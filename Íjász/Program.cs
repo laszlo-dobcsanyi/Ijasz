@@ -14,7 +14,6 @@ namespace Íjász
 
         public static MainForm mainform;
 
-        public static int Adatbázis_Verzió = 2;
         public static string Tulajdonos_Megnevezés = "Turul Koppány Íjászai HE, Hunvér Kft.";
 
 
@@ -25,6 +24,15 @@ namespace Íjász
             {
                 network = new Network();
                 database = new Database();
+
+                if (!database.IsCorrectVersion())
+                {
+                    MessageBox.Show("Az adatbázis verziója nem megfelelő, le kell először futtatni az Íjász adatbázis kezelőt!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    network.Shutdown();
+
+                    System.Environment.Exit(2);
+                }
 
                 AddressForm addressform;
                 do

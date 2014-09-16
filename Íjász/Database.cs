@@ -8,6 +8,7 @@ namespace Íjász
 {
     public sealed class Database :IDisposable
     {
+        public static int Verzió = 2;
         private SQLiteConnection connection;
 
         public Database()
@@ -30,8 +31,8 @@ namespace Íjász
                     "CREATE TABLE Korosztályok (VEAZON char(10) NOT NULL, KOAZON char(10) NOT NULL, KOMEGN char(30), KOEKMI int NOT NULL, KOEKMA int NOT NULL, KOINSF int, KOINSN int);" +
                     "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
                     "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int);" +
-                    
-                    "INSERT INTO Verzió (PRVERZ) VALUES (" + Program.Adatbázis_Verzió + ");";
+
+                    "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
                 if (command.ExecuteNonQuery() != 0) MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else MessageBox.Show("Adatbázis létrehozva!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -42,13 +43,10 @@ namespace Íjász
 
                 if (!Directory.Exists(@"backup")) Directory.CreateDirectory(@"backup");
             }
-            else CreateBackup("adat_indítás_" + DateTime.Now.ToString().Trim(new Char[] {'-'}).Replace(' ', '_').Replace('.', '-').Replace(':', '-'));
-        }
-
-        public static bool IsCorrectSQLText(string _text)
-        {
-            if (_text.Contains("'") || _text.Contains("\"") || _text.Contains("(") || _text.Contains(")") || _text.Contains(";") ) return false;
-            return true;
+            else
+            {
+                CreateBackup("adat_indítás_" + DateTime.Now.ToString().Trim(new Char[] { '-' }).Replace(' ', '_').Replace('.', '-').Replace(':', '-'));
+            }
         }
 
         public void CreateBackup(string _name)
@@ -64,6 +62,34 @@ namespace Íjász
                 connection.Close();
                 cnnOut.Close();
             }
+        }
+
+        public static bool IsCorrectSQLText(string _text)
+        {
+            if (_text.Contains("'") || _text.Contains("\"") || _text.Contains("(") || _text.Contains(")") || _text.Contains(";") ) return false;
+            return true;
+        }
+
+        public bool IsCorrectVersion()
+        {
+            int version = 0;
+            SQLiteCommand command;
+
+            command = connection.CreateCommand();
+            command.CommandText = "SELECT VEALSZ FROM Verseny;";
+            try
+            {
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    version = reader.GetInt32(0);
+                }
+            }
+            catch (SQLiteException) { version = 1; }
+            catch (Exception exception) { return false; }
+
+            if (Verzió == version) return true;
+            return false;
         }
 
         #region Versenysorozat
@@ -259,7 +285,7 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ VEINSZ, VELEZAR FROM Verseny;";
+                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR FROM Verseny;";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {

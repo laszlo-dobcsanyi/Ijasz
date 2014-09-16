@@ -182,8 +182,8 @@ namespace Íjász
 
         public void Shutdown()
         {
-            thread.Abort();
-            listener.Close();
+            if (thread != null) thread.Abort();
+            if (listener != null) listener.Close();
         }
     }
 }
