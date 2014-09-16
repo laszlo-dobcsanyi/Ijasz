@@ -14,6 +14,7 @@ namespace Íjász
 
         public static MainForm mainform;
 
+        public static int Adatbázis_Verzió = 2;
         public static string Tulajdonos_Megnevezés = "Turul Koppány Íjászai HE, Hunvér Kft.";
 
 

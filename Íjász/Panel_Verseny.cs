@@ -14,16 +14,18 @@ namespace Íjász
         public string dátum;
         public string versenysorozat;
         public int összes;
+        public int állomások;
         public int indulók;
         public bool lezárva;
 
-        public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _indulók, bool _lezárva)
+        public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _állomások, int _indulók, bool _lezárva)
         {
             azonosító = _azonosító;
             megnevezés = _megnevezés;
             dátum = _dátum;
             versenysorozat = _versenysorozat;
             összes = _összes;
+            állomások = _állomások;
             indulók = _indulók;
             lezárva = _lezárva;
         }
@@ -102,7 +104,8 @@ namespace Íjász
             data.Columns.Add(new DataColumn("Megnevezés", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Dátum", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Versenysorozat", System.Type.GetType("System.String")));
-            data.Columns.Add(new DataColumn("Lövések száma", System.Type.GetType("System.Int32")));
+            data.Columns.Add(new DataColumn("Lövések", System.Type.GetType("System.Int32")));
+            data.Columns.Add(new DataColumn("Állomások", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Indulók száma", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Lezárva", System.Type.GetType("System.Boolean")));
 
@@ -116,8 +119,9 @@ namespace Íjász
                 row[2] = current.dátum;
                 row[3] = current.versenysorozat;
                 row[4] = current.összes;
-                row[5] = current.indulók;
-                row[6] = current.lezárva;
+                row[5] = current.állomások;
+                row[6] = current.indulók;
+                row[7] = current.lezárva;
 
                 data.Rows.Add(row);
             }
@@ -145,8 +149,9 @@ namespace Íjász
                 row[2] = _verseny.dátum;
                 row[3] = _verseny.versenysorozat;
                 row[4] = _verseny.összes;
-                row[5] = _verseny.indulók;
-                row[6] = _verseny.lezárva;
+                row[5] = _verseny.állomások;
+                row[6] = _verseny.indulók;
+                row[7] = _verseny.lezárva;
                 data.Rows.Add(row);
 
                 if (verseny_hozzáadva != null) verseny_hozzáadva(_verseny);
@@ -174,8 +179,9 @@ namespace Íjász
                         current[2] = _verseny.dátum;
                         current[3] = _verseny.versenysorozat;
                         current[4] = _verseny.összes;
-                        current[5] = _verseny.indulók;
-                        current[6] = _verseny.lezárva;
+                        current[5] = _verseny.állomások;
+                        current[6] = _verseny.indulók;
+                        current[7] = _verseny.lezárva;
                         break;
                     }
                 }
@@ -306,9 +312,10 @@ namespace Íjász
             table.Columns[1].Width = 200;
             table.Columns[2].Width = 90;
             table.Columns[3].Width = 80;
-            table.Columns[4].Width = 120;
-            table.Columns[5].Width = 120;
-            table.Columns[6].Width = 50;
+            table.Columns[4].Width = 60;
+            table.Columns[5].Width = 60;
+            table.Columns[6].Width = 120;
+            table.Columns[7].Width = 50;
 
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
@@ -321,22 +328,23 @@ namespace Íjász
 
         private void módosítás_Click(object _sender, EventArgs _event)
         {
-            if ((table.SelectedRows.Count == 0) || (table.SelectedRows[0].Index == data.Rows.Count)) return;
+            if (table.SelectedRows.Count != 1) return;
 
             verseny_form = new Form_Verseny(new Verseny(data.Rows[table.SelectedRows[0].Index][0].ToString(),
                 data.Rows[table.SelectedRows[0].Index][1].ToString(), data.Rows[table.SelectedRows[0].Index][2].ToString(), data.Rows[table.SelectedRows[0].Index][3].ToString(),
-                Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][4]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][5]), Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][6])));
+                Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][4]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][5]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][6]),
+                Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][7])));
             verseny_form.ShowDialog();
         }
 
         private void törlés_Click(object _sender, EventArgs _event)
         {
-            if ((table.SelectedRows.Count == 0) || (table.SelectedRows[0].Index == data.Rows.Count)) return;
+            if (table.SelectedRows.Count != 1) return;
             if (0 < (int)(data.Rows[table.SelectedRows[0].Index][5])) { MessageBox.Show("Ez a verseny nem törölhető, mivel van hozzárendelve eredmény!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (MessageBox.Show("Biztosan törli ezt a versenyt?", "Megerősítés", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
+            // TODO ezt egyben kellene!
             Program.mainform.versenysorozat_panel.Versenysorozat_VersenyCsökkentés(data.Rows[table.SelectedRows[0].Index][3].ToString());
-
             Verseny_Törlés(data.Rows[table.SelectedRows[0].Index][0].ToString());
         }
         #endregion
@@ -351,6 +359,7 @@ namespace Íjász
             private DateTimePicker dátumválasztó;
             private ComboBox combo_versenysorozat;
             private TextBox box_összes;
+            private TextBox box_állomások;
             private Label label_indulók;
             private Label label_lezárva;
 
@@ -374,7 +383,7 @@ namespace Íjász
             private void InitializeForm()
             {
                 Text = "Verseny";
-                ClientSize = new System.Drawing.Size(400 - 64, 296);
+                ClientSize = new System.Drawing.Size(400 - 64, 296 + 32);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -404,14 +413,18 @@ namespace Íjász
                 összes.Text = "Lövések száma:";
                 összes.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 4 * 32);
 
+                Label állomások = new Label();
+                állomások.Text = "Állomások száma:";
+                állomások.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 5 * 32);
+
                 Label indulók = new Label();
                 indulók.Text = "Indulók száma:";
-                indulók.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 5 * 32);
+                indulók.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 6 * 32);
                 //szám.Font = new System.Drawing.Font("Arial Black", 10);
 
                 Label lezárva = new Label();
                 lezárva.Text = "Lezárva:";
-                lezárva.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 6 * 32);
+                lezárva.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 7 * 32);
                 
                 ///
 
@@ -438,6 +451,10 @@ namespace Íjász
                 box_összes = new TextBox();
                 box_összes.Location = new System.Drawing.Point(összes.Location.X + összes.Size.Width + 16, összes.Location.Y);
                 box_összes.Size = box_azonosító.Size;
+
+                box_állomások = new TextBox();
+                box_állomások.Location = new System.Drawing.Point(állomások.Location.X + állomások.Size.Width + 16, összes.Location.Y);
+                box_állomások.Size = box_azonosító.Size;
 
                 label_indulók = new Label();
                 label_indulók.Location = new System.Drawing.Point(indulók.Location.X + indulók.Size.Width + 16, indulók.Location.Y);
@@ -468,6 +485,7 @@ namespace Íjász
                 Controls.Add(dátum);
                 Controls.Add(versenysorozat);
                 Controls.Add(összes);
+                Controls.Add(állomások);
                 Controls.Add(indulók);
                 Controls.Add(lezárva);
 
@@ -476,6 +494,7 @@ namespace Íjász
                 Controls.Add(dátumválasztó);
                 Controls.Add(combo_versenysorozat);
                 Controls.Add(box_összes);
+                Controls.Add(box_állomások);
                 Controls.Add(label_indulók);
                 Controls.Add(label_lezárva);
 
@@ -490,6 +509,7 @@ namespace Íjász
                 dátumválasztó.Value = DateTime.Now;
                 combo_versenysorozat.Text = "";
                 box_összes.Text = "0";
+                box_állomások.Text = "0";
                 label_indulók.Text = "0";
                 label_lezárva.Text = "Hamis";
             }
@@ -501,8 +521,10 @@ namespace Íjász
                 box_megnevezés.Text = _verseny.megnevezés;
                 dátumválasztó.Value = DateTime.Parse(_verseny.dátum);
                 combo_versenysorozat.Text = _verseny.versenysorozat;
-                box_összes.Text = (_verseny.összes ).ToString();
+                box_összes.Text = (_verseny.összes).ToString();
                 box_összes.Enabled = (_verseny.indulók == 0) ? true : false;
+                box_állomások.Text = (_verseny.összes).ToString();
+                box_állomások.Enabled = (_verseny.indulók == 0) ? true : false;
                 label_indulók.Text = _verseny.indulók.ToString();
                 label_lezárva.Text = _verseny.lezárva ? "Igen" : "Nem";
             }
@@ -562,16 +584,17 @@ namespace Íjász
                 if (!(0 < box_azonosító.Text.Length && box_azonosító.Text.Length <= 10)) { MessageBox.Show("Nem megfelelő az azonosító hossza (1 - 10 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!(0 < box_megnevezés.Text.Length && box_megnevezés.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő a megnevezés hossza (1 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!Database.IsCorrectSQLText(box_megnevezés.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                int összes;
-                try { összes = Convert.ToInt32(box_összes.Text); }
-                catch { MessageBox.Show("Nem jó szám!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (összes <= 0) { MessageBox.Show("Túl kicsi a lövések száma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                int összes; try { összes = Convert.ToInt32(box_összes.Text); } catch { MessageBox.Show("Nem szám található a lövéseknél!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (összes < 1) { MessageBox.Show("Túl kevés a lövések száma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                int állomások; try { állomások = Convert.ToInt32(box_összes.Text); } catch { MessageBox.Show("Nem szám található az állomásoknál!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if ((állomások < 1) || (30 < állomások)) { MessageBox.Show("Nem megfelelő az állomások száma (1-30)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (eredeti_azonosító != null)
                 {
                     if ((0 < Convert.ToInt32(label_indulók.Text)) && (eredeti_azonosító != box_azonosító.Text))
                     { MessageBox.Show("Ez a verseny nem átnevezhető!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; };
 
+                    // TODO ezt sem kéne külön csinálni!
                     if (combo_versenysorozat.Text != eredeti_versenysorozat)
                     {
                         Program.mainform.versenysorozat_panel.Versenysorozat_VersenyCsökkentés(eredeti_versenysorozat);
@@ -579,12 +602,13 @@ namespace Íjász
                     }
 
                     Program.mainform.verseny_panel.Verseny_Módosítás(eredeti_azonosító, new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(),
-                        combo_versenysorozat.Text, összes, Convert.ToInt32(label_indulók.Text), label_lezárva.Text == "Igen" ? true : false));
+                        combo_versenysorozat.Text, összes, állomások, Convert.ToInt32(label_indulók.Text), label_lezárva.Text == "Igen" ? true : false));
                 }
                 else
                 {
+                    // TODO ezt sem kéne külön csinálni!
                     Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(combo_versenysorozat.Text);
-                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(), combo_versenysorozat.Text, összes, 0, false));
+                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(), combo_versenysorozat.Text, összes, állomások, 0, false));
                 }
 
                 Close();
