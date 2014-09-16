@@ -453,7 +453,7 @@ namespace Íjász
                 box_összes.Size = box_azonosító.Size;
 
                 box_állomások = new TextBox();
-                box_állomások.Location = new System.Drawing.Point(állomások.Location.X + állomások.Size.Width + 16, összes.Location.Y);
+                box_állomások.Location = new System.Drawing.Point(állomások.Location.X + állomások.Size.Width + 16, állomások.Location.Y);
                 box_állomások.Size = box_azonosító.Size;
 
                 label_indulók = new Label();
@@ -523,7 +523,7 @@ namespace Íjász
                 combo_versenysorozat.Text = _verseny.versenysorozat;
                 box_összes.Text = (_verseny.összes).ToString();
                 box_összes.Enabled = (_verseny.indulók == 0) ? true : false;
-                box_állomások.Text = (_verseny.összes).ToString();
+                box_állomások.Text = (_verseny.állomások).ToString();
                 box_állomások.Enabled = (_verseny.indulók == 0) ? true : false;
                 label_indulók.Text = _verseny.indulók.ToString();
                 label_lezárva.Text = _verseny.lezárva ? "Igen" : "Nem";
@@ -586,7 +586,7 @@ namespace Íjász
                 if (!Database.IsCorrectSQLText(box_megnevezés.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 int összes; try { összes = Convert.ToInt32(box_összes.Text); } catch { MessageBox.Show("Nem szám található a lövéseknél!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (összes < 1) { MessageBox.Show("Túl kevés a lövések száma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                int állomások; try { állomások = Convert.ToInt32(box_összes.Text); } catch { MessageBox.Show("Nem szám található az állomásoknál!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                int állomások; try { állomások = Convert.ToInt32(box_állomások.Text); } catch { MessageBox.Show("Nem szám található az állomásoknál!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if ((állomások < 1) || (30 < állomások)) { MessageBox.Show("Nem megfelelő az állomások száma (1-30)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (eredeti_azonosító != null)
