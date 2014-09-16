@@ -75,8 +75,10 @@ namespace Íjász
             int version = 0;
             SQLiteCommand command;
 
+            connection.Open();
+
             command = connection.CreateCommand();
-            command.CommandText = "SELECT VEALSZ FROM Verseny;";
+            command.CommandText = "SELECT PRVERZ FROM Verzió;";
             try
             {
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -86,7 +88,12 @@ namespace Íjász
                 }
             }
             catch (SQLiteException) { version = 1; }
-            catch (Exception) { return false; }
+            catch (Exception excp) { MessageBox.Show(excp.Message); return false; }
+            finally
+            {
+                command.Dispose();
+                connection.Close();
+            }
 
             if (Verzió == version) return true;
             return false;
