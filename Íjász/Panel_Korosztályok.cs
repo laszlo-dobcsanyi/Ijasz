@@ -510,13 +510,6 @@ namespace Íjász
 
                 ///
 
-                Button számolás = new Button();
-                számolás.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-                számolás.Text = "Számolás";
-                számolás.Size = new System.Drawing.Size(96, 32);
-                számolás.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 2 * 16 - számolás.Width, ClientRectangle.Height - 32 - 16);
-                számolás.Click += számolás_Click;
-
                 Button rendben = new Button();
                 rendben.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
                 rendben.Text = "Rendben";
@@ -544,7 +537,6 @@ namespace Íjász
                 Controls.Add(text_indulo_nő);
                 Controls.Add(text_indulo_férfi);
 
-                //Controls.Add(számolás);
                 Controls.Add(rendben);
             }
 
@@ -576,25 +568,6 @@ namespace Íjász
             }
 
             #region EventHandlers
-            private void számolás_Click(object _sender, EventArgs _event)
-            {
-                int alsó = 0, felső = 0;
-
-                try { alsó = Convert.ToInt32(text_also.Text); }
-                catch { MessageBox.Show("Nem megfelelő az alsó életkor formátuma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-
-                try { felső = Convert.ToInt32(text_felso.Text); }
-                catch { MessageBox.Show("Nem megfelelő a felső életkor formátuma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-
-                if (alsó <= 0) { MessageBox.Show("Alsó korhatár túl kicsi!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (felső <= alsó) { MessageBox.Show("A felső korhatárnak nagyobbnak kell lenni, mint az alsónak", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (100 < felső) { if (MessageBox.Show("Alsó korhatár túl magas, biztosan hagyjuk így?", "Korhatár", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK) return; }
-
-                Database.CountPair indulók = Program.database.KorosztálySzámolás(eredeti_verseny, alsó, felső, box_nők.Checked, box_férfiak.Checked, false);
-                text_indulo_nő.Text = indulók.nők.ToString();
-                text_indulo_férfi.Text = indulók.férfiak.ToString();
-            }
-
             private void rendben_Click(object _sender, EventArgs _event)
             {
                 if (text_kazon.Text.Length == 0 || text_kazon.Text.Length > 10) { MessageBox.Show("Korosztályazonosító hossza nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
