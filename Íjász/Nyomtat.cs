@@ -141,6 +141,7 @@ namespace Íjász
                 public string VEMEGN;
                 public string VEDATU;
                 public int VEOSPO;
+                public int VEALSZ;
                 public string VSAZON;
                 public string VSMEGN;
                 public Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
@@ -149,6 +150,7 @@ namespace Íjász
                     VEMEGN = _verseny.megnevezés;
                     VEDATU = _verseny.dátum;
                     VEOSPO = _verseny.összes;
+                    VEALSZ = _verseny.állomások;
                     VSAZON = _versenysorozat.azonosító;
                     VSMEGN = _versenysorozat.megnevezés;
                 }
@@ -158,6 +160,7 @@ namespace Íjász
                     VEMEGN = _verseny.megnevezés;
                     VEDATU = _verseny.dátum;
                     VEOSPO = _verseny.összes;
+                    VEALSZ = _verseny.állomások;
                     VSAZON = null;
                     VSMEGN = null;
                 }
@@ -465,9 +468,6 @@ namespace Íjász
 
             var document = DocX.Create(filename);
             document.AddHeaders();
-            // TODO!!
-            // int VEOSPO = beirlap.versenyadatok.VEOSPO;
-            int VEOSPO = 20;
 
             #region címbekezdés
 
@@ -488,12 +488,8 @@ namespace Íjász
 
             #region táblázat formázás
 
-            // TODO
-            Table table = document.AddTable(VEOSPO + 3, 8);
+            Table table = document.AddTable(beirlap.versenyadatok.VEALSZ + 3, 8);
             table.Alignment = Alignment.center;
-
-
-
 
             table.Rows[0].Cells[0].Paragraphs[0].Append("Sorszám");
             table.Rows[0].Cells[1].Paragraphs[0].Append("Lőállás");
@@ -503,15 +499,14 @@ namespace Íjász
             table.Rows[0].Cells[5].Paragraphs[0].Append("Mellé");
             table.Rows[0].Cells[6].Paragraphs[0].Append("Összesen");
             table.Rows[0].Cells[7].Paragraphs[0].Append("Göngyölt");
-            // TODO
-            for (int i = 1; i <= VEOSPO; i++)
+
+            for (int i = 1; i <= beirlap.versenyadatok.VEALSZ; i++)
             {
                 table.Rows[i].Cells[0].Paragraphs[0].Append((i).ToString());
             }
 
-            // TODO
-            table.Rows[VEOSPO + 1].Cells[1].Paragraphs[0].Append("Össz darab");
-            table.Rows[VEOSPO + 2].Cells[1].Paragraphs[0].Append("Össz pont");
+            table.Rows[beirlap.versenyadatok.VEALSZ + 1].Cells[1].Paragraphs[0].Append("Össz darab");
+            table.Rows[beirlap.versenyadatok.VEALSZ + 2].Cells[1].Paragraphs[0].Append("Össz pont");
             
 
 
