@@ -383,7 +383,7 @@ namespace Íjász
             private void InitializeForm()
             {
                 Text = "Verseny";
-                ClientSize = new System.Drawing.Size(400 - 64, 296 + 32);
+                ClientSize = new System.Drawing.Size(400 - 64, 308);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

@@ -28,7 +28,7 @@ namespace Íjász
                     "CREATE TABLE Verzió (PRVERZ int);" +
                     "CREATE TABLE Versenysorozat (VSAZON char(10) PRIMARY KEY, VSMEGN char(30), VSVESZ int);" +
                     "CREATE TABLE Verseny (VEAZON char(10) PRIMARY KEY, VEMEGN char(30), VEDATU char(20), VSAZON char(10), VEOSPO int NOT NULL, VEALSZ int, VEINSZ int, VELEZAR boolean);" +
-                    "CREATE TABLE Korosztályok (VEAZON char(10) NOT NULL, KOAZON char(10) NOT NULL, KOMEGN char(30), KOEKMI int NOT NULL, KOEKMA int NOT NULL, KOINSF int, KOINSN int);" +
+                    "CREATE TABLE Korosztályok (VEAZON char(10) NOT NULL, KOAZON char(10) NOT NULL, KOMEGN char(30), KOEKMI int NOT NULL, KOEKMA int NOT NULL, KONOK boolean, KOFERF boolean, KOINSN int, KOINSF int);" +
                     "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
                     "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int);" +
 
@@ -349,12 +349,12 @@ namespace Íjász
 
 
                 command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KOINSF, KOINSN) VALUES" +
-                    "('" + _verseny.azonosító + "', 'K10', '0-10', 1, 9, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K14', '10-14', 10, 13, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K18', '14-18', 14, 17, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K50', '18-50', 18, 49, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K100', '50-100', 50, 99, 0, 0);";
+                command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSF, KOINSN) VALUES" +
+                    "('" + _verseny.azonosító + "', 'K10', '0-10', 1, 9, 1, 1, 0, 0)," +
+                    "('" + _verseny.azonosító + "', 'K14', '10-14', 10, 13, 1, 1, 0, 0)," +
+                    "('" + _verseny.azonosító + "', 'K18', '14-18', 14, 17, 1, 1, 0, 0)," +
+                    "('" + _verseny.azonosító + "', 'K50', '18-50', 18, 49, 1, 1, 0, 0)," +
+                    "('" + _verseny.azonosító + "', 'K100', '50-100', 50, 99, 1, 1, 0, 0);";
                 command.ExecuteNonQuery();
 
                 command = connection.CreateCommand();
@@ -596,11 +596,12 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
 
-                command.CommandText = "SELECT VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KOINSF, KOINSN FROM Korosztályok WHERE VEAZON = '" + _verseny + "';";
+                command.CommandText = "SELECT VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSN, KOINSF FROM Korosztályok WHERE VEAZON = '" + _verseny + "';";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    data.Add(new Korosztály(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6)));
+                    data.Add(new Korosztály(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4),
+                        reader.GetBoolean(5), reader.GetBoolean(6), reader.GetInt32(7), reader.GetInt32(8)));
                 }
 
                 command.Dispose();
@@ -636,8 +637,8 @@ namespace Íjász
                 }
 
                 command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KOINSF, KOINSN) VALUES('" + _korosztály.verseny + "', '" + _korosztály.azonosító + "', '" + _korosztály.megnevezés + "', " +
-                     +_korosztály.alsó_határ + ", " + _korosztály.felső_határ + ", " + _korosztály.indulók_férfiak + ", " + _korosztály.indulók_nők + ");";
+                command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF KOINSF, KOINSN) VALUES('" + _korosztály.verseny + "', '" + _korosztály.azonosító + "', '" + _korosztály.megnevezés + "', " +
+                    +_korosztály.alsó_határ + ", " + _korosztály.felső_határ + ", " + (_korosztály.nők ? "1" : "0") + ", " + (_korosztály.férfiak ? "1" : "0") + ", " + _korosztály.indulók_férfiak + ", " + _korosztály.indulók_nők + ");";
 
                 command.ExecuteNonQuery();
                 command.Dispose();
@@ -679,8 +680,8 @@ namespace Íjász
 
                 command = connection.CreateCommand();
                 command.CommandText = "UPDATE Korosztályok SET KOAZON = '" + _korosztály.azonosító + "', KOMEGN = '" + _korosztály.megnevezés + "', " +
-                    "KOEKMI = " + _korosztály.alsó_határ + ", KOEKMA = " + _korosztály.felső_határ + ", KOINSF = " + _korosztály.indulók_férfiak + ", KOINSN = " + _korosztály.indulók_nők + " " +
-                    "WHERE KOAZON = '" + _azonosító + "' AND VEAZON = '" + _korosztály.verseny + "';";
+                    "KOEKMI = " + _korosztály.alsó_határ + ", KOEKMA = " + _korosztály.felső_határ + ", KONOK = " + (_korosztály.nők ? "1" : "0") + ", KOFERF = " + (_korosztály.férfiak ? "1" : "0") +
+                    ", KOINSF = " + _korosztály.indulók_férfiak + ", KOINSN = " + _korosztály.indulók_nők + " WHERE KOAZON = '" + _azonosító + "' AND VEAZON = '" + _korosztály.verseny + "';";
                 try
                 {
                     command.ExecuteNonQuery();
@@ -730,7 +731,7 @@ namespace Íjász
             {
                 foreach (Korosztály current in korosztályok)
                 {
-                    CountPair indulók = KorosztálySzámolás(_verseny, current.alsó_határ, current.felső_határ, true);
+                    CountPair indulók = KorosztálySzámolás(_verseny, current.alsó_határ, current.felső_határ, current.nők, current.férfiak, true);
 
                     connection.Open();
                     SQLiteCommand command = connection.CreateCommand();
@@ -745,16 +746,16 @@ namespace Íjász
             }
         }
 
-        public CountPair KorosztálySzámolás(string _azonosító, int _alsó, int _felső, bool _internal)
+        public CountPair KorosztálySzámolás(string _azonosító, int _alsó, int _felső, bool _nők, bool _férfiak, bool _internal)
         {
-            if (!_internal) lock (Program.datalock) { return KorosztálySzámolás_Segéd(_azonosító, _alsó, _felső); }
-            else return KorosztálySzámolás_Segéd(_azonosító, _alsó, _felső);
+            if (!_internal) lock (Program.datalock) { return KorosztálySzámolás_Segéd(_azonosító, _alsó, _felső, _nők, _férfiak); }
+            else return KorosztálySzámolás_Segéd(_azonosító, _alsó, _felső, _nők, _férfiak);
         }
 
         /// <summary>
         /// Nincs lockolva, csak belső használatra!
         /// </summary>
-        private CountPair KorosztálySzámolás_Segéd(string _azonosító, int _alsó, int _felső)
+        private CountPair KorosztálySzámolás_Segéd(string _azonosító, int _alsó, int _felső, bool _nők, bool _férfiak)
         {
             CountPair count = new CountPair();
 
@@ -769,8 +770,14 @@ namespace Íjász
                 //MessageBox.Show("also: " + _alsó + " felso: " + _felső + " year: " + year);
                 if (_alsó <= year && year <= _felső)
                 {
-                    if (reader.GetString(1) == "N") count.nők++;
-                    else count.férfiak++;
+                    if (reader.GetString(1) == "N")
+                    {
+                        if (_nők) count.nők++;
+                    }
+                    else
+                    {
+                        if (_férfiak) count.férfiak++;
+                    }
                 }
                 //MessageBox.Show(reader.GetBoolean(2).ToString());
             }
