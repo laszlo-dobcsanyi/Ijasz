@@ -86,7 +86,7 @@ namespace Íjász
                 }
             }
             catch (SQLiteException) { version = 1; }
-            catch (Exception exception) { return false; }
+            catch (Exception) { return false; }
 
             if (Verzió == version) return true;
             return false;
