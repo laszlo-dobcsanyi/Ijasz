@@ -88,7 +88,7 @@ namespace Íjász
                 }
             }
             catch (SQLiteException) { version = 1; }
-            catch (Exception excp) { MessageBox.Show(excp.Message); return false; }
+            catch (Exception) { return false; }
             finally
             {
                 command.Dispose();

@@ -27,7 +27,7 @@ namespace Íjász
 
                 if (!database.IsCorrectVersion())
                 {
-                    MessageBox.Show("Az adatbázis verziója nem megfelelő, le kell először futtatni az Íjász adatbázis kezelőt!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Az adatbázis hibás vagy verziója nem megfelelő, le kell először futtatni az Íjász adatbázis kezelőt!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     
                     network.Shutdown();
 
