@@ -277,7 +277,7 @@ namespace Íjász
                 {
                     if (_azonosító == current[0].ToString())
                     {
-                        current[5] = ((int)current[5]) + 1;
+                        current[5] = ((int)current[6]) + 1;
                         return;
                     }
                 }
@@ -294,7 +294,7 @@ namespace Íjász
             {
                 if (_azonosító == current[0].ToString())
                 {
-                    current[5] = ((int)current[5]) - 1;
+                    current[5] = ((int)current[6]) - 1;
                     return;
                 }
             }
