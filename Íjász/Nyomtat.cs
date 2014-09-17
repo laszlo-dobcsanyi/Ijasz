@@ -384,8 +384,6 @@ namespace Íjász
         static public string nyomtat_beirlap(string _VEAZON, Eredmény _eredmény) 
         {
             #region alap stringek
-            string st_pont = "\n\n\n       ------------------------------      ------------------------------";
-            string st_beiro = "                                 Beíró aláírása                                               Versenyző aláírása";
 
             string headline = "B E Í R Ó L A P";
             string st_vazon_vnev = "Verseny azonosító, név: ";
@@ -578,9 +576,38 @@ namespace Íjász
             beirlap_táblázat_formázás(table);
             document.InsertTable(table);
 
-            //TODO SZÉTCSÚSZIK!!!4NÉGY
-            Paragraph paragraph_3 = document.InsertParagraph(st_pont, false, titleFormat2);
-            paragraph_3.AppendLine(st_beiro);
+
+            Table aláírás = document.AddTable(1, 2);
+            aláírás.Alignment = Alignment.center;
+            
+            Border c = new Border(Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Black);
+            aláírás.SetBorder(TableBorderType.InsideH, c);
+            aláírás.SetBorder(TableBorderType.InsideV, c);
+            aláírás.SetBorder(TableBorderType.Bottom, c);
+            aláírás.SetBorder(TableBorderType.Top, c);
+            aláírás.SetBorder(TableBorderType.Left, c);
+            aláírás.SetBorder(TableBorderType.Right, c);
+            
+            aláírás.Rows[0].Cells[0].Paragraphs[0].Append("----------------------------------------------");
+            aláírás.Rows[0].Cells[1].Paragraphs[0].Append("----------------------------------------------");
+            aláírás.Rows[0].Cells[0].InsertParagraph("Beíró aláírása");
+            aláírás.Rows[0].Cells[1].InsertParagraph("Versenyző aláírása");
+
+            aláírás.Rows[0].Cells[0].Width = 400;
+            aláírás.Rows[0].Cells[1].Width = 400;
+            aláírás.Rows[0].Height = 70;
+            aláírás.Rows[0].Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+            aláírás.Rows[0].Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+
+
+            aláírás.Rows[0].Cells[0].Paragraphs[0].Alignment = Alignment.center;
+            aláírás.Rows[0].Cells[0].Paragraphs[1].Alignment = Alignment.center;
+            aláírás.Rows[0].Cells[1].Paragraphs[0].Alignment = Alignment.center;
+            aláírás.Rows[0].Cells[1].Paragraphs[1].Alignment = Alignment.center;
+            //
+
+            document.InsertParagraph();
+            document.InsertTable(aláírás);
 
             try { document.Save(); }
             catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "BEIRLAP.DOCX ", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -1115,6 +1142,7 @@ namespace Íjász
         static public string nyomtat_eredmenylap_verseny_teljes(string _VEAZON)
         {
             string filename = null;
+            int indulók_száma = 0;
 
             Node_Eredménylap_Verseny_Teljes verseny = new Node_Eredménylap_Verseny_Teljes();
             verseny.íjtípus = new List<Node_Eredménylap_Verseny_Teljes.Node_Íjtípus>();
@@ -1198,12 +1226,14 @@ namespace Íjász
                                                 verseny.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
+                                                indulók_száma++;
                                             }
                                             else
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
+                                                indulók_száma++;
                                             }
                                             break;
                                         }
@@ -1296,16 +1326,20 @@ namespace Íjász
 
                         if (ijtipus_count == 0)
                         {
+                            /*
                             adatok.AppendLine("Íjtípus: ");
                             adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
                             adatok.Bold();
-                            ijtipus_count++;
+                            */
+                             ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
+                            /*
                             adatok.Append("    Korosztály: ");
                             adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
                             adatok.Bold();
+                            */
                             korosztaly_count++;
                         }
 
@@ -1315,6 +1349,13 @@ namespace Íjász
                             Paragraph np = document.InsertParagraph();
                             if (nok_count == 0)
                             {
+
+                                adatok.AppendLine("Íjtípus: ");
+                                adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
+                                adatok.Bold();
+                                adatok.Append("    Korosztály: ");
+                                adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
+                                adatok.Bold();
                                 np.Append("       Nők:");
                                 nok_count++;
                             }
@@ -1339,7 +1380,13 @@ namespace Íjász
                             Paragraph fp = document.InsertParagraph();
                             if (ferfiak_count == 0)
                             {
-                                fp.Append("        Férfiak:");
+                                fp.AppendLine("Íjtípus: ");
+                                fp.Append(verseny.íjtípus[i].megnevezés + "\n");
+                                fp.Bold();
+                                fp.Append("    Korosztály: ");
+                                fp.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
+                                fp.Bold();
+                                fp.Append("\n        Férfiak:");
                                 ferfiak_count++;
                             }
 
@@ -1362,10 +1409,9 @@ namespace Íjász
 
             }
             #endregion
-
-
+            if (indulók_száma != verseny.versenyadatok.VEINSZ) { MessageBox.Show("Versenyen indulók száma: " + verseny.versenyadatok.VEINSZ.ToString() + "\nAz eredménylapon szereplő versenyzők száma: " + indulók_száma, "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             try { document.Save(); }
-            catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "ERLAPVEMISZ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "ERLAPVETELJ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             return filename;
         }
 
@@ -1555,16 +1601,10 @@ namespace Íjász
 
                         if (ijtipus_count == 0)
                         {
-                            adatok.AppendLine("Íjtípus: ");
-                            adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
-                            adatok.Bold();
                             ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
-                            adatok.Append("    Korosztály: ");
-                            adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
-                            adatok.Bold();
                             korosztaly_count++;
                         }
 
@@ -1574,6 +1614,12 @@ namespace Íjász
                             Paragraph np = document.InsertParagraph();
                             if (nok_count == 0)
                             {
+                                adatok.AppendLine("Íjtípus: ");
+                                adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
+                                adatok.Bold();
+                                adatok.Append("    Korosztály: ");
+                                adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
+                                adatok.Bold();
                                 np.Append("       Nők:");
                                 nok_count++;
                             }
@@ -1598,6 +1644,12 @@ namespace Íjász
                             Paragraph fp = document.InsertParagraph();
                             if (ferfiak_count == 0)
                             {
+                                fp.AppendLine("Íjtípus: ");
+                                fp.Append(verseny.íjtípus[i].megnevezés + "\n");
+                                fp.Bold();
+                                fp.Append("    Korosztály: ");
+                                fp.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
+                                fp.Bold();
                                 fp.Append("        Férfiak:");
                                 ferfiak_count++;
                             }
