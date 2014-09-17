@@ -232,66 +232,66 @@ namespace Íjász
 
             public struct Node_Íjtípus
             {
-                public Node_Íjtípus(string azon, string megn)
+                public Node_Íjtípus(string _azon, string _megn)
                 {
 
-                    _azonosito = azon;
-                    _megnevezés = megn;
-                    _korosztáyok = new List<Node_Korosztály>();
-                    _ijtipus_vanbenne = false;
+                    azonosito = _azon;
+                    megnevezés = _megn;
+                    korosztályok = new List<Node_Korosztály>();
+                    ijtipus_vanbenne = false;
                 }
 
-                public bool _ijtipus_vanbenne;
-                public void Vanbenne() { _ijtipus_vanbenne = true; }
-                public string _azonosito;
-                public string _megnevezés;
-                public List<Node_Korosztály> _korosztáyok;
+                public bool ijtipus_vanbenne;
+                public void Vanbenne() { ijtipus_vanbenne = true; }
+                public string azonosito;
+                public string megnevezés;
+                public List<Node_Korosztály> korosztályok;
                 public struct Node_Korosztály
                 {
-                    public Node_Korosztály(int also, int felso, string azonosito, string megnevezés)
+                    public Node_Korosztály(int _also, int _felso, string _azonosito, string _megnevezés)
                     {
-                        _ferfiak = new List<Node_Indulo>();
-                        _nok = new List<Node_Indulo>();
-                        _also = also;
-                        _felso = felso;
-                        _korosztály_vanbenne = false;
-                        _kazon = azonosito;
-                        _kmegn = megnevezés;
+                        ferfiak = new List<Node_Indulo>();
+                        nok = new List<Node_Indulo>();
+                        also = _also;
+                        felso = _felso;
+                        korosztály_vanbenne = false;
+                        kazon = _azonosito;
+                        kmegn = _megnevezés;
 
                     }
-                    public string _kazon;
-                    public string _kmegn;
-                    public int _also;
-                    public int _felso;
-                    public bool _korosztály_vanbenne;
-                    public void Vanbenne2() { _korosztály_vanbenne = true; }
-                    public List<Node_Indulo> _ferfiak;
-                    public List<Node_Indulo> _nok;
+                    public string kazon;
+                    public string kmegn;
+                    public int also;
+                    public int felso;
+                    public bool korosztály_vanbenne;
+                    public void Vanbenne2() { korosztály_vanbenne = true; }
+                    public List<Node_Indulo> ferfiak;
+                    public List<Node_Indulo> nok;
                     public struct Node_Indulo
                     {
-                        public Node_Indulo(string nev, int pont, string nem, int sorszam, int kor, string egyesulet, string ijazon, int szazalek, int tiztalalat)
+                        public Node_Indulo(string _nev, int _pont, string _nem, int _sorszam, int _kor, string _egyesulet, string _ijazon, int _szazalek, int _tiztalalat)
                         {
-                            _nev = nev;
-                            _sorszam = sorszam;
-                            _egyesulet = egyesulet;
-                            _kor = kor;
-                            _nem = nem;
-                            _pont = pont;
-                            _ijazon = ijazon;
-                            _szazalek = szazalek;
-                            _tiztalalat = tiztalalat;
-                            _holtverseny = false;
+                            nev = _nev;
+                            sorszam = _sorszam;
+                            egyesulet = _egyesulet;
+                            kor = _kor;
+                            nem = _nem;
+                            pont = _pont;
+                            ijazon = _ijazon;
+                            szazalek = _szazalek;
+                            tiztalalat = _tiztalalat;
+                            holtverseny = false;
                         }
-                        public string _nev;
-                        public int _sorszam;
-                        public string _egyesulet;
-                        public int _kor;
-                        public string _nem;
-                        public int _pont;
-                        public string _ijazon;
-                        public int _szazalek;
-                        public int _tiztalalat;
-                        public bool _holtverseny;
+                        public string nev;
+                        public int sorszam;
+                        public string egyesulet;
+                        public int kor;
+                        public string nem;
+                        public int pont;
+                        public string ijazon;
+                        public int szazalek;
+                        public int tiztalalat;
+                        public bool holtverseny;
 
                     }
                 }
@@ -305,75 +305,75 @@ namespace Íjász
         {
             public struct Node_Íjtípus
             {
-                public Node_Íjtípus(string azon, string megn)
+                public Node_Íjtípus(string _azon, string _megn)
                 {
-                    _azonosito = azon;
-                    _megnevezés = megn;
-                    _korosztáyok = new List<Node_Korosztály>();
-                    _ijtipus_vanbenne = false;
+                    azonosito = _azon;
+                    megnevezés = _megn;
+                    korosztályok = new List<Node_Korosztály>();
+                    ijtipus_vanbenne = false;
                 }
 
-                public bool _ijtipus_vanbenne;
-                public void Vanbenne() { _ijtipus_vanbenne = true; }
-                public string _azonosito;
-                public string _megnevezés;
-                public List<Node_Korosztály> _korosztáyok;
+                public bool ijtipus_vanbenne;
+                public void Vanbenne() { ijtipus_vanbenne = true; }
+                public string azonosito;
+                public string megnevezés;
+                public List<Node_Korosztály> korosztályok;
                 public struct Node_Korosztály
                 {
-                    public Node_Korosztály(int also, int felso, string azonosito, string megnevezés)
+                    public Node_Korosztály(int _also, int _felso, string _azonosito, string _megnevezés)
                     {
-                        _ferfiak = new List<Node_Indulo>();
-                        _nok = new List<Node_Indulo>();
-                        _also = also;
-                        _felso = felso;
-                        _korosztály_vanbenne = false;
-                        _kazon = azonosito;
-                        _kmegn = megnevezés;
+                        ferfiak = new List<Node_Indulo>();
+                        nok = new List<Node_Indulo>();
+                        also = _also;
+                        felso = _felso;
+                        korosztály_vanbenne = false;
+                        kazon = _azonosito;
+                        kmegn = _megnevezés;
 
                     }
-                    public string _kazon;
-                    public string _kmegn;
-                    public int _also;
-                    public int _felso;
-                    public bool _korosztály_vanbenne;
-                    public void Vanbenne2() { _korosztály_vanbenne = true; }
-                    public List<Node_Indulo> _ferfiak;
-                    public List<Node_Indulo> _nok;
+                    public string kazon;
+                    public string kmegn;
+                    public int also;
+                    public int felso;
+                    public bool korosztály_vanbenne;
+                    public void Vanbenne2() { korosztály_vanbenne = true; }
+                    public List<Node_Indulo> ferfiak;
+                    public List<Node_Indulo> nok;
                     public struct Node_Indulo
                     {
-                        public Node_Indulo(string nev,string nem, int sorszam, int kor, string egyesulet, string ijazon, int pont, int szazalek, int tizpont)
+                        public Node_Indulo(string _nev,string _nem, int _sorszam, int _kor, string _egyesulet, string _ijazon, int _pont, int _szazalek, int _tizpont)
                         {
-                            _nev = nev;
-                            _sorszam = sorszam;
-                            _egyesulet = egyesulet;
-                            _kor = kor;
-                            _nem = nem;
-                            _ijazon = ijazon;
-                            _eredmények = new List<Node_Eredmény>() ;
-                            _eredmények.Add( new Node_Eredmény(pont,szazalek,tizpont));
-                            _holtverseny = false;
+                            nev = _nev;
+                            sorszam = _sorszam;
+                            egyesulet = _egyesulet;
+                            kor = _kor;
+                            nem = _nem;
+                            ijazon = _ijazon;
+                            eredmények = new List<Node_Eredmény>() ;
+                            eredmények.Add( new Node_Eredmény(_pont,_szazalek,_tizpont));
+                            holtverseny = false;
                         }
-                        public void Holtverseny() { _holtverseny = true; }
-                        public string _nev;
-                        public int _sorszam;
-                        public string _egyesulet;
-                        public int _kor;
-                        public string _nem;
-                        public string _ijazon;
-                        public List<Node_Eredmény> _eredmények;
-                        public bool _holtverseny;
+                        public void Holtverseny() { holtverseny = true; }
+                        public string nev;
+                        public int sorszam;
+                        public string egyesulet;
+                        public int kor;
+                        public string nem;
+                        public string ijazon;
+                        public List<Node_Eredmény> eredmények;
+                        public bool holtverseny;
                     }
                     public struct Node_Eredmény
                     {
-                        public Node_Eredmény( int pont, int szazalek, int tizpont )
+                        public Node_Eredmény( int _pont, int _szazalek, int _tizpont )
                         {
-                            _pont = pont;
-                            _szazalek = szazalek;
-                            _tizpont = tizpont;
+                            pont = _pont;
+                            szazalek = _szazalek;
+                            tizpont = _tizpont;
                         }
-                        public int _pont;
-                        public int _szazalek;
-                        public int _tizpont;
+                        public int pont;
+                        public int szazalek;
+                        public int tizpont;
                     }
                 }
             }
@@ -1115,7 +1115,6 @@ namespace Íjász
         static public string nyomtat_eredmenylap_verseny_teljes(string _VEAZON)
         {
             string filename = null;
-            
 
             Node_Eredménylap_Verseny_Teljes verseny = new Node_Eredménylap_Verseny_Teljes();
             verseny.íjtípus = new List<Node_Eredménylap_Verseny_Teljes.Node_Íjtípus>();
@@ -1167,7 +1166,7 @@ namespace Íjász
             {
                 foreach (Node_Eredménylap_Verseny_Teljes.Node_Íjtípus item in verseny.íjtípus)
                 {
-                    item._korosztáyok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító, item_korosztályok.megnevezés));
+                    item.korosztályok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító, item_korosztályok.megnevezés));
                 }
             }
 
@@ -1188,23 +1187,23 @@ namespace Íjász
 
                             for (int i = 0; i < verseny.íjtípus.Count; i++)
                             {
-                                if (verseny.íjtípus[i]._azonosito == temp._ijazon)
+                                if (verseny.íjtípus[i].azonosito == temp.ijazon)
                                 {
-                                    for (int j = 0; j < verseny.íjtípus[i]._korosztáyok.Count; j++)
+                                    for (int j = 0; j < verseny.íjtípus[i].korosztályok.Count; j++)
                                     {
-                                        if (verseny.íjtípus[i]._korosztáyok[j]._also <= temp._kor && verseny.íjtípus[i]._korosztáyok[j]._felso >= temp._kor)
+                                        if (verseny.íjtípus[i].korosztályok[j].also <= temp.kor && verseny.íjtípus[i].korosztályok[j].felso >= temp.kor)
                                         {
-                                            if (temp._nem == "F")
+                                            if (temp.nem == "F")
                                             {
-                                                verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Add(temp);
+                                                verseny.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
-                                                verseny.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
                                             else
                                             {
-                                                verseny.íjtípus[i]._korosztáyok[j]._nok.Add(temp);
+                                                verseny.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
-                                                verseny.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
                                             break;
                                         }
@@ -1286,10 +1285,10 @@ namespace Íjász
             {
                 Table table = null;
                 int ijtipus_count = 0;
-                for (int j = 0; j < verseny.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < verseny.íjtípus[i].korosztályok.Count; j++)
                 {
                     int korosztaly_count = 0;
-                    if (verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0 || verseny.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                    if (verseny.íjtípus[i].korosztályok[j].ferfiak.Count > 0 || verseny.íjtípus[i].korosztályok[j].nok.Count > 0)
                     {
                         Paragraph adatok = document.InsertParagraph();
                         int ferfiak_count = 0;
@@ -1298,20 +1297,20 @@ namespace Íjász
                         if (ijtipus_count == 0)
                         {
                             adatok.AppendLine("Íjtípus: ");
-                            adatok.Append(verseny.íjtípus[i]._megnevezés + "\n");
+                            adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
                             adatok.Bold();
                             ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
                             adatok.Append("    Korosztály: ");
-                            adatok.Append(verseny.íjtípus[i]._korosztáyok[j]._kmegn);
+                            adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
                             adatok.Bold();
                             korosztaly_count++;
                         }
 
 
-                        if (verseny.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                        if (verseny.íjtípus[i].korosztályok[j].nok.Count > 0)
                         {
                             Paragraph np = document.InsertParagraph();
                             if (nok_count == 0)
@@ -1320,22 +1319,22 @@ namespace Íjász
                                 nok_count++;
                             }
 
-                            for (int q = 0; q < verseny.íjtípus[i]._korosztáyok[j]._nok.Count; q++)
+                            for (int q = 0; q < verseny.íjtípus[i].korosztályok[j].nok.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._sorszam + (verseny.íjtípus[i]._korosztáyok[j]._nok[q]._holtverseny ? "!" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._nev + (verseny.íjtípus[i]._korosztáyok[j]._nok[q]._holtverseny ? " (HOLTVERSENY)" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].sorszam + (verseny.íjtípus[i].korosztályok[j].nok[q].holtverseny ? "!" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].nev + (verseny.íjtípus[i].korosztályok[j].nok[q].holtverseny ? " (HOLTVERSENY)" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
                         }
 
-                        if (verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0)
+                        if (verseny.íjtípus[i].korosztályok[j].ferfiak.Count > 0)
                         {
                             Paragraph fp = document.InsertParagraph();
                             if (ferfiak_count == 0)
@@ -1344,16 +1343,16 @@ namespace Íjász
                                 ferfiak_count++;
                             }
 
-                            for (int q = 0; q < verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Count; q++)
+                            for (int q = 0; q < verseny.íjtípus[i].korosztályok[j].ferfiak.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._sorszam + (verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._holtverseny ? "!" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._nev + (verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._holtverseny ? " (HOLTVERSENY)" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].sorszam + (verseny.íjtípus[i].korosztályok[j].ferfiak[q].holtverseny ? "!" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].nev + (verseny.íjtípus[i].korosztályok[j].ferfiak[q].holtverseny ? " (HOLTVERSENY)" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
@@ -1363,6 +1362,7 @@ namespace Íjász
 
             }
             #endregion
+
 
             try { document.Save(); }
             catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "ERLAPVEMISZ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -1424,7 +1424,7 @@ namespace Íjász
             {
                 foreach (Node_Eredménylap_Verseny_Teljes.Node_Íjtípus item in verseny.íjtípus)
                 {
-                    item._korosztáyok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító,item_korosztályok.megnevezés));
+                    item.korosztályok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító,item_korosztályok.megnevezés));
                 }
             }
 
@@ -1446,23 +1446,23 @@ namespace Íjász
 
                             for (int i = 0; i < verseny.íjtípus.Count; i++)
                             {
-                                if (verseny.íjtípus[i]._azonosito == temp._ijazon)
+                                if (verseny.íjtípus[i].azonosito == temp.ijazon)
                                 {
-                                    for (int j = 0; j < verseny.íjtípus[i]._korosztáyok.Count; j++)
+                                    for (int j = 0; j < verseny.íjtípus[i].korosztályok.Count; j++)
                                     {
-                                        if (verseny.íjtípus[i]._korosztáyok[j]._also <= temp._kor && verseny.íjtípus[i]._korosztáyok[j]._felso >= temp._kor)
+                                        if (verseny.íjtípus[i].korosztályok[j].also <= temp.kor && verseny.íjtípus[i].korosztályok[j].felso >= temp.kor)
                                         {
-                                            if (temp._nem == "F")
+                                            if (temp.nem == "F")
                                             {
-                                                verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Add(temp);
+                                                verseny.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
-                                                verseny.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
                                             else
                                             {
-                                                verseny.íjtípus[i]._korosztáyok[j]._nok.Add(temp);
+                                                verseny.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
-                                                verseny.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
                                             break;
                                         }
@@ -1544,10 +1544,10 @@ namespace Íjász
             {
                 Table table = null;
                 int ijtipus_count = 0;
-                for (int j = 0; j < verseny.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < verseny.íjtípus[i].korosztályok.Count; j++)
                 {
                     int korosztaly_count = 0;
-                    if (verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0 || verseny.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                    if (verseny.íjtípus[i].korosztályok[j].ferfiak.Count > 0 || verseny.íjtípus[i].korosztályok[j].nok.Count > 0)
                     {
                         Paragraph adatok = document.InsertParagraph();
                         int ferfiak_count = 0;
@@ -1556,20 +1556,20 @@ namespace Íjász
                         if (ijtipus_count == 0)
                         {
                             adatok.AppendLine("Íjtípus: ");
-                            adatok.Append(verseny.íjtípus[i]._megnevezés + "\n");
+                            adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
                             adatok.Bold();
                             ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
                             adatok.Append("    Korosztály: ");
-                            adatok.Append(verseny.íjtípus[i]._korosztáyok[j]._kmegn);
+                            adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
                             adatok.Bold();
                             korosztaly_count++;
                         }
 
                       
-                        if (verseny.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                        if (verseny.íjtípus[i].korosztályok[j].nok.Count > 0)
                         {
                             Paragraph np = document.InsertParagraph();
                             if (nok_count == 0)
@@ -1578,22 +1578,22 @@ namespace Íjász
                                 nok_count++;
                             }
 
-                            for (int q = 0; q < verseny.íjtípus[i]._korosztáyok[j]._nok.Count; q++)
+                            for (int q = 0; q < verseny.íjtípus[i].korosztályok[j].nok.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._sorszam + (verseny.íjtípus[i]._korosztáyok[j]._nok[q]._holtverseny ? "!" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._nev + (verseny.íjtípus[i]._korosztáyok[j]._nok[q]._holtverseny ? " (HOLTVERSENY)" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._nok[q]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].sorszam + (verseny.íjtípus[i].korosztályok[j].nok[q].holtverseny ? "!" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].nev + (verseny.íjtípus[i].korosztályok[j].nok[q].holtverseny ? " (HOLTVERSENY)" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].nok[q].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
                         }
 
-                        if (verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0)
+                        if (verseny.íjtípus[i].korosztályok[j].ferfiak.Count > 0)
                         {
                             Paragraph fp = document.InsertParagraph();
                             if (ferfiak_count == 0)
@@ -1602,16 +1602,16 @@ namespace Íjász
                                 ferfiak_count++;
                             }
 
-                            for (int q = 0; q < verseny.íjtípus[i]._korosztáyok[j]._ferfiak.Count; q++)
+                            for (int q = 0; q < verseny.íjtípus[i].korosztályok[j].ferfiak.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._sorszam + (verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._holtverseny ? "!" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._nev + (verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._holtverseny ? " (HOLTVERSENY)" : ""));
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i]._korosztáyok[j]._ferfiak[q]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].sorszam + (verseny.íjtípus[i].korosztályok[j].ferfiak[q].holtverseny ? "!" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].nev + (verseny.íjtípus[i].korosztályok[j].ferfiak[q].holtverseny ? " (HOLTVERSENY)" : ""));
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(verseny.íjtípus[i].korosztályok[j].ferfiak[q].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
@@ -1694,10 +1694,10 @@ namespace Íjász
             {
                 Table table = null;
                 int ijtipus_count = 0;
-                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                 {
                     int korosztaly_count = 0;
-                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0 || versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                    if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count > 0 || versenysorozat.íjtípus[i].korosztályok[j].nok.Count > 0)
                     {
                         Paragraph adatok = document.InsertParagraph();
                         int ferfiak_count = 0;
@@ -1706,21 +1706,21 @@ namespace Íjász
                         if (ijtipus_count == 0)
                         {
                             adatok.Append("Íjtípus: ");
-                            adatok.Append(versenysorozat.íjtípus[i]._megnevezés + "\n");
+                            adatok.Append(versenysorozat.íjtípus[i].megnevezés + "\n");
                             adatok.Bold();
                             ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
                             adatok.Append("    Korosztály: ");
-                            adatok.Append(versenysorozat.íjtípus[i]._korosztáyok[j]._kmegn);
+                            adatok.Append(versenysorozat.íjtípus[i].korosztályok[j].kmegn);
                             adatok.Bold();
                             korosztaly_count++;
                         }
 
 
                        
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].nok.Count > 0)
                         {
                             Paragraph np = document.InsertParagraph();
                             if (nok_count == 0)
@@ -1729,22 +1729,22 @@ namespace Íjász
                                 nok_count++;
                             }
 
-                            for (int q = 0; q < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; q++)
+                            for (int q = 0; q < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._sorszam.ToString());
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._nev);
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._eredmények[0]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._eredmények[0]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].sorszam.ToString());
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].nev);
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].eredmények[0].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].eredmények[0].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
                         }
 
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count > 0)
                         {
                             Paragraph fp = document.InsertParagraph();
                             if (ferfiak_count == 0)
@@ -1753,16 +1753,16 @@ namespace Íjász
                                 ferfiak_count++;
                             }
 
-                            for (int q = 0; q < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; q++)
+                            for (int q = 0; q < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._sorszam.ToString());
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._nev);
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._eredmények[0]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._eredmények[0]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].sorszam.ToString());
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].nev);
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].eredmények[0].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].eredmények[0].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
@@ -1846,10 +1846,10 @@ namespace Íjász
             {
                 Table table = null;
                 int ijtipus_count = 0;
-                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                 {
                     int korosztaly_count = 0;
-                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0 || versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                    if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count > 0 || versenysorozat.íjtípus[i].korosztályok[j].nok.Count > 0)
                     {
                         Paragraph adatok = document.InsertParagraph();
                         int ferfiak_count = 0;
@@ -1858,21 +1858,21 @@ namespace Íjász
                         if (ijtipus_count == 0)
                         {
                             adatok.Append("Íjtípus: ");
-                            adatok.Append(versenysorozat.íjtípus[i]._megnevezés + "\n");
+                            adatok.Append(versenysorozat.íjtípus[i].megnevezés + "\n");
                             adatok.Bold();
                             ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
                             adatok.Append("    Korosztály: ");
-                            adatok.Append(versenysorozat.íjtípus[i]._korosztáyok[j]._kmegn);
+                            adatok.Append(versenysorozat.íjtípus[i].korosztályok[j].kmegn);
                             adatok.Bold();
                             korosztaly_count++;
                         }
 
 
                       
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count > 0)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].nok.Count > 0)
                         {
                             Paragraph np = document.InsertParagraph();
                             if (nok_count == 0)
@@ -1881,22 +1881,22 @@ namespace Íjász
                                 nok_count++;
                             }
 
-                            for (int q = 0; q < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; q++)
+                            for (int q = 0; q < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._sorszam.ToString());
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._nev);
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._eredmények[0]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._nok[q]._eredmények[0]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].sorszam.ToString());
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].nev);
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].eredmények[0].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].nok[q].eredmények[0].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
                         }
 
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count > 0)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count > 0)
                         {
                             Paragraph fp = document.InsertParagraph();
                             if (ferfiak_count == 0)
@@ -1905,16 +1905,16 @@ namespace Íjász
                                 ferfiak_count++;
                             }
 
-                            for (int q = 0; q < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; q++)
+                            for (int q = 0; q < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; q++)
                             {
                                 table = document.AddTable(1, 7);
 
                                 table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append((q + 1) + ".");
-                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._sorszam.ToString());
-                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._nev);
-                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._egyesulet);
-                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._eredmények[0]._pont.ToString() + " pont");
-                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[q]._eredmények[0]._szazalek.ToString() + "%");
+                                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].sorszam.ToString());
+                                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].nev);
+                                table.Rows[table.Rows.Count - 1].Cells[4].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].egyesulet);
+                                table.Rows[table.Rows.Count - 1].Cells[5].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].eredmények[0].pont.ToString() + " pont");
+                                table.Rows[table.Rows.Count - 1].Cells[6].Paragraphs[0].Append(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[q].eredmények[0].szazalek.ToString() + "%");
                                 startlista_táblázat_formázás(table);
                                 document.InsertTable(table);
                             }
@@ -1949,7 +1949,7 @@ namespace Íjász
             {
                 foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus item in versenysorozat.íjtípus)
                 {
-                    item._korosztáyok.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító,item_korosztályok.megnevezés));
+                    item.korosztályok.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító,item_korosztályok.megnevezés));
                 }
             }
 
@@ -1976,31 +1976,31 @@ namespace Íjász
                                     //ha már meglévő csak az eredményt adom hozzá, ha más az íjtípus akkor külön veszem
                                     for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
                                     {
-                                        for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                                        for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                                         {
                                             if (item_induló.nem == "F")
                                             {
-                                                for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                                                for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                                                 {
                                                     //férfi
-                                                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._nev == item_induló.név && found == false && versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._ijazon == item_eredmény.íjtípus)
+                                                    if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].nev == item_induló.név && found == false && versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].ijazon == item_eredmény.íjtípus)
                                                     {
                                                         found = true;
-                                                        versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10));
-                                                        //Console.WriteLine("eredmény hozzáadva meglévő férfi versenyzőhöz: " + versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._nev + " found: " + found);
+                                                        versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10));
+                                                        //Console.WriteLine("eredmény hozzáadva meglévő férfiversenyzőhöz: " + versenysorozat.íjtípus[i]._korosztályok[j]._ferfiak[k]._nev + " found: " + found);
                                                     }
                                                 }
                                             }
                                             else if (item_induló.nem == "N")
                                             {
-                                                for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                                                for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; k++)
                                                 {
                                                     //nő
-                                                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._nev == item_induló.név && found == false && versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._ijazon == item_eredmény.íjtípus)//ennyit elég csekkelni??
+                                                    if (versenysorozat.íjtípus[i].korosztályok[j].nok[k].nev == item_induló.név && found == false && versenysorozat.íjtípus[i].korosztályok[j].nok[k].ijazon == item_eredmény.íjtípus)//ennyit elég csekkelni??
                                                     {
                                                         found = true;
-                                                        versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10 ));
-                                                        //Console.WriteLine("eredmény hozzáadva meglévő nő versenyzőhöz: " + versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._nev + " found: " + found);
+                                                        versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10 ));
+                                                        //Console.WriteLine("eredmény hozzáadva meglévő nő versenyzőhöz: " + versenysorozat.íjtípus[i]._korosztályok[j]._nok[k]._nev + " found: " + found);
                                                     }
                                                 }
                                             }
@@ -2018,23 +2018,23 @@ namespace Íjász
                                         item_induló.név, item_induló.nem, (int)item_eredmény.sorszám, year, item_induló.egyesület, item_eredmény.íjtípus, (int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10);
                                         for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
                                         {
-                                            if (versenysorozat.íjtípus[i]._azonosito == temp._ijazon)
+                                            if (versenysorozat.íjtípus[i].azonosito == temp.ijazon)
                                             {
-                                                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                                                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                                                 {
-                                                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._also <= temp._kor && versenysorozat.íjtípus[i]._korosztáyok[j]._felso >= temp._kor)
+                                                    if (versenysorozat.íjtípus[i].korosztályok[j].also <= temp.kor && versenysorozat.íjtípus[i].korosztályok[j].felso >= temp.kor)
                                                     {
-                                                        if (temp._nem == "F")
+                                                        if (temp.nem == "F")
                                                         {
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Add(temp);
+                                                            versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                             versenysorozat.íjtípus[i].Vanbenne();
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                            versenysorozat.íjtípus[i].korosztályok[j].Vanbenne2();
                                                         }
                                                         else
                                                         {
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Add(temp);
+                                                            versenysorozat.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                             versenysorozat.íjtípus[i].Vanbenne();
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                            versenysorozat.íjtípus[i].korosztályok[j].Vanbenne2();
                                                         }
                                                         break;
                                                     }
@@ -2056,31 +2056,31 @@ namespace Íjász
                                     //ha már meglévő csak az eredményt adom hozzá, ha más az íjtípus akkor külön veszem
                                     for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
                                     {
-                                        for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                                        for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                                         {
                                             if (item_induló.nem == "F")
                                             {
-                                                for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                                                for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                                                 {
                                                     //férfi
-                                                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._nev == item_induló.név && found == false && versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._ijazon == item_eredmény.íjtípus)
+                                                    if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].nev == item_induló.név && found == false && versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].ijazon == item_eredmény.íjtípus)
                                                     {
                                                         found = true;
-                                                        versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10));
-                                                        //Console.WriteLine("eredmény hozzáadva meglévő férfi versenyzőhöz: " + versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._nev + " found: " + found);
+                                                        versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10));
+                                                        //Console.WriteLine("eredmény hozzáadva meglévő férfi versenyzőhöz: " + versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].nev + " found: " + found);
                                                     }
                                                 }
                                             }
                                             else if (item_induló.nem == "N")
                                             {
-                                                for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                                                for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; k++)
                                                 {
                                                     //nő
-                                                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._nev == item_induló.név && found == false && versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._ijazon == item_eredmény.íjtípus)//ennyit elég csekkelni??
+                                                    if (versenysorozat.íjtípus[i].korosztályok[j].nok[k].nev == item_induló.név && found == false && versenysorozat.íjtípus[i].korosztályok[j].nok[k].ijazon == item_eredmény.íjtípus)//ennyit elég csekkelni??
                                                     {
                                                         found = true;
-                                                        versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10));
-                                                        //Console.WriteLine("eredmény hozzáadva meglévő nő versenyzőhöz: " + versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._nev + " found: " + found);
+                                                        versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény((int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10));
+                                                        //Console.WriteLine("eredmény hozzáadva meglévő nő versenyzőhöz: " + versenysorozat.íjtípus[i].korosztályok[j].nok[k].nev + " found: " + found);
                                                     }
                                                 }
                                             }
@@ -2098,23 +2098,23 @@ namespace Íjász
                                         item_induló.név, item_induló.nem, (int)item_eredmény.sorszám, year, item_induló.egyesület, item_eredmény.íjtípus, (int)item_eredmény.összpont, (int)item_eredmény.százalék, (int)item_eredmény.találat_10);
                                         for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
                                         {
-                                            if (versenysorozat.íjtípus[i]._azonosito == temp._ijazon)
+                                            if (versenysorozat.íjtípus[i].azonosito == temp.ijazon)
                                             {
-                                                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                                                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                                                 {
-                                                    if (versenysorozat.íjtípus[i]._korosztáyok[j]._also <= temp._kor && versenysorozat.íjtípus[i]._korosztáyok[j]._felso > temp._kor)
+                                                    if (versenysorozat.íjtípus[i].korosztályok[j].also <= temp.kor && versenysorozat.íjtípus[i].korosztályok[j].felso > temp.kor)
                                                     {
-                                                        if (temp._nem == "F")
+                                                        if (temp.nem == "F")
                                                         {
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Add(temp);
+                                                            versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                             versenysorozat.íjtípus[i].Vanbenne();
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                            versenysorozat.íjtípus[i].korosztályok[j].Vanbenne2();
                                                         }
                                                         else
                                                         {
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Add(temp);
+                                                            versenysorozat.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                             versenysorozat.íjtípus[i].Vanbenne();
-                                                            versenysorozat.íjtípus[i]._korosztáyok[j].Vanbenne2();
+                                                            versenysorozat.íjtípus[i].korosztályok[j].Vanbenne2();
                                                         }
                                                         break;
                                                     }
@@ -2135,34 +2135,34 @@ namespace Íjász
             
             for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
             {
-                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                 {
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                     {
-                        for (int l = 0; l < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count; l++)
+                        for (int l = 0; l < versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count; l++)
                         {
-                            for (int m = 0; m <  versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count; m++)
+                            for (int m = 0; m <  versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count; m++)
                             {
-                                if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[l]._szazalek > versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[m]._szazalek)
+                                if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[l].szazalek > versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[m].szazalek)
                                 {
-                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény temp = versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[l];
-                                    versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[l] = versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[m];
-                                    versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[m] = temp;
+                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény temp = versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[l];
+                                    versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[l] = versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[m];
+                                    versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[m] = temp;
                                 }
                             }
                         }
                     }
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; k++)
                     {
-                        for (int l = 0; l < versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count; l++)
+                        for (int l = 0; l < versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count; l++)
                         {
-                            for (int m = 0; m < versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count; m++)
+                            for (int m = 0; m < versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count; m++)
                             {
-                                if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[l]._szazalek > versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[m]._szazalek)
+                                if (versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[l].szazalek > versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[m].szazalek)
                                 {
-                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény temp = versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[l];
-                                    versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[l] = versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[m];
-                                    versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[m] = temp;
+                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény temp = versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[l];
+                                    versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[l] = versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[m];
+                                    versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[m] = temp;
                                 }
                             }
                         }
@@ -2175,36 +2175,36 @@ namespace Íjász
             
             for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
             {
-                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                 {
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                     {
-                        if(versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count > _limit)
+                        if(versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count > _limit)
                         {
-                            while (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count != _limit)
+                            while (versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count != _limit)
                             {
-                                int q = versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count-1;
-                                versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.RemoveAt(q);
+                                int q = versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count-1;
+                                versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.RemoveAt(q);
                             }
                         }
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count < _limit)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count < _limit)
                         {
-                            versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény(0, 0,0));
+                            versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény(0, 0,0));
                         }
                     }
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; k++)
                     {
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count > _limit)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count > _limit)
                         {
-                            while (versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count != _limit)
+                            while (versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count != _limit)
                             {
-                                int q = versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count - 1;
-                                versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.RemoveAt(q);
+                                int q = versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count - 1;
+                                versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.RemoveAt(q);
                             }
                         }
-                        if (versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count < _limit)
+                        if (versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count < _limit)
                         {
-                            versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény(0, 0,0));
+                            versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Add(new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény(0, 0,0));
                         }
                     }
                 }
@@ -2215,29 +2215,29 @@ namespace Íjász
             
             for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
             {
-                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                 {
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                     {
                         Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény temp = new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény();
-                        for (int l = 0; l < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count; l++)
+                        for (int l = 0; l < versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count; l++)
                         {
-                            temp._pont += versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[l]._pont;
-                            temp._szazalek += versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[l]._szazalek;
-                            temp._szazalek /= l + 1;
+                            temp.pont += versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[l].pont;
+                            temp.szazalek += versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[l].szazalek;
+                            temp.szazalek /= l + 1;
                         }
-                        versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[0] = temp;
+                        versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[0] = temp;
                     }
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; k++)
                     {
                         Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény temp = new Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény();
-                        for (int l = 0; l < versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count; l++)
+                        for (int l = 0; l < versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count; l++)
                         {
-                            temp._pont += versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[l]._pont;
-                            temp._szazalek += versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[l]._szazalek;
-                            temp._szazalek /= l + 1;
+                            temp.pont += versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[l].pont;
+                            temp.szazalek += versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[l].szazalek;
+                            temp.szazalek /= l + 1;
                         }
-                        versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[0] = temp;
+                        versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények[0] = temp;
                     }
                 }
             }
@@ -2247,20 +2247,20 @@ namespace Íjász
             
             for (int i = 0; i < versenysorozat.íjtípus.Count; i++)
             {
-                for (int j = 0; j < versenysorozat.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < versenysorozat.íjtípus[i].korosztályok.Count; j++)
                 {
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                     {
-                        for (int l = 1; l < versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.Count; l++)
+                        for (int l = 1; l < versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.Count; l++)
                         {
-                            versenysorozat.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények.RemoveAt(l);
+                            versenysorozat.íjtípus[i].korosztályok[j].ferfiak[k].eredmények.RemoveAt(l);
                         }
                     }
-                    for (int k = 0; k < versenysorozat.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                    for (int k = 0; k < versenysorozat.íjtípus[i].korosztályok[j].nok.Count; k++)
                     {
-                        for (int l = 1; l < versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.Count; l++)
+                        for (int l = 1; l < versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.Count; l++)
                         {
-                            versenysorozat.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények.RemoveAt(l);
+                            versenysorozat.íjtípus[i].korosztályok[j].nok[k].eredmények.RemoveAt(l);
                         }
                     }
                 }
@@ -2278,33 +2278,33 @@ namespace Íjász
 
             foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus íjtípus_item in _versenysorozat.íjtípus)
             {
-                if (íjtípus_item._korosztáyok.Count != 0)//van benne
+                if (íjtípus_item.korosztályok.Count != 0)//van benne
                 {
-                    Console.WriteLine("ij: " + íjtípus_item._azonosito);
+                    Console.WriteLine("ij: " + íjtípus_item.azonosito);
                 }
-                foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály korosztály_item in íjtípus_item._korosztáyok)
+                foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály korosztály_item in íjtípus_item.korosztályok)
                 {
-                    if (korosztály_item._ferfiak.Count != 0 || korosztály_item._nok.Count != 0)
+                    if (korosztály_item.ferfiak.Count != 0 || korosztály_item.nok.Count != 0)
                     {
-                        Console.WriteLine("   korosztály: " + korosztály_item._kazon);
+                        Console.WriteLine("   korosztály: " + korosztály_item.kazon);
                     }
-                    foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo indulo_item in korosztály_item._ferfiak)
+                    foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo indulo_item in korosztály_item.ferfiak)
                     {
-                        Console.WriteLine("      " + indulo_item._nev + " " + indulo_item._ijazon);//+ " " + indulo_item._nem + " " + indulo_item._kor + " " + indulo_item._sorszam);
+                        Console.WriteLine("      " + indulo_item.nev + " " + indulo_item.ijazon);//+ " " + indulo_item._nem + " " + indulo_item._kor + " " + indulo_item._sorszam);
 
-                        foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény eredmény_item in indulo_item._eredmények)
+                        foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény eredmény_item in indulo_item.eredmények)
                         {
-                            Console.WriteLine("         " + eredmény_item._pont + " " + eredmény_item._szazalek + "%");
+                            Console.WriteLine("         " + eredmény_item.pont + " " + eredmény_item.szazalek + "%");
                         }
                     }
 
-                    foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo indulo_item in korosztály_item._nok)
+                    foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo indulo_item in korosztály_item.nok)
                     {
-                        Console.WriteLine("      " + indulo_item._nev + " " +  indulo_item._ijazon);//+ " " + indulo_item._nem + " " + indulo_item._kor + " " + indulo_item._sorszam);
+                        Console.WriteLine("      " + indulo_item.nev + " " +  indulo_item.ijazon);//+ " " + indulo_item._nem + " " + indulo_item._kor + " " + indulo_item._sorszam);
 
-                        foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény eredmény_item in indulo_item._eredmények)
+                        foreach (Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Eredmény eredmény_item in indulo_item.eredmények)
                         {
-                            Console.WriteLine("         " + eredmény_item._pont + " " + eredmény_item._szazalek + "%");
+                            Console.WriteLine("         " + eredmény_item.pont + " " + eredmény_item.szazalek + "%");
                         }
                     }
                 }
@@ -2319,69 +2319,69 @@ namespace Íjász
         {
             for (int i = 0; i < eredmény.íjtípus.Count; i++)
             {
-                for (int j = 0; j < eredmény.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < eredmény.íjtípus[i].korosztályok.Count; j++)
                 {
-                    for (int k = 0; k < eredmény.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                    for (int k = 0; k < eredmény.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                     {
-                        for (int l = k+1; l < eredmény.íjtípus[i]._korosztáyok[j]._ferfiak.Count; l++)
+                        for (int l = k+1; l < eredmény.íjtípus[i].korosztályok[j].ferfiak.Count; l++)
                         {
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._pont < eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].pont < eredmény.íjtípus[i].korosztályok[j].ferfiak[l].pont)
                             {
-                                Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k];
-                                eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k] = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l];
-                                eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l] = temp;
+                                Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].ferfiak[k];
+                                eredmény.íjtípus[i].korosztályok[j].ferfiak[k] = eredmény.íjtípus[i].korosztályok[j].ferfiak[l];
+                                eredmény.íjtípus[i].korosztályok[j].ferfiak[l] = temp;
                             }
 
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._pont == eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].pont == eredmény.íjtípus[i].korosztályok[j].ferfiak[l].pont)
                             {
-                                if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._tiztalalat < eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._tiztalalat)
+                                if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].tiztalalat < eredmény.íjtípus[i].korosztályok[j].ferfiak[l].tiztalalat)
                                 {
-                                    //MessageBox.Show( "csere:  " + eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._tiztalalat + "  ----    " + eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._tiztalalat);
-                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k] = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l] = temp;
+                                    //MessageBox.Show( "csere:  " + eredmény.íjtípus[i].korosztályok[j].ferfiak[k].tiztalalat + "  ----    " + eredmény.íjtípus[i].korosztályok[j].ferfiak[l].tiztalalat);
+                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].ferfiak[k];
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[k] = eredmény.íjtípus[i].korosztályok[j].ferfiak[l];
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[l] = temp;
                                 }
-                                else if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._tiztalalat == eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._tiztalalat)
+                                else if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].tiztalalat == eredmény.íjtípus[i].korosztályok[j].ferfiak[l].tiztalalat)
                                 {
-                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k];
-                                    temp._holtverseny = true;
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k] = temp;
+                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].ferfiak[k];
+                                    temp.holtverseny = true;
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[k] = temp;
 
-                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp2 = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l];
-                                    temp2._holtverseny = true;
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l] = temp2;
+                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp2 = eredmény.íjtípus[i].korosztályok[j].ferfiak[l];
+                                    temp2.holtverseny = true;
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[l] = temp2;
                                 }
                             }
                         }
                     }
 
-                    for (int k = 0; k < eredmény.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                    for (int k = 0; k < eredmény.íjtípus[i].korosztályok[j].nok.Count; k++)
                     {
-                        for (int l = k+1; l < eredmény.íjtípus[i]._korosztáyok[j]._nok.Count; l++)
+                        for (int l = k+1; l < eredmény.íjtípus[i].korosztályok[j].nok.Count; l++)
                         {
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._pont < eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].nok[k].pont < eredmény.íjtípus[i].korosztályok[j].nok[l].pont)
                             {
-                                Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._nok[k];
-                                eredmény.íjtípus[i]._korosztáyok[j]._nok[k] = eredmény.íjtípus[i]._korosztáyok[j]._nok[l];
-                                eredmény.íjtípus[i]._korosztáyok[j]._nok[l] = temp;
+                                Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].nok[k];
+                                eredmény.íjtípus[i].korosztályok[j].nok[k] = eredmény.íjtípus[i].korosztályok[j].nok[l];
+                                eredmény.íjtípus[i].korosztályok[j].nok[l] = temp;
                             }
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._pont == eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].nok[k].pont == eredmény.íjtípus[i].korosztályok[j].nok[l].pont)
                             {
-                                if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._tiztalalat < eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._tiztalalat)
+                                if (eredmény.íjtípus[i].korosztályok[j].nok[k].tiztalalat < eredmény.íjtípus[i].korosztályok[j].nok[l].tiztalalat)
                                 {
-                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._nok[k];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._nok[k] = eredmény.íjtípus[i]._korosztáyok[j]._nok[l];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._nok[l] = temp;
+                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].nok[k];
+                                    eredmény.íjtípus[i].korosztályok[j].nok[k] = eredmény.íjtípus[i].korosztályok[j].nok[l];
+                                    eredmény.íjtípus[i].korosztályok[j].nok[l] = temp;
                                 }
-                                else if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._tiztalalat == eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._tiztalalat)
+                                else if (eredmény.íjtípus[i].korosztályok[j].nok[k].tiztalalat == eredmény.íjtípus[i].korosztályok[j].nok[l].tiztalalat)
                                 {
-                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._nok[k];
-                                    temp._holtverseny = true;
-                                    eredmény.íjtípus[i]._korosztáyok[j]._nok[k] = temp;
+                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].nok[k];
+                                    temp.holtverseny = true;
+                                    eredmény.íjtípus[i].korosztályok[j].nok[k] = temp;
 
-                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp2 = eredmény.íjtípus[i]._korosztáyok[j]._nok[l];
-                                    temp2._holtverseny = true;
-                                    eredmény.íjtípus[i]._korosztáyok[j]._nok[l] = temp2;
+                                    Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp2 = eredmény.íjtípus[i].korosztályok[j].nok[l];
+                                    temp2.holtverseny = true;
+                                    eredmény.íjtípus[i].korosztályok[j].nok[l] = temp2;
                                 }
                             }
                         }
@@ -2395,53 +2395,53 @@ namespace Íjász
         {
             for (int i = 0; i < eredmény.íjtípus.Count; i++)
             {
-                for (int j = 0; j < eredmény.íjtípus[i]._korosztáyok.Count; j++)
+                for (int j = 0; j < eredmény.íjtípus[i].korosztályok.Count; j++)
                 {
-                    for (int k = 0; k < eredmény.íjtípus[i]._korosztáyok[j]._ferfiak.Count; k++)
+                    for (int k = 0; k < eredmény.íjtípus[i].korosztályok[j].ferfiak.Count; k++)
                     {
-                        for (int l = 0; l < eredmény.íjtípus[i]._korosztáyok[j]._ferfiak.Count; l++)
+                        for (int l = 0; l < eredmény.íjtípus[i].korosztályok[j].ferfiak.Count; l++)
                         {
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[0]._pont > eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._eredmények[0]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[0].pont > eredmény.íjtípus[i].korosztályok[j].ferfiak[l].eredmények[0].pont)
                             {
-                                Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k];
-                                eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k] = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l];
-                                eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l] = temp;
+                                Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].ferfiak[k];
+                                eredmény.íjtípus[i].korosztályok[j].ferfiak[k] = eredmény.íjtípus[i].korosztályok[j].ferfiak[l];
+                                eredmény.íjtípus[i].korosztályok[j].ferfiak[l] = temp;
                             }
 
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[0]._pont == eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._eredmények[0]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[0].pont == eredmény.íjtípus[i].korosztályok[j].ferfiak[l].eredmények[0].pont)
                             {
-                                if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[0]._tizpont > eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._eredmények[0]._tizpont)
+                                if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[0].tizpont > eredmény.íjtípus[i].korosztályok[j].ferfiak[l].eredmények[0].tizpont)
                                 {
-                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k] = eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l] = temp;
+                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].ferfiak[k];
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[k] = eredmény.íjtípus[i].korosztályok[j].ferfiak[l];
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[l] = temp;
                                 }
-                                else if (eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k]._eredmények[0]._tizpont == eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[l]._eredmények[0]._tizpont)
+                                else if (eredmény.íjtípus[i].korosztályok[j].ferfiak[k].eredmények[0].tizpont == eredmény.íjtípus[i].korosztályok[j].ferfiak[l].eredmények[0].tizpont)
                                 {
-                                    eredmény.íjtípus[i]._korosztáyok[j]._ferfiak[k].Holtverseny();
+                                    eredmény.íjtípus[i].korosztályok[j].ferfiak[k].Holtverseny();
                                 }
                             }
                         }
                     }
 
-                    for (int k = 0; k < eredmény.íjtípus[i]._korosztáyok[j]._nok.Count; k++)
+                    for (int k = 0; k < eredmény.íjtípus[i].korosztályok[j].nok.Count; k++)
                     {
-                        for (int l = 0; l < eredmény.íjtípus[i]._korosztáyok[j]._nok.Count; l++)
+                        for (int l = 0; l < eredmény.íjtípus[i].korosztályok[j].nok.Count; l++)
                         {
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[0]._pont > eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._eredmények[0]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].nok[k].eredmények[0].pont > eredmény.íjtípus[i].korosztályok[j].nok[l].eredmények[0].pont)
                             {
-                                Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._nok[k];
-                                eredmény.íjtípus[i]._korosztáyok[j]._nok[k] = eredmény.íjtípus[i]._korosztáyok[j]._nok[l];
-                                eredmény.íjtípus[i]._korosztáyok[j]._nok[l] = temp;
+                                Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].nok[k];
+                                eredmény.íjtípus[i].korosztályok[j].nok[k] = eredmény.íjtípus[i].korosztályok[j].nok[l];
+                                eredmény.íjtípus[i].korosztályok[j].nok[l] = temp;
                             }
 
-                            if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[0]._pont == eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._eredmények[0]._pont)
+                            if (eredmény.íjtípus[i].korosztályok[j].nok[k].eredmények[0].pont == eredmény.íjtípus[i].korosztályok[j].nok[l].eredmények[0].pont)
                             {
-                                if (eredmény.íjtípus[i]._korosztáyok[j]._nok[k]._eredmények[0]._tizpont > eredmény.íjtípus[i]._korosztáyok[j]._nok[l]._eredmények[0]._tizpont)
+                                if (eredmény.íjtípus[i].korosztályok[j].nok[k].eredmények[0].tizpont > eredmény.íjtípus[i].korosztályok[j].nok[l].eredmények[0].tizpont)
                                 {
-                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i]._korosztáyok[j]._nok[k];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._nok[k] = eredmény.íjtípus[i]._korosztáyok[j]._nok[l];
-                                    eredmény.íjtípus[i]._korosztáyok[j]._nok[l] = temp;
+                                    Node_Eredménylap_VersenySorozat_Teljes.Node_Íjtípus.Node_Korosztály.Node_Indulo temp = eredmény.íjtípus[i].korosztályok[j].nok[k];
+                                    eredmény.íjtípus[i].korosztályok[j].nok[k] = eredmény.íjtípus[i].korosztályok[j].nok[l];
+                                    eredmény.íjtípus[i].korosztályok[j].nok[l] = temp;
                                 }
                             }
                         }
