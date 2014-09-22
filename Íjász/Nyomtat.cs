@@ -248,7 +248,7 @@ namespace Íjász
                 public List<Node_Korosztály> korosztályok;
                 public struct Node_Korosztály
                 {
-                    public Node_Korosztály(int _also, int _felso, string _azonosito, string _megnevezés)
+                    public Node_Korosztály(int _also, int _felso, string _azonosito, string _megnevezés,bool _férfiakra, bool _nőkre)
                     {
                         ferfiak = new List<Node_Indulo>();
                         nok = new List<Node_Indulo>();
@@ -257,6 +257,9 @@ namespace Íjász
                         korosztály_vanbenne = false;
                         kazon = _azonosito;
                         kmegn = _megnevezés;
+                        férfiakra = _férfiakra;
+                        nőkre = _nőkre;
+                        
 
                     }
                     public string kazon;
@@ -264,6 +267,9 @@ namespace Íjász
                     public int also;
                     public int felso;
                     public bool korosztály_vanbenne;
+                    public bool férfiakra;
+                    public bool nőkre;
+
                     public void Vanbenne2() { korosztály_vanbenne = true; }
                     public List<Node_Indulo> ferfiak;
                     public List<Node_Indulo> nok;
@@ -1194,7 +1200,7 @@ namespace Íjász
             {
                 foreach (Node_Eredménylap_Verseny_Teljes.Node_Íjtípus item in verseny.íjtípus)
                 {
-                    item.korosztályok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító, item_korosztályok.megnevezés));
+                    item.korosztályok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító, item_korosztályok.megnevezés,item_korosztályok.férfiak,item_korosztályok.nők));
                 }
             }
 
@@ -1221,21 +1227,21 @@ namespace Íjász
                                     {
                                         if (verseny.íjtípus[i].korosztályok[j].also <= temp.kor && verseny.íjtípus[i].korosztályok[j].felso >= temp.kor)
                                         {
-                                            if (temp.nem == "F")
+                                            if (temp.nem == "F" && verseny.íjtípus[i].korosztályok[j].férfiakra == true)
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                                 indulók_száma++;
                                             }
-                                            else
+                                            if (temp.nem == "N" && verseny.íjtípus[i].korosztályok[j].nőkre == true)
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                                 indulók_száma++;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                     break;
@@ -1470,7 +1476,7 @@ namespace Íjász
             {
                 foreach (Node_Eredménylap_Verseny_Teljes.Node_Íjtípus item in verseny.íjtípus)
                 {
-                    item.korosztályok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító,item_korosztályok.megnevezés));
+                    item.korosztályok.Add(new Node_Eredménylap_Verseny_Teljes.Node_Íjtípus.Node_Korosztály(item_korosztályok.alsó_határ, item_korosztályok.felső_határ, item_korosztályok.azonosító, item_korosztályok.megnevezés, item_korosztályok.férfiak, item_korosztályok.nők));
                 }
             }
 
@@ -1498,19 +1504,19 @@ namespace Íjász
                                     {
                                         if (verseny.íjtípus[i].korosztályok[j].also <= temp.kor && verseny.íjtípus[i].korosztályok[j].felso >= temp.kor)
                                         {
-                                            if (temp.nem == "F")
+                                            if (temp.nem == "F" && verseny.íjtípus[i].korosztályok[j].férfiakra == true)
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
-                                            else
+                                            else if (temp.nem == "N" && verseny.íjtípus[i].korosztályok[j].nőkre == true)
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                     break;
