@@ -102,6 +102,7 @@ namespace Íjász
             keresés.MaxLength = 30;
             keresés.Width = 150;
 
+
             Controls.Add(label_keresés);
             Controls.Add(keresés);
 
@@ -360,7 +361,6 @@ namespace Íjász
                 }
             }
         }
-
         
         #endregion
 
@@ -372,7 +372,7 @@ namespace Íjász
             private TextBox box_nem;
             private DateTimePicker date_születés;
             private TextBox box_engedély;
-            private TextBox box_egyesület;
+            private ComboBox combo_egyesület;
             private Label eredmények_száma;
 
             public Form_Induló()
@@ -448,10 +448,15 @@ namespace Íjász
                 box_engedély.Size = box_név.Size;
                 box_engedély.MaxLength = 30;
 
-                box_egyesület = new TextBox();
-                box_egyesület.Location = new System.Drawing.Point(egyesület.Location.X + egyesület.Size.Width + 16, egyesület.Location.Y);
-                box_egyesület.Size = box_név.Size;
-                box_egyesület.MaxLength = 30;
+                combo_egyesület = new ComboBox();
+                combo_egyesület.Location = new System.Drawing.Point(egyesület.Location.X + egyesület.Size.Width + 16, egyesület.Location.Y);
+                combo_egyesület.Size = box_név.Size;
+                combo_egyesület.MaxLength = 30;
+
+                List<KeyValuePair<string, int>> egyesületek = Egyesületek();
+                foreach (KeyValuePair<string, int> item in egyesületek)
+                    combo_egyesület.Items.Add(item.Key);
+
 
                 eredmények_száma = new Label();
                 eredmények_száma.Location = new System.Drawing.Point(eredmények.Location.X + eredmények.Size.Width + 16, eredmények.Location.Y);
@@ -476,10 +481,11 @@ namespace Íjász
                 Controls.Add(box_nem);
                 Controls.Add(date_születés);
                 Controls.Add(box_engedély);
-                Controls.Add(box_egyesület);
+                Controls.Add(combo_egyesület);
                 Controls.Add(eredmények_száma);
                 Controls.Add(rendben);
             }
+
 
             private void InitializeData()
             {
@@ -488,7 +494,6 @@ namespace Íjász
                 box_nem.Text = "";
                 date_születés.Value = DateTime.Now;
                 box_engedély.Text = "";
-                box_egyesület.Text = "";
                 eredmények_száma.Text = "0";
             }
 
@@ -500,7 +505,7 @@ namespace Íjász
                 date_születés.Value = DateTime.Parse(_induló.születés);
                 date_születés.Enabled = (_induló.eredmények > 0 ? false : true);
                 box_engedély.Text = _induló.engedély;
-                box_egyesület.Text = _induló.egyesület;
+                combo_egyesület.Text = _induló.egyesület;
                 eredmények_száma.Text = _induló.eredmények.ToString();
             }
 
@@ -515,16 +520,55 @@ namespace Íjász
                 else if (!(box_nem.Text.ToLower() == "f" || box_nem.Text.ToLower() == "férfi")) { MessageBox.Show("Nem megfelelő nem!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!(box_engedély.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő az engedély hossza (0 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!Database.IsCorrectSQLText(box_engedély.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!(box_egyesület.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő az egyesület hossza (0 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!Database.IsCorrectSQLText(box_egyesület.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!(combo_egyesület.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő az egyesület hossza (0 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Database.IsCorrectSQLText(combo_egyesület.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (eredeti_név != null)
-                    Program.mainform.indulók_panel.Induló_Módosítás(eredeti_név, new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, box_egyesület.Text, Convert.ToInt32(eredmények_száma.Text)));
+                    Program.mainform.indulók_panel.Induló_Módosítás(eredeti_név, new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, combo_egyesület.Text, Convert.ToInt32(eredmények_száma.Text)));
                 else
-                    Program.mainform.indulók_panel.Induló_Hozzáadás(new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, box_egyesület.Text, 0));
+                    Program.mainform.indulók_panel.Induló_Hozzáadás(new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, combo_egyesület.Text, 0));
 
                 Close();
             }
+            public List<KeyValuePair<string, int>> Egyesületek()
+            {
+                List<KeyValuePair<string, int>> data = new List<KeyValuePair<string, int>>();
+                List<Induló> indulók = Program.database.Indulók();
+                bool found;
+                foreach (Induló outer in indulók)
+                {
+                    found = false;
+                    if (outer.egyesület.Length != 0)
+                    {
+                        foreach (KeyValuePair<string, int> inner in data)
+                        {
+                            if (outer.egyesület == inner.Key)
+                            {
+                                KeyValuePair<string, int> temp = new KeyValuePair<string, int>(inner.Key, inner.Value + 1);
+                                found = true;
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            data.Add(new KeyValuePair<string, int>(outer.egyesület, 1));
+                        }
+                    }
+
+                }
+
+                for (int i = 0; i < data.Count; i++ )
+                for (int j = 0; j< data.Count; j++ )
+                    if(data[i].Key.CompareTo(data[j].Key) == -1)
+                    {
+                        KeyValuePair<string, int> temp = data[i];
+                        data[i] = data[j];
+                        data[j] = temp;
+                    }
+                data.Add(new KeyValuePair<string, int>("",0));
+                    return data;
+            }
+
         }
 
         public sealed class Form_Induló_Teszt : Form
