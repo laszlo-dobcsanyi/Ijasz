@@ -16,156 +16,76 @@ namespace Íjász
         public static string filename;
         public static Form dialog;
 
+  
+        public struct Node_Versenyadatok
+        {
+            public string VEAZON;
+            public string VEMEGN;
+            public string VEDATU;
+            public int VEOSPO; 
+            public int VEALSZ;
+            public int VEINSZ;
+            public string VSAZON;
+            public string VSMEGN;
+
+            public Node_Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
+            {
+                VEAZON = _verseny.azonosító;
+                VEMEGN = _verseny.megnevezés;
+                VEDATU = _verseny.dátum;
+                VEOSPO = _verseny.összes;
+                VEALSZ = _verseny.állomások;
+                VEINSZ = _verseny.indulók;
+                VSAZON = _versenysorozat.azonosító;
+                VSMEGN = _versenysorozat.megnevezés;
+            }
+            public Node_Versenyadatok(Verseny _verseny)
+            {
+                VEAZON = _verseny.azonosító;
+                VEMEGN = _verseny.megnevezés;
+                VEDATU = _verseny.dátum;
+                VEOSPO = _verseny.összes;
+                VEALSZ = _verseny.állomások;
+                VEINSZ = _verseny.indulók;
+                VSAZON = null;
+                VSMEGN = null;
+            }
+        }
+
+        public struct Node_Versenyzoadatok
+        {
+            public string ITMEGN;
+            public string INNEVE;
+            public int INSOSZ;
+            public int INSZUL;
+            public string INEGYE;
+            public int INCSSZ;
+
+            public Node_Versenyzoadatok(Íjtípus _íjtípus, Induló _induló, Eredmény _eredmény)
+            {
+                ITMEGN = _íjtípus.megnevezés;
+                INNEVE = _eredmény.név;
+                INSOSZ = (int)_eredmény.sorszám;
+                INSZUL = (new DateTime(1, 1, 1) + (DateTime.Now - DateTime.Parse(_induló.születés))).Year - 1;
+                INEGYE = _induló.egyesület;
+                INCSSZ = _eredmény.csapat;
+            }
+        }
 
         public struct Node_Csapatlista
         {
-            public struct Versenyadatok
-            {
-                public string VEAZON;
-                public string VEMEGN;
-                public string VEDATU;
-                public int VEOSPO;
-                public int VEINSZ;
-                public string VSAZON;
-                public string VSMEGN;
-
-                public Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEINSZ = _verseny.indulók;
-                    VSAZON = _versenysorozat.azonosító;
-                    VSMEGN = _versenysorozat.megnevezés;
-                }
-                public Versenyadatok(Verseny _verseny)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEINSZ = _verseny.indulók;
-                    VSAZON = null;
-                    VSMEGN = null;
-                }
-            }
-
-            public struct Versenyzoadatok
-            {
-                public string ITMEGN;
-                public string INNEVE;
-                public int INSOSZ;
-                public int INSZUL;
-                public string INEGYE;
-                public int INCSSZ;
-
-                public Versenyzoadatok( Íjtípus _íjtípus, Induló _induló, Eredmény _eredmény )
-                {
-                    ITMEGN = _íjtípus.megnevezés;
-                    INNEVE = _eredmény.név;
-                    INSOSZ = (int)_eredmény.sorszám;
-                    INSZUL = (new DateTime(1, 1, 1) + (DateTime.Now - DateTime.Parse(_induló.születés))).Year - 1;
-                    INEGYE = _induló.egyesület;
-                    INCSSZ = _eredmény.csapat;
-                }
-            }
-
-            public Versenyadatok versenyadatok;
-            public List<Versenyzoadatok> versenyzoadatok;
+            public Node_Versenyadatok versenyadatok;
+            public List<Node_Versenyzoadatok> versenyzoadatok;
         };
 
         public struct Node_NevezésiLista
         {
-            public struct Versenyadatok
-            {
-                public string VEAZON;
-                public string VEMEGN;
-                public string VEDATU;
-                public int VEOSPO;
-                public int VEINSZ;
-                public string VSAZON;
-                public string VSMEGN;
-
-                public Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEINSZ = _verseny.indulók;
-                    VSAZON = _versenysorozat.azonosító;
-                    VSMEGN = _versenysorozat.megnevezés;
-                }
-                public Versenyadatok(Verseny _verseny)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEINSZ = _verseny.indulók;
-                    VSAZON = null;
-                    VSMEGN = null;
-                }
-            }
-            public struct Versenyzoadatok
-            {
-                public int INSOSZ;
-                public string INNEVE;
-                public string ITMEGN;
-                public int INSZUL;
-                public string INEGYE;
-                public int INCSSZ;
-
-                public Versenyzoadatok( Induló _induló, Eredmény _eredmény, Íjtípus _íjtípus )
-                {
-                    INSOSZ = (int)_eredmény.sorszám;
-                    INNEVE = _eredmény.név;
-                    ITMEGN = _íjtípus.megnevezés;
-                    INSZUL = (new DateTime(1, 1, 1) + (DateTime.Now - DateTime.Parse(_induló.születés))).Year - 1;
-                    INEGYE = _induló.egyesület;
-                    INCSSZ = _eredmény.csapat;
-                }
-            }
-
-            public Versenyadatok versenyadatok;
-            public List<Versenyzoadatok> versenyzoadatok;
+            public Node_Versenyadatok versenyadatok;
+            public List<Node_Versenyzoadatok> versenyzoadatok;
         };
         
         public struct Node_Beírólap
         {
-           
-            public struct Versenyadatok
-            {
-                public string VEAZON;
-                public string VEMEGN;
-                public string VEDATU;
-                public int VEOSPO;
-                public int VEALSZ;
-                public string VSAZON;
-                public string VSMEGN;
-                public Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEALSZ = _verseny.állomások;
-                    VSAZON = _versenysorozat.azonosító;
-                    VSMEGN = _versenysorozat.megnevezés;
-                }
-                public Versenyadatok(Verseny _verseny)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEALSZ = _verseny.állomások;
-                    VSAZON = null;
-                    VSMEGN = null;
-                }
-            }
-
             public struct Versenyzoadatok
             {
                 public int INSOSZ;
@@ -193,43 +113,13 @@ namespace Íjász
 
             }
 
-            public Versenyadatok versenyadatok;
+            public Node_Versenyadatok versenyadatok;
             public Versenyzoadatok versenyzoadatok;
         }
 
         public class Node_Eredménylap_Verseny_Teljes
         {
-            public struct Versenyadatok
-            {
-                public string VEAZON;
-                public string VEMEGN;
-                public string VEDATU;
-                public int VEOSPO;
-                public int VEINSZ;
-                public string VSAZON;
-                public string VSMEGN;
-                public Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEINSZ = _verseny.indulók;
-                    VSAZON = _versenysorozat.azonosító;
-                    VSMEGN = _versenysorozat.megnevezés;
-                }
-                public Versenyadatok(Verseny _verseny)
-                {
-                    VEAZON = _verseny.azonosító;
-                    VEMEGN = _verseny.megnevezés;
-                    VEDATU = _verseny.dátum;
-                    VEOSPO = _verseny.összes;
-                    VEINSZ = _verseny.indulók;
-                    VSAZON = null;
-                    VSMEGN = null;
-                }
-            }
-
+          
             public struct Node_Íjtípus
             {
                 public Node_Íjtípus(string _azon, string _megn)
@@ -303,7 +193,7 @@ namespace Íjász
                 }
             }
 
-            public Versenyadatok versenyadatok;
+            public Node_Versenyadatok versenyadatok;
             public List<Node_Íjtípus> íjtípus;
         }
       
@@ -371,7 +261,7 @@ namespace Íjász
                     }
                     public struct Node_Eredmény
                     {
-                        public Node_Eredmény( int _pont, int _szazalek, int _tizpont )
+                        public Node_Eredmény(int _pont, int _szazalek, int _tizpont)
                         {
                             pont = _pont;
                             szazalek = _szazalek;
@@ -390,7 +280,6 @@ namespace Íjász
         static public string nyomtat_beirlap(string _VEAZON, Eredmény _eredmény) 
         {
             #region alap stringek
-
             string headline = "B E Í R Ó L A P";
             string st_vazon_vnev = "Verseny azonosító, név: ";
             string st_ido = "Verseny ideje: ";
@@ -408,7 +297,6 @@ namespace Íjász
             #endregion
 
             #region adatok
-
             Node_Beírólap beirlap = new Node_Beírólap();
 
             List<Verseny> versenyek = Program.database.Versenyek();
@@ -422,13 +310,13 @@ namespace Íjász
                     {
                         if (inner.azonosító==outer.versenysorozat)
                         {
-                            beirlap.versenyadatok = new Node_Beírólap.Versenyadatok(outer, inner);
+                            beirlap.versenyadatok = new Node_Versenyadatok(outer, inner);
                         }
                     }
                 }
                 else if (outer.azonosító == _VEAZON)
                 {
-                    beirlap.versenyadatok = new Node_Beírólap.Versenyadatok(outer);
+                    beirlap.versenyadatok = new Node_Versenyadatok(outer);
                 }
             }
 
@@ -511,9 +399,6 @@ namespace Íjász
 
             table.Rows[beirlap.versenyadatok.VEALSZ + 1].Cells[1].Paragraphs[0].Append("Össz darab");
             table.Rows[beirlap.versenyadatok.VEALSZ + 2].Cells[1].Paragraphs[0].Append("Össz pont");
-            
-
-
             #endregion
 
             #region header
@@ -556,10 +441,11 @@ namespace Íjász
             header_table.Rows[3].Cells[1].Paragraphs[0].Append(st_korosztaly);
             header_table.Rows[3].Cells[1].Paragraphs[0].Append(beirlap.versenyzoadatok.KOMEGN.ToString()).Bold();
 
+
+
             header_táblázat_formázása(header_table);
             document.InsertTable(header_table);
             Paragraph temp = document.InsertParagraph();
-
 
             paragraph_1.Append(_VEAZON + ", " + beirlap.versenyadatok.VEMEGN);
             paragraph_1.Bold();
@@ -581,7 +467,6 @@ namespace Íjász
 
             beirlap_táblázat_formázás(table);
             document.InsertTable(table);
-
 
             Table aláírás = document.AddTable(1, 2);
             aláírás.Alignment = Alignment.center;
@@ -623,7 +508,7 @@ namespace Íjász
         static public string nyomtat_nevezesilista(string _VEAZON , bool _nemmegjelent_nyomtat)
         {
             Node_NevezésiLista nevezlista = new Node_NevezésiLista();
-            nevezlista.versenyzoadatok = new List<Node_NevezésiLista.Versenyzoadatok>();
+            nevezlista.versenyzoadatok = new List<Node_Versenyzoadatok>();
             
 
 
@@ -662,13 +547,13 @@ namespace Íjász
                     {
                         if (inner.azonosító ==outer.versenysorozat )
                         {
-                            nevezlista.versenyadatok = new Node_NevezésiLista.Versenyadatok(outer, inner);
+                            nevezlista.versenyadatok = new Node_Versenyadatok(outer, inner);
                         }
                     }
                 }
                 else if(outer.azonosító == _VEAZON)
                 {
-                    nevezlista.versenyadatok = new Node_NevezésiLista.Versenyadatok(outer);
+                    nevezlista.versenyadatok = new Node_Versenyadatok(outer);
                 }
             }
 
@@ -694,7 +579,7 @@ namespace Íjász
                                 {
                                     if (item_eredmény.íjtípus == item_íjtípus.azonosító)
                                     {
-                                        nevezlista.versenyzoadatok.Add(new Node_NevezésiLista.Versenyzoadatok(item_induló, item_eredmény, item_íjtípus));
+                                        nevezlista.versenyzoadatok.Add(new Node_Versenyzoadatok(  item_íjtípus,item_induló,item_eredmény));
                                     }
                                 }
                             }
@@ -714,7 +599,7 @@ namespace Íjász
                                 {
                                     if (item_eredmény.íjtípus == item_íjtípus.azonosító)
                                     {
-                                        nevezlista.versenyzoadatok.Add(new Node_NevezésiLista.Versenyzoadatok(item_induló, item_eredmény, item_íjtípus));
+                                        nevezlista.versenyzoadatok.Add(new Node_Versenyzoadatok(item_íjtípus, item_induló, item_eredmény));
                                     }
                                 }
                             }
@@ -740,7 +625,7 @@ namespace Íjász
                 {
                     if (nevezlista.versenyzoadatok[j-1].INNEVE[0] < nevezlista.versenyzoadatok[j].INNEVE[0])
                     {
-                        Node_NevezésiLista.Versenyzoadatok temp = nevezlista.versenyzoadatok[j];
+                        Node_Versenyzoadatok temp = nevezlista.versenyzoadatok[j];
                         nevezlista.versenyzoadatok[j] = nevezlista.versenyzoadatok[j - 1];
                         nevezlista.versenyzoadatok[j - 1] = temp;
                     }
@@ -867,7 +752,7 @@ namespace Íjász
                 for (int j = 0; j < nevezlista.versenyzoadatok.Count-1; j++)
                     if (nevezlista.versenyzoadatok[i].INNEVE.CompareTo(nevezlista.versenyzoadatok[j].INNEVE)!=-1)
                     {
-                        Node_NevezésiLista.Versenyzoadatok temp = nevezlista.versenyzoadatok[i];
+                        Node_Versenyzoadatok temp = nevezlista.versenyzoadatok[i];
                         nevezlista.versenyzoadatok[i] = nevezlista.versenyzoadatok[j];
                         nevezlista.versenyzoadatok[j] = temp;
                     }
@@ -895,7 +780,7 @@ namespace Íjász
         {
             string filename = null;
             Node_Csapatlista csapatlista = new Node_Csapatlista();
-            csapatlista.versenyzoadatok = new List<Node_Csapatlista.Versenyzoadatok>();
+            csapatlista.versenyzoadatok = new List<Node_Versenyzoadatok>();
 
             #region alap stringek
             string headline = "C S A P A T  L I S T A";
@@ -919,13 +804,13 @@ namespace Íjász
                     {
                         if (outer.versenysorozat==inner.azonosító )
                         {
-                            csapatlista.versenyadatok = new Node_Csapatlista.Versenyadatok(outer, inner);
+                            csapatlista.versenyadatok = new Node_Versenyadatok(outer, inner);
                         }
                     }
                 }
                 else if (outer.azonosító == _VEAZON)
                 {
-                    csapatlista.versenyadatok = new Node_Csapatlista.Versenyadatok(outer);
+                    csapatlista.versenyadatok = new Node_Versenyadatok(outer);
                 }
             }
 
@@ -948,7 +833,7 @@ namespace Íjász
                             {
                                 if (item_eredmény.íjtípus == item_íjtípus.azonosító)
                                 {
-                                    csapatlista.versenyzoadatok.Add(new Node_Csapatlista.Versenyzoadatok(item_íjtípus, item_indulók, item_eredmény));
+                                    csapatlista.versenyzoadatok.Add(new Node_Versenyzoadatok(item_íjtípus, item_indulók, item_eredmény));
                                 }
                             }
                         }
@@ -961,7 +846,7 @@ namespace Íjász
                 for (int j = 0; j < i; j++)
                     if (csapatlista.versenyzoadatok[i].INCSSZ < csapatlista.versenyzoadatok[j].INCSSZ)
                     {
-                        Node_Csapatlista.Versenyzoadatok temp = csapatlista.versenyzoadatok[i];
+                        Node_Versenyzoadatok temp = csapatlista.versenyzoadatok[i];
                         csapatlista.versenyzoadatok[i] = csapatlista.versenyzoadatok[j];
                         csapatlista.versenyzoadatok[j] = temp;
                     }
@@ -1063,13 +948,13 @@ namespace Íjász
                 for (int j = 0; j < csapatlista.versenyadatok.VEINSZ-1; j++)
                     if (csapatlista.versenyzoadatok[i].INNEVE.CompareTo(csapatlista.versenyzoadatok[j].INNEVE) == -1 && csapatlista.versenyzoadatok[i].INCSSZ == csapatlista.versenyzoadatok[j].INCSSZ)
                     {
-                        Node_Csapatlista.Versenyzoadatok temp = csapatlista.versenyzoadatok[i];
+                        Node_Versenyzoadatok temp = csapatlista.versenyzoadatok[i];
                         csapatlista.versenyzoadatok[i] = csapatlista.versenyzoadatok[j];
                         csapatlista.versenyzoadatok[j] = temp;
                     }
 
 
-            foreach (Node_Csapatlista.Versenyzoadatok  item in csapatlista.versenyzoadatok)
+            foreach (Node_Versenyzoadatok  item in csapatlista.versenyzoadatok)
             {
                 if (tempcs == 0 || tempcs == item.INCSSZ)
                 {
@@ -1179,13 +1064,13 @@ namespace Íjász
                     {
                         if (inner.azonosító == outer.versenysorozat)
                         {
-                            verseny.versenyadatok = new Node_Eredménylap_Verseny_Teljes.Versenyadatok(outer, inner);
+                            verseny.versenyadatok = new Node_Versenyadatok(outer, inner);
                         }
                     }
                 }
                 else if (outer.azonosító == _VEAZON)
                 {
-                    verseny.versenyadatok = new Node_Eredménylap_Verseny_Teljes.Versenyadatok(outer);
+                    verseny.versenyadatok = new Node_Versenyadatok(outer);
                 }
             }
 
@@ -1332,20 +1217,10 @@ namespace Íjász
 
                         if (ijtipus_count == 0)
                         {
-                            /*
-                            adatok.AppendLine("Íjtípus: ");
-                            adatok.Append(verseny.íjtípus[i].megnevezés + "\n");
-                            adatok.Bold();
-                            */
                              ijtipus_count++;
                         }
                         if (korosztaly_count == 0)
                         {
-                            /*
-                            adatok.Append("    Korosztály: ");
-                            adatok.Append(verseny.íjtípus[i].korosztályok[j].kmegn);
-                            adatok.Bold();
-                            */
                             korosztaly_count++;
                         }
 
@@ -1415,7 +1290,7 @@ namespace Íjász
 
             }
             #endregion
-            if (indulók_száma != verseny.versenyadatok.VEINSZ) { MessageBox.Show("Versenyen indulók száma: " + verseny.versenyadatok.VEINSZ.ToString() + "\nAz eredménylapon szereplő versenyzők száma: " + indulók_száma, "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+            if (indulók_száma != verseny.versenyadatok.VEINSZ) { MessageBox.Show("Versenyen indulók száma: " + verseny.versenyadatok.VEINSZ.ToString() + "\nAz eredménylapon szereplő versenyzők száma: " + indulók_száma + "\nValószínűleg nem stimmelnek a korosztályok" , "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             try { document.Save(); }
             catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "ERLAPVETELJ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             return filename;
@@ -1424,7 +1299,7 @@ namespace Íjász
         static public string nyomtat_eredmenylap_verseny_misz(string _VEAZON)
         {
             string filename = null;
-
+            int indulók_száma = 0;
 
             Node_Eredménylap_Verseny_Teljes verseny = new Node_Eredménylap_Verseny_Teljes();
             verseny.íjtípus = new List<Node_Eredménylap_Verseny_Teljes.Node_Íjtípus>();
@@ -1455,13 +1330,13 @@ namespace Íjász
                     {
                         if (inner.azonosító == outer.versenysorozat)
                         {
-                            verseny.versenyadatok = new Node_Eredménylap_Verseny_Teljes.Versenyadatok(outer, inner);
+                            verseny.versenyadatok = new Node_Versenyadatok(outer, inner);
                         }
                     }
                 }
                 else if (outer.azonosító == _VEAZON)
                 {
-                    verseny.versenyadatok = new Node_Eredménylap_Verseny_Teljes.Versenyadatok(outer);
+                    verseny.versenyadatok = new Node_Versenyadatok(outer);
                 }
             }
 
@@ -1507,6 +1382,7 @@ namespace Íjász
                                             if (temp.nem == "F" && verseny.íjtípus[i].korosztályok[j].férfiakra == true)
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].ferfiak.Add(temp);
+                                                indulók_száma++;
                                                 verseny.íjtípus[i].Vanbenne();
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
@@ -1514,6 +1390,7 @@ namespace Íjász
                                             {
                                                 verseny.íjtípus[i].korosztályok[j].nok.Add(temp);
                                                 verseny.íjtípus[i].Vanbenne();
+                                                indulók_száma++;
                                                 verseny.íjtípus[i].korosztályok[j].Vanbenne2();
                                             }
                                             //break;
@@ -1679,7 +1556,7 @@ namespace Íjász
 
             }
             #endregion
-
+            if (indulók_száma != verseny.versenyadatok.VEINSZ) { MessageBox.Show("Versenyen indulók száma: " + verseny.versenyadatok.VEINSZ.ToString() + "\nAz eredménylapon szereplő versenyzők száma: " + indulók_száma + "\nValószínűleg nem stimmelnek a korosztályok", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             try { document.Save(); }
             catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "ERLAPVEMISZ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
             return filename;
@@ -2523,8 +2400,14 @@ namespace Íjász
                 _table.Rows[i].Cells[5].Width = 70;
                 _table.Rows[i].Cells[6].Width = 80;
                 _table.Rows[i].Height = 25;
-            }
+                
+                if(_table.Rows[i].Cells[3].Paragraphs[0].Text.Length>=20)
+                    _table.Rows[i].Height = 35;
+                else
+                    _table.Rows[i].Height = 25;
 
+
+            }
             Border c = new Border(Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Black);
             _table.SetBorder(TableBorderType.InsideH, c);
             _table.SetBorder(TableBorderType.InsideV, c);
@@ -2536,14 +2419,15 @@ namespace Íjász
 
         static public void header_táblázat_formázása(Table _table)
         {
-            _table.AutoFit = AutoFit.ColumnWidth;
+            _table.AutoFit = AutoFit.Contents;
             for (int i = 0; i < _table.Rows.Count; i++)
             {
-                _table.Rows[i].Cells[0].Width = 350;
-                _table.Rows[i].Cells[1].Width = 200;
+                _table.Rows[i].Cells[0].Width = 250;
+                _table.Rows[i].Cells[1].Width = 300;
                 _table.Rows[i].Cells[2].Width = 100;
                 _table.Rows[i].Height = 27;
             }
+            _table.Rows[1].Height = 40;
 
             Border c = new Border(Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Black);
             _table.SetBorder(TableBorderType.InsideH, c);
