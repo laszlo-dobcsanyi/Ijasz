@@ -110,6 +110,7 @@ namespace Íjász
             megnyitás.Location = new System.Drawing.Point(törlés.Location.X + törlés.Size.Width + lezárás.Size.Width + 32, ClientRectangle.Height - 32 - 16);
             megnyitás.Click += megnyitás_Click;
 
+
             ///
 
             List<Verseny> versenyek = Program.database.Versenyek();
@@ -347,7 +348,20 @@ namespace Íjász
 
                     if (eredmény_beírva != null) eredmény_beírva(_verseny, beírás);
 
-                    if (_nyomtat) Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                    Verseny? verseny = Program.database.Verseny(_verseny);
+
+                    if (_nyomtat)
+                    {
+                        if (verseny.Value.duplabeirlap)
+                        {
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                        }
+                        else
+                        {
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                        }
+                    }
                 }
             }
         }
@@ -965,5 +979,6 @@ namespace Íjász
             }
             #endregion
         }
+
     }
 }

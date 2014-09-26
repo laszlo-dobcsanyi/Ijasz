@@ -27,7 +27,7 @@ namespace Íjász
                 command.CommandText =
                     "CREATE TABLE Verzió (PRVERZ int);" +
                     "CREATE TABLE Versenysorozat (VSAZON char(10) PRIMARY KEY, VSMEGN char(30), VSVESZ int);" +
-                    "CREATE TABLE Verseny (VEAZON char(10) PRIMARY KEY, VEMEGN char(30), VEDATU char(20), VSAZON char(10), VEOSPO int NOT NULL, VEALSZ int, VEINSZ int, VELEZAR boolean);" +
+                    "CREATE TABLE Verseny (VEAZON char(10) PRIMARY KEY, VEMEGN char(30), VEDATU char(20), VSAZON char(10), VEOSPO int NOT NULL, VEALSZ int, VEINSZ int, VELEZAR boolean, VEDUBE boolean);" +
                     "CREATE TABLE Korosztályok (VEAZON char(10) NOT NULL, KOAZON char(10) NOT NULL, KOMEGN char(30), KOEKMI int NOT NULL, KOEKMA int NOT NULL, KONOK boolean, KOFERF boolean, KOINSN int, KOINSF int);" +
                     "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
                     "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int);" +
@@ -271,11 +271,11 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR FROM Verseny WHERE VEAZON = '" + _azonosító + "';";
+                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR, VEDUBE FROM Verseny WHERE VEAZON = '" + _azonosító + "';";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    data = new Verseny(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7));
+                    data = new Verseny(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetBoolean(8));
                 }
 
                 command.Dispose();
@@ -292,11 +292,11 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR FROM Verseny;";
+                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR, VEDUBE FROM Verseny;";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    data.Add(new Verseny(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7)));
+                    data.Add(new Verseny(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetBoolean(8)));
                 }
 
                 command.Dispose();
@@ -314,11 +314,11 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR FROM Verseny WHERE VELEZAR = 0;";
+                command.CommandText = "SELECT VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR, VEDUBE FROM Verseny WHERE VELEZAR = 0;";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    data.Add(new Verseny(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7)));
+                    data.Add(new Verseny(reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetBoolean(8)));
                 }
 
                 command.Dispose();
@@ -334,13 +334,13 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Verseny (VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR) VALUES('" + _verseny.azonosító + "', '" + _verseny.megnevezés + "', " +
-                    "'" + _verseny.dátum + "', '" + _verseny.versenysorozat + "', " + _verseny.összes + ", " + _verseny.állomások + ", 0, 0);";
+                command.CommandText = "INSERT INTO Verseny (VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR, VEDUBE) VALUES('" + _verseny.azonosító + "', '" + _verseny.megnevezés + "', " +
+                    "'" + _verseny.dátum + "', '" + _verseny.versenysorozat + "', " + _verseny.összes + ", " + _verseny.állomások + ", 0, 0, " + (_verseny.duplabeirlap ? "1" : "0") + ");";
                 try
                 {
                     command.ExecuteNonQuery();
                 }
-                catch (System.Data.SQLite.SQLiteException)
+                catch (System.Data.SQLite.SQLiteException e )
                 {
                     command.Dispose();
                     connection.Close();
@@ -380,7 +380,7 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
                 command.CommandText = "UPDATE Verseny SET VEAZON = '" + _verseny.azonosító + "', VEMEGN = '" + _verseny.megnevezés + "', VEDATU = '" + _verseny.dátum + "' ," +
-                    "VSAZON = '" + _verseny.versenysorozat + "', VEOSPO = " + _verseny.összes + ", VEALSZ = " + _verseny.állomások + " WHERE VEAZON = '" + _azonosító + "';";
+                    "VSAZON = '" + _verseny.versenysorozat + "', VEOSPO = " + _verseny.összes + ", VEALSZ = " + _verseny.állomások + ", VEDUBE = '" + (_verseny.duplabeirlap ? "1" : "0") + "' WHERE VEAZON = '" + _azonosító + "';";
                 try
                 {
                     command.ExecuteNonQuery();
