@@ -17,6 +17,7 @@ namespace Íjász
         public int állomások;
         public int indulók;
         public bool lezárva;
+        public bool dupla_beirlap;
 
         public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _állomások, int _indulók, bool _lezárva)
         {
@@ -28,6 +29,19 @@ namespace Íjász
             állomások = _állomások;
             indulók = _indulók;
             lezárva = _lezárva;
+            dupla_beirlap = false;
+        }
+        public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _állomások, int _indulók, bool _lezárva, bool _dupla_beirlap)
+        {
+            azonosító = _azonosító;
+            megnevezés = _megnevezés;
+            dátum = _dátum;
+            versenysorozat = _versenysorozat;
+            összes = _összes;
+            állomások = _állomások;
+            indulók = _indulók;
+            lezárva = _lezárva;
+            dupla_beirlap = _dupla_beirlap;
         }
     }
 
@@ -44,7 +58,7 @@ namespace Íjász
         public Verseny_Lezárva verseny_lezárva;
         public Verseny_Lezárva verseny_megnyitva;
 
-        private DataTable data;
+        public DataTable data;
         private DataGridView table;
 
         public Form_Verseny verseny_form;
@@ -65,7 +79,7 @@ namespace Íjász
             table.AllowUserToResizeRows = false;
             table.AllowUserToResizeColumns = false;
             table.AllowUserToAddRows = false;
-            table.Width = 743;
+            table.Width = 803;
             table.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             table.MultiSelect = false;
             table.ReadOnly = true;
@@ -108,6 +122,7 @@ namespace Íjász
             data.Columns.Add(new DataColumn("Állomások", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Indulók száma", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Lezárva", System.Type.GetType("System.Boolean")));
+            data.Columns.Add(new DataColumn("Dupla Beirlap", System.Type.GetType("System.Boolean")));
 
             List<Verseny> versenysorozatok = Program.database.Versenyek();
 
@@ -152,6 +167,7 @@ namespace Íjász
                 row[5] = _verseny.állomások;
                 row[6] = _verseny.indulók;
                 row[7] = _verseny.lezárva;
+                row[8] = _verseny.dupla_beirlap;
                 data.Rows.Add(row);
 
                 if (verseny_hozzáadva != null) verseny_hozzáadva(_verseny);
@@ -182,6 +198,7 @@ namespace Íjász
                         current[5] = _verseny.állomások;
                         current[6] = _verseny.indulók;
                         current[7] = _verseny.lezárva;
+                        current[8] = _verseny.dupla_beirlap;
                         break;
                     }
                 }
@@ -314,8 +331,9 @@ namespace Íjász
             table.Columns[3].Width = 80;
             table.Columns[4].Width = 60;
             table.Columns[5].Width = 60;
-            table.Columns[6].Width = 120;
+            table.Columns[6].Width = 100;
             table.Columns[7].Width = 50;
+            table.Columns[8].Width = 100;
 
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
@@ -333,7 +351,7 @@ namespace Íjász
             verseny_form = new Form_Verseny(new Verseny(data.Rows[table.SelectedRows[0].Index][0].ToString(),
                 data.Rows[table.SelectedRows[0].Index][1].ToString(), data.Rows[table.SelectedRows[0].Index][2].ToString(), data.Rows[table.SelectedRows[0].Index][3].ToString(),
                 Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][4]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][5]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][6]),
-                Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][7])));
+                Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][7]), data.Rows[table.SelectedRows[0].Index][8].ToString()=="True"));
             verseny_form.ShowDialog();
         }
 
@@ -358,6 +376,7 @@ namespace Íjász
             private TextBox box_megnevezés;
             private DateTimePicker dátumválasztó;
             private ComboBox combo_versenysorozat;
+            private CheckBox check_duplabeirlap;
             private TextBox box_összes;
             private TextBox box_állomások;
             private Label label_indulók;
@@ -383,7 +402,7 @@ namespace Íjász
             private void InitializeForm()
             {
                 Text = "Verseny";
-                ClientSize = new System.Drawing.Size(400 - 64, 308);
+                ClientSize = new System.Drawing.Size(400 - 64, 358);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -422,9 +441,13 @@ namespace Íjász
                 indulók.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 6 * 32);
                 //szám.Font = new System.Drawing.Font("Arial Black", 10);
 
+                Label duplabeirlap = new Label();
+                duplabeirlap.Text = "Dupla beirlap:";
+                duplabeirlap.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 7 * 32);
+              
                 Label lezárva = new Label();
                 lezárva.Text = "Lezárva:";
-                lezárva.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 7 * 32);
+                lezárva.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 8 * 32);
                 
                 ///
 
@@ -455,6 +478,10 @@ namespace Íjász
                 box_állomások = new TextBox();
                 box_állomások.Location = new System.Drawing.Point(állomások.Location.X + állomások.Size.Width + 16, állomások.Location.Y);
                 box_állomások.Size = box_azonosító.Size;
+
+                check_duplabeirlap = new CheckBox();
+                check_duplabeirlap.Location = new System.Drawing.Point(duplabeirlap.Location.X + duplabeirlap.Size.Width + 16, duplabeirlap.Location.Y);
+                check_duplabeirlap.Size = box_azonosító.Size;
 
                 label_indulók = new Label();
                 label_indulók.Location = new System.Drawing.Point(indulók.Location.X + indulók.Size.Width + 16, indulók.Location.Y);
@@ -497,6 +524,8 @@ namespace Íjász
                 Controls.Add(box_állomások);
                 Controls.Add(label_indulók);
                 Controls.Add(label_lezárva);
+                Controls.Add(duplabeirlap);
+                Controls.Add(check_duplabeirlap);
 
                 Controls.Add(rendben);
             }
@@ -527,6 +556,7 @@ namespace Íjász
                 box_állomások.Enabled = (_verseny.indulók == 0) ? true : false;
                 label_indulók.Text = _verseny.indulók.ToString();
                 label_lezárva.Text = _verseny.lezárva ? "Igen" : "Nem";
+                check_duplabeirlap.Checked = _verseny.dupla_beirlap;
             }
 
             #region EventHandlers
@@ -602,13 +632,14 @@ namespace Íjász
                     }
 
                     Program.mainform.verseny_panel.Verseny_Módosítás(eredeti_azonosító, new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(),
-                        combo_versenysorozat.Text, összes, állomások, Convert.ToInt32(label_indulók.Text), label_lezárva.Text == "Igen" ? true : false));
+                        combo_versenysorozat.Text, összes, állomások, Convert.ToInt32(label_indulók.Text), label_lezárva.Text == "Igen" ? true : false, check_duplabeirlap.Checked ? true : false));
+                    
                 }
                 else
                 {
                     // TODO ezt sem kéne külön csinálni!
                     Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(combo_versenysorozat.Text);
-                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(), combo_versenysorozat.Text, összes, állomások, 0, false));
+                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(), combo_versenysorozat.Text, összes, állomások, 0, false, check_duplabeirlap.Checked ? true : false));
                 }
 
                 Close();

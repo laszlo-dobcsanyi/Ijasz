@@ -346,8 +346,19 @@ namespace Íjász
                     }
 
                     if (eredmény_beírva != null) eredmény_beírva(_verseny, beírás);
-
-                    if (_nyomtat) Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                    Verseny? verseny = Program.database.Verseny(_verseny);
+                    if (_nyomtat)
+                    {
+                        if (verseny.Value.dupla_beirlap)
+                        {
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                        }
+                        else
+                        {
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                        }
+                    }
                 }
             }
         }

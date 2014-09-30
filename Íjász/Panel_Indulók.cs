@@ -685,8 +685,24 @@ namespace Íjász
                 if (MessageBox.Show("Nyomtassak beírólapot ennek a versenyzőnek: " + label_név.Text + "?", "Nyomtatás", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Eredmény? eredmény = Program.database.Eredmény(combo_verseny.Text, label_név.Text);
-                    Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.SelectedItem.ToString(), eredmény.Value));
-                }  
+                    
+                    foreach(DataRow item in Program.mainform.verseny_panel.data.Rows)
+                    {
+                        if ((string)item[0] == combo_verseny.Text)
+                        {
+                            if ((bool)item[8] == true)
+                            {
+                                Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                                Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                            }
+                            else
+                            {
+                                Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                            }
+                        }
+                    }
+                    
+                }
 
                 lastindex = combo_verseny.SelectedIndex;
                 Close();

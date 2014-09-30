@@ -34,7 +34,7 @@ namespace Íjász
 
                     "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
-                if (command.ExecuteNonQuery() != 0) MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (command.ExecuteNonQuery() != 0){}// MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else MessageBox.Show("Adatbázis létrehozva!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 command.Dispose();
                 connection.Close();
