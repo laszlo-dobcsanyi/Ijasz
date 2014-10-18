@@ -41,11 +41,14 @@ namespace Íjász
             #region Status
             ToolStripStatusLabel Tulajdonos = new ToolStripStatusLabel(Program.Tulajdonos_Megnevezés);
             ToolStripStatusLabel Készítők = new ToolStripStatusLabel("Belinyák Nándor és Társai. \u00A9 2014");
+            ToolStripStatusLabel Verzió = new ToolStripStatusLabel("Verzió: 0.9.3-2014.10.18");
             Készítők.BorderSides = ToolStripStatusLabelBorderSides.Left;
+            Verzió.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
             status = new StatusStrip();
             status.Items.Add(Tulajdonos);
             status.Items.Add(Készítők);
+            status.Items.Add(Verzió);
             #endregion
 
             #region Menü
