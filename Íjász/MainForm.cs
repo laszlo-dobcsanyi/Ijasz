@@ -40,7 +40,7 @@ namespace Íjász
         {
             #region Status
             ToolStripStatusLabel Tulajdonos = new ToolStripStatusLabel(Program.Tulajdonos_Megnevezés);
-            ToolStripStatusLabel Készítők = new ToolStripStatusLabel("©Belinyák Nándor és Társai.");
+            ToolStripStatusLabel Készítők = new ToolStripStatusLabel("Belinyák Nándor és Társai. \u00A9 2014");
             Készítők.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
             status = new StatusStrip();
@@ -119,6 +119,7 @@ namespace Íjász
             BackupButton.Text = "Biztonsági mentés";
             BackupButton.Location = new Point(ClientSize.Width - 128, 0);
             BackupButton.Size = new System.Drawing.Size(128, 24);
+            BackupButton.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             BackupButton.Click += BackupButton_Click;
 
             Controls.Add(status);
