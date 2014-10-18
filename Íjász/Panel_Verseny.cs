@@ -122,7 +122,7 @@ namespace Íjász
             data.Columns.Add(new DataColumn("Állomások", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Indulók száma", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Lezárva", System.Type.GetType("System.Boolean")));
-            data.Columns.Add(new DataColumn("Dupla Beirlap", System.Type.GetType("System.Boolean")));
+            data.Columns.Add(new DataColumn("Dupla Beírólap", System.Type.GetType("System.Boolean")));
 
             List<Verseny> versenysorozatok = Program.database.Versenyek();
 
@@ -331,9 +331,9 @@ namespace Íjász
             table.Columns[3].Width = 80;
             table.Columns[4].Width = 60;
             table.Columns[5].Width = 60;
-            table.Columns[6].Width = 100;
+            table.Columns[6].Width = 90;
             table.Columns[7].Width = 50;
-            table.Columns[8].Width = 100;
+            table.Columns[8].Width = 90;
 
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
@@ -442,7 +442,7 @@ namespace Íjász
                 //szám.Font = new System.Drawing.Font("Arial Black", 10);
 
                 Label duplabeirlap = new Label();
-                duplabeirlap.Text = "Dupla beirlap:";
+                duplabeirlap.Text = "Dupla beírólap:";
                 duplabeirlap.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 7 * 32);
               
                 Label lezárva = new Label();
@@ -541,6 +541,7 @@ namespace Íjász
                 box_állomások.Text = "0";
                 label_indulók.Text = "0";
                 label_lezárva.Text = "Hamis";
+                check_duplabeirlap.Checked = false;
             }
 
             private void InitializeData(Verseny _verseny)
