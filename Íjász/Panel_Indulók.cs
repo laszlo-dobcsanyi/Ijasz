@@ -690,15 +690,7 @@ namespace Íjász
                     {
                         if ((string)item[0] == combo_verseny.Text)
                         {
-                            if ((bool)item[8] == true)
-                            {
                                 Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
-                                Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
-                            }
-                            else
-                            {
-                                Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
-                            }
                         }
                     }
                     

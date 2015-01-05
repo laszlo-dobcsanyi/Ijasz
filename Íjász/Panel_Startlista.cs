@@ -1,242 +1,224 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Íjász
 {
     public sealed class Panel_Startlista : Control
     {
-        private ComboBox combo_versenyek;
-        Label azon;
-        Label megn = new Label();
-        Label megn2 = new Label();
-        CheckBox csapat;
-        CheckBox nevez;
-        CheckBox nemmegjelent;
-        public Panel_Startlista()
+        private ComboBox cboVersenyAzonosito;
+        Label lblVersenyAzonosito;
+        Label lblMegnevezes = new Label();
+        Label lblMegnevezes2 = new Label();
+        CheckBox chkCsapatlista;
+        CheckBox chkNevezesiLista;
+        CheckBox chkNemMegjelent;
+
+        public
+        Panel_Startlista()
         {
             InitializeContent();
         }
-        public void InitializeContent()
+
+        public void
+        InitializeContent()
         {
-            
-            Button nyomtat = new Button();
-            nyomtat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            nyomtat.Text = "Nyomtat";
-            nyomtat.Size = new System.Drawing.Size(96, 32);
-            nyomtat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 150, ClientRectangle.Height - 32 - 16);
-            nyomtat.Click += nyomtat_Click;
+            Button btnNyomtat = new Button();
+            btnNyomtat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            btnNyomtat.Text = "Nyomtat";
+            btnNyomtat.Size = new System.Drawing.Size(96, 32);
+            btnNyomtat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 150,
+                                                           ClientRectangle.Height - 32 - 16);
+            btnNyomtat.Click += btnNyomtat_Click;
 
-            azon = new Label();
-            azon.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            azon.Text = "Verseny azonosító:";
-            azon.AutoSize = true;
-            azon.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 50 * 16, ClientRectangle.Height - 32 - 40 * 16);
+            lblVersenyAzonosito = new Label();
+            lblVersenyAzonosito.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            lblVersenyAzonosito.Text = "Verseny azonosító:";
+            lblVersenyAzonosito.AutoSize = true;
+            lblVersenyAzonosito.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 50 * 16,
+                                                                    ClientRectangle.Height - 32 - 40 * 16);
 
-            Label start = new Label();
-            start.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            start.Text = "Startlista típus:";
-            start.AutoSize = true;
-            start.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 50 * 16, ClientRectangle.Height - 32 - 37 * 16 - 7);
+            Label lblStart = new Label();
+            lblStart.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            lblStart.Text = "Startlista típus:";
+            lblStart.AutoSize = true;
+            lblStart.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 50 * 16,
+                                                      ClientRectangle.Height - 32 - 37 * 16 - 7);
 
-            combo_versenyek = new ComboBox();
-            combo_versenyek.Size = new System.Drawing.Size(128, 24);
-            combo_versenyek.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            combo_versenyek.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 42 * 16, ClientRectangle.Height - 32 - 40 * 16);
-            combo_versenyek.DropDownStyle = ComboBoxStyle.DropDownList;
-            combo_versenyek.SelectedIndexChanged += combo_versenyek_SelectedIndexChanged;
+            cboVersenyAzonosito = new ComboBox();
+            cboVersenyAzonosito.Size = new System.Drawing.Size(128, 24);
+            cboVersenyAzonosito.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            cboVersenyAzonosito.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 42 * 16,
+                                                                    ClientRectangle.Height - 32 - 40 * 16);
+            cboVersenyAzonosito.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboVersenyAzonosito.SelectedIndexChanged += cboVersenyAzonosito_SelectedIndexChanged;
 
-            List<Verseny> versenyek = Program.database.Versenyek();
-            foreach (Verseny current in versenyek)
-                combo_versenyek.Items.Add(current.azonosító);
-
-            if (combo_versenyek.Items.Count != 0) combo_versenyek.SelectedIndex = 0;
-
-            megn.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            megn.Text = "Verseny megnevezés: ";
-            megn.AutoSize = true;
-            megn.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 32 * 16, ClientRectangle.Height - 32 - 40 * 16);
-
-            megn2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            megn2.AutoSize = true;
-            megn2.Location = new System.Drawing.Point(megn.Location.X + megn.Size.Width + 18, megn.Location.Y);
-            megn2.Font = new System.Drawing.Font(megn2.Font, FontStyle.Underline);
-
-            foreach (Verseny current in versenyek)
+            List<Verseny> Versenyek = Program.database.Versenyek();
+            foreach (Verseny current in Versenyek)
             {
-                if (combo_versenyek.Text == current.azonosító)
+                cboVersenyAzonosito.Items.Add(current.azonosító);
+            }
+
+            if (cboVersenyAzonosito.Items.Count != 0)
+            {
+                cboVersenyAzonosito.SelectedIndex = 0;
+            }
+
+            lblMegnevezes.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            lblMegnevezes.Text = "Verseny Megnevezés: ";
+            lblMegnevezes.AutoSize = true;
+            lblMegnevezes.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 32 * 16,
+                                                              ClientRectangle.Height - 32 - 40 * 16);
+
+            lblMegnevezes2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            lblMegnevezes2.AutoSize = true;
+            lblMegnevezes2.Location = new System.Drawing.Point(lblMegnevezes.Location.X + lblMegnevezes.Size.Width + 18,
+                                                               lblMegnevezes.Location.Y);
+            lblMegnevezes2.Font = new System.Drawing.Font(lblMegnevezes2.Font, FontStyle.Underline);
+
+            foreach (Verseny current in Versenyek)
+            {
+                if (cboVersenyAzonosito.Text == current.azonosító)
                 {
-                    megn2.Text = current.megnevezés;
+                    lblMegnevezes2.Text = current.megnevezés;
                 }
             }
-            nevez = new CheckBox();
-            nevez.Text = "Nevezési";
-            nevez.AutoSize = true;
-            nevez.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            nevez.FlatStyle = FlatStyle.Flat;
-            nevez.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 44 * 16, ClientRectangle.Height - 32 - 38 * 16);
+            chkNevezesiLista = new CheckBox();
+            chkNevezesiLista.Text = "Nevezési";
+            chkNevezesiLista.AutoSize = true;
+            chkNevezesiLista.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            chkNevezesiLista.FlatStyle = FlatStyle.Flat;
+            chkNevezesiLista.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 44 * 16,
+                                                                 ClientRectangle.Height - 32 - 38 * 16);
 
-            csapat = new CheckBox();
-            csapat.Text = "Csapat";
-            csapat.AutoSize = true;
-            csapat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            csapat.FlatStyle = FlatStyle.Flat;
-            csapat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 40 * 16, ClientRectangle.Height - 32 - 38 * 16);
+            chkCsapatlista = new CheckBox();
+            chkCsapatlista.Text = "Csapatlista";
+            chkCsapatlista.AutoSize = true;
+            chkCsapatlista.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            chkCsapatlista.FlatStyle = FlatStyle.Flat;
+            chkCsapatlista.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 40 * 16,
+                                                               ClientRectangle.Height - 32 - 38 * 16);
 
-            nemmegjelent = new CheckBox();
-            nemmegjelent.Text = "Nem Megjelent";
-            nemmegjelent.AutoSize = true;
-            nemmegjelent.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            nemmegjelent.FlatStyle = FlatStyle.Flat;
-            nemmegjelent.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 33 * 16, ClientRectangle.Height - 32 - 38 * 16);
+            chkNemMegjelent = new CheckBox();
+            chkNemMegjelent.Text = "Nem Megjelent";
+            chkNemMegjelent.AutoSize = true;
+            chkNemMegjelent.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            chkNemMegjelent.FlatStyle = FlatStyle.Flat;
+            chkNemMegjelent.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 33 * 16,
+                                                                ClientRectangle.Height - 32 - 38 * 16);
 
-            nevez.Click += checkbox_klikk;
-            csapat.Click += checkbox_klikk;
-            nemmegjelent.Click += checkbox_klikk;
+            chkNevezesiLista.Click += CheckBox_Click;
+            chkCsapatlista.Click += CheckBox_Click;
+            chkNemMegjelent.Click += CheckBox_Click;
 
-            Controls.Add(nevez);
-            Controls.Add(csapat);
-            Controls.Add(nemmegjelent);
-            Controls.Add(megn);
-            Controls.Add(megn2);
-            Controls.Add(combo_versenyek);
-            Controls.Add(azon);
-            Controls.Add(start);
-            Controls.Add(nyomtat);
+            Controls.Add(chkNevezesiLista);
+            Controls.Add(chkCsapatlista);
+            Controls.Add(chkNemMegjelent);
+            Controls.Add(lblMegnevezes);
+            Controls.Add(lblMegnevezes2);
+            Controls.Add(lblVersenyAzonosito);
+            Controls.Add(lblStart);
+            Controls.Add(cboVersenyAzonosito);
+            Controls.Add(btnNyomtat);
         }
 
         #region EventHandlers
 
-        private void combo_versenyek_SelectedIndexChanged(object sender, EventArgs e)
+        private void
+        cboVersenyAzonosito_SelectedIndexChanged(object _sender, EventArgs _event)
         {
-            List<Verseny> versenyek = Program.database.Versenyek();
-            foreach (Verseny current in versenyek)
+            List<Verseny> Versenyek = Program.database.Versenyek();
+            foreach (Verseny current in Versenyek)
             {
-                if (combo_versenyek.Text == current.azonosító)
+                if (cboVersenyAzonosito.Text == current.azonosító)
                 {
-                    megn2.Text = current.megnevezés;
+                    lblMegnevezes2.Text = current.megnevezés;
                 }
             }
         }
 
-        private void nyomtat_Click(object _sender, EventArgs _event)
+        private void
+        btnNyomtat_Click(object _sender, EventArgs _event)
         {
-            if (combo_versenyek.Text == "") return;
+            if (cboVersenyAzonosito.Text == "") return;
 
-            if (csapat.Checked == false && nevez.Checked == false && nemmegjelent.Checked == false) return;
+            if (chkCsapatlista.Checked == false && chkNevezesiLista.Checked == false && chkNemMegjelent.Checked == false) return;
 
-            if (csapat.Checked == true)
+            if (chkCsapatlista.Checked == true)
             {
-                Nyomtat.owndialog(Nyomtat.nyomtat_csapatlista(combo_versenyek.Text));
+                Nyomtat.owndialog(Nyomtat.nyomtat_csapatlista(cboVersenyAzonosito.Text));
 
                 return;
                 // Nyomtat.print("NEVEZLISTA.docx");
             }
-            if (nevez.Checked == true)
+            if (chkNevezesiLista.Checked == true)
             {
-                Nyomtat.owndialog(Nyomtat.nyomtat_nevezesilista(combo_versenyek.Text, false));
+                Nyomtat.owndialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, false));
                 return;
                 // Nyomtat.print("NEVEZLISTA.docx");
             }
-            if (nemmegjelent.Checked == true)
+            if (chkNemMegjelent.Checked == true)
             {
-                Nyomtat.owndialog(Nyomtat.nyomtat_nevezesilista(combo_versenyek.Text, true));
+                Nyomtat.owndialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, true));
                 return;
                 // Nyomtat.print("CSAPATLISTA.docx");
             }
 
-            Nyomtat.owndialog(combo_versenyek.Text);
-
-
-
-
-            /* DialogResult temp = MessageBox.Show("Biztosan nyomtatni akar?", "Nyomtatás", MessageBoxButtons.YesNo);
-             if (temp == DialogResult.Yes)
-             {
-
-                 if (csapat.Checked == true)
-                 {
-                        
-                     Nyomtat.nyomtat_csapatlista(combo_versenyek.Text);
-                     return;
-                     // Nyomtat.print("NEVEZLISTA.docx");
-                 }
-                 if (nevez.Checked == true)
-                 {
-                     Nyomtat.nyomtat_nevezesilista(combo_versenyek.Text, false);
-                     return;
-                     // Nyomtat.print("NEVEZLISTA.docx");
-                 }
-                 if (nemmegjelent.Checked == true)
-                 {
-                     Nyomtat.nyomtat_nevezesilista(combo_versenyek.Text, true);
-                     return;
-                     // Nyomtat.print("CSAPATLISTA.docx");
-                 }
-
-             }
-             else
-             {
-                 return;
-             }
-             * */
+            Nyomtat.owndialog(cboVersenyAzonosito.Text);
         }
 
-        private void checkbox_klikk(object sender, EventArgs e)
+        private void
+        CheckBox_Click(object _sender, EventArgs _event)
         {
-            CheckBox aktív = sender as CheckBox;
-            if (aktív == csapat )
+            CheckBox chkAktiv = _sender as CheckBox;
+            if (chkAktiv == chkCsapatlista)
             {
-                csapat.Checked = true;
-                nevez.Checked = false;
-                nemmegjelent.Checked = false;
-
+                chkCsapatlista.Checked = true;
+                chkNevezesiLista.Checked = false;
+                chkNemMegjelent.Checked = false;
             }
-            else if(aktív == nevez )
+            else if (chkAktiv == chkNevezesiLista)
             {
-                nevez.Checked = true;
-                csapat.Checked = false;
-                nemmegjelent.Checked = false;
-
+                chkNevezesiLista.Checked = true;
+                chkCsapatlista.Checked = false;
+                chkNemMegjelent.Checked = false;
             }
-            else if( aktív == nemmegjelent )
+            else if (chkAktiv == chkNemMegjelent)
             {
-                nemmegjelent.Checked = true;
-                nevez.Checked = false;
-                csapat.Checked = false;
-
-
+                chkNemMegjelent.Checked = true;
+                chkNevezesiLista.Checked = false;
+                chkCsapatlista.Checked = false;
             }
         }
 
-        public void verseny_hozzáadás(Verseny _verseny)
+        public void
+        VersenyHozzaadas(Verseny _verseny)
         {
-            combo_versenyek.Items.Add(_verseny.azonosító);
+            cboVersenyAzonosito.Items.Add(_verseny.azonosító);
         }
 
-        public void verseny_törlés(string _verseny)
+        public void
+        VersenyTorles(string _verseny)
         {
-            combo_versenyek.Items.Remove(_verseny);
+            cboVersenyAzonosito.Items.Remove(_verseny);
         }
 
-        public void verseny_módosítás(string _azonosító, Verseny _verseny)
+        public void
+        VersenyModositas(string _versenyazonosito, Verseny _verseny)
         {
-            if (_azonosító != _verseny.azonosító)
+            if (_versenyazonosito != _verseny.azonosító)
             {
-                for (int current = 0; current < combo_versenyek.Items.Count; ++current)
+                for (int current = 0; current < cboVersenyAzonosito.Items.Count; ++current)
                 {
-                    if (_azonosító == combo_versenyek.Items[current].ToString())
+                    if (_versenyazonosito == cboVersenyAzonosito.Items[current].ToString())
                     {
-                        combo_versenyek.Items[current] = _verseny.azonosító;
+                        cboVersenyAzonosito.Items[current] = _verseny.azonosító;
                         break;
                     }
                 }
             }
         }
-
         #endregion
     }
 }

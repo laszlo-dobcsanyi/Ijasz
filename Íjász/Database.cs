@@ -637,7 +637,7 @@ namespace Íjász
                 }
 
                 command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF KOINSF, KOINSN) VALUES('" + _korosztály.verseny + "', '" + _korosztály.azonosító + "', '" + _korosztály.megnevezés + "', " +
+                command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSF, KOINSN) VALUES('" + _korosztály.verseny + "', '" + _korosztály.azonosító + "', '" + _korosztály.megnevezés + "', " +
                     +_korosztály.alsó_határ + ", " + _korosztály.felső_határ + ", " + (_korosztály.nők ? "1" : "0") + ", " + (_korosztály.férfiak ? "1" : "0") + ", " + _korosztály.indulók_férfiak + ", " + _korosztály.indulók_nők + ");";
 
                 command.ExecuteNonQuery();
