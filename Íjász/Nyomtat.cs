@@ -2475,7 +2475,7 @@ namespace Íjász
             Border c = new Border(Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Black);
             //_table.SetBorder(TableBorderType.InsideH, c);
             _table.SetBorder(TableBorderType.InsideV, c);
-            _table.SetBorder(TableBorderType.Bottom, c);
+            // _table.SetBorder(TableBorderType.Bottom, c);
             _table.SetBorder(TableBorderType.Top, c);
             _table.SetBorder(TableBorderType.Left, c);
             _table.SetBorder(TableBorderType.Right, c);
