@@ -219,9 +219,9 @@ namespace Íjász
             versenysorozat_panel.versenysorozat_módosítva += verseny_panel.verseny_form.versenysorozat_módosítás;
             versenysorozat_panel.versenysorozat_törölve += verseny_panel.verseny_form.versenysorozat_törlés;
 
-            versenysorozat_panel.versenysorozat_hozzáadva += eredménylap_panel.versenysorozat_hozzáadás;
-            versenysorozat_panel.versenysorozat_módosítva += eredménylap_panel.versenysorozat_módosítás;
-            versenysorozat_panel.versenysorozat_törölve += eredménylap_panel.versenysorozat_törlés;
+            versenysorozat_panel.versenysorozat_hozzáadva += eredménylap_panel.VersenysorozatHozzáadás;
+            versenysorozat_panel.versenysorozat_módosítva += eredménylap_panel.VersenysorozatModositas;
+            versenysorozat_panel.versenysorozat_törölve += eredménylap_panel.VersenysorozatTorles;
 
             //
 
@@ -235,13 +235,13 @@ namespace Íjász
             verseny_panel.verseny_módosítva += korosztályok_panel.verseny_módosítás;
             verseny_panel.verseny_törölve += korosztályok_panel.verseny_törlés;
 
-            verseny_panel.verseny_hozzáadva += eredménylap_panel.verseny_hozzáadás;
-            verseny_panel.verseny_törölve += eredménylap_panel.verseny_törlés;
-            verseny_panel.verseny_módosítva += eredménylap_panel.verseny_módosítás;
+            verseny_panel.verseny_hozzáadva += eredménylap_panel.VersenyHozzaadas;
+            verseny_panel.verseny_törölve += eredménylap_panel.VersenyTorles;
+            verseny_panel.verseny_módosítva += eredménylap_panel.VersenyModositas;
 
-            verseny_panel.verseny_hozzáadva += startlista_panel.verseny_hozzáadás;
-            verseny_panel.verseny_törölve += startlista_panel.verseny_törlés;
-            verseny_panel.verseny_módosítva += startlista_panel.verseny_módosítás;
+            verseny_panel.verseny_hozzáadva += startlista_panel.VersenyHozzaadas;
+            verseny_panel.verseny_törölve += startlista_panel.VersenyTorles;
+            verseny_panel.verseny_módosítva += startlista_panel.VersenyModositas;
 
             verseny_panel.verseny_hozzáadva += Program.network.verseny_hozzáadás;
             verseny_panel.verseny_módosítva += Program.network.verseny_módosítás;

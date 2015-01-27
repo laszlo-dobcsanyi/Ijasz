@@ -19,18 +19,6 @@ namespace Íjász
         public bool lezárva;
         public bool dupla_beirlap;
 
-        public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _állomások, int _indulók, bool _lezárva)
-        {
-            azonosító = _azonosító;
-            megnevezés = _megnevezés;
-            dátum = _dátum;
-            versenysorozat = _versenysorozat;
-            összes = _összes;
-            állomások = _állomások;
-            indulók = _indulók;
-            lezárva = _lezárva;
-            dupla_beirlap = false;
-        }
         public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _állomások, int _indulók, bool _lezárva, bool _dupla_beirlap)
         {
             azonosító = _azonosító;
@@ -137,6 +125,7 @@ namespace Íjász
                 row[5] = current.állomások;
                 row[6] = current.indulók;
                 row[7] = current.lezárva;
+                row[8] = current.dupla_beirlap;
 
                 data.Rows.Add(row);
             }
@@ -349,9 +338,14 @@ namespace Íjász
             if (table.SelectedRows.Count != 1) return;
 
             verseny_form = new Form_Verseny(new Verseny(data.Rows[table.SelectedRows[0].Index][0].ToString(),
-                data.Rows[table.SelectedRows[0].Index][1].ToString(), data.Rows[table.SelectedRows[0].Index][2].ToString(), data.Rows[table.SelectedRows[0].Index][3].ToString(),
-                Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][4]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][5]), Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][6]),
-                Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][7]), data.Rows[table.SelectedRows[0].Index][8].ToString()=="True"));
+                                                        data.Rows[table.SelectedRows[0].Index][1].ToString(), 
+                                                        data.Rows[table.SelectedRows[0].Index][2].ToString(),
+                                                        data.Rows[table.SelectedRows[0].Index][3].ToString(),
+                                                        Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][4]),
+                                                        Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][5]),
+                                                        Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][6]),
+                                                        Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][7]),
+                                                        data.Rows[table.SelectedRows[0].Index][8].ToString()=="True"));
             verseny_form.ShowDialog();
         }
 
@@ -413,12 +407,10 @@ namespace Íjász
                 Label azonosító = new Label();
                 azonosító.Text = "Azonosító:";
                 azonosító.Location = new System.Drawing.Point(16, 16 + 0 * 32);
-                //azonosító.Font = new System.Drawing.Font("Arial Black", 10);
 
                 Label megnevezés = new Label();
                 megnevezés.Text = "Megnevezés:";
                 megnevezés.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 1 * 32);
-                //megnevezés.Font = new System.Drawing.Font("Arial Black", 10);
 
                 Label dátum = new Label();
                 dátum.Text = "Dátum:";
@@ -439,7 +431,6 @@ namespace Íjász
                 Label indulók = new Label();
                 indulók.Text = "Indulók száma:";
                 indulók.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 6 * 32);
-                //szám.Font = new System.Drawing.Font("Arial Black", 10);
 
                 Label duplabeirlap = new Label();
                 duplabeirlap.Text = "Dupla beírólap:";
@@ -632,15 +623,29 @@ namespace Íjász
                         Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(combo_versenysorozat.Text);
                     }
 
-                    Program.mainform.verseny_panel.Verseny_Módosítás(eredeti_azonosító, new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(),
-                        combo_versenysorozat.Text, összes, állomások, Convert.ToInt32(label_indulók.Text), label_lezárva.Text == "Igen" ? true : false, check_duplabeirlap.Checked ? true : false));
+                    Program.mainform.verseny_panel.Verseny_Módosítás(eredeti_azonosító, new Verseny(box_azonosító.Text, 
+                                                                                                    box_megnevezés.Text, 
+                                                                                                    dátumválasztó.Value.ToShortDateString(),
+                                                                                                    combo_versenysorozat.Text, 
+                                                                                                    összes,
+                                                                                                    állomások, Convert.ToInt32(label_indulók.Text), 
+                                                                                                    label_lezárva.Text == "Igen" ? true : false, 
+                                                                                                    check_duplabeirlap.Checked ? true : false));
                     
                 }
                 else
                 {
                     // TODO ezt sem kéne külön csinálni!
                     Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(combo_versenysorozat.Text);
-                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, box_megnevezés.Text, dátumválasztó.Value.ToShortDateString(), combo_versenysorozat.Text, összes, állomások, 0, false, check_duplabeirlap.Checked ? true : false));
+                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, 
+                                                                                box_megnevezés.Text, 
+                                                                                dátumválasztó.Value.ToShortDateString(), 
+                                                                                combo_versenysorozat.Text, 
+                                                                                összes, 
+                                                                                állomások, 
+                                                                                0, 
+                                                                                false, 
+                                                                                check_duplabeirlap.Checked ? true : false));
                 }
 
                 Close();

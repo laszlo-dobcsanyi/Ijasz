@@ -688,9 +688,15 @@ namespace Íjász
                     
                     foreach(DataRow item in Program.mainform.verseny_panel.data.Rows)
                     {
-                        if ((string)item[0] == combo_verseny.Text)
+                        Verseny? verseny = Program.database.Verseny(combo_verseny.Text);
+                        if ((string)item[0] == combo_verseny.Text && verseny.Value.dupla_beirlap==false )
                         {
                                 Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                        }
+                        else if ((string)item[0] == combo_verseny.Text && verseny.Value.dupla_beirlap == true)
+                        {
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
                         }
                     }
                     
