@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace Íjász
         public Panel_Korosztályok korosztályok_panel;
         public Panel_Íjtípusok íjtípusok_panel;
         public Panel_Indulók indulók_panel;
+        public Panel_Egyesuletek egyesuletek_panel;
         public Panel_Eredmények eredmények_panel;
         public Panel_Kapcsolatok kapcsolatok_panel;
         public Panel_Startlista startlista_panel;
@@ -72,6 +74,11 @@ namespace Íjász
             íjtípusok_panel.Dock = DockStyle.Fill;
             Íjtípusok.Controls.Add(íjtípusok_panel);
 
+            TabPage Egyesuletek = new TabPage("Egyesületek");
+            egyesuletek_panel = new Panel_Egyesuletek();
+            egyesuletek_panel.Dock = DockStyle.Fill;
+            Egyesuletek.Controls.Add(egyesuletek_panel);
+
             TabPage Indulók = new TabPage("Indulók");
             indulók_panel = new Panel_Indulók();
             indulók_panel.Dock = DockStyle.Fill;
@@ -105,6 +112,7 @@ namespace Íjász
             menu.TabPages.Add(Verseny);
             menu.TabPages.Add(Korosztályok);
             menu.TabPages.Add(Íjtípusok);
+            menu.TabPages.Add(Egyesuletek);
             menu.TabPages.Add(Indulók);
             menu.TabPages.Add(Eredmények);
             menu.TabPages.Add(Startlista);
@@ -283,4 +291,90 @@ namespace Íjász
             eredmények_panel.eredmény_törölve += Program.network.eredmény_törlés;
         }
     }
+
+    //-------------
+
+    public class iButton : Button
+    {
+
+        public
+        iButton(string _Text, Point _Location, Size _Size, EventHandler _Click, Form _Form)
+        {
+            this.Text = _Text;
+            this.Location = _Location;
+            this.Size = _Size;
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.Click += _Click;
+            _Form.Controls.Add(this);
+        }
+    }
+
+    public class iLabel : Label
+    {
+        public
+        iLabel(string _Text, Point _Location, Form _Form)
+        {
+            this.Text = _Text;
+            this.Location = _Location;
+            _Form.Controls.Add(this);
+        }
+    }
+
+    public class iTextBox : TextBox
+    {
+        public
+        iTextBox(Point _Location, int _MaxLength, Size _Size, EventHandler _TextChanged, Form _Form)
+        {
+
+            this.Size = _Size;
+            this.Location = _Location;
+            this.MaxLength = _MaxLength;
+            this.TextChanged += _TextChanged;
+            _Form.Controls.Add(this);
+        }
+    }
+
+    public class iComboBox : ComboBox
+    {
+        public
+        iComboBox(Point _Location, Size _Size, EventHandler _SelectedIndexChanged, List<string> _Items, Form _Form)
+        {
+            this.Location = _Location;
+            this.Size = _Size;
+            this.SelectedIndexChanged += _SelectedIndexChanged;
+            this.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            foreach (string item in _Items)
+            {
+                this.Items.Add(item);
+            }
+            _Form.Controls.Add(this);
+        }
+
+        public
+        iComboBox(Point _Location, Size _Size, EventHandler _SelectedIndexChanged, List<int> _Items, Form _Form)
+        {
+            this.Location = _Location;
+            this.Size = _Size;
+            this.SelectedIndexChanged += _SelectedIndexChanged;
+            this.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            foreach (int item in _Items)
+            {
+                this.Items.Add(item);
+            }
+            _Form.Controls.Add(this);
+        }
+    }
+
+    public class iCheckBox : CheckBox
+    {
+        public
+        iCheckBox(Point _Location, Form _form)
+        {
+            this.Location = _Location;
+            _form.Controls.Add(this);
+        }
+    }
+
 }

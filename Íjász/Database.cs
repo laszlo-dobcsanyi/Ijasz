@@ -30,7 +30,8 @@ namespace Íjász
                     "CREATE TABLE Verseny (VEAZON char(10) PRIMARY KEY, VEMEGN char(30), VEDATU char(20), VSAZON char(10), VEOSPO int NOT NULL, VEALSZ int, VEINSZ int, VELEZAR boolean, VEDUBE boolean);" +
                     "CREATE TABLE Korosztályok (VEAZON char(10) NOT NULL, KOAZON char(10) NOT NULL, KOMEGN char(30), KOEKMI int NOT NULL, KOEKMA int NOT NULL, KONOK boolean, KOFERF boolean, KOINSN int, KOINSF int);" +
                     "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
-                    "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int);" +
+                    "CREATE TABLE Egyesuletek (EGAZON char(10) PRIMARY KEY,EGMEGN char(30),EGCIME char(30),EGVENE char(30),EGVETE char(10),EGVEEM char(30),EGLIST boolean,EGTASZ int);" +
+                    "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int,  EGAZON char(10));" +
 
                     "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
@@ -946,6 +947,145 @@ namespace Íjász
 
             return exists;
         }
+        #endregion
+
+        #region Egyesuletek
+
+        public List<Egyesulet> 
+        Egyesuletek()
+        {
+            lock (Program.datalock)
+            {
+                List<Egyesulet> data = new List<Egyesulet>();
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+
+                command.CommandText = "SELECT EGAZON,EGMEGN,EGCIME,EGVENE,EGVETE,EGVEEM,EGLIST,EGTASZ FROM Egyesuletek ;";
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Egyesulet temp = new Egyesulet( reader.GetString(0), 
+                                                reader.GetString(1),
+                                                reader.GetString(2),
+                                                reader.GetString(3), 
+                                                reader.GetString(4), 
+                                                reader.GetString(5),
+                                                reader.GetBoolean(6),
+                                                reader.GetInt32(7));
+                    data.Add(temp);
+                }
+
+                command.Dispose();
+                connection.Close();
+
+                return data;
+            }
+        }
+
+        public Egyesulet 
+        Egyesulet(string _Azonosito)
+        {
+            Egyesulet Data = new Egyesulet();
+
+            return Data; 
+        }
+
+        public bool 
+        UjEgyesulet(Egyesulet _egyesulet)
+        {
+            lock (Program.datalock)
+            {
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+
+                command.CommandText = "SELECT EGAZON FROM Egyesuletek WHERE EGAZON = '" + _egyesulet.Azonosito + "';";
+                SQLiteDataReader reader = command.ExecuteReader();
+                bool found = false;
+                while (reader.Read())
+                {
+                    if (_egyesulet.Azonosito == reader.GetString(0))
+                    {
+                        found = true;
+                    }
+                }
+                if (found)
+                {
+                    command.Dispose();
+                    connection.Close();
+                    return false;
+                }
+
+
+
+                command = connection.CreateCommand();
+                command.CommandText = "INSERT INTO Egyesuletek (EGAZON,EGMEGN,EGCIME,EGVENE,EGVETE,EGVEEM,EGLIST,EGTASZ)" + 
+                                      " VALUES('" + _egyesulet.Azonosito + "', '" +
+                                       _egyesulet.Nev + "', '" +
+                                       _egyesulet.Cim + "', '" +
+                                       _egyesulet.Vezeto + "', '" +
+                                       _egyesulet.Telefon + "', '" +
+                                       _egyesulet.Email + "', '" +
+                                       Convert.ToInt32(_egyesulet.Listazando) + "'," +
+                                       _egyesulet.TagokSzama + ");";
+
+                command.ExecuteNonQuery();
+                command.Dispose();
+                connection.Close();
+
+                return true;
+            }
+        }
+
+        public bool 
+        EgyesuletModositas(Egyesulet _Regi, Egyesulet _Uj )
+        {
+            lock (Program.datalock)
+            {
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+                command.CommandText = "UPDATE Egyesuletek SET EGAZON= '" + _Uj.Azonosito +
+                                                            "', EGMEGN = '" + _Uj.Nev +
+                                                            "', EGCIME = '" + _Uj.Cim +
+                                                            "', EGVENE = '" + _Uj.Vezeto+
+                                                            "', EGVETE = '" + _Uj.Telefon+
+                                                            "', EGVEEM = '" + _Uj.Email+
+                                                            "', EGLIST = " + (_Uj.Listazando ? "1" : "0") +
+                                                            ", EGTASZ = " + _Uj.TagokSzama +
+                                                            " WHERE EGAZON = '" + _Regi.Azonosito + "';";
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (System.Data.SQLite.SQLiteException)
+                {
+                    command.Dispose();
+                    connection.Close();
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        public bool 
+        EgyesuletTorles( string _Azonosito )
+        {
+            lock (Program.datalock)
+            {
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+                command.CommandText = "DELETE FROM Egyesuletek WHERE EGAZON = '" + _Azonosito + "';";
+                command.ExecuteNonQuery();
+
+                command.Dispose();
+                connection.Close();
+                return true;
+            }
+        }
+
         #endregion
 
         #region Induló
