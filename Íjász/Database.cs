@@ -341,7 +341,7 @@ namespace Íjász
                 {
                     command.ExecuteNonQuery();
                 }
-                catch (System.Data.SQLite.SQLiteException e)
+                catch (System.Data.SQLite.SQLiteException)
                 {
                     command.Dispose();
                     connection.Close();

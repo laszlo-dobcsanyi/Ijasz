@@ -601,7 +601,7 @@ namespace Íjász
                 combo_csapat.Size = label_név.Size;
                 combo_csapat.DropDownStyle = ComboBoxStyle.DropDownList;
 
-                for (int i = 0; i < 35; i++) combo_csapat.Items.Add(i + 1);
+                for (int i = 0; i < 45; i++) combo_csapat.Items.Add(i + 1);
                 combo_csapat.SelectedItem = combo_csapat.Items[0];
 
                 check_megjelent = new CheckBox();
@@ -815,11 +815,13 @@ namespace Íjász
 
             private DataTable CreateSource()
             {
+                const int CsapatokSzama = 45; 
+
                 data = new DataTable();
                 data.Columns.Add(new DataColumn("Csapat", System.Type.GetType("System.Int32")));
                 data.Columns.Add(new DataColumn("Indulók száma", System.Type.GetType("System.Int32")));
 
-                for (int i = 0; i < 35; i++)
+                for (int i = 0; i < CsapatokSzama; i++)
                 {
                     DataRow row = data.NewRow();
                     row[0] = i + 1;
