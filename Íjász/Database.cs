@@ -32,6 +32,7 @@ namespace Íjász
                     "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
                     "CREATE TABLE Egyesuletek (EGAZON char(10) PRIMARY KEY,EGMEGN char(30),EGCIME char(30),EGVENE char(30),EGVETE char(10),EGVEEM char(30),EGLIST boolean,EGTASZ int);" +
                     "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int,  EGAZON char(10));" +
+                    "INSERT INTO Egyesuletek (EGAZON,EGMEGN,EGCIME,EGVENE,EGVETE,EGVEEM,EGLIST,EGTASZ) VALUES('','','','','','','0','0');" + 
 
                     "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
@@ -973,7 +974,7 @@ namespace Íjász
                                                 reader.GetString(5),
                                                 reader.GetBoolean(6),
                                                 reader.GetInt32(7));
-                    data.Add(temp);
+                   data.Add(temp);
                 }
 
                 command.Dispose();
@@ -1065,6 +1066,8 @@ namespace Íjász
                     connection.Close();
                     return false;
                 }
+                command.Dispose();
+                connection.Close();
                 return true;
             }
         }
@@ -1079,6 +1082,64 @@ namespace Íjász
                 SQLiteCommand command = connection.CreateCommand();
                 command.CommandText = "DELETE FROM Egyesuletek WHERE EGAZON = '" + _Azonosito + "';";
                 command.ExecuteNonQuery();
+
+                command.Dispose();
+                connection.Close();
+                return true;
+            }
+        }
+
+        public int
+        EgyesuletTagokSzama( string _azonosito )
+        {
+            lock (Program.datalock)
+            {
+                int value = 0;
+                connection.Open(); 
+
+                SQLiteCommand command = connection.CreateCommand();
+
+                command.CommandText = "SELECT COUNT(EGAZON) FROM Indulók WHERE EGAZON= '" + _azonosito + "';";
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    value++;
+                }
+
+                command.Dispose();
+                connection.Close();
+
+                return value;
+            }
+        }
+
+        public bool 
+        EgyesuletTagokNoveles(string _azonosito)
+        {
+            lock (Program.datalock)
+            {
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+                command.CommandText = "UPDATE Egyesuletek SET EGTASZ = EGTASZ + 1 WHERE EGAZON = '" + _azonosito + "';";
+                command.ExecuteNonQuery();
+
+                command.Dispose();
+                connection.Close();
+                return true;
+            }
+        }
+
+        public bool
+        EgyesuletTagokCsokkentes(string _azonosito)
+        {
+            lock (Program.datalock)
+            {
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+                command.CommandText = "UPDATE Egyesuletek SET EGTASZ = EGTASZ - 1 WHERE EGAZON = '" + _azonosito + "';";
+                 command.ExecuteNonQuery();
 
                 command.Dispose();
                 connection.Close();

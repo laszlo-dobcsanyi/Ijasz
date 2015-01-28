@@ -289,9 +289,14 @@ namespace Íjász
             eredmények_panel.eredmény_beírva += Program.network.eredmény_beírás;
             eredmények_panel.eredmény_módosítva += Program.network.eredmény_módosítás;
             eredmények_panel.eredmény_törölve += Program.network.eredmény_törlés;
+
+            //
+
+            indulók_panel.induló_hozzáadva += egyesuletek_panel.InduloHozzaadas;
+            indulók_panel.induló_törölve += egyesuletek_panel.InduloTorles;
+            indulók_panel.induló_módosítva += egyesuletek_panel.InduloModositas;
         }
     }
-
     //-------------
 
     public class iButton : Button
@@ -376,5 +381,5 @@ namespace Íjász
             _form.Controls.Add(this);
         }
     }
-
+    
 }

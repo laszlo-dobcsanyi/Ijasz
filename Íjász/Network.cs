@@ -66,9 +66,9 @@ namespace Íjász
             Broadcast(ServerCommand.INDULÓ_HOZZÁADÁS, _induló.név + ";" + _induló.nem + ";" + _induló.születés + ";" + _induló.engedély + ";" + _induló.egyesület + ";" + _induló.eredmények);
         }
 
-        public void induló_módosítás(string _név, Induló _induló)
+        public void induló_módosítás(Induló _eredeti, Induló _uj)
         {
-            Broadcast(ServerCommand.INDULÓ_MÓDOSÍTÁS, _név + ";" + _induló.név + ";" + _induló.nem + ";" + _induló.születés + ";" + _induló.engedély + ";" + _induló.egyesület + ";" + _induló.eredmények);
+            Broadcast(ServerCommand.INDULÓ_MÓDOSÍTÁS, _eredeti.név + ";" + _uj.név + ";" + _uj.nem + ";" + _uj.születés + ";" + _uj.engedély + ";" + _uj.egyesület + ";" + _uj.eredmények);
         }
 
         public void induló_átnevezés(string _eredeti_név, string _új_név)
@@ -76,9 +76,9 @@ namespace Íjász
             Broadcast(ServerCommand.INDULÓ_ÁTNEVEZÉS, _eredeti_név + ";" + _új_név);
         }
 
-        public void induló_törlés(string _név)
+        public void induló_törlés(Induló _indulo)
         {
-            Broadcast(ServerCommand.INDULÓ_TÖRLÉS, _név);
+            Broadcast(ServerCommand.INDULÓ_TÖRLÉS, _indulo.név);
         }
 
         //

@@ -903,24 +903,25 @@ namespace Íjász
                 combo_név.Items.Add(_induló.név);
             }
 
-            public void induló_módosítás(string _név, Induló _induló)
+            public void induló_módosítás(Induló _eredeti, Induló _uj)
             {
-                if (_név != _induló.név)
+                if (_eredeti.név != _uj.név)
                 {
                     for (int current = 0; current < combo_név.Items.Count; ++current)
                     {
-                        if (_név == combo_név.Items[current].ToString())
+                        if (_eredeti.név == combo_név.Items[current].ToString())
                         {
-                            combo_név.Items[current] = _induló.név;
+                            combo_név.Items[current] = _uj.név;
                             break;
                         }
                     }
                 }
             }
 
-            public void induló_törlés(string _név)
+
+            public void induló_törlés(Induló _indulo)
             {
-                combo_név.Items.Remove(_név);
+                combo_név.Items.Remove(_indulo.név);
             }
 
             private void rendben_Click(object _sender, EventArgs _event)

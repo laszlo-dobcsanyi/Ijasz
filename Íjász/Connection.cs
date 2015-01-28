@@ -166,7 +166,15 @@ namespace Íjász
                 case ClientCommand.INDULÓ_MÓDOSÍTÁS:
                     data = arguments[1].Split(new char[] { ';' });
                     if (data.Length != 6) { MessageBox.Show("Hálózati hiba!\nA kapott induló módosítás adatok száma nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                    Program.mainform.indulók_panel.Induló_Módosítás(data[0], new Induló(data[1], data[2], data[3], data[4], data[5], -666));
+                    Induló? temp = Program.database.Induló(data[0]);
+
+                    Program.mainform.indulók_panel.Induló_Módosítás(temp.Value,
+                                                                     new Induló(data[1], 
+                                                                                data[2], 
+                                                                                data[3], 
+                                                                                data[4], 
+                                                                                data[5], 
+                                                                                -666));
                     break;
 
                 ///

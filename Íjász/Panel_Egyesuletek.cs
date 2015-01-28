@@ -171,8 +171,8 @@ namespace Íjász
                 row[3] = _egyesulet.Vezeto;
                 row[4] = _egyesulet.Telefon;
                 row[5] = _egyesulet.Email;
-                row[6] = _egyesulet.TagokSzama;
-                row[7] = _egyesulet.Listazando;
+                row[6] = _egyesulet.Listazando;
+                row[7] = _egyesulet.TagokSzama;
                 data.Rows.Add(row);
 
                 if (egyesulet_hozzaadva != null) egyesulet_hozzaadva(_egyesulet);
@@ -181,6 +181,7 @@ namespace Íjász
 
         private delegate void 
         Egyesulet_Modositva_Callback(Egyesulet _regi, Egyesulet _uj);
+
         public void 
         Egyesulet_Modositas(Egyesulet _regi, Egyesulet _uj)
         {
@@ -216,6 +217,7 @@ namespace Íjász
 
         private delegate void 
         Egyesulet_Torolve_Callback(string _azonosito);
+
         public void 
         Egyesulet_Torles(string _azonosito)
         {
@@ -272,6 +274,8 @@ namespace Íjász
         private void 
         Modositas_Click(object _sender, EventArgs _event)
         {
+            if ((string)data.Rows[table.SelectedRows[0].Index][0] == "") return;
+
             Egyesulet egyesulet = new Egyesulet( data.Rows[table.SelectedRows[0].Index][0].ToString(),
                                                  data.Rows[table.SelectedRows[0].Index][1].ToString(),
                                                  data.Rows[table.SelectedRows[0].Index][2].ToString(),
@@ -296,11 +300,99 @@ namespace Íjász
         private void 
         btnTorles_Click(object _sender, EventArgs _event)
         {
-            if (table.SelectedRows.Count != 1) return;
-            if (0 < (int)(data.Rows[table.SelectedRows[0].Index][7])) { MessageBox.Show("Ez az egyesület nem törölhető, mivel van hozzárendelve induló!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-            if (MessageBox.Show("Biztosan törli ezt az egyesületet?", "Megerősítés", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (table.SelectedRows.Count != 1 || (string)data.Rows[table.SelectedRows[0].Index][0] == "") return;
+            if (0 < (int)(data.Rows[table.SelectedRows[0].Index][7]))
+            { 
+                MessageBox.Show("Ez az egyesület nem törölhető, mivel van hozzárendelve induló!",
+                                "Hiba", 
+                                MessageBoxButtons.OK, 
+                                MessageBoxIcon.Error); 
+                return;
+            }
+
+
+
+            if (MessageBox.Show("Biztosan törli ezt az egyesületet?", 
+                                "Megerősítés", 
+                                MessageBoxButtons.YesNo, 
+                                MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             Program.mainform.egyesuletek_panel.Egyesulet_Torles(data.Rows[table.SelectedRows[0].Index][0].ToString());
+
+
+        }
+
+        //tesztel
+
+        public void 
+        InduloHozzaadas(Induló _indulo)
+        {
+            if(_indulo.egyesület=="") return ;
+
+            if(!Program.database.EgyesuletTagokNoveles(_indulo.egyesület))
+            {
+                 MessageBox.Show("Adatbázis hiba!", 
+                                 "Hiba", 
+                                 MessageBoxButtons.OK, 
+                                 MessageBoxIcon.Error); 
+                 return;
+            }
+
+            foreach(DataRow current in data.Rows)
+            {
+                if( _indulo.egyesület==current[0].ToString() )
+                {
+                    current[7] = (int)current[7]+1;
+                }
+            }
+        }
+
+        public void
+        InduloTorles(Induló _indulo)
+        {
+            if(_indulo.egyesület=="") return;
+            if(!Program.database.EgyesuletTagokCsokkentes(_indulo.egyesület))
+            {
+                MessageBox.Show("Adatbázis hiba!",
+                                "Hiba",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error); 
+            }
+
+            foreach(DataRow current in data.Rows)
+            {
+                if(_indulo.egyesület==current[0].ToString())
+                {
+                    current[7] = (int)current[7]-1;
+                }
+            }
+        }
+
+        public void
+        InduloModositas( Induló _eredeti, Induló _uj )
+        {
+            if( _eredeti.egyesület == _uj.egyesület ) return;
+
+            if( (!Program.database.EgyesuletTagokCsokkentes(_eredeti.egyesület) ||
+                (!Program.database.EgyesuletTagokNoveles(_uj.egyesület))))
+            {
+                MessageBox.Show("Adatbázis hiba!",
+                "Hiba",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error); 
+            }
+
+            foreach (DataRow current in data.Rows)
+            {
+                if (_eredeti.egyesület == current[0].ToString())
+                {
+                    current[7] = (int)current[7]-1;
+                }
+                if( _uj.egyesület == current[0].ToString() )
+                {
+                    current[7] = (int)current[7]+1;
+                }
+            }
         }
 
         #endregion
@@ -417,6 +509,8 @@ namespace Íjász
             InitializeData(Egyesulet? _egyesulet)
             {
                 txtAzonosito.Text = _egyesulet.Value.Azonosito;
+                if (_egyesulet.Value.TagokSzama != 0) { txtAzonosito.Enabled = false; }
+                
                 txtNev.Text = _egyesulet.Value.Nev;
                 txtCim.Text = _egyesulet.Value.Cim;
                 txtVezeto.Text = _egyesulet.Value.Vezeto;
@@ -458,7 +552,7 @@ namespace Íjász
                                     txtTelefon.Text,
                                     txtEmail.Text,
                                     chkListazando.Checked,
-                                    0);
+                                    egyesulet.Value.TagokSzama);
                     Egyesulet regi = egyesulet.Value;
 
                     Program.mainform.egyesuletek_panel.Egyesulet_Modositas(regi,uj);

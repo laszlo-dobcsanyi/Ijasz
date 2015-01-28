@@ -27,9 +27,9 @@ namespace Íjász
     }
    
     public delegate void Induló_Hozzáadva(Induló _induló);
-    public delegate void Induló_Módosítva(string _név, Induló _induló);
+    public delegate void Induló_Módosítva(Induló _eredeti, Induló _uj);
     public delegate void Induló_Átnevezve(string _eredeti_név, string _új_név);
-    public delegate void Induló_Törölve(string _név);
+    public delegate void Induló_Törölve(Induló _indulo);
 
     public sealed class Panel_Indulók : Control
     {
@@ -120,7 +120,7 @@ namespace Íjász
             data.Columns.Add(new DataColumn("Nem", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Születési idő", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Engedély", System.Type.GetType("System.String")));
-            data.Columns.Add(new DataColumn("Egyesület név", System.Type.GetType("System.String")));
+            data.Columns.Add(new DataColumn("Egyesület", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("#", System.Type.GetType("System.Int32")));
 
             List<Induló> indulók = Program.database.Indulók();
@@ -137,7 +137,6 @@ namespace Íjász
 
                 data.Rows.Add(row);
             }
-
             return data;
         }
 
@@ -168,68 +167,68 @@ namespace Íjász
             }
         }
 
-        private delegate void Induló_Módosítás_Callback(string _név, Induló _induló);
-        public void Induló_Módosítás(string _név, Induló _induló)
+        private delegate void Induló_Módosítás_Callback(Induló _eredeti, Induló _uj);
+        public void Induló_Módosítás(Induló _eredeti, Induló _uj)
         {
             if (InvokeRequired)
             {
                 Induló_Módosítás_Callback callback = new Induló_Módosítás_Callback(Induló_Módosítás);
-                Invoke(callback, new object[] { _név, _induló });
+                Invoke(callback, new object[] { _eredeti, _uj });
             }
             else
             {
-                if (!Program.database.IndulóMódosítás(_név, _induló)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Program.database.IndulóMódosítás(_eredeti.név, _uj)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 foreach (DataRow current in data.Rows)
                 {
-                    if (_név == current[0].ToString())
+                    if (_eredeti.név == current[0].ToString())
                     {
-                        current[0] = _induló.név;
-                        current[1] = _induló.nem;
-                        current[2] = _induló.születés;
-                        current[3] = _induló.engedély;
-                        current[4] = _induló.egyesület;
+                        current[0] = _uj.név;
+                        current[1] = _uj.nem;
+                        current[2] = _uj.születés;
+                        current[3] = _uj.engedély;
+                        current[4] = _uj.egyesület;
 
                         // Jól legyen broadcastolva a módosítás!
-                        _induló.eredmények = (int)current[5];
+                        _uj.eredmények = (int)current[5];
                         break;
                     }
                 }
 
-                if (induló_módosítva != null) induló_módosítva(_név, _induló);
+                if (induló_módosítva != null) induló_módosítva(_eredeti, _uj);
 
 
-                if (_név != _induló.név && 0 < _induló.eredmények)
+                if (_eredeti.név != _uj.név && 0 < _uj.eredmények)
                 {
-                    if (!Program.database.Induló_EredményekÁtnevezése(_név, _induló.név)) { MessageBox.Show("Adatbázis hiba!\nLEHETETLEN!!!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                    if (induló_átnevezve != null) induló_átnevezve(_név, _induló.név);
+                    if (!Program.database.Induló_EredményekÁtnevezése(_eredeti.név, _uj.név)) { MessageBox.Show("Adatbázis hiba!\nLEHETETLEN!!!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                    if (induló_átnevezve != null) induló_átnevezve(_eredeti.név, _uj.név);
                 }
 
             }
         }
 
-        private delegate void Induló_Törlés_Callback(string _név);
-        public void Induló_Törlés(string _név)
+        private delegate void Induló_Törlés_Callback(Induló _indulo);
+        public void Induló_Törlés(Induló _indulo)
         {
             if (InvokeRequired)
             {
                 Induló_Törlés_Callback callback = new Induló_Törlés_Callback(Induló_Törlés);
-                Invoke(callback, new object[] { _név });
+                Invoke(callback, new object[] { _indulo});
             }
             else
             {
-                if (!Program.database.IndulóTörlés(_név)) { MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Program.database.IndulóTörlés(_indulo.név)) { MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 foreach (DataRow current in data.Rows)
                 {
-                    if (_név == current[0].ToString())
+                    if (_indulo.név == current[0].ToString())
                     {
                         data.Rows.Remove(current);
                         break;
                     }
                 }
 
-                if (induló_törölve != null) induló_törölve(_név);
+                if (induló_törölve != null) induló_törölve(_indulo);
             }
         }
         #endregion
@@ -307,11 +306,11 @@ namespace Íjász
                 if (table.SelectedRows[0] == current)
                 {
                     Form_Induló induló = new Form_Induló(new Induló(current.Cells[0].Value.ToString(),
-                        current.Cells[1].Value.ToString(),
-                        current.Cells[2].Value.ToString(),
-                        current.Cells[3].Value.ToString(), 
-                        current.Cells[4].Value.ToString(), 
-                        Convert.ToInt32(current.Cells[5].Value) ) ) ;
+                                                                    current.Cells[1].Value.ToString(),
+                                                                    current.Cells[2].Value.ToString(),
+                                                                    current.Cells[3].Value.ToString(), 
+                                                                    current.Cells[4].Value.ToString(), 
+                                                                    Convert.ToInt32(current.Cells[5].Value) ) ) ;
                     induló.ShowDialog();
                     return;
                 }
@@ -329,8 +328,8 @@ namespace Íjász
             {
                 if (table.SelectedRows[0] == current)
                 {
-
-                    Induló_Törlés(current.Cells[0].Value.ToString());
+                    Induló? _indulo = Program.database.Induló(table.SelectedRows[0].Cells[0].Value.ToString());
+                    Induló_Törlés(_indulo.Value);
 
                 }
             }
@@ -372,7 +371,7 @@ namespace Íjász
             private TextBox box_nem;
             private DateTimePicker date_születés;
             private TextBox box_engedély;
-            private TextBox box_egyesület;
+            private ComboBox cboEgyesulet;
             private Label eredmények_száma;
 
             public Form_Induló()
@@ -419,7 +418,7 @@ namespace Íjász
                 engedély.Location = new System.Drawing.Point(név.Location.X, 16 + 3 * 32);
 
                 Label egyesület = new Label();
-                egyesület.Text = "Egyesület név:";
+                egyesület.Text = "Egyesület:";
                 egyesület.Location = new System.Drawing.Point(név.Location.X, 16 + 4 * 32);
 
                 Label eredmények = new Label();
@@ -448,10 +447,17 @@ namespace Íjász
                 box_engedély.Size = box_név.Size;
                 box_engedély.MaxLength = 30;
 
-                box_egyesület = new TextBox();
-                box_egyesület.Location = new System.Drawing.Point(egyesület.Location.X + egyesület.Size.Width + 16, egyesület.Location.Y);
-                box_egyesület.Size = box_név.Size;
-                box_egyesület.MaxLength = 30;
+                cboEgyesulet = new ComboBox();
+                cboEgyesulet.Location = new System.Drawing.Point(egyesület.Location.X + egyesület.Size.Width + 16, egyesület.Location.Y);
+                cboEgyesulet.Size = box_név.Size;
+                cboEgyesulet.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                 List<Egyesulet> egyesuletek = Program.database.Egyesuletek();
+
+                foreach (Egyesulet item in egyesuletek)
+                {
+                    cboEgyesulet.Items.Add(item.Azonosito);
+                }
 
                 eredmények_száma = new Label();
                 eredmények_száma.Location = new System.Drawing.Point(eredmények.Location.X + eredmények.Size.Width + 16, eredmények.Location.Y);
@@ -476,7 +482,7 @@ namespace Íjász
                 Controls.Add(box_nem);
                 Controls.Add(date_születés);
                 Controls.Add(box_engedély);
-                Controls.Add(box_egyesület);
+                Controls.Add(cboEgyesulet);
                 Controls.Add(eredmények_száma);
                 Controls.Add(rendben);
             }
@@ -488,7 +494,6 @@ namespace Íjász
                 box_nem.Text = "";
                 date_születés.Value = DateTime.Now;
                 box_engedély.Text = "";
-                box_egyesület.Text = "";
                 eredmények_száma.Text = "0";
             }
 
@@ -500,8 +505,8 @@ namespace Íjász
                 date_születés.Value = DateTime.Parse(_induló.születés);
                 date_születés.Enabled = (_induló.eredmények > 0 ? false : true);
                 box_engedély.Text = _induló.engedély;
-                box_egyesület.Text = _induló.egyesület;
                 eredmények_száma.Text = _induló.eredmények.ToString();
+                cboEgyesulet.Text = _induló.egyesület;
             }
 
             private void rendben_Click(object _sender, EventArgs _event)
@@ -515,13 +520,22 @@ namespace Íjász
                 else if (!(box_nem.Text.ToLower() == "f" || box_nem.Text.ToLower() == "férfi")) { MessageBox.Show("Nem megfelelő nem!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!(box_engedély.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő az engedély hossza (0 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!Database.IsCorrectSQLText(box_engedély.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!(box_egyesület.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő az egyesület hossza (0 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!Database.IsCorrectSQLText(box_egyesület.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (eredeti_név != null)
-                    Program.mainform.indulók_panel.Induló_Módosítás(eredeti_név, new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, box_egyesület.Text, Convert.ToInt32(eredmények_száma.Text)));
+                {
+                    Induló? eredeti = Program.database.Induló(eredeti_név);
+                    Program.mainform.indulók_panel.Induló_Módosítás(eredeti.Value, 
+                                                                    new Induló(box_név.Text, 
+                                                                                (nő ? "N" : "F"), 
+                                                                                date_születés.Value.ToShortDateString(), 
+                                                                                box_engedély.Text, 
+                                                                                cboEgyesulet.Text, 
+                                                                                Convert.ToInt32(eredmények_száma.Text)));
+                }
                 else
-                    Program.mainform.indulók_panel.Induló_Hozzáadás(new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, box_egyesület.Text, 0));
+                {
+                    Program.mainform.indulók_panel.Induló_Hozzáadás(new Induló(box_név.Text, (nő ? "N" : "F"), date_születés.Value.ToShortDateString(), box_engedély.Text, cboEgyesulet.Text, 0));
+                }
 
                 Close();
             }
@@ -691,7 +705,7 @@ namespace Íjász
                         Verseny? verseny = Program.database.Verseny(combo_verseny.Text);
                         if ((string)item[0] == combo_verseny.Text && verseny.Value.dupla_beirlap==false )
                         {
-                                Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                            Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
                         }
                         else if ((string)item[0] == combo_verseny.Text && verseny.Value.dupla_beirlap == true)
                         {
