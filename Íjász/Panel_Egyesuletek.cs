@@ -487,8 +487,10 @@ namespace Íjász
                                                     null,
                                                     this); 
 
-                chkListazando = new iCheckBox( new Point( lblListazando.Location.X + lblListazando.Width + 16,lblListazando.Location.Y),
-                                                       this );
+                chkListazando = new iCheckBox( "",
+                                                new Point( lblListazando.Location.X + lblListazando.Width + 16,lblListazando.Location.Y),
+                                                null,
+                                                this );
 
                 Button btnRendben = new iButton("Rendben",
                                                 new Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16),

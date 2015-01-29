@@ -381,6 +381,153 @@ namespace Íjász
             public List<string> versenyazonosítók;
         }
 
+        public struct EredmenylapVersenyEgyesulet
+        {
+            public struct Versenyadatok
+            {
+                public string VEAZON;
+                public string VEMEGN;
+                public string VEDATU;
+                public int VEOSPO;
+                public string VSAZON;
+                public string VSMEGN;
+
+                public Versenyadatok(string _VEAZON ) : this()
+                {
+                    List<Verseny> versenyek = Program.database.Versenyek();
+                    List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok();
+
+                    foreach (Verseny verseny in versenyek)
+                    {
+                        if (verseny.azonosító == _VEAZON)
+                        {
+                            VEAZON = verseny.azonosító;
+                            VEMEGN = verseny.megnevezés;
+                            VEDATU = verseny.dátum;
+                            VEOSPO = verseny.összes;
+                            VSAZON = verseny.versenysorozat;
+                        }
+                        
+                    }
+                    foreach (Versenysorozat versenysorozat in versenysorozatok)
+                    {
+                        if(versenysorozat.azonosító == VSAZON)
+                        VSMEGN = versenysorozat.megnevezés;
+                    }
+                }
+            }
+
+            public struct InduloAdat
+            {
+                public string Nev;
+                public string Egyesulet;
+                public int Pont;
+
+                public InduloAdat( string _Nev, string _Egyesulet, int _Pont )
+                {
+                    Nev = _Nev;
+                    Egyesulet = _Egyesulet;
+                    Pont = _Pont;
+                }
+            }
+
+            public struct EgyesuletAdat
+            {
+                public int Helyezes;
+                public string Nev;
+                public string Cim;
+                public int OsszPont;
+
+
+                public EgyesuletAdat(int _Helyezes, string _Nev, string _Cim, int _OsszPont)
+                {
+                    Helyezes = _Helyezes;
+                    Nev = _Nev;
+                    Cim = _Cim;
+                    OsszPont = _OsszPont;
+                }
+            }
+
+            public static List<InduloAdat> InduloAdatok(string _VEAZON)
+            {
+                List<Eredmény> eredmenyek = Program.database.Eredmények(_VEAZON);
+                List<Induló> indulok = new List<Induló>();
+                List<InduloAdat> induloadatok = new List<InduloAdat>();
+
+                for (int i = eredmenyek.Count - 1; i >= 0; i--)
+                {
+                    if (eredmenyek[i].megjelent == false)
+                    {
+                        eredmenyek.Remove(eredmenyek[i]);
+                    }
+                    else
+                    {
+                        Induló temp = Program.database.Induló(eredmenyek[i].név).Value;
+                        if (temp.egyesület != "")
+                        {
+                            indulok.Add(temp);
+                        }
+                        else
+                        {
+                            eredmenyek.Remove(eredmenyek[i]);
+                        }
+                    }
+                }
+
+                for (int i = eredmenyek.Count - 1; i >= 0; i--)
+                {
+                    for (int j = indulok.Count - 1; j >= 0; j--)
+                    {
+                        if (eredmenyek[i].név == indulok[i].név)
+                        {
+                            InduloAdat indulo = new InduloAdat(indulok[j].név, indulok[j].egyesület, eredmenyek[i].összpont.Value);
+                            induloadatok.Add(indulo);
+                            eredmenyek.RemoveAt(i);
+                            indulok.RemoveAt(j);
+                        }
+                    }
+                }
+
+                if (eredmenyek.Count != 0 || indulok.Count != 0)
+                {
+                    MessageBox.Show("FAIL");
+                }
+                return induloadatok;
+            }
+
+            public List<EgyesuletAdat> EgyesuletAdatok(string _VEAZON)
+            {
+                List<InduloAdat> induloadatok = InduloAdatok(_VEAZON);
+                List<EgyesuletAdat> egyesuletadatok = new List<EgyesuletAdat>();
+
+                for( int i = induloadatok.Count-1; i>=0; i-- )
+                {
+                    EgyesuletAdat egyesulet = new EgyesuletAdat(0,induloadatok[i].Nev,"",0);
+                    induloadatok.RemoveAt(i);
+                    for( int j = induloadatok.Count-1; j>=0; j-- )
+                    {
+                        if(induloadatok[j].Egyesulet == egyesulet.Nev)
+                        {
+                            egyesulet.OsszPont += induloadatok[j].Pont;
+                            induloadatok.RemoveAt(j);
+
+                        }
+                    }
+                    egyesuletadatok.Add(egyesulet);
+                }
+                return egyesuletadatok;
+            }
+
+            public EredmenylapVersenyEgyesulet(string _VEAZON) : this()
+            {
+                Egyesuletek = EgyesuletAdatok( _VEAZON);
+                VersenyAdatok = new EredmenylapVersenyEgyesulet.Versenyadatok(_VEAZON);
+            }
+
+            public List<EgyesuletAdat> Egyesuletek;
+            public Versenyadatok VersenyAdatok; 
+        }
+
         static public string nyomtat_beirlap(string _VEAZON, Eredmény _eredmény) 
         {
             #region alap stringek
@@ -1935,6 +2082,15 @@ namespace Íjász
             return filename;
         }
 
+        static public string NyomtatEredmenylapVersenyEgyesulet(string _VEAZON)
+        {
+            string FileName = null;
+
+            EredmenylapVersenyEgyesulet data = new EredmenylapVersenyEgyesulet(_VEAZON);
+
+            return FileName;
+        }
+
         static public Node_Eredménylap_VersenySorozat_Teljes versenysorozat_adatok(string _VSAZON, int _limit, bool _teljes)
         {
             Node_Eredménylap_VersenySorozat_Teljes versenysorozat = new Node_Eredménylap_VersenySorozat_Teljes();
@@ -2533,7 +2689,7 @@ namespace Íjász
             Process.Start(info);
         }
 
-        static public void owndialog(string _filename) 
+        static public void Dialog(string _filename) 
         {
             filename = _filename;
             dialog = new Form();

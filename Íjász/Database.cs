@@ -951,6 +951,7 @@ namespace Íjász
         #endregion
 
         #region Egyesuletek
+        
 
         public List<Egyesulet> 
         Egyesuletek()

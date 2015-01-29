@@ -147,25 +147,25 @@ namespace Íjász
 
             if (chkCsapatlista.Checked == true)
             {
-                Nyomtat.owndialog(Nyomtat.nyomtat_csapatlista(cboVersenyAzonosito.Text));
+                Nyomtat.Dialog(Nyomtat.nyomtat_csapatlista(cboVersenyAzonosito.Text));
 
                 return;
                 // Nyomtat.print("NEVEZLISTA.docx");
             }
             if (chkNevezesiLista.Checked == true)
             {
-                Nyomtat.owndialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, false));
+                Nyomtat.Dialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, false));
                 return;
                 // Nyomtat.print("NEVEZLISTA.docx");
             }
             if (chkNemMegjelent.Checked == true)
             {
-                Nyomtat.owndialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, true));
+                Nyomtat.Dialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, true));
                 return;
                 // Nyomtat.print("CSAPATLISTA.docx");
             }
 
-            Nyomtat.owndialog(cboVersenyAzonosito.Text);
+            Nyomtat.Dialog(cboVersenyAzonosito.Text);
         }
 
         private void

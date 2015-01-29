@@ -17,8 +17,9 @@ namespace Íjász
         ComboBox cboVersenyAzonosito;
         ComboBox cboVersenysorozatAzonosito;
         ComboBox cboVersenyekSzama;
-        CheckBox teljes;
-        CheckBox mísz;
+        CheckBox chkTeljes;
+        CheckBox chkMisz;
+        CheckBox chkEgyesulet;
 
         Label lblVersenyNyomtat;
         Label lblVersenysorozatNyomtat;
@@ -36,120 +37,107 @@ namespace Íjász
         public void 
         InitializeContent()
         {
-            Button nyomtat = new Button();
-            nyomtat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            nyomtat.Text = "Nyomtat";
-            nyomtat.Size = new System.Drawing.Size(96, 32);
-            nyomtat.Click += Nyomtat_Click;
+            int cWidth = ClientRectangle.Width;
+            int cHeight = ClientRectangle.Height;
 
-            lblVersenysorozatAzonosito = new Label();
-            lblVersenysorozatAzonosito.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenysorozatAzonosito.Text = "Versenysorozat azonosító:";
-            lblVersenysorozatAzonosito.AutoSize = true;
+            Button btnNyomtat = new iButton("Nyomtat,",
+                                            new Point(cWidth - 96 - 150,cHeight - 32 - 16),
+                                            new Size(96, 32),
+                                            btnNyomtat_Click,
+                                            this);
+ 
 
-            lblVersenyekSzama.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenyekSzama.Text = "Versenyek száma:";
-            lblVersenyekSzama.AutoSize = true;
+            lblVersenysorozatAzonosito = new iLabel("Versenysorozat azonosító:",
+                                                    new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 36 * 16),
+                                                    this);
+  
+            lblVersenyekSzama = new iLabel("Versenyek száma:",
+                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 33 * 16),
+                                            this);
 
+            lblVersenyAzonosito = new iLabel("Verseny azonosító:",
+                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 30 * 16),
+                                            this);
 
-            lblVersenyAzonosito = new Label();
-            lblVersenyAzonosito.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenyAzonosito.Text = "Verseny azonosító:";
-            lblVersenyAzonosito.AutoSize = true;
+            lblVersenyNyomtat = new iLabel("Versenyt nyomtat:",
+                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 41 * 16),
+                                            this);
 
-            lblVersenyNyomtat = new Label();
-            lblVersenyNyomtat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenyNyomtat.Text = "Versenyt nyomtat:";
-            lblVersenyNyomtat.AutoSize = true;
+            lblVersenysorozatNyomtat = new iLabel("Versenysorozatot nyomtat:",
+                                                    new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 39 * 16),
+                                                    this);
 
-            lblVersenysorozatNyomtat = new Label();
-            lblVersenysorozatNyomtat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenysorozatNyomtat.Text = "Versenysorozatot nyomtat:";
-            lblVersenysorozatNyomtat.AutoSize = true;
+            Label lblEredmeny = new iLabel("Eredménylap típus:",
+                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 27 * 16),
+                                            this);
 
-            Label eredmeny = new Label();
-            eredmeny.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            eredmeny.Text = "Eredménylap típus:";
-            eredmeny.AutoSize = true;
-
-            cboVersenyAzonosito = new ComboBox();
-            cboVersenyAzonosito.Size = new System.Drawing.Size(128, 24);
-            cboVersenyAzonosito.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            cboVersenyAzonosito.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboVersenyAzonosito.SelectedIndexChanged += cboVersenyek_SelectedIndexChanged;
-
-
-            cboVersenyekSzama = new ComboBox();
-            cboVersenyekSzama.Size = new System.Drawing.Size(128, 24);
-            cboVersenyekSzama.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            cboVersenyekSzama.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboVersenyekSzama.SelectedIndexChanged += cboVersenyekSzama_SelectedIndexChanged;
-
+            cboVersenyAzonosito = new iComboBox(new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 30 * 16),
+                                                new Size(128, 24),
+                                                cboVersenyek_SelectedIndexChanged,
+                                                this);
 
             List<Verseny> versenyek = Program.database.Versenyek();
-
-            
-
             foreach (Verseny current in versenyek)
-            {
                 cboVersenyAzonosito.Items.Add(current.azonosító);
-            }
-
             if (cboVersenyAzonosito.Items.Count != 0) cboVersenyAzonosito.SelectedIndex = 0;
 
+            cboVersenyekSzama = new iComboBox( new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 33 * 16),
+                                                new Size(128, 24),
+                                                cboVersenyekSzama_SelectedIndexChanged,
+                                                this);
 
-            cboVersenysorozatAzonosito = new ComboBox();
-            cboVersenysorozatAzonosito.Size = new System.Drawing.Size(128, 24);
-            cboVersenysorozatAzonosito.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            cboVersenysorozatAzonosito.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboVersenysorozatAzonosito.SelectedIndexChanged += cboVersenysorozatAzonosito_SelectedIndexChanged;
+            cboVersenysorozatAzonosito = new iComboBox( new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 36 * 16),
+                                                        new Size(128, 24),
+                                                        cboVersenysorozatAzonosito_SelectedIndexChanged,
+                                                        this);
 
             List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok();
             foreach (Versenysorozat current in versenysorozatok)
                 cboVersenysorozatAzonosito.Items.Add(current.azonosító);
-
             if (cboVersenysorozatAzonosito.Items.Count != 0) cboVersenysorozatAzonosito.SelectedIndex = 0;
 
+            lblVersenyMegnevezes = new iLabel("Verseny megnevezés: ",
+                                                     new Point(cWidth - 96 - 32 * 16,cHeight - 32 - 30 * 16),
+                                                     this);
 
+            lblVersenyMegnevezes2 = new iLabel( "",
+                                                new Point(lblVersenyMegnevezes.Location.X + lblVersenyMegnevezes.Width + 18,lblVersenyMegnevezes.Location.Y),
+                                                this);
+            lblVersenyMegnevezes2.Font = new Font(lblVersenyMegnevezes2.Font, FontStyle.Underline);
 
+            lblVersenysorozatMegnevezes = new iLabel("Versenysorozat megnevezés: ",
+                                                            new Point(cWidth - 96 - 32 * 16,cHeight - 32 - 36 * 16),
+                                                            this);
 
-            lblVersenyMegnevezes.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenyMegnevezes.Text = "Verseny megnevezés: ";
-            lblVersenyMegnevezes.AutoSize = true;
+            lblVersenysorozatMegnevezes2 = new iLabel("",
+                                                      new Point(lblVersenysorozatMegnevezes.Location.X + lblVersenysorozatMegnevezes.Width + 56,lblVersenysorozatMegnevezes.Location.Y),
+                                                      this);
 
-            lblVersenyMegnevezes2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenyMegnevezes2.AutoSize = true;
-            lblVersenyMegnevezes2.Font = new System.Drawing.Font(lblVersenyMegnevezes2.Font, FontStyle.Underline);
+            chkTeljes = new iCheckBox("Teljes",
+                                      new Point(cWidth - 96 - 45 * 16,cHeight - 32 - 27 * 16 - 8),
+                                      Eredmenylap_Click,
+                                      this);
 
-            lblVersenysorozatMegnevezes.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenysorozatMegnevezes.Text = "Versenysorozat megnevezés: ";
-            lblVersenysorozatMegnevezes.AutoSize = true;
+            chkMisz = new iCheckBox("MÍSZ",
+                                new Point(cWidth - 96 - 41 * 16,cHeight - 32 - 27 * 16 - 8),
+                                Eredmenylap_Click,
+                                this);
 
-            lblVersenysorozatMegnevezes2.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            lblVersenysorozatMegnevezes2.AutoSize = true;
-            lblVersenysorozatMegnevezes2.Font = new System.Drawing.Font(lblVersenyMegnevezes2.Font, FontStyle.Underline);
+            chkEgyesulet = new iCheckBox("Egyesület",
+                                         new Point( cWidth - 96 - 36 * 16,cHeight - 32 - 27 * 16 - 8 ),
+                                         Eredmenylap_Click,
+                                         this);
 
-            teljes = new CheckBox();
-            teljes.Text = "Teljes";
-            teljes.AutoSize = true;
-            teljes.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            teljes.FlatStyle = FlatStyle.Flat;
+            chkVerseny = new iCheckBox("",
+                                        new Point(cWidth - 96 - 48 * 16,cHeight - 32 - 41 * 16 - 12),
+                                        Versenysorozat_Click,
+                                        this);
 
-            mísz = new CheckBox();
-            mísz.Text = "MÍSZ";
-            mísz.AutoSize = true;
-            mísz.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            mísz.FlatStyle = FlatStyle.Flat;
-
-            chkVerseny = new CheckBox();
-            chkVerseny.AutoSize = true;
-            chkVerseny.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            chkVerseny.FlatStyle = FlatStyle.Flat;
-
-            chkVersenysorozat = new CheckBox();
-            chkVersenysorozat.AutoSize = true;
-            chkVersenysorozat.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            chkVersenysorozat.FlatStyle = FlatStyle.Flat;
+            chkVersenysorozat = new iCheckBox( "",
+                                               new Point(cWidth - 96 - 48 * 16,cHeight - 32 - 39 * 16 - 12),
+                                               Versenysorozat_Click,
+                                               this);
+                                                
 
             foreach (Verseny current in versenyek)
             {
@@ -166,94 +154,6 @@ namespace Íjász
                     lblVersenysorozatMegnevezes2.Text = current.megnevezés;
                 }
             }
-
-            lblVersenyNyomtat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 52 * 16, 
-                                                                  ClientRectangle.Height - 32 - 41 * 16);
-
-            lblVersenysorozatNyomtat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 52 * 16, 
-                                                                         ClientRectangle.Height - 32 - 39 * 16);
-
-            chkVerseny.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 48 * 16,
-                                                           ClientRectangle.Height - 32 - 41 * 16 - 12);
-
-            chkVersenysorozat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 48 * 16, 
-                                                                  ClientRectangle.Height - 32 - 39 * 16 - 12);
-
-            lblVersenysorozatAzonosito.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 52 * 16,
-                                                                           ClientRectangle.Height - 32 - 36 * 16);
-            //--
-            lblVersenyekSzama.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 52 * 16, 
-                                                                  ClientRectangle.Height - 32 - 33 * 16);
-
-            lblVersenyAzonosito.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 52 * 16, 
-                                                                    ClientRectangle.Height - 32 - 30 * 16);
-
-            eredmeny.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 52 * 16,
-                                                         ClientRectangle.Height - 32 - 27 * 16);
-
-            cboVersenysorozatAzonosito.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 42 * 16,
-                                                                           ClientRectangle.Height - 32 - 36 * 16);
-
-            cboVersenyekSzama.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 42 * 16,
-                                                                  ClientRectangle.Height - 32 - 33 * 16);
-
-            cboVersenyAzonosito.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 42 * 16, 
-                                                                    ClientRectangle.Height - 32 - 30 * 16);
-
-            lblVersenysorozatMegnevezes.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 32 * 16,
-                                                                            ClientRectangle.Height - 32 - 36 * 16);
-
-            lblVersenysorozatMegnevezes2.Location = new System.Drawing.Point(lblVersenysorozatMegnevezes.Location.X + lblVersenysorozatMegnevezes.Width + 56, 
-                                                                             lblVersenysorozatMegnevezes.Location.Y);
-
-            lblVersenyMegnevezes.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 32 * 16, 
-                                                                     ClientRectangle.Height - 32 - 30 * 16);
-
-            lblVersenyMegnevezes2.Location = new System.Drawing.Point(lblVersenyMegnevezes.Location.X + lblVersenyMegnevezes.Width + 18, 
-                                                                      lblVersenyMegnevezes.Location.Y);
-
-            teljes.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 45 * 16, 
-                                                       ClientRectangle.Height - 32 - 27 * 16 - 8);
-
-            mísz.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 41 * 16, 
-                                                     ClientRectangle.Height - 32 - 27 * 16 - 8);
-
-            nyomtat.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 150,
-                                                        ClientRectangle.Height - 32 - 16);
-
-            teljes.Click += Eredmenylap_Click;
-            mísz.Click += Eredmenylap_Click;
-
-            chkVerseny.Click += Versenysorozat_Click;
-            chkVersenysorozat.Click += Versenysorozat_Click;
-
-            teljes.CheckState = CheckState.Unchecked;
-            mísz.CheckState = CheckState.Unchecked;
-            chkVerseny.CheckState = CheckState.Unchecked;
-            chkVersenysorozat.CheckState = CheckState.Unchecked;
-
-
-            Controls.Add(lblVersenyNyomtat);
-            Controls.Add(lblVersenysorozatNyomtat);
-
-            Controls.Add(chkVerseny);
-            Controls.Add(chkVersenysorozat);
-
-            Controls.Add(lblVersenyekSzama);
-            Controls.Add(cboVersenyekSzama);
-
-            Controls.Add(lblVersenysorozatAzonosito);
-            Controls.Add(lblVersenyAzonosito);
-            Controls.Add(eredmeny);
-            Controls.Add(cboVersenysorozatAzonosito);
-            Controls.Add(cboVersenyAzonosito);
-            Controls.Add(lblVersenysorozatMegnevezes);
-            Controls.Add(lblVersenysorozatMegnevezes2);
-            Controls.Add(lblVersenyMegnevezes);
-            Controls.Add(lblVersenyMegnevezes2);
-            Controls.Add(teljes);
-            Controls.Add(mísz);
-            Controls.Add(nyomtat);
         }
 
         #region EventHandlers
@@ -308,77 +208,56 @@ namespace Íjász
         }
 
         private void 
-        Nyomtat_Click(object _sender, EventArgs _event)
+        btnNyomtat_Click(object _sender, EventArgs _event)
         {
-            if (mísz.Checked == false && teljes.Checked == false)
+                //nincs verseny versenysorozat pipa
+            if (chkVerseny.Checked == false && chkVersenysorozat.Checked == false) return;
+
+                //van pipa verseny de nincs kiválasztva
+            if(chkVerseny.Checked && cboVersenyAzonosito.SelectedItem==null) return;
+
+                //van pipa versenysorozat de nincs kiválasztva
+            if(chkVersenysorozat.Checked && cboVersenysorozatAzonosito.SelectedItem == null) return;
+            
+                //nincs eredménylap
+            if(chkTeljes.Checked == chkMisz.Checked == chkEgyesulet.Checked == false) return;
+
+                // nincs verseny a vs-ban
+            if (chkVersenysorozat.Checked && VersenyekSzama == 0) return;
+
+            if ( chkVerseny.CheckState == CheckState.Checked && chkTeljes.CheckState == CheckState.Checked)
             {
-                MessageBox.Show("Nincs kiválasztva mísz/teljes", "Hiba", 
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_verseny_teljes(cboVersenyAzonosito.Text));
                 return;
             }
 
-            if (chkVerseny.CheckState == CheckState.Checked && teljes.CheckState == CheckState.Checked)
+            if (chkVerseny.CheckState == CheckState.Checked && chkMisz.CheckState == CheckState.Checked)
             {
-                if (cboVersenyAzonosito.SelectedItem == null)
-                {
-                    MessageBox.Show("Nincs kiválasztva verseny", "Hiba", 
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Nyomtat.owndialog(Nyomtat.nyomtat_eredmenylap_verseny_teljes(cboVersenyAzonosito.Text));
+
+                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_verseny_misz(cboVersenyAzonosito.Text));
                 return;
             }
 
-            else if (chkVerseny.CheckState == CheckState.Checked && mísz.CheckState == CheckState.Checked)
+            if (chkVersenysorozat.CheckState == CheckState.Checked && chkTeljes.CheckState == CheckState.Checked)
             {
-                if (cboVersenyAzonosito.SelectedItem == null)
-                {
-                    MessageBox.Show("Nincs kiválasztva verseny", "Hiba", 
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Nyomtat.owndialog(Nyomtat.nyomtat_eredmenylap_verseny_misz(cboVersenyAzonosito.Text));
-                return;
-            }
 
-            else if (chkVersenysorozat.CheckState == CheckState.Checked && teljes.CheckState == CheckState.Checked)
-            {
-                if (cboVersenysorozatAzonosito.SelectedItem == null)
-                {
-                    MessageBox.Show("Nincs kiválasztva versenysorozat", "Hiba",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (VersenyekSzama == 0)
-                {
-                    MessageBox.Show("Nincs verseny a kiválasztott versenysorozatban", "Hiba", 
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                Nyomtat.owndialog(Nyomtat.nyomtat_eredmenylap_versenysorozat_teljes(
+                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_versenysorozat_teljes(
                                     cboVersenysorozatAzonosito.Text, Convert.ToInt32(cboVersenyekSzama.Text)));
                 return;
             }
 
-            else if (chkVersenysorozat.CheckState == CheckState.Checked && mísz.CheckState == CheckState.Checked)
+            if (chkVersenysorozat.CheckState == CheckState.Checked && chkMisz.CheckState == CheckState.Checked)
             {
-                if (cboVersenysorozatAzonosito.SelectedItem == null)
-                {
-                    MessageBox.Show("Nincs kiválasztva versenysorozat", "Hiba",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
 
-                if (VersenyekSzama == 0)
-                {
-                    MessageBox.Show("Nincs verseny a kiválasztott versenysorozatban", "Hiba", 
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                Nyomtat.owndialog(Nyomtat.nyomtat_eredmenylap_versenysorozat_misz(
+                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_versenysorozat_misz(
                                     cboVersenysorozatAzonosito.Text, Convert.ToInt32(cboVersenyekSzama.Text)));
                 return;
+            }
+
+            if( chkVerseny.CheckState == CheckState.Checked && chkEgyesulet.CheckState == CheckState.Checked  )
+            {
+                Nyomtat.Dialog(Nyomtat.NyomtatEredmenylapVersenyEgyesulet( cboVersenyAzonosito.Text ));
             }
         }
 
@@ -386,16 +265,27 @@ namespace Íjász
         Eredmenylap_Click(object _sender, EventArgs _event)
         {
             CheckBox Aktiv = _sender as CheckBox;
-            if (Aktiv != teljes && Aktiv != null)
+            if(Aktiv==null) return ;
+
+            if(Aktiv == chkTeljes)
             {
-                teljes.Checked = false;
-                mísz.CheckState = CheckState.Checked;
+                chkTeljes.Checked = true;
+                chkMisz.Checked = false;
+                chkEgyesulet.Checked = false;
             }
-            else
+            else if (Aktiv == chkMisz)
             {
-                teljes.Checked = true;
-                mísz.CheckState = CheckState.Unchecked;
+                chkMisz.Checked = true;
+                chkTeljes.Checked = false;
+                chkEgyesulet.Checked = false;
             }
+            else if (Aktiv == chkEgyesulet)
+            {
+                chkEgyesulet.Checked = true;
+                chkTeljes.Checked = false;
+                chkMisz.Checked = false;
+            }
+
         }
 
         private void 

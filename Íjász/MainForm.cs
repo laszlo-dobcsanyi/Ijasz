@@ -43,7 +43,7 @@ namespace Íjász
             #region Status
             ToolStripStatusLabel Tulajdonos = new ToolStripStatusLabel(Program.Tulajdonos_Megnevezés);
             ToolStripStatusLabel Készítők = new ToolStripStatusLabel("Belinyák Nándor és Társai. \u00A9 2014");
-            ToolStripStatusLabel Verzió = new ToolStripStatusLabel("Verzió: 0.9.3-2014.10.18");
+            ToolStripStatusLabel Verzió = new ToolStripStatusLabel("Verzió: 0.9.5-2015.01.28");
             Készítők.BorderSides = ToolStripStatusLabelBorderSides.Left;
             Verzió.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
@@ -312,6 +312,17 @@ namespace Íjász
             this.Click += _Click;
             _Form.Controls.Add(this);
         }
+
+        public
+        iButton(string _Text, Point _Location, Size _Size, EventHandler _Click, Control _Control)
+        {
+            this.Text = _Text;
+            this.Location = _Location;
+            this.Size = _Size;
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.Click += _Click;
+            _Control.Controls.Add(this);
+        }
     }
 
     public class iLabel : Label
@@ -321,7 +332,21 @@ namespace Íjász
         {
             this.Text = _Text;
             this.Location = _Location;
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.AutoSize = true;
+
             _Form.Controls.Add(this);
+        }
+
+        public
+        iLabel(string _Text, Point _Location, Control _Control)
+        {
+            this.Text = _Text;
+            this.Location = _Location;
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.AutoSize = true;
+
+            _Control.Controls.Add(this);
         }
     }
 
@@ -342,32 +367,24 @@ namespace Íjász
     public class iComboBox : ComboBox
     {
         public
-        iComboBox(Point _Location, Size _Size, EventHandler _SelectedIndexChanged, List<string> _Items, Form _Form)
+        iComboBox(Point _Location, Size _Size, EventHandler _SelectedIndexChanged, Control _Control)
         {
             this.Location = _Location;
             this.Size = _Size;
             this.SelectedIndexChanged += _SelectedIndexChanged;
             this.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            foreach (string item in _Items)
-            {
-                this.Items.Add(item);
-            }
-            _Form.Controls.Add(this);
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            _Control.Controls.Add(this);
         }
 
         public
-        iComboBox(Point _Location, Size _Size, EventHandler _SelectedIndexChanged, List<int> _Items, Form _Form)
+        iComboBox(Point _Location, Size _Size, EventHandler _SelectedIndexChanged, Form _Form)
         {
             this.Location = _Location;
             this.Size = _Size;
             this.SelectedIndexChanged += _SelectedIndexChanged;
             this.DropDownStyle = ComboBoxStyle.DropDownList;
-
-            foreach (int item in _Items)
-            {
-                this.Items.Add(item);
-            }
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             _Form.Controls.Add(this);
         }
     }
@@ -375,10 +392,29 @@ namespace Íjász
     public class iCheckBox : CheckBox
     {
         public
-        iCheckBox(Point _Location, Form _form)
+        iCheckBox(string _Text, Point _Location, EventHandler _Click, Form _form)
         {
+            this.Text = _Text;
             this.Location = _Location;
+            this.AutoSize = true;
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.FlatStyle = FlatStyle.Flat;
+            this.CheckState = CheckState.Unchecked;
+            this.Click += _Click;
             _form.Controls.Add(this);
+        }
+
+        public
+        iCheckBox(string _Text, Point _Location,EventHandler _Click, Control _control)
+        {
+            this.Text = _Text;
+            this.Location = _Location;
+            this.AutoSize = true;
+            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            this.FlatStyle = FlatStyle.Flat;
+            this.CheckState = CheckState.Unchecked;
+            this.Click += _Click;
+            _control.Controls.Add(this);
         }
     }
     
