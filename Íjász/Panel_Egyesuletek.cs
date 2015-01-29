@@ -12,29 +12,32 @@ namespace Íjász
     public struct Egyesulet
     {
         public string Azonosito;
-        public string Nev;
         public string Cim;
         public string Vezeto;
-        public string Telefon;
-        public string Email;
+        public string Telefon1;
+        public string Telefon2;
+        public string Email1;
+        public string Email2;
         public bool Listazando;
         public int TagokSzama;
 
         public Egyesulet(   string _Azonosito, 
-                            string _Nev, 
                             string _Cim, 
-                            string _Vezeto, 
-                            string _Telefon, 
-                            string _Email, 
+                            string _Vezeto,
+                            string _Telefon1,
+                            string _Telefon2,
+                            string _Email1,
+                            string _Email2, 
                             bool _Listazando, 
                             int _TagokSzama)
         {
             Azonosito = _Azonosito;
-            Nev = _Nev;
             Cim = _Cim;
             Vezeto = _Vezeto;
-            Telefon = _Telefon;
-            Email = _Email;
+            Telefon1 = _Telefon1;
+            Telefon2 = _Telefon2;
+            Email1 = _Email1;
+            Email2 = _Email2;
             Listazando = _Listazando;
             TagokSzama = _TagokSzama;
         }
@@ -76,7 +79,8 @@ namespace Íjász
             table.ReadOnly = true;
             table.DataBindingComplete += table_DataBindingComplete;
             table.CellDoubleClick += Modositas_Click;
-
+            table.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            table.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             ///
 
             Button btnHozzaadas = new Button();
@@ -107,13 +111,12 @@ namespace Íjász
             data = new DataTable();
 
             data.Columns.Add(new DataColumn("Azonosító", System.Type.GetType("System.String")));
-            data.Columns.Add(new DataColumn("Megnevezés", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Cím", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Vezető", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Telefon", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("E-mail", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Listázandó", System.Type.GetType("System.Boolean")));
-            data.Columns.Add(new DataColumn("Tagok száma", System.Type.GetType("System.Int32")));
+            data.Columns.Add(new DataColumn("Tagok", System.Type.GetType("System.Int32")));
 
             List<Egyesulet> Egyesuletek = Program.database.Egyesuletek();
 
@@ -121,15 +124,15 @@ namespace Íjász
             {
                 DataRow row = data.NewRow();
                 row[0] = current.Azonosito;
-                row[1] = current.Nev;
-                row[2] = current.Cim;
-                row[3] = current.Vezeto;
-                row[4] = current.Telefon;
-                row[5] = current.Email;
-                row[6] = current.Listazando;
-                row[7] = current.TagokSzama;
+                row[1] = current.Cim;
+                row[2] = current.Vezeto;
+                row[3] = current.Telefon1   +  Environment.NewLine + current.Telefon2;
+                row[4] = current.Email1     + Environment.NewLine + current.Email2;
+                row[5] = current.Listazando;
+                row[6] = current.TagokSzama;
                 data.Rows.Add(row);
             }
+
             return data;
         }
         
@@ -164,15 +167,16 @@ namespace Íjász
                     return; 
                 }
 
+                string nl = Environment.NewLine;
+
                 DataRow row = data.NewRow();
                 row[0] = _egyesulet.Azonosito;
-                row[1] = _egyesulet.Nev;
-                row[2] = _egyesulet.Cim;
-                row[3] = _egyesulet.Vezeto;
-                row[4] = _egyesulet.Telefon;
-                row[5] = _egyesulet.Email;
-                row[6] = _egyesulet.Listazando;
-                row[7] = _egyesulet.TagokSzama;
+                row[1] = _egyesulet.Cim;
+                row[2] = _egyesulet.Vezeto;
+                row[3] = _egyesulet.Telefon1 + Environment.NewLine + _egyesulet.Telefon2;
+                row[4] = _egyesulet.Email1 + Environment.NewLine + _egyesulet.Email2;
+                row[5] = _egyesulet.Listazando;
+                row[6] = _egyesulet.TagokSzama;
                 data.Rows.Add(row);
 
                 if (egyesulet_hozzaadva != null) egyesulet_hozzaadva(_egyesulet);
@@ -199,14 +203,12 @@ namespace Íjász
                     if (_regi.Azonosito == current[0].ToString())
                     {
                         current[0] = _uj.Azonosito;
-                        current[1] = _uj.Nev;
-                        current[2] = _uj.Cim;
-                        current[3] = _uj.Vezeto;
-                        current[4] = _uj.Telefon;
-                        current[5] = _uj.Email;
-                        current[6] = _uj.Listazando;
-                        current[7] = _uj.TagokSzama;
-
+                        current[1] = _uj.Cim;
+                        current[2] = _uj.Vezeto;
+                        current[3] = _uj.Telefon1 + Environment.NewLine + _uj.Telefon2;
+                        current[4] = _uj.Email1 + Environment.NewLine + _uj.Email2;
+                        current[5] = _uj.Listazando;
+                        current[6] = _uj.TagokSzama;
                         break;
                     }
                 }
@@ -259,16 +261,19 @@ namespace Íjász
         {
             table.DataBindingComplete -= table_DataBindingComplete;
 
-            table.Columns[0].Width = 110;
-            table.Columns[1].Width = 99;
-            table.Columns[2].Width = 99;
-            table.Columns[3].Width = 99;
-            table.Columns[4].Width = 99;
-            table.Columns[5].Width = 99;
-            table.Columns[6].Width = 99;
-            table.Columns[7].Width = 99;
+            table.Columns[0].Width = 210;
+            table.Columns[1].Width = 153;
+            table.Columns[2].Width = 100;
+            table.Columns[3].Width = 100;
+            table.Columns[4].Width = 100;
+            table.Columns[5].Width = 60;
+            table.Columns[6].Width = 60;
 
-            foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            foreach (DataGridViewColumn column in table.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
         private void 
@@ -276,14 +281,18 @@ namespace Íjász
         {
             if ((string)data.Rows[table.SelectedRows[0].Index][0] == "") return;
 
+            string[] telefon = data.Rows[table.SelectedRows[0].Index][3].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            string[] email = data.Rows[table.SelectedRows[0].Index][4].ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
             Egyesulet egyesulet = new Egyesulet( data.Rows[table.SelectedRows[0].Index][0].ToString(),
                                                  data.Rows[table.SelectedRows[0].Index][1].ToString(),
                                                  data.Rows[table.SelectedRows[0].Index][2].ToString(),
-                                                 data.Rows[table.SelectedRows[0].Index][3].ToString(),
-                                                 data.Rows[table.SelectedRows[0].Index][4].ToString(),
-                                                 data.Rows[table.SelectedRows[0].Index][5].ToString(),
-                                                 Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][6]),
-                                                 Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][7]));
+                                                 telefon[0],
+                                                 telefon[1],
+                                                 email[0],
+                                                 email[1],
+                                                 Convert.ToBoolean(data.Rows[table.SelectedRows[0].Index][5]),
+                                                 Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][6]));
 
             Form_Egyesulet form_egyesulet = new Form_Egyesulet(egyesulet);
             form_egyesulet.Show();  
@@ -301,7 +310,7 @@ namespace Íjász
         btnTorles_Click(object _sender, EventArgs _event)
         {
             if (table.SelectedRows.Count != 1 || (string)data.Rows[table.SelectedRows[0].Index][0] == "") return;
-            if (0 < (int)(data.Rows[table.SelectedRows[0].Index][7]))
+            if (0 < (int)(data.Rows[table.SelectedRows[0].Index][6]))
             { 
                 MessageBox.Show("Ez az egyesület nem törölhető, mivel van hozzárendelve induló!",
                                 "Hiba", 
@@ -322,7 +331,6 @@ namespace Íjász
 
         }
 
-        //tesztel
 
         public void 
         InduloHozzaadas(Induló _indulo)
@@ -342,7 +350,7 @@ namespace Íjász
             {
                 if( _indulo.egyesület==current[0].ToString() )
                 {
-                    current[7] = (int)current[7]+1;
+                    current[6] = (int)current[6]+1;
                 }
             }
         }
@@ -363,7 +371,7 @@ namespace Íjász
             {
                 if(_indulo.egyesület==current[0].ToString())
                 {
-                    current[7] = (int)current[7]-1;
+                    current[6] = (int)current[6]-1;
                 }
             }
         }
@@ -386,11 +394,11 @@ namespace Íjász
             {
                 if (_eredeti.egyesület == current[0].ToString())
                 {
-                    current[7] = (int)current[7]-1;
+                    current[6] = (int)current[6]-1;
                 }
                 if( _uj.egyesület == current[0].ToString() )
                 {
-                    current[7] = (int)current[7]+1;
+                    current[6] = (int)current[6]+1;
                 }
             }
         }
@@ -401,11 +409,12 @@ namespace Íjász
         {
             private Egyesulet? egyesulet;
             TextBox txtAzonosito; 
-            TextBox txtNev ;
             TextBox txtCim ;
             TextBox txtVezeto;
-            TextBox txtTelefon;
-            TextBox txtEmail;
+            TextBox txtTelefon1;
+            TextBox txtTelefon2;
+            TextBox txtEmail1;
+            TextBox txtEmail2;
             CheckBox chkListazando;
 
             public 
@@ -427,8 +436,8 @@ namespace Íjász
             private void 
             InitializeForm()
             {
-                Text = "Egyesulet";
-                ClientSize = new System.Drawing.Size(400, 250);
+                Text = "Egyesület";
+                ClientSize = new System.Drawing.Size(400, 350);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -439,56 +448,62 @@ namespace Íjász
             {
                 Label lblAzonosito = new iLabel("Azonosító:",new Point(16, 16 + 0 * 32),this);
 
-                Label lblNev = new iLabel("Egyesület neve:",new Point(16, 16 + 1 * 32),this);
 
-                Label lblCim = new iLabel("Egyesület címe:",new Point(16, 16 + 2 * 32),this);
+                Label lblCim = new iLabel("Egyesület címe:",new Point(16, 16 + 1 * 32),this);
 
-                Label lblVezeto = new iLabel("Vezető:",new Point(16, 16 + 3 * 32),this);
+                Label lblVezeto = new iLabel("Vezető:",new Point(16, 16 + 2 * 32),this);
 
-                Label lblTelefon = new iLabel("Telefon:",new Point(16, 16 + 4 * 32),this);
+                Label lblTelefon = new iLabel("Telefon:",new Point(16, 16 + 3 * 32),this);
 
                 Label lblEmail = new iLabel("E-mail:",new Point(16, 16 + 5 * 32),this);
 
-                Label lblListazando = new iLabel("Listázandó:",new Point(16, 16 + 6 * 32),this);
+                Label lblListazando = new iLabel("Listázandó:",new Point(16, 16 + 7 * 32),this);
 
-                txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Width + 16, lblAzonosito.Location.Y ),
+                
+                txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Width + 32 + 16, lblAzonosito.Location.Y ),
                                                     10,
-                                                    new System.Drawing.Size( 128 + 64, 24),
-                                                    null,
-                                                    this); 
-
-                txtNev = new iTextBox( new Point( txtAzonosito.Location.X,lblNev.Location.Y ),
-                                                    30,
-                                                    new System.Drawing.Size( 128 + 2 * 64, 24),
+                                                    new Size( 128 + 64, 24),
                                                     null,
                                                     this); 
 
                 txtCim = new iTextBox( new Point( txtAzonosito.Location.X,lblCim.Location.Y ),
                                                     30,
-                                                    new System.Drawing.Size(128 + 2 * 64, 24),
+                                                    new Size(128 + 2 * 64, 24),
                                                     null,
                                                     this); 
 
                 txtVezeto = new iTextBox( new Point( txtAzonosito.Location.X,lblVezeto.Location.Y ),
                                                     30,
-                                                    new System.Drawing.Size(128 + 2 * 64, 24),
+                                                    new Size(128 + 2 * 64, 24),
                                                     null,
                                                     this); 
 
-                txtTelefon =new iTextBox( new Point( txtAzonosito.Location.X,lblTelefon.Location.Y ),
-                                                    10,
-                                                    new System.Drawing.Size( 128 + 64, 24),
-                                                    null,
-                                                    this); 
-
-                txtEmail = new iTextBox( new Point( txtAzonosito.Location.X,lblEmail.Location.Y ),
+                txtTelefon1 =new iTextBox( new Point( txtAzonosito.Location.X,lblTelefon.Location.Y ),
                                                     30,
-                                                    new System.Drawing.Size(128 + 2 * 64, 24),
+                                                    new Size( 128 + 2* 64, 24),
                                                     null,
-                                                    this); 
+                                                    this);
+
+                txtTelefon2 = new iTextBox(new Point(txtAzonosito.Location.X, lblTelefon.Location.Y + 32),
+                                                    30,
+                                                    new Size(128 + 2* 64, 24),
+                                                    null,
+                                                    this);
+
+                txtEmail1 = new iTextBox( new Point( txtAzonosito.Location.X,lblEmail.Location.Y ),
+                                                    30,
+                                                    new Size(128 + 2 * 64, 24),
+                                                    null,
+                                                    this);
+
+                txtEmail2 = new iTextBox(new Point(txtAzonosito.Location.X, lblEmail.Location.Y + 32),
+                                                    30,
+                                                    new Size(128 + 2 * 64, 24),
+                                                    null,
+                                                    this);
 
                 chkListazando = new iCheckBox( "",
-                                                new Point( lblListazando.Location.X + lblListazando.Width + 16,lblListazando.Location.Y),
+                                                new Point(txtAzonosito.Location.X,lblListazando.Location.Y),
                                                 null,
                                                 this );
 
@@ -497,14 +512,16 @@ namespace Íjász
                                                 new Size(96, 32),
                                                 btnRendben_Click,
                                                 this);
-                //teszteléshez
+                /*teszteléshez
 
                 txtAzonosito.Text = "azonosito";
-                txtNev.Text = "megnevezes";
                 txtCim.Text = "cim";
                 txtVezeto.Text = "vezeto bela";
-                txtTelefon.Text = "36303705065";
-                txtEmail.Text = "asd@gmail.com";
+                txtTelefon1.Text = "telo1sdafdadfs";
+                txtTelefon2.Text = "telo2";
+                txtEmail1.Text = "email1";
+                txtEmail2.Text = "email2";
+               */
             }
 
             private void 
@@ -513,11 +530,12 @@ namespace Íjász
                 txtAzonosito.Text = _egyesulet.Value.Azonosito;
                 if (_egyesulet.Value.TagokSzama != 0) { txtAzonosito.Enabled = false; }
                 
-                txtNev.Text = _egyesulet.Value.Nev;
                 txtCim.Text = _egyesulet.Value.Cim;
                 txtVezeto.Text = _egyesulet.Value.Vezeto;
-                txtTelefon.Text = _egyesulet.Value.Telefon;
-                txtEmail.Text = _egyesulet.Value.Email;
+                txtTelefon1.Text = _egyesulet.Value.Telefon1;
+                txtTelefon2.Text = _egyesulet.Value.Telefon2;
+                txtEmail1.Text = _egyesulet.Value.Email1;
+                txtEmail2.Text = _egyesulet.Value.Email2;
                 chkListazando.Checked = _egyesulet.Value.Listazando;
             }
 
@@ -526,20 +544,16 @@ namespace Íjász
             private void btnRendben_Click(Object _sender, EventArgs _event)
             {
                 if (txtAzonosito.Text.Length == 0) { MessageBox.Show("Nem megfelelő az azonosító hossza (1 - 10 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (txtNev.Text.Length == 0) { MessageBox.Show("Nem megfelelő a név hossza (1 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (txtCim.Text.Length == 0) { MessageBox.Show("Nem megfelelő a címhossza (1 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (txtVezeto.Text.Length == 0) { MessageBox.Show("Nem megfelelő a vezető hossza (1 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (txtTelefon.Text.Length == 0) { MessageBox.Show("Nem megfelelő a telefon hossza (1 - 10 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (txtEmail.Text.Length == 0) { MessageBox.Show("Nem megfelelő az e-mail hossza (1 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (egyesulet == null)
                 {
                     egyesulet = new Egyesulet(txtAzonosito.Text, 
-                                                        txtNev.Text,
                                                         txtCim.Text, 
-                                                        txtVezeto.Text, 
-                                                        txtTelefon.Text,
-                                                        txtEmail.Text,
+                                                        txtVezeto.Text,
+                                                        txtTelefon1.Text,
+                                                        txtTelefon2.Text,
+                                                        txtEmail1.Text,
+                                                        txtEmail2.Text,
                                                         chkListazando.Checked, 
                                                         0);
 
@@ -548,11 +562,12 @@ namespace Íjász
                 else
                 {
                     Egyesulet uj = new Egyesulet(txtAzonosito.Text,
-                                    txtNev.Text,
                                     txtCim.Text,
                                     txtVezeto.Text,
-                                    txtTelefon.Text,
-                                    txtEmail.Text,
+                                    txtTelefon1.Text,
+                                    txtTelefon2.Text,
+                                    txtEmail1.Text,
+                                    txtEmail2.Text,
                                     chkListazando.Checked,
                                     egyesulet.Value.TagokSzama);
                     Egyesulet regi = egyesulet.Value;

@@ -463,7 +463,8 @@ namespace Íjász
                     else
                     {
                         Induló temp = Program.database.Induló(eredmenyek[i].név).Value;
-                        if (temp.egyesület != "")
+                        Egyesulet tempegyesulet = Program.database.Egyesulet(temp.egyesület);
+                        if (tempegyesulet.Listazando==true)
                         {
                             indulok.Add(temp);
                         }
@@ -478,7 +479,7 @@ namespace Íjász
                 {
                     for (int j = indulok.Count - 1; j >= 0; j--)
                     {
-                        if (eredmenyek[i].név == indulok[i].név)
+                        if (eredmenyek[i].név == indulok[j].név)
                         {
                             InduloAdat indulo = new InduloAdat(indulok[j].név, indulok[j].egyesület, eredmenyek[i].összpont.Value);
                             induloadatok.Add(indulo);
@@ -499,22 +500,65 @@ namespace Íjász
             {
                 List<InduloAdat> induloadatok = InduloAdatok(_VEAZON);
                 List<EgyesuletAdat> egyesuletadatok = new List<EgyesuletAdat>();
+                //List<Egyesulet> egyesuletek = Program.database.Egyesuletek();
 
-                for( int i = induloadatok.Count-1; i>=0; i-- )
+                List<Egyesulet> egyesuletek = Program.database.Egyesuletek();
+                foreach(Egyesulet egyesulet in egyesuletek)
                 {
-                    EgyesuletAdat egyesulet = new EgyesuletAdat(0,induloadatok[i].Nev,"",0);
-                    induloadatok.RemoveAt(i);
-                    for( int j = induloadatok.Count-1; j>=0; j-- )
-                    {
-                        if(induloadatok[j].Egyesulet == egyesulet.Nev)
-                        {
-                            egyesulet.OsszPont += induloadatok[j].Pont;
-                            induloadatok.RemoveAt(j);
+                    egyesuletadatok.Add(new EgyesuletAdat(0,egyesulet.Azonosito,egyesulet.Cim,0));
+                }
 
+                for (int i =0; i< induloadatok.Count ; i++)
+                {
+                    for (int j = 0; j < egyesuletadatok.Count; j++)
+                    {
+                        if( induloadatok[i].Egyesulet == egyesuletadatok[j].Nev )
+                        {
+                            EgyesuletAdat temp = egyesuletadatok[j];
+                            temp.OsszPont += induloadatok[i].Pont;
+                            egyesuletadatok.RemoveAt(j);
+                            egyesuletadatok.Add(temp);
                         }
                     }
-                    egyesuletadatok.Add(egyesulet);
                 }
+
+                for(int i= egyesuletadatok.Count-1;i>=0;i--)
+                {
+                    if(egyesuletadatok[i].OsszPont == 0)
+                    {
+                        egyesuletadatok.RemoveAt(i);
+                    }
+                }
+
+                for (int i=0;i<egyesuletadatok.Count;i++)
+                {
+                    for (int j = 0; j < egyesuletadatok.Count; j++)
+                    {
+                        if(egyesuletadatok[i].OsszPont > egyesuletadatok[j].OsszPont)
+                        {
+                            EgyesuletAdat temp = egyesuletadatok[i];
+                            egyesuletadatok[i] = egyesuletadatok[j];
+                            egyesuletadatok[j] = temp;
+                        }
+                    }
+                }
+
+                /*
+                {
+                    EgyesuletAdat egyesuletadat = new EgyesuletAdat(0,induloadatok[i].Egyesulet,"",0);
+                    induloadatok.RemoveAt(i);
+                    for( int j = induloadatok.Count-1; j>=1; j-- )
+                    {
+                        if(induloadatok[j].Egyesulet == egyesuletadat.Nev)
+                        {
+                            egyesuletadat.OsszPont += induloadatok[j].Pont;
+                            induloadatok.RemoveAt(j);
+                        }
+                    }
+                    egyesuletadatok.Add(egyesuletadat);
+
+                }
+                */
                 return egyesuletadatok;
             }
 
@@ -2084,9 +2128,99 @@ namespace Íjász
 
         static public string NyomtatEredmenylapVersenyEgyesulet(string _VEAZON)
         {
+            EredmenylapVersenyEgyesulet Data = new EredmenylapVersenyEgyesulet(_VEAZON);
             string FileName = null;
 
-            EredmenylapVersenyEgyesulet data = new EredmenylapVersenyEgyesulet(_VEAZON);
+            #region alap stringek
+            string Cim = "EREDMÉNYLAP";
+            string Tipus = "***egyesület***";
+            string Verseny = "Verseny azonosítója, neve: ";
+            string Ido = "Verseny ideje: ";
+            string Osszpont = "Verseny összpontszáma: ";
+            string VersenySorozat = "Versenysorozat azonosítója, neve: ";
+            #endregion
+
+            if (Data.VersenyAdatok.VSAZON != null)
+            {
+                FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "ERLAPVEEGYE.docx";
+            }
+            else
+            {
+                FileName = _VEAZON + "\\" + "ERLAPVEEGYE.docx";
+            }
+
+            var document = DocX.Create(FileName);
+            document.AddHeaders();
+
+            #region header
+
+            var titleFormat = new Formatting();
+            titleFormat.Size = 14D;
+            titleFormat.Position = 1;
+            titleFormat.Spacing = 5;
+            titleFormat.Bold = true;
+
+            Header header = document.Headers.odd;
+
+            Paragraph title = header.InsertParagraph();
+            title.Append(Cim);
+            title.AppendLine(Tipus);
+            title.Alignment = Alignment.center;
+
+            titleFormat.Size = 10D;
+            title.AppendLine(Program.Tulajdonos_Megnevezés);
+            title.Bold();
+            titleFormat.Position = 12;
+            #endregion
+
+            #region Title
+
+            var titleFormat2 = new Formatting();
+            titleFormat2.Size = 10D;
+            titleFormat2.Position = 1;
+
+            Paragraph paragraph_1 = header.InsertParagraph();
+            paragraph_1.AppendLine(Verseny);
+
+            paragraph_1.Append(_VEAZON + ", " + Data.VersenyAdatok.VEMEGN);
+            paragraph_1.Bold();
+            titleFormat2.Bold = false;
+            paragraph_1.Append("\n" + Ido);
+            paragraph_1.Append(Data.VersenyAdatok.VEDATU);
+            paragraph_1.Bold();
+            paragraph_1.Append("\t" + Osszpont);
+            paragraph_1.Append((Data.VersenyAdatok.VEOSPO * 10).ToString());
+            paragraph_1.Bold();
+            paragraph_1.Append("\n" + VersenySorozat);
+            paragraph_1.Append(Data.VersenyAdatok.VSAZON + "," + Data.VersenyAdatok.VSMEGN);
+            paragraph_1.AppendLine();
+            paragraph_1.Bold();
+            #endregion
+
+            Table table = document.AddTable(1, 4);
+            table.Alignment = Alignment.center;
+
+            table.Rows[0].Cells[0].Paragraphs[0].Append("Sorrend").Bold();
+            table.Rows[0].Cells[1].Paragraphs[0].Append("Egyesület neve").Bold();
+            table.Rows[0].Cells[2].Paragraphs[0].Append("Egyesület címe").Bold();
+            table.Rows[0].Cells[3].Paragraphs[0].Append("ÖsszPont").Bold();
+            
+
+            
+            for(int i = 0;i<Data.Egyesuletek.Count;i++)
+            {
+                table.InsertRow();
+                table.Rows[table.Rows.Count - 1].Cells[0].Paragraphs[0].Append( i+1 + "."  );
+                table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append(Data.Egyesuletek[i].Nev);
+                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(Data.Egyesuletek[i].Cim);
+                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(Data.Egyesuletek[i].OsszPont.ToString());
+            }
+            EgyesuletTablazatFormazas(table);
+
+            document.InsertTable(table);
+
+            try { document.Save(); }
+            catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "CSAPATLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
             return FileName;
         }
@@ -2678,6 +2812,39 @@ namespace Íjász
                 _table.Rows[i].Height = 20;
             }
         }
+
+        static public void EgyesuletTablazatFormazas(Table _table)
+        {
+            Border b = new Border(Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Blue);
+            Border c = new Border(Novacode.BorderStyle.Tcbs_single, BorderSize.seven, 0, Color.Black);
+
+            _table.SetBorder(TableBorderType.InsideH, b);
+            _table.SetBorder(TableBorderType.InsideV, b);
+            _table.SetBorder(TableBorderType.Bottom, b);
+            _table.SetBorder(TableBorderType.Top, b);
+            _table.SetBorder(TableBorderType.Left, b);
+            _table.SetBorder(TableBorderType.Right, b);
+
+            for (int i = 0; i < 4; i++)
+            {
+                _table.Rows[0].Cells[i].SetBorder(TableCellBorderType.Bottom, c);
+            }
+
+            _table.AutoFit = AutoFit.ColumnWidth;
+            for (int i = 0; i < _table.Rows.Count; i++)
+            {
+                _table.Rows[i].Cells[0].Width = 100;
+                _table.Rows[i].Cells[1].Width = 250;
+                _table.Rows[i].Cells[2].Width = 250;
+                _table.Rows[i].Cells[3].Width = 100;
+            }
+
+            for (int i = 0; i < _table.Rows.Count; i++)
+            {
+                _table.Rows[i].Height = 20;
+            }
+        }
+
         #endregion
 
         static public void print(string _filename)

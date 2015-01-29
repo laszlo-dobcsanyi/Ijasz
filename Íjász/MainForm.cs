@@ -332,7 +332,7 @@ namespace Íjász
         {
             this.Text = _Text;
             this.Location = _Location;
-            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            //this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             this.AutoSize = true;
 
             _Form.Controls.Add(this);
@@ -397,7 +397,7 @@ namespace Íjász
             this.Text = _Text;
             this.Location = _Location;
             this.AutoSize = true;
-            this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            //this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             this.FlatStyle = FlatStyle.Flat;
             this.CheckState = CheckState.Unchecked;
             this.Click += _Click;

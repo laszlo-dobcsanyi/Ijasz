@@ -63,7 +63,7 @@ namespace Íjász
             table.AllowUserToAddRows = false;
             table.Width = 703;
             table.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            table.MultiSelect = false;
+            table.MultiSelect = true;
             table.ReadOnly = true;
             table.DataBindingComplete += table_DataBindingComplete;
             table.CellDoubleClick += módosítás_Click;

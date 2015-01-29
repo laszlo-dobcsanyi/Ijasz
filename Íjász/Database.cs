@@ -8,7 +8,7 @@ namespace Íjász
 {
     public sealed class Database :IDisposable
     {
-        public static int Verzió = 2;
+        public static int Verzió = 3;
         private SQLiteConnection connection;
 
         public Database()
@@ -24,18 +24,20 @@ namespace Íjász
 
                 //Create tables
                 SQLiteCommand command = connection.CreateCommand();
+                
+
+
+                /*
                 command.CommandText =
                     "CREATE TABLE Verzió (PRVERZ int);" +
                     "CREATE TABLE Versenysorozat (VSAZON char(10) PRIMARY KEY, VSMEGN char(30), VSVESZ int);" +
                     "CREATE TABLE Verseny (VEAZON char(10) PRIMARY KEY, VEMEGN char(30), VEDATU char(20), VSAZON char(10), VEOSPO int NOT NULL, VEALSZ int, VEINSZ int, VELEZAR boolean, VEDUBE boolean);" +
                     "CREATE TABLE Korosztályok (VEAZON char(10) NOT NULL, KOAZON char(10) NOT NULL, KOMEGN char(30), KOEKMI int NOT NULL, KOEKMA int NOT NULL, KONOK boolean, KOFERF boolean, KOINSN int, KOINSF int);" +
                     "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
-                    "CREATE TABLE Egyesuletek (EGAZON char(10) PRIMARY KEY,EGMEGN char(30),EGCIME char(30),EGVENE char(30),EGVETE char(10),EGVEEM char(30),EGLIST boolean,EGTASZ int);" +
-                    "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30), INEGYE char(30), INERSZ int,  EGAZON char(10));" +
-                    "INSERT INTO Egyesuletek (EGAZON,EGMEGN,EGCIME,EGVENE,EGVETE,EGVEEM,EGLIST,EGTASZ) VALUES('','','','','','','0','0');" + 
-
+                    "CREATE TABLE Egyesuletek (EGAZON char(30) PRIMARY KEY,EGCIME char(30),EGVENE char(30),EGVET1 char(30),EGVET2 char(30),EGVEM1 char(30),EGVEM2 char(30),EGLIST boolean,EGTASZ int);" +
+                    "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30),INERSZ int, EGAZON char(10));" +
                     "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
-
+                */
                 if (command.ExecuteNonQuery() != 0){}// MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else MessageBox.Show("Adatbázis létrehozva!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 command.Dispose();
@@ -951,7 +953,55 @@ namespace Íjász
         #endregion
 
         #region Egyesuletek
-        
+
+        public static string GetNullableString(SQLiteDataReader _reader, int _column)
+        {
+            if (!_reader.IsDBNull(_column)) return _reader.GetString(_column);
+            return null;
+        }
+        public static bool GetNullableBool(SQLiteDataReader _reader, int _column)
+        {
+            if (!_reader.IsDBNull(_column)) return _reader.GetBoolean(_column);
+            return false;
+        }
+
+        public static int GetNullableInt(SQLiteDataReader _reader, int _column)
+        {
+            if (!_reader.IsDBNull(_column)) return _reader.GetInt32(_column);
+            return 0;
+        }
+
+        public Egyesulet
+        Egyesulet( string _azonosito )
+        {
+            lock (Program.datalock)
+            {
+                Egyesulet data = new Egyesulet();
+                connection.Open();
+
+                SQLiteCommand command = connection.CreateCommand();
+
+                command.CommandText = "SELECT EGAZON,EGCIME,EGVENE,EGVET1,EGVET2,EGVEM1,EGVEM2,EGLIST,EGTASZ FROM Egyesuletek WHERE Egyesuletek.EGAZON='" + _azonosito + "';";
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    data = new Egyesulet(reader.GetString(0),
+                                                GetNullableString(reader, 1),
+                                                GetNullableString(reader, 2),
+                                                GetNullableString(reader, 3),
+                                                GetNullableString(reader, 4),
+                                                GetNullableString(reader, 5),
+                                                GetNullableString(reader, 6),
+                                                GetNullableBool(reader, 7),
+                                                GetNullableInt(reader, 8));
+                }
+
+                command.Dispose();
+                connection.Close();
+
+                return data;
+            }
+        }
 
         public List<Egyesulet> 
         Egyesuletek()
@@ -963,18 +1013,19 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
 
-                command.CommandText = "SELECT EGAZON,EGMEGN,EGCIME,EGVENE,EGVETE,EGVEEM,EGLIST,EGTASZ FROM Egyesuletek ;";
+                command.CommandText = "SELECT EGAZON,EGCIME,EGVENE,EGVET1,EGVET2,EGVEM1,EGVEM2,EGLIST,EGTASZ FROM Egyesuletek ;";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     Egyesulet temp = new Egyesulet( reader.GetString(0), 
-                                                reader.GetString(1),
-                                                reader.GetString(2),
-                                                reader.GetString(3), 
-                                                reader.GetString(4), 
-                                                reader.GetString(5),
-                                                reader.GetBoolean(6),
-                                                reader.GetInt32(7));
+                                                GetNullableString(reader, 1),
+                                                GetNullableString(reader,2),
+                                                GetNullableString(reader,3),
+                                                GetNullableString(reader,4),
+                                                GetNullableString(reader,5),
+                                                GetNullableString(reader,6),
+                                                GetNullableBool(reader, 7),
+                                                GetNullableInt(reader, 8));
                    data.Add(temp);
                 }
 
@@ -983,14 +1034,6 @@ namespace Íjász
 
                 return data;
             }
-        }
-
-        public Egyesulet 
-        Egyesulet(string _Azonosito)
-        {
-            Egyesulet Data = new Egyesulet();
-
-            return Data; 
         }
 
         public bool 
@@ -1019,16 +1062,15 @@ namespace Íjász
                     return false;
                 }
 
-
-
                 command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Egyesuletek (EGAZON,EGMEGN,EGCIME,EGVENE,EGVETE,EGVEEM,EGLIST,EGTASZ)" + 
+                command.CommandText = "INSERT INTO Egyesuletek (EGAZON,EGCIME,EGVENE,EGVET1,EGVET2,EGVEM1,EGVEM2,EGLIST,EGTASZ)" + 
                                       " VALUES('" + _egyesulet.Azonosito + "', '" +
-                                       _egyesulet.Nev + "', '" +
                                        _egyesulet.Cim + "', '" +
                                        _egyesulet.Vezeto + "', '" +
-                                       _egyesulet.Telefon + "', '" +
-                                       _egyesulet.Email + "', '" +
+                                       _egyesulet.Telefon1 + "', '" +
+                                       _egyesulet.Telefon2 + "', '" +
+                                       _egyesulet.Email1 + "', '" +
+                                       _egyesulet.Email2 + "', '" +
                                        Convert.ToInt32(_egyesulet.Listazando) + "'," +
                                        _egyesulet.TagokSzama + ");";
 
@@ -1049,11 +1091,12 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
                 command.CommandText = "UPDATE Egyesuletek SET EGAZON= '" + _Uj.Azonosito +
-                                                            "', EGMEGN = '" + _Uj.Nev +
                                                             "', EGCIME = '" + _Uj.Cim +
                                                             "', EGVENE = '" + _Uj.Vezeto+
-                                                            "', EGVETE = '" + _Uj.Telefon+
-                                                            "', EGVEEM = '" + _Uj.Email+
+                                                            "', EGVET1 = '" + _Uj.Telefon1 +
+                                                            "', EGVET2 = '" + _Uj.Telefon2 +
+                                                            "', EGVEM1 = '" + _Uj.Email1 +
+                                                            "', EGVEM2 = '" + _Uj.Email2 +
                                                             "', EGLIST = " + (_Uj.Listazando ? "1" : "0") +
                                                             ", EGTASZ = " + _Uj.TagokSzama +
                                                             " WHERE EGAZON = '" + _Regi.Azonosito + "';";
@@ -1160,7 +1203,7 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
 
-                command.CommandText = "SELECT INNEVE, INNEME, INSZUL, INVEEN, INEGYE, INERSZ FROM Indulók;";
+                command.CommandText = "SELECT INNEVE, INNEME, INSZUL, INVEEN, EGAZON, INERSZ FROM Indulók;";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1183,7 +1226,7 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
 
-                command.CommandText = "SELECT INNEVE, INNEME, INSZUL, INVEEN, INEGYE, INERSZ FROM Indulók WHERE INNEVE = '" + _név + "';";
+                command.CommandText = "SELECT INNEVE, INNEME, INSZUL, INVEEN, EGAZON, INERSZ FROM Indulók WHERE INNEVE = '" + _név + "';";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -1206,7 +1249,7 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Indulók (INNEVE, INNEME, INSZUL, INVEEN, INEGYE, INERSZ) VALUES('" + _induló.név + "', '" + _induló.nem + "', '" + _induló.születés + "', " +
+                command.CommandText = "INSERT INTO Indulók (INNEVE, INNEME, INSZUL, INVEEN, EGAZON, INERSZ) VALUES('" + _induló.név + "', '" + _induló.nem + "', '" + _induló.születés + "', " +
                     "'" + _induló.engedély + "', '" + _induló.egyesület + "', 0);";
                 try
                 {
@@ -1236,7 +1279,7 @@ namespace Íjász
 
                 SQLiteCommand command = connection.CreateCommand();
                 command.CommandText = "UPDATE Indulók SET INNEVE = '" + _induló.név + "', INNEME = '" + _induló.nem + "', INSZUL = '" + _induló.születés + "', " +
-                    "INVEEN = '" + _induló.engedély + "', INEGYE = '" + _induló.egyesület + "' WHERE INNEVE = '" + _név + "';";
+                    "INVEEN = '" + _induló.engedély + "', EGAZON = '" + _induló.egyesület + "' WHERE INNEVE = '" + _név + "';";
 
                 command.ExecuteNonQuery();
                 command.Dispose();
