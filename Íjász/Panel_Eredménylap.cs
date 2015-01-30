@@ -20,6 +20,7 @@ namespace Íjász
         CheckBox chkTeljes;
         CheckBox chkMisz;
         CheckBox chkEgyesulet;
+        CheckBox chkReszletes;
 
         Label lblVersenyNyomtat;
         Label lblVersenysorozatNyomtat;
@@ -128,6 +129,12 @@ namespace Íjász
                                          Eredmenylap_Click,
                                          this);
 
+            chkReszletes= new iCheckBox("Részletes",
+                                         new Point(cWidth - 96 - 31 * 16, cHeight - 32 - 27 * 16 - 8),
+                                         Eredmenylap_Click,
+                                         this);
+
+
             chkVerseny = new iCheckBox("",
                                         new Point(cWidth - 96 - 48 * 16,cHeight - 32 - 41 * 16 - 12),
                                         Versenysorozat_Click,
@@ -220,7 +227,7 @@ namespace Íjász
             if(chkVersenysorozat.Checked && cboVersenysorozatAzonosito.SelectedItem == null) return;
             
                 //nincs eredménylap
-            if(chkTeljes.Checked == chkMisz.Checked == chkEgyesulet.Checked == false) return;
+            if (chkTeljes.Checked == false && chkMisz.Checked == false && chkEgyesulet.Checked == false && chkReszletes.Checked == false) return;
 
                 // nincs verseny a vs-ban
             if (chkVersenysorozat.Checked && VersenyekSzama == 0) return;
@@ -266,6 +273,11 @@ namespace Íjász
                 Nyomtat.Dialog(Nyomtat.NyomtatEredmenylapVersenySorozatEgyesulet(cboVersenysorozatAzonosito.Text));
             }
 
+            if( chkVersenysorozat.CheckState == CheckState.Checked && chkReszletes.CheckState == CheckState.Checked  )
+            {
+                Nyomtat.Dialog(Nyomtat.NyomtatEredmenylapVersenySorozatReszletes(cboVersenysorozatAzonosito.Text));
+
+            }
         }
 
         private void 
@@ -279,16 +291,26 @@ namespace Íjász
                 chkTeljes.Checked = true;
                 chkMisz.Checked = false;
                 chkEgyesulet.Checked = false;
+                chkReszletes.Checked = false;
             }
             else if (Aktiv == chkMisz)
             {
                 chkMisz.Checked = true;
                 chkTeljes.Checked = false;
                 chkEgyesulet.Checked = false;
+                chkReszletes.Checked = false;
             }
             else if (Aktiv == chkEgyesulet)
             {
                 chkEgyesulet.Checked = true;
+                chkTeljes.Checked = false;
+                chkMisz.Checked = false;
+                chkReszletes.Checked = false;
+            }
+            else if (Aktiv == chkReszletes )
+            {
+                chkReszletes.Checked = true;
+                chkEgyesulet.Checked = false;
                 chkTeljes.Checked = false;
                 chkMisz.Checked = false;
             }
@@ -299,13 +321,14 @@ namespace Íjász
         Versenysorozat_Click(object _sender, EventArgs _event)
         {
             CheckBox aktív = _sender as CheckBox;
-            if (aktív != chkVerseny && aktív != null)
+            if (aktív != chkVerseny &&aktív != null)
             {
                 cboVersenyAzonosito.Enabled = false;
-                cboVersenysorozatAzonosito.Enabled = true;
                 chkVerseny.Checked = false;
+                cboVersenysorozatAzonosito.Enabled = true;
                 cboVersenyekSzama.Enabled = true;
                 chkVersenysorozat.Checked = true;
+                chkReszletes.Enabled = true;
             }
             else
             {
@@ -314,6 +337,7 @@ namespace Íjász
                 cboVersenyAzonosito.Enabled = true;
                 cboVersenysorozatAzonosito.Enabled = false;
                 cboVersenyekSzama.Enabled = false;
+                chkReszletes.Enabled = false;
             }
         }
 

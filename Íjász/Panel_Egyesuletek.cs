@@ -110,7 +110,7 @@ namespace Íjász
         {
             data = new DataTable();
 
-            data.Columns.Add(new DataColumn("Azonosító", System.Type.GetType("System.String")));
+            data.Columns.Add(new DataColumn("Név", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Cím", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Vezető", System.Type.GetType("System.String")));
             data.Columns.Add(new DataColumn("Telefon", System.Type.GetType("System.String")));
@@ -150,14 +150,6 @@ namespace Íjász
             }
             else
             {
-                if (_egyesulet.Azonosito.Contains(" ")) 
-                {
-                    MessageBox.Show("Az azonosito nem tartalmazhat szóközt!",
-                                    "Hiba", 
-                                    MessageBoxButtons.OK, 
-                                    MessageBoxIcon.Error);
-                    return; 
-                }
                 if (!Program.database.UjEgyesulet(_egyesulet)) 
                 { 
                     MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", 
@@ -269,11 +261,7 @@ namespace Íjász
             table.Columns[5].Width = 60;
             table.Columns[6].Width = 60;
 
-
-            foreach (DataGridViewColumn column in table.Columns)
-            {
-                column.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
+            foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
         private void 
@@ -437,7 +425,7 @@ namespace Íjász
             InitializeForm()
             {
                 Text = "Egyesület";
-                ClientSize = new System.Drawing.Size(400, 350);
+                ClientSize = new System.Drawing.Size(420, 300);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -446,7 +434,7 @@ namespace Íjász
             private void 
             InitializeContent()
             {
-                Label lblAzonosito = new iLabel("Azonosító:",new Point(16, 16 + 0 * 32),this);
+                Label lblAzonosito = new iLabel("Egyesület neve:",new Point(16, 16 + 0 * 32),this);
 
 
                 Label lblCim = new iLabel("Egyesület címe:",new Point(16, 16 + 1 * 32),this);
@@ -461,8 +449,8 @@ namespace Íjász
 
                 
                 txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Width + 32 + 16, lblAzonosito.Location.Y ),
-                                                    10,
-                                                    new Size( 128 + 64, 24),
+                                                    30,
+                                                    new Size( 128 + 2* 64, 24),
                                                     null,
                                                     this); 
 
@@ -506,6 +494,7 @@ namespace Íjász
                                                 new Point(txtAzonosito.Location.X,lblListazando.Location.Y),
                                                 null,
                                                 this );
+                chkListazando.Checked = true;
 
                 Button btnRendben = new iButton("Rendben",
                                                 new Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16),

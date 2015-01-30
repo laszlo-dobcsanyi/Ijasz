@@ -393,7 +393,7 @@ namespace Íjász
             private void InitializeForm()
             {
                 Text = "Induló";
-                ClientSize = new System.Drawing.Size(400 - 32, 232);
+                ClientSize = new System.Drawing.Size(400 - 32, 262);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -469,6 +469,12 @@ namespace Íjász
                 rendben.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16);
                 rendben.Click += rendben_Click;
 
+                Button btnEgyesulet = new iButton( "Új Egyesület",
+                                                    new Point(ClientRectangle.Width - 96 - 96 - 32, ClientRectangle.Height - 32 - 16 ),
+                                                    new Size(96,32),
+                                                    btnEgyesulet_Click,
+                                                    this);
+
                 ///
 
                 Controls.Add(név);
@@ -538,6 +544,28 @@ namespace Íjász
                 }
 
                 Close();
+            }
+
+            private void
+            btnEgyesulet_Click( object _sender, EventArgs _event )
+            {
+                 Panel_Egyesuletek.Form_Egyesulet EgyesuletForm = new Panel_Egyesuletek.Form_Egyesulet();
+                 EgyesuletForm.Show();
+                 EgyesuletForm.FormClosed += EgyesuletForm_FormClosed;
+            }
+
+            void EgyesuletForm_FormClosed(object sender, FormClosedEventArgs e)
+            {
+                cboEgyesulet.Items.Clear();
+                List<Egyesulet> egyesuletek = Program.database.Egyesuletek();
+
+                foreach (Egyesulet item in egyesuletek)
+                {
+                    cboEgyesulet.Items.Add(item.Azonosito);
+                }
+
+                if(cboEgyesulet.Items.Count != 0)
+                cboEgyesulet.SelectedIndex = cboEgyesulet.Items.Count - 1;
             }
         }
 
