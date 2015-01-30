@@ -1191,6 +1191,41 @@ namespace Íjász
             }
         }
 
+        public List<Nyomtat.EgyesuletAdat> EredmenylapVersenyEgyesulet(string _VEAZON)
+        {
+            lock (Program.datalock)
+            {
+                int c=1;
+                List<Nyomtat.EgyesuletAdat> egyesuletadatok = new List<Nyomtat.EgyesuletAdat>();
+                connection.Open();
+                SQLiteCommand command = connection.CreateCommand();
+
+                command.CommandText = "SELECT Egyesuletek.EGAZON, Egyesuletek.EGCIME, SUM(Eredmények_" + _VEAZON + ".INOSZP) " +
+                                      "FROM Indulók " + 
+                                      "INNER JOIN Eredmények_" + _VEAZON  + 
+                                      " ON Eredmények_" + _VEAZON + ".INNEVE=Indulók.INNEVE " + 
+                                      "INNER JOIN Egyesuletek" + 
+                                      " ON Indulók.EGAZON=Egyesuletek.EGAZON " + 
+                                      "WHERE Egyesuletek.EGLIST=1 AND Eredmények_" + _VEAZON + ".INMEGJ=1 " + 
+                                      "GROUP BY Indulók.EGAZON " +
+                                      "ORDER BY SUM(Eredmények_" + _VEAZON + ".INOSZP) DESC" + ";";
+                
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    egyesuletadatok.Add( new Nyomtat.EgyesuletAdat(c,
+                                                                                               reader.GetString(0),
+                                                                                               reader.GetString(1),
+                                                                                               reader.GetInt32(2)));
+                    c++;
+                }
+
+                command.Dispose();
+                connection.Close();
+                return egyesuletadatok;
+            }
+        }
+
         #endregion
 
         #region Induló

@@ -258,7 +258,14 @@ namespace Íjász
             if( chkVerseny.CheckState == CheckState.Checked && chkEgyesulet.CheckState == CheckState.Checked  )
             {
                 Nyomtat.Dialog(Nyomtat.NyomtatEredmenylapVersenyEgyesulet( cboVersenyAzonosito.Text ));
+
             }
+
+            if( chkVersenysorozat.CheckState == CheckState.Checked && chkEgyesulet.CheckState == CheckState.Checked  )
+            {
+                Nyomtat.Dialog(Nyomtat.NyomtatEredmenylapVersenySorozatEgyesulet(cboVersenysorozatAzonosito.Text));
+            }
+
         }
 
         private void 

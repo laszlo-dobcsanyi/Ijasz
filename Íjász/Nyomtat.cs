@@ -380,6 +380,22 @@ namespace Íjász
             public List<Node_Íjtípus> íjtípus;
             public List<string> versenyazonosítók;
         }
+        
+        public struct EgyesuletAdat
+        {
+            public int Helyezes;
+            public string Nev;
+            public string Cim;
+            public int OsszPont;
+
+            public EgyesuletAdat(int _Helyezes, string _Nev, string _Cim, int _OsszPont)
+            {
+                Helyezes = _Helyezes;
+                Nev = _Nev;
+                Cim = _Cim;
+                OsszPont = _OsszPont;
+            }
+        }
 
         public struct EredmenylapVersenyEgyesulet
         {
@@ -407,7 +423,6 @@ namespace Íjász
                             VEOSPO = verseny.összes;
                             VSAZON = verseny.versenysorozat;
                         }
-                        
                     }
                     foreach (Versenysorozat versenysorozat in versenysorozatok)
                     {
@@ -417,159 +432,77 @@ namespace Íjász
                 }
             }
 
-            public struct InduloAdat
-            {
-                public string Nev;
-                public string Egyesulet;
-                public int Pont;
-
-                public InduloAdat( string _Nev, string _Egyesulet, int _Pont )
-                {
-                    Nev = _Nev;
-                    Egyesulet = _Egyesulet;
-                    Pont = _Pont;
-                }
-            }
-
-            public struct EgyesuletAdat
-            {
-                public int Helyezes;
-                public string Nev;
-                public string Cim;
-                public int OsszPont;
-
-
-                public EgyesuletAdat(int _Helyezes, string _Nev, string _Cim, int _OsszPont)
-                {
-                    Helyezes = _Helyezes;
-                    Nev = _Nev;
-                    Cim = _Cim;
-                    OsszPont = _OsszPont;
-                }
-            }
-
-            public static List<InduloAdat> InduloAdatok(string _VEAZON)
-            {
-                List<Eredmény> eredmenyek = Program.database.Eredmények(_VEAZON);
-                List<Induló> indulok = new List<Induló>();
-                List<InduloAdat> induloadatok = new List<InduloAdat>();
-
-                for (int i = eredmenyek.Count - 1; i >= 0; i--)
-                {
-                    if (eredmenyek[i].megjelent == false)
-                    {
-                        eredmenyek.Remove(eredmenyek[i]);
-                    }
-                    else
-                    {
-                        Induló temp = Program.database.Induló(eredmenyek[i].név).Value;
-                        Egyesulet tempegyesulet = Program.database.Egyesulet(temp.egyesület);
-                        if (tempegyesulet.Listazando==true)
-                        {
-                            indulok.Add(temp);
-                        }
-                        else
-                        {
-                            eredmenyek.Remove(eredmenyek[i]);
-                        }
-                    }
-                }
-
-                for (int i = eredmenyek.Count - 1; i >= 0; i--)
-                {
-                    for (int j = indulok.Count - 1; j >= 0; j--)
-                    {
-                        if (eredmenyek[i].név == indulok[j].név)
-                        {
-                            InduloAdat indulo = new InduloAdat(indulok[j].név, indulok[j].egyesület, eredmenyek[i].összpont.Value);
-                            induloadatok.Add(indulo);
-                            eredmenyek.RemoveAt(i);
-                            indulok.RemoveAt(j);
-                        }
-                    }
-                }
-
-                if (eredmenyek.Count != 0 || indulok.Count != 0)
-                {
-                    MessageBox.Show("FAIL");
-                }
-                return induloadatok;
-            }
-
-            public List<EgyesuletAdat> EgyesuletAdatok(string _VEAZON)
-            {
-                List<InduloAdat> induloadatok = InduloAdatok(_VEAZON);
-                List<EgyesuletAdat> egyesuletadatok = new List<EgyesuletAdat>();
-                //List<Egyesulet> egyesuletek = Program.database.Egyesuletek();
-
-                List<Egyesulet> egyesuletek = Program.database.Egyesuletek();
-                foreach(Egyesulet egyesulet in egyesuletek)
-                {
-                    egyesuletadatok.Add(new EgyesuletAdat(0,egyesulet.Azonosito,egyesulet.Cim,0));
-                }
-
-                for (int i =0; i< induloadatok.Count ; i++)
-                {
-                    for (int j = 0; j < egyesuletadatok.Count; j++)
-                    {
-                        if( induloadatok[i].Egyesulet == egyesuletadatok[j].Nev )
-                        {
-                            EgyesuletAdat temp = egyesuletadatok[j];
-                            temp.OsszPont += induloadatok[i].Pont;
-                            egyesuletadatok.RemoveAt(j);
-                            egyesuletadatok.Add(temp);
-                        }
-                    }
-                }
-
-                for(int i= egyesuletadatok.Count-1;i>=0;i--)
-                {
-                    if(egyesuletadatok[i].OsszPont == 0)
-                    {
-                        egyesuletadatok.RemoveAt(i);
-                    }
-                }
-
-                for (int i=0;i<egyesuletadatok.Count;i++)
-                {
-                    for (int j = 0; j < egyesuletadatok.Count; j++)
-                    {
-                        if(egyesuletadatok[i].OsszPont > egyesuletadatok[j].OsszPont)
-                        {
-                            EgyesuletAdat temp = egyesuletadatok[i];
-                            egyesuletadatok[i] = egyesuletadatok[j];
-                            egyesuletadatok[j] = temp;
-                        }
-                    }
-                }
-
-                /*
-                {
-                    EgyesuletAdat egyesuletadat = new EgyesuletAdat(0,induloadatok[i].Egyesulet,"",0);
-                    induloadatok.RemoveAt(i);
-                    for( int j = induloadatok.Count-1; j>=1; j-- )
-                    {
-                        if(induloadatok[j].Egyesulet == egyesuletadat.Nev)
-                        {
-                            egyesuletadat.OsszPont += induloadatok[j].Pont;
-                            induloadatok.RemoveAt(j);
-                        }
-                    }
-                    egyesuletadatok.Add(egyesuletadat);
-
-                }
-                */
-                return egyesuletadatok;
-            }
-
-            public EredmenylapVersenyEgyesulet(string _VEAZON) : this()
-            {
-                Egyesuletek = EgyesuletAdatok( _VEAZON);
-                VersenyAdatok = new EredmenylapVersenyEgyesulet.Versenyadatok(_VEAZON);
-            }
-
             public List<EgyesuletAdat> Egyesuletek;
             public Versenyadatok VersenyAdatok; 
+
+            public EredmenylapVersenyEgyesulet(string _VEAZON)
+            {
+                Egyesuletek = Program.database.EredmenylapVersenyEgyesulet(_VEAZON);
+                VersenyAdatok = new Versenyadatok(_VEAZON); 
+            }
+        }
+
+        public struct EredmenylapVersenySorozatEgyesulet
+        {
+            public string VSAZON;
+            public string VSMEGN;
+            
+            public List<EgyesuletAdat> Egyesuletek;
+
+            public EredmenylapVersenySorozatEgyesulet(string _VSAZON) :this()
+            {
+                Versenysorozat tmpvs = Program.database.Versenysorozat(_VSAZON).Value;
+                VSAZON = _VSAZON;
+                VSMEGN = tmpvs.megnevezés;
+
+                Egyesuletek = new List<EgyesuletAdat>();
+                List<Egyesulet> egyes = Program.database.Egyesuletek();
+                foreach (Egyesulet item in egyes)
+                {
+                    if(item.Listazando==true)
+                    Egyesuletek.Add(new EgyesuletAdat(0,item.Azonosito,item.Cim,0));
+                }
+
+               List<List<EgyesuletAdat>> temp = new List<List<EgyesuletAdat>>();
+
+                List<Verseny> versenyek = Program.database.Versenyek();
+                for( int i = versenyek.Count-1; i>=0;i-- )
+                {
+                    if(versenyek[i].versenysorozat==_VSAZON)
+                    {
+                        temp.Add( Program.database.EredmenylapVersenyEgyesulet(versenyek[i].azonosító) );
+                    }
+                }
+                EgyesuletAdat[] Egyesuletek2 = Egyesuletek.ToArray();
+
+                 foreach (List<EgyesuletAdat> item in temp)
+                 {
+                    foreach (EgyesuletAdat item2 in item)
+                    {
+                        for(int i=0;i<Egyesuletek2.Length;i++)
+                        {
+                            if(item2.Nev == Egyesuletek2[i].Nev)
+                            {
+                                Egyesuletek2[i].OsszPont += item2.OsszPont;
+                            }
+                        }
+                    }
+                 }
+                 Egyesuletek = new List<EgyesuletAdat>( Egyesuletek2 );
+
+                for (int i = 0; i < Egyesuletek.Count; i++)
+                {
+                    for (int j = 0; j < Egyesuletek.Count; j++)
+                    {
+                        if(Egyesuletek[i].OsszPont>Egyesuletek[j].OsszPont)
+                        {
+                            EgyesuletAdat temp3 = Egyesuletek[i];
+                            Egyesuletek[i] = Egyesuletek[j];
+                            Egyesuletek[j] = temp3;
+                        }
+                    }
+                }
+            }
         }
 
         static public string nyomtat_beirlap(string _VEAZON, Eredmény _eredmény) 
@@ -2129,8 +2062,9 @@ namespace Íjász
         static public string NyomtatEredmenylapVersenyEgyesulet(string _VEAZON)
         {
             EredmenylapVersenyEgyesulet Data = new EredmenylapVersenyEgyesulet(_VEAZON);
+            
             string FileName = null;
-
+            
             #region alap stringek
             string Cim = "EREDMÉNYLAP";
             string Tipus = "***egyesület***";
@@ -2221,6 +2155,87 @@ namespace Íjász
 
             try { document.Save(); }
             catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "CSAPATLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            
+            return FileName;
+        }
+
+        static public string NyomtatEredmenylapVersenySorozatEgyesulet( string _VSAZON )
+        {
+            string FileName = _VSAZON + "\\" + "ERLAPVSEGYE.docx";
+            EredmenylapVersenySorozatEgyesulet Data = new EredmenylapVersenySorozatEgyesulet(_VSAZON);
+
+
+            #region alap stringek
+            string Cim = "EREDMÉNYLAP";
+            string Tipus = "***egyesület***";
+            string VersenySorozat = "Versenysorozat azonosítója, neve: ";
+            #endregion
+
+
+
+            var document = DocX.Create(FileName);
+            document.AddHeaders();
+
+            #region header
+
+            var titleFormat = new Formatting();
+            titleFormat.Size = 14D;
+            titleFormat.Position = 1;
+            titleFormat.Spacing = 5;
+            titleFormat.Bold = true;
+
+            Header header = document.Headers.odd;
+
+            Paragraph title = header.InsertParagraph();
+            title.Append(Cim);
+            title.AppendLine(Tipus);
+            title.Alignment = Alignment.center;
+
+            titleFormat.Size = 10D;
+            title.AppendLine(Program.Tulajdonos_Megnevezés);
+            title.Bold();
+            titleFormat.Position = 12;
+            #endregion
+
+            #region Title
+
+            var titleFormat2 = new Formatting();
+            titleFormat2.Size = 10D;
+            titleFormat2.Position = 1;
+
+            Paragraph paragraph_1 = header.InsertParagraph();
+            
+            paragraph_1.Append("\n" + VersenySorozat);
+            paragraph_1.Append(Data.VSAZON + "," + Data.VSMEGN);
+            paragraph_1.AppendLine();
+            paragraph_1.Bold();
+              
+            #endregion
+
+            Table table = document.AddTable(1, 4);
+            table.Alignment = Alignment.center;
+
+            table.Rows[0].Cells[0].Paragraphs[0].Append("Sorrend").Bold();
+            table.Rows[0].Cells[1].Paragraphs[0].Append("Egyesület neve").Bold();
+            table.Rows[0].Cells[2].Paragraphs[0].Append("Egyesület címe").Bold();
+            table.Rows[0].Cells[3].Paragraphs[0].Append("ÖsszPont").Bold();
+
+
+
+            for (int i = 0; i < Data.Egyesuletek.Count; i++)
+            {
+                table.InsertRow();
+                table.Rows[table.Rows.Count - 1].Cells[0].Paragraphs[0].Append(i + 1 + ".");
+                table.Rows[table.Rows.Count - 1].Cells[1].Paragraphs[0].Append(Data.Egyesuletek[i].Nev);
+                table.Rows[table.Rows.Count - 1].Cells[2].Paragraphs[0].Append(Data.Egyesuletek[i].Cim);
+                table.Rows[table.Rows.Count - 1].Cells[3].Paragraphs[0].Append(Data.Egyesuletek[i].OsszPont.ToString());
+            }
+            EgyesuletTablazatFormazas(table);
+
+            document.InsertTable(table);
+
+            try { document.Save(); }
+            catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "ERLAPVSEGYE.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
             return FileName;
         }
