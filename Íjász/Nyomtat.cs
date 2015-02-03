@@ -114,8 +114,6 @@ namespace Íjász
 
                     }
                 }
-
-
             }
 
             public List<CSAPAT> CsapatokLista(string _VEAZON)
@@ -184,9 +182,9 @@ namespace Íjász
             public List<CSAPAT> Csapatok;
         };
 
-        public struct Node_NevezésiLista
+        public struct NEVEZESILISTA
         {
-            public struct Versenyadatok
+            public struct VERSENYADATOK
             {
                 public string VEAZON;
                 public string VEMEGN;
@@ -196,50 +194,149 @@ namespace Íjász
                 public string VSAZON;
                 public string VSMEGN;
 
-                public Versenyadatok(Verseny _verseny, Versenysorozat _versenysorozat)
+                public
+                VERSENYADATOK( string _VEAZON , bool _NemMegjelentNyomtat )
                 {
-                    VEAZON = _verseny.Azonosito;
-                    VEMEGN = _verseny.Megnevezes;
-                    VEDATU = _verseny.Datum;
-                    VEOSPO = _verseny.Osszes;
-                    VEINSZ = _verseny.Indulok;
-                    VSAZON = _versenysorozat.azonosító;
-                    VSMEGN = _versenysorozat.megnevezés;
-                }
-                public Versenyadatok(Verseny _verseny)
-                {
-                    VEAZON = _verseny.Azonosito;
-                    VEMEGN = _verseny.Megnevezes;
-                    VEDATU = _verseny.Datum;
-                    VEOSPO = _verseny.Osszes;
-                    VEINSZ = _verseny.Indulok;
                     VSAZON = null;
                     VSMEGN = null;
+                    Verseny verseny = Program.database.Verseny( _VEAZON ).Value;
+                    List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
+                    List<Eredmény> eredmenyek = Program.database.Eredmények( _VEAZON );
+                    int MegjelentIndulok = 0;
+                    foreach ( Eredmény item in eredmenyek ) 
+                    {
+                        if( _NemMegjelentNyomtat == true )
+                        {
+                            if ( item.megjelent == false ) 
+                            {
+                                MegjelentIndulok++; 
+                            } 
+
+                        }
+                        else if ( _NemMegjelentNyomtat == false )
+                        {
+                            if ( item.megjelent == true )
+                            {
+                                MegjelentIndulok++;
+                            } 
+                        }
+                    }
+
+                    foreach ( Versenysorozat item in versenysorozatok )
+                    {
+                        if ( item.azonosító == verseny.VersenySorozat )
+                        {
+                            VSAZON = item.azonosító;
+                            VSMEGN = item.megnevezés;
+                            break;
+                        }
+                    }
+                    VEAZON = verseny.Azonosito;
+                    VEMEGN = verseny.Megnevezes;
+                    VEDATU = verseny.Datum;
+                    VEOSPO = verseny.Osszes;
+                    VEINSZ = MegjelentIndulok;
                 }
             }
 
-            public struct Versenyzoadatok
+            public struct VERSENYZOADAT
             {
-                public int INSOSZ;
                 public string INNEVE;
-                public string ITMEGN;
+                public int INSOSZ;
                 public int INSZUL;
                 public string INEGYE;
                 public int INCSSZ;
+                public string ITMEGN;
 
-                public Versenyzoadatok( Induló _induló, Eredmény _eredmény, Íjtípus _íjtípus )
+                public VERSENYZOADAT( string _INNEVE, int _INSOSZ, int _INSZUL, string _INEGYE, int _INCSSZ, string _ITMEGN )
                 {
-                    INSOSZ = (int)_eredmény.sorszám;
-                    INNEVE = _eredmény.név;
-                    ITMEGN = _íjtípus.megnevezés;
-                    INSZUL = (new DateTime(1, 1, 1) + (DateTime.Now - DateTime.Parse(_induló.születés))).Year - 1;
-                    INEGYE = _induló.egyesület;
-                    INCSSZ = _eredmény.csapat;
+                    INNEVE = _INNEVE;
+                    ITMEGN = _ITMEGN;
+                    INSOSZ = _INSOSZ;
+                    INSZUL = _INSZUL;
+                    INEGYE = _INEGYE;
+                    INCSSZ = _INCSSZ;
+                }
+
+                public class RendezNev : IComparer<VERSENYZOADAT>
+                {
+                    public int Compare( VERSENYZOADAT v1, VERSENYZOADAT v2 )
+                    {
+                        return v1.INNEVE.CompareTo( v2.INNEVE );
+                    }
                 }
             }
 
-            public Versenyadatok versenyadatok;
-            public List<Versenyzoadatok> versenyzoadatok;
+            public List<VERSENYZOADAT>
+            Versenyzodatok(string _VEAZON, bool _NemMegjelentNyomtat)
+            {
+                List<VERSENYZOADAT> Data = new List<VERSENYZOADAT>( );
+
+                List<Eredmény> eredmenyek = Program.database.Eredmények( _VEAZON );
+                List<Induló> indulok = Program.database.Indulók( );
+                List<Íjtípus> ijtipusok = Program.database.Íjtípusok( );
+                foreach ( Eredmény eredmeny in eredmenyek )
+                {
+                    foreach ( Induló indulo in indulok )
+                    {
+                        if ( eredmeny.név == indulo.név )
+                        {
+                            if(_NemMegjelentNyomtat == true)
+                            {
+                                if ( eredmeny.megjelent == false )
+                                {
+                                    foreach ( Íjtípus ijtipus in ijtipusok )
+                                    {
+                                        if ( ijtipus.azonosító == eredmeny.íjtípus )
+                                        {
+                                            Data.Add( new VERSENYZOADAT( eredmeny.név,
+                                                                        (int)eredmeny.sorszám,
+                                                                        Program.database.InduloKora( _VEAZON, eredmeny.név ),
+                                                                        indulo.egyesület,
+                                                                        eredmeny.csapat,
+                                                                        ijtipus.megnevezés ) );
+                                        }
+                                    }
+                                }
+                            }
+                            else if(_NemMegjelentNyomtat == false)
+                            {
+                                if ( eredmeny.megjelent == true )
+                                {
+                                    foreach ( Íjtípus ijtipus in ijtipusok )
+                                    {
+                                        if ( ijtipus.azonosító == eredmeny.íjtípus )
+                                        {
+                                            Data.Add( new VERSENYZOADAT( eredmeny.név,
+                                                                        (int)eredmeny.sorszám,
+                                                                        Program.database.InduloKora( _VEAZON, eredmeny.név ),
+                                                                        indulo.egyesület,
+                                                                        eredmeny.csapat,
+                                                                        ijtipus.megnevezés ) );
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+
+                IComparer<VERSENYZOADAT> Comparer2 = new NEVEZESILISTA.VERSENYZOADAT.RendezNev( );
+                Data.Sort( Comparer2 );
+
+                return Data;
+            }
+
+            public NEVEZESILISTA( string _VEAZON, bool _NemMegjelentNyomtat )
+                : this( )
+            {
+                VersenyAdatok = new VERSENYADATOK( _VEAZON, _NemMegjelentNyomtat );
+                VersenyzoAdatok = Versenyzodatok( _VEAZON, _NemMegjelentNyomtat );
+            }
+
+            public VERSENYADATOK VersenyAdatok;
+            public List<VERSENYZOADAT> VersenyzoAdatok;
         };
         
         public struct Node_Beírólap
@@ -1107,37 +1204,6 @@ namespace Íjász
             return FileName;
         }
 
-        static public void CsapatlistaTablazatFormazas( Table _table )
-        {
-            Border b = new Border( Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Blue );
-            Border c = new Border( Novacode.BorderStyle.Tcbs_single, BorderSize.seven, 0, Color.Black );
-            
-            _table.SetBorder( TableBorderType.InsideH, b );
-            _table.SetBorder( TableBorderType.InsideV, b );
-            _table.SetBorder( TableBorderType.Bottom, b );
-            _table.SetBorder( TableBorderType.Top, b );
-            _table.SetBorder( TableBorderType.Left, b );
-            _table.SetBorder( TableBorderType.Right, b );
-            
-            for ( int i = 0; i < 6; i++ )
-            {
-                _table.Rows[0].Cells[i].SetBorder( TableCellBorderType.Bottom, c );
-            }
-
-            for ( int i = 0; i < _table.Rows.Count; i++ )
-            {
-                _table.Rows[i].Cells[0].Width = 70;
-                _table.Rows[i].Cells[1].Width = 70;
-                _table.Rows[i].Cells[2].Width = 200;
-                _table.Rows[i].Cells[3].Width = 100;
-                _table.Rows[i].Cells[4].Width = 70;
-                _table.Rows[i].Cells[5].Width = 200;
-            }
-            _table.AutoFit = AutoFit.ColumnWidth;
-
-        }
-
-
         static public string nyomtat_beirlap(string _VEAZON, Eredmény _eredmény) 
         {
             #region alap stringek
@@ -1343,276 +1409,185 @@ namespace Íjász
             return filename;
         }
 
-        static public string nyomtat_nevezesilista(string _VEAZON , bool _nemmegjelent_nyomtat)
+        static public string NyomtatNevezesiLista( string _VEAZON, bool _NemMegjelentNyomtat )
         {
-            Node_NevezésiLista nevezlista = new Node_NevezésiLista();
-            nevezlista.versenyzoadatok = new List<Node_NevezésiLista.Versenyzoadatok>();
-            
-            #region alap stringek
-            string headline;
-            string st_ind;
+            NEVEZESILISTA Data = new NEVEZESILISTA( _VEAZON, _NemMegjelentNyomtat );
 
-            if (_nemmegjelent_nyomtat)
+            #region Feliratok
+            string HeadLine;
+            string Indulok;
+
+            if ( _NemMegjelentNyomtat )
             {
-                 headline = "H I Á N Y Z Ó K  L I S T A";
-                 st_ind = "Hiányzók száma: ";
+                HeadLine = "H I Á N Y Z Ó K  L I S T A";
+                Indulok = "Hiányzók száma: ";
 
             }
             else
             {
-                 headline = "N E V E Z É S I  L I S T A";
-                 st_ind = "Indulók száma: ";
+                HeadLine = "N E V E Z É S I  L I S T A";
+                Indulok = "Indulók száma: ";
 
-            } 
-            string st_vazon_vnev = "Verseny azonosító, név: ";
-            string st_ido = "Verseny ideje: ";
-            string st_vosszp = "Verseny össz pontszám: ";
-            string st_vsorazon = "Versenysorozat azonosító, név: ";
+            }
+            string VersenyAzonosito = "Verseny azonosító, név: ";
+            string VersenyIdo = "Verseny ideje: ";
+            string VersenyOsszPont = "Verseny össz pontszám: ";
+            string VersenySorozat = "Versenysorozat azonosító, név: ";
             #endregion
 
-            #region adatok
+            #region FileName
+            
+            string FileName;
 
-            List<Verseny> versenyek = Program.database.Versenyek();
-            List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok();
-
-            foreach (Verseny outer in versenyek)
+            if ( _NemMegjelentNyomtat )
             {
-                if (outer.Azonosito==_VEAZON && versenysorozatok.Count!=0)
+                if ( Data.VersenyAdatok.VSAZON != null )
                 {
-                    foreach (Versenysorozat inner in versenysorozatok)
-                    {
-                        if (inner.azonosító ==outer.VersenySorozat )
-                        {
-                            nevezlista.versenyadatok = new Node_NevezésiLista.Versenyadatok(outer, inner);
-                        }
-                    }
-                }
-                else if(outer.Azonosito == _VEAZON)
-                {
-                    nevezlista.versenyadatok = new Node_NevezésiLista.Versenyadatok(outer);
-                }
-            }
-
-
-            List<Induló> indulók = Program.database.Indulók();
-            List<Eredmény> eredmények = Program.database.Eredmények(_VEAZON);
-            List<Íjtípus> íjtípusok = Program.database.Íjtípusok();
-            int nemmegjelent = 0;
-            int megjelent = 0;
-
-            foreach (Eredmény item_eredmény in eredmények)
-            {
-                if (_nemmegjelent_nyomtat == true )
-                {
-                    if (item_eredmény.megjelent == false)
-                    {
-                        nemmegjelent++;
-                        foreach (Induló item_induló in indulók)
-                        {
-                            if (item_induló.név == item_eredmény.név)
-                            {
-                                foreach (Íjtípus item_íjtípus in íjtípusok)
-                                {
-                                    if (item_eredmény.íjtípus == item_íjtípus.azonosító)
-                                    {
-                                        nevezlista.versenyzoadatok.Add(new Node_NevezésiLista.Versenyzoadatok(item_induló, item_eredmény, item_íjtípus));
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "NEVEZLISTANEMMEGJELENT.docx";
                 }
                 else
                 {
-                    if (item_eredmény.megjelent == true)
-                    {
-                        megjelent++;
-                        foreach (Induló item_induló in indulók)
-                        {
-                            if (item_induló.név == item_eredmény.név)
-                            {
-                                foreach (Íjtípus item_íjtípus in íjtípusok)
-                                {
-                                    if (item_eredmény.íjtípus == item_íjtípus.azonosító)
-                                    {
-                                        nevezlista.versenyzoadatok.Add(new Node_NevezésiLista.Versenyzoadatok(item_induló, item_eredmény, item_íjtípus));
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    FileName = _VEAZON + "\\" + "NEVEZLISTANEMMEGJELENT.docx";
                 }
-                
-            }
-
-            if (_nemmegjelent_nyomtat==true)
-            {
-                nevezlista.versenyadatok.VEINSZ = nemmegjelent;
             }
             else
             {
-                nevezlista.versenyadatok.VEINSZ = megjelent;
-            }
-
-
-            for (int i = 0; i < nevezlista.versenyzoadatok.Count-1; i++)
-            {
-                for (int j = nevezlista.versenyzoadatok.Count - 1; j > i; j-- )
+                if ( Data.VersenyAdatok.VSAZON != null )
                 {
-                    if (nevezlista.versenyzoadatok[j-1].INNEVE[0] < nevezlista.versenyzoadatok[j].INNEVE[0])
-                    {
-                        Node_NevezésiLista.Versenyzoadatok temp = nevezlista.versenyzoadatok[j];
-                        nevezlista.versenyzoadatok[j] = nevezlista.versenyzoadatok[j - 1];
-                        nevezlista.versenyzoadatok[j - 1] = temp;
-                    }
+                    FileName = Data.VersenyAdatok.VSAZON + "\\" + Data.VersenyAdatok.VEAZON + "\\" + "NEVEZLISTA.docx";
+                }
+                else
+                {
+                    FileName = _VEAZON + "\\" + "NEVEZLISTA.docx";
                 }
             }
-
             #endregion
-            
-            string filename;
-            
-            if (_nemmegjelent_nyomtat)
-            {
-                if (nevezlista.versenyadatok.VSAZON!=null)
-                {
-                    filename = nevezlista.versenyadatok.VSAZON + "\\" + _VEAZON + "\\"  + "NEVEZLISTANEMMEGJELENT.docx";
-                }
-                else
-                {
-                    filename = _VEAZON + "\\" + "NEVEZLISTANEMMEGJELENT.docx";
-                }
-            }
-            else
-            {
-                if (nevezlista.versenyadatok.VSAZON != null)
-                {
-                    filename = nevezlista.versenyadatok.VSAZON + "\\" + nevezlista.versenyadatok.VEAZON + "\\" + "NEVEZLISTA.docx";
-                }
-                else
-                {
-                    filename = _VEAZON + "\\" + "NEVEZLISTA.docx";
-                }
-            }
-            var document = DocX.Create(filename);
-            document.AddHeaders();
+
+            var document = DocX.Create( FileName );
             PageNumber( document );
+            document.DifferentFirstPage = true;
+
+            #region FirstPageFooter
+            
+            Footer footer = document.Footers.first;
+
+            Table FooterTable = footer.InsertTable( 1, 2 );
+            FooterTable.Rows[0].Cells[1].Paragraphs[0].Append( "1. oldal" );
+            FooterTable.AutoFit = AutoFit.ColumnWidth;
+            FooterTable.Rows[0].Cells[0].Width = document.PageWidth - 200;
+            FooterTable.Rows[0].Cells[1].Width = 60;
+
+            Border c = new Border( Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Black );
+            FooterTable.SetBorder( TableBorderType.InsideH, c );
+            FooterTable.SetBorder( TableBorderType.InsideV, c );
+            FooterTable.SetBorder( TableBorderType.Bottom, c );
+            FooterTable.SetBorder( TableBorderType.Top, c );
+            FooterTable.SetBorder( TableBorderType.Left, c );
+            FooterTable.SetBorder( TableBorderType.Right, c );
+            #endregion
+
             #region címbekezdés
 
-            var titleFormat = new Formatting();
+            var titleFormat = new Formatting( );
             titleFormat.Size = 14D;
             titleFormat.Position = 1;
             titleFormat.Spacing = 5;
             titleFormat.Bold = true;
 
-            Header header = document.Headers.odd;
+            document.AddHeaders( );
+            Header FirstPageHeader = document.Headers.first;
 
 
-            Paragraph title = header.InsertParagraph();
-            title.Append(headline);
+            Paragraph title = FirstPageHeader.InsertParagraph();
+            title.Append( HeadLine );
             title.Alignment = Alignment.center;
             titleFormat.Size = 10D;
-            title.AppendLine(Program.Tulajdonos_Megnevezés + "\n");
-            title.Bold();
+            title.AppendLine( Program.Tulajdonos_Megnevezés + "\n" );
+            title.Bold( );
             titleFormat.Position = 12;
 
             #endregion
 
             #region header
 
-            var titleFormat2 = new Formatting();
+            var titleFormat2 = new Formatting( );
             titleFormat2.Size = 10D;
             titleFormat2.Position = 1;
 
-            Paragraph paragraph_1 = document.InsertParagraph(st_vazon_vnev, false, titleFormat2);
+            Paragraph paragraph_1 = FirstPageHeader.InsertParagraph( VersenyAzonosito, false, titleFormat2 );
 
-            paragraph_1.Append(nevezlista.versenyadatok.VEAZON + ", " + nevezlista.versenyadatok.VEMEGN);
-            paragraph_1.Bold();
+            paragraph_1.Append( Data.VersenyAdatok.VEAZON + ", " + Data.VersenyAdatok.VEMEGN );
+            paragraph_1.Bold( );
             titleFormat2.Bold = false;
-            paragraph_1.Append("\n" + st_ido);
-            paragraph_1.Append(nevezlista.versenyadatok.VEDATU);
-            paragraph_1.Bold();
-            paragraph_1.Append("\t\t" + st_vosszp);
-            paragraph_1.Append((nevezlista.versenyadatok.VEOSPO * 10).ToString());
-            paragraph_1.Bold();
-            paragraph_1.Append("\t\t" + st_ind);
-            paragraph_1.Append(nevezlista.versenyadatok.VEINSZ.ToString());
-            paragraph_1.Bold();
-            paragraph_1.Append("\n" + st_vsorazon);
-            paragraph_1.Append(nevezlista.versenyadatok.VSAZON + ", " + nevezlista.versenyadatok.VSMEGN);
-            paragraph_1.Bold();
-            paragraph_1.AppendLine();
+            paragraph_1.Append( "\n" + VersenyIdo );
+            paragraph_1.Append( Data.VersenyAdatok.VEDATU );
+            paragraph_1.Bold( );
+            paragraph_1.Append( "\t\t" + VersenyOsszPont );
+            paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
+            paragraph_1.Bold( );
+            paragraph_1.Append( "\t\t" + Indulok );
+            paragraph_1.Append( Data.VersenyAdatok.VEINSZ.ToString( ) );
+            paragraph_1.Bold( );
+            paragraph_1.Append( "\n" + VersenySorozat );
+            paragraph_1.Append( Data.VersenyAdatok.VSAZON + ", " + Data.VersenyAdatok.VSMEGN );
+            paragraph_1.Bold( );
+            paragraph_1.AppendLine( );
             #endregion
+
+            #region HeaderTable
+            
+            Header TablazatFejlec = document.Headers.odd;
+
+            Table HeaderTable = document.AddTable( 1, 6 );
+            HeaderTable.AutoFit = AutoFit.ColumnWidth;
+
+            HeaderTable.Rows[0].Cells[0].Paragraphs[0].Append( "Sorszám" );
+            HeaderTable.Rows[0].Cells[1].Paragraphs[0].Append( "Név" );
+            HeaderTable.Rows[0].Cells[2].Paragraphs[0].Append( "Íjtípus" );
+            HeaderTable.Rows[0].Cells[3].Paragraphs[0].Append( "Kor" );
+            HeaderTable.Rows[0].Cells[4].Paragraphs[0].Append( "Egyesület" );
+            HeaderTable.Rows[0].Cells[5].Paragraphs[0].Append( "Csapat" );
+
+            NevezesiListaTablazatFormazas( HeaderTable );
+            TablazatFejlec.InsertTable( HeaderTable );
+            
+            #endregion
+
 
             #region táblázat formázás
 
-            Table table = document.AddTable(nevezlista.versenyadatok.VEINSZ + 1, 6);
-            table.Alignment = Alignment.center;
+            Table table = document.AddTable( Data.VersenyAdatok.VEINSZ + 1, 6 );
 
-            Border b = new Border(Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Blue);
-            Border c = new Border(Novacode.BorderStyle.Tcbs_single, BorderSize.seven, 0, Color.Black);
-
-            table.SetBorder(TableBorderType.InsideH, b);
-            table.SetBorder(TableBorderType.InsideV, b);
-            table.SetBorder(TableBorderType.Bottom, b);
-            table.SetBorder(TableBorderType.Top, b);
-            table.SetBorder(TableBorderType.Left, b);
-            table.SetBorder(TableBorderType.Right, b);
-
-            for (int i = 0; i < 6; i++)
-            {
-                table.Rows[0].Cells[i].SetBorder(TableCellBorderType.Bottom, c);
-            }
-
-            for (int i = 0; i < nevezlista.versenyadatok.VEINSZ + 1; i++)
-            {
-                table.Rows[i].Cells[0].Width = 70;
-                table.Rows[i].Cells[1].Width = 200;
-                table.Rows[i].Cells[2].Width = 100;
-                table.Rows[i].Cells[3].Width = 40;
-                table.Rows[i].Cells[4].Width = 150;
-                table.Rows[i].Cells[5].Width = 150;
-            }
-            table.AutoFit = AutoFit.ColumnWidth;
-
-
-            table.Rows[0].Cells[0].Paragraphs[0].Append("Sorszám");
-            table.Rows[0].Cells[1].Paragraphs[0].Append("Név");
-            table.Rows[0].Cells[2].Paragraphs[0].Append("Íjtípus");
-            table.Rows[0].Cells[3].Paragraphs[0].Append("Kor");
-            table.Rows[0].Cells[4].Paragraphs[0].Append("Egyesület");
-            table.Rows[0].Cells[5].Paragraphs[0].Append("Csapat");
+            table.Rows[0].Cells[0].Paragraphs[0].Append( "Sorszám" );
+            table.Rows[0].Cells[1].Paragraphs[0].Append( "Név" );
+            table.Rows[0].Cells[2].Paragraphs[0].Append( "Íjtípus" );
+            table.Rows[0].Cells[3].Paragraphs[0].Append( "Kor" );
+            table.Rows[0].Cells[4].Paragraphs[0].Append( "Egyesület" );
+            table.Rows[0].Cells[5].Paragraphs[0].Append( "Csapat" );
             #endregion
 
             #region táblázat adatok betöltése
 
-            for (int i = 0; i < nevezlista.versenyzoadatok.Count; i++)
-                for (int j = 0; j < nevezlista.versenyzoadatok.Count-1; j++)
-                    if (nevezlista.versenyzoadatok[i].INNEVE.CompareTo(nevezlista.versenyzoadatok[j].INNEVE)!=-1)
-                    {
-                        Node_NevezésiLista.Versenyzoadatok temp = nevezlista.versenyzoadatok[i];
-                        nevezlista.versenyzoadatok[i] = nevezlista.versenyzoadatok[j];
-                        nevezlista.versenyzoadatok[j] = temp;
-                    }
-
-                    for (int i = 1; i < nevezlista.versenyadatok.VEINSZ + 1; ++i)
-                    {
-                        table.Rows[table.Rows.Count - i].Cells[1].Paragraphs[0].Append(nevezlista.versenyzoadatok[i - 1].INNEVE);
-                        table.Rows[table.Rows.Count - i].Cells[0].Paragraphs[0].Append(nevezlista.versenyzoadatok[i - 1].INSOSZ.ToString());
-                        table.Rows[table.Rows.Count - i].Cells[2].Paragraphs[0].Append(nevezlista.versenyzoadatok[i - 1].ITMEGN);
-                        table.Rows[table.Rows.Count - i].Cells[3].Paragraphs[0].Append((nevezlista.versenyzoadatok[i - 1].INSZUL.ToString()));
-                        table.Rows[table.Rows.Count - i].Cells[4].Paragraphs[0].Append(nevezlista.versenyzoadatok[i - 1].INEGYE);
-                        table.Rows[table.Rows.Count - i].Cells[5].Paragraphs[0].Append(nevezlista.versenyzoadatok[i - 1].INCSSZ.ToString());
-                    }
+            for ( int i = 0; i < Data.VersenyAdatok.VEINSZ; i++ )
+            {
+                table.Rows[i + 1].Cells[0].Paragraphs[0].Append( Data.VersenyzoAdatok[i].INSOSZ.ToString( ) );
+                table.Rows[i + 1].Cells[1].Paragraphs[0].Append( Data.VersenyzoAdatok[i].INNEVE );
+                table.Rows[i + 1].Cells[2].Paragraphs[0].Append( Data.VersenyzoAdatok[i].ITMEGN );
+                table.Rows[i + 1].Cells[3].Paragraphs[0].Append( ( Data.VersenyzoAdatok[i].INSZUL.ToString( ) ) );
+                table.Rows[i + 1].Cells[4].Paragraphs[0].Append( Data.VersenyzoAdatok[i].INEGYE );
+                table.Rows[i + 1].Cells[5].Paragraphs[0].Append( Data.VersenyzoAdatok[i].INCSSZ.ToString( ) );
+            }
             #endregion
 
-            document.InsertTable(table);
+            NevezesiListaTablazatFormazas( table );
+            document.InsertTable( table );
 
-                try { document.Save(); }
-                catch (System.Exception) { MessageBox.Show("A dokumentum meg van nyitva!", "NEVEZLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error);}
-                return filename;
-            
+            try { document.Save( ); }
+            catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "NEVEZLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
+            return FileName;
+
         }
+
 
         static public string nyomtat_eredmenylap_verseny_teljes(string _VEAZON)
         {
@@ -3361,6 +3336,71 @@ namespace Íjász
         #endregion
 
         #region táblázatok
+
+        static public void
+        NevezesiListaTablazatFormazas( Table _table )
+        {
+            _table.Alignment = Alignment.center;
+
+            Border b = new Border( Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Blue );
+            Border c = new Border( Novacode.BorderStyle.Tcbs_single, BorderSize.seven, 0, Color.Black );
+
+            _table.SetBorder( TableBorderType.InsideH, b );
+            _table.SetBorder( TableBorderType.InsideV, b );
+            _table.SetBorder( TableBorderType.Bottom, b );
+            _table.SetBorder( TableBorderType.Top, b );
+            _table.SetBorder( TableBorderType.Left, b );
+            _table.SetBorder( TableBorderType.Right, b );
+
+            for ( int i = 0; i < 6; i++ )
+            {
+                _table.Rows[0].Cells[i].SetBorder( TableCellBorderType.Bottom, c );
+            }
+
+            for ( int i = 0; i < _table.Rows.Count; i++ )
+            {
+                _table.Rows[i].Cells[0].Width = 70;
+                _table.Rows[i].Cells[1].Width = 200;
+                _table.Rows[i].Cells[2].Width = 150;
+                _table.Rows[i].Cells[3].Width = 40;
+                _table.Rows[i].Cells[4].Width = 150;
+                _table.Rows[i].Cells[5].Width = 70;
+            }
+            _table.AutoFit = AutoFit.ColumnWidth;
+        }
+
+        static public void 
+        CsapatlistaTablazatFormazas( Table _table )
+        {
+            Border b = new Border( Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Blue );
+            Border c = new Border( Novacode.BorderStyle.Tcbs_single, BorderSize.seven, 0, Color.Black );
+
+            _table.SetBorder( TableBorderType.InsideH, b );
+            _table.SetBorder( TableBorderType.InsideV, b );
+            _table.SetBorder( TableBorderType.Bottom, b );
+            _table.SetBorder( TableBorderType.Top, b );
+            _table.SetBorder( TableBorderType.Left, b );
+            _table.SetBorder( TableBorderType.Right, b );
+
+            for ( int i = 0; i < 6; i++ )
+            {
+                _table.Rows[0].Cells[i].SetBorder( TableCellBorderType.Bottom, c );
+            }
+
+            for ( int i = 0; i < _table.Rows.Count; i++ )
+            {
+                _table.Rows[i].Cells[0].Width = 70;
+                _table.Rows[i].Cells[1].Width = 70;
+                _table.Rows[i].Cells[2].Width = 200;
+                _table.Rows[i].Cells[3].Width = 100;
+                _table.Rows[i].Cells[4].Width = 70;
+                _table.Rows[i].Cells[5].Width = 200;
+            }
+            _table.AutoFit = AutoFit.ColumnWidth;
+
+        }
+
+
         static public void startlista_táblázat_formázás(Table _table)
         {
             _table.AutoFit = AutoFit.Contents;

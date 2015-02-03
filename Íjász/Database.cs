@@ -2027,7 +2027,7 @@ namespace Íjász
 
         #region Nyomtat
 
-        #region CsapatList
+        #region CsapatLista
 
         public List<Nyomtat.CSAPATLISTA.CSAPAT>
         CsapatLista(string _VEAZON)
@@ -2057,6 +2057,10 @@ namespace Íjász
             }
         }
 
+        #endregion
+
+        #region NevezesiLista
+       
         #endregion
 
         #endregion
