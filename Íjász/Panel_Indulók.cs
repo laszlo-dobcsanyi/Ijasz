@@ -761,12 +761,12 @@ namespace Íjász
                         Verseny? verseny = Program.database.Verseny( cboVerseny.Text );
                         if ( (string)item[0] == cboVerseny.Text && verseny.Value.DublaBeirlap == false )
                         {
-                            Nyomtat.print( Nyomtat.nyomtat_beirlap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
                         }
                         else if ( (string)item[0] == cboVerseny.Text && verseny.Value.DublaBeirlap == true )
                         {
-                            Nyomtat.print( Nyomtat.nyomtat_beirlap( cboVerseny.Text, eredmény.Value ) );
-                            Nyomtat.print( Nyomtat.nyomtat_beirlap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
                         }
                     }
 

@@ -378,12 +378,12 @@ namespace Íjász
                     {
                         if (verseny.Value.DublaBeirlap)
                         {
-                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
-                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                            Nyomtat.print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
+                            Nyomtat.print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
                         }
                         else
                         {
-                            Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
+                            Nyomtat.print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
                         }
                     }
                 }

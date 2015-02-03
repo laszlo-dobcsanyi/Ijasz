@@ -154,13 +154,13 @@ namespace Íjász
             }
             if (chkNevezesiLista.Checked == true)
             {
-                Nyomtat.Dialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, false));
+                Nyomtat.Dialog( Nyomtat.NyomtatNevezesiLista( cboVersenyAzonosito.Text, false ) );
                 return;
                 // Nyomtat.print("NEVEZLISTA.docx");
             }
             if (chkNemMegjelent.Checked == true)
             {
-                Nyomtat.Dialog(Nyomtat.nyomtat_nevezesilista(cboVersenyAzonosito.Text, true));
+                Nyomtat.Dialog( Nyomtat.NyomtatNevezesiLista( cboVersenyAzonosito.Text, true ) );
                 return;
                 // Nyomtat.print("CSAPATLISTA.docx");
             }
