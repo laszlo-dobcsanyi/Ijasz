@@ -25,9 +25,6 @@ namespace Íjász
                 //Create tables
                 SQLiteCommand command = connection.CreateCommand();
                 
-
-
-                /*
                 command.CommandText =
                     "CREATE TABLE Verzió (PRVERZ int);" +
                     "CREATE TABLE Versenysorozat (VSAZON char(10) PRIMARY KEY, VSMEGN char(30), VSVESZ int);" +
@@ -37,7 +34,7 @@ namespace Íjász
                     "CREATE TABLE Egyesuletek (EGAZON char(30) PRIMARY KEY,EGCIME char(30),EGVENE char(30),EGVET1 char(30),EGVET2 char(30),EGVEM1 char(30),EGVEM2 char(30),EGLIST boolean,EGTASZ int);" +
                     "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30),INERSZ int, EGAZON char(10));" +
                     "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
-                */
+                
                 if (command.ExecuteNonQuery() != 0){}// MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else MessageBox.Show("Adatbázis létrehozva!", "Információ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 command.Dispose();
@@ -51,6 +48,7 @@ namespace Íjász
             {
                 CreateBackup("adat_indítás_" + DateTime.Now.ToString().Trim(new Char[] { '-' }).Replace(' ', '_').Replace('.', '-').Replace(':', '-'));
             }
+
         }
 
         public void CreateBackup(string _name)
@@ -101,6 +99,19 @@ namespace Íjász
 
             if (Verzió == version) return true;
             return false;
+        }
+
+        public void torol( )
+        {
+            SQLiteCommand command;
+            connection = new SQLiteConnection( "Data Source=adat.db; Version=3; New=False; Compress=True;" );
+            connection.Open( );
+
+            command = connection.CreateCommand( );
+            command.CommandText = "UPDATE Eredmények_2014KVS2 SET KOAzON = 'FAIL';";
+                command.ExecuteNonQuery( );
+                command.Dispose( );
+                connection.Close( );
         }
 
         #region Versenysorozat
@@ -339,8 +350,8 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "INSERT INTO Verseny (VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR, VEDUBE) VALUES('" + _verseny.azonosító + "', '" + _verseny.megnevezés + "', " +
-                    "'" + _verseny.dátum + "', '" + _verseny.versenysorozat + "', " + _verseny.összes + ", " + _verseny.állomások + ", 0, 0, " +  Convert.ToInt32(_verseny.dupla_beirlap)+ ");";
+                command.CommandText = "INSERT INTO Verseny (VEAZON, VEMEGN, VEDATU, VSAZON, VEOSPO, VEALSZ, VEINSZ, VELEZAR, VEDUBE) VALUES('" + _verseny.Azonosito + "', '" + _verseny.Megnevezes + "', " +
+                    "'" + _verseny.Datum + "', '" + _verseny.VersenySorozat + "', " + _verseny.Osszes + ", " + _verseny.Allomasok + ", 0, 0, " +  Convert.ToInt32(_verseny.DublaBeirlap)+ ");";
                 try
                 {
                     command.ExecuteNonQuery();
@@ -355,23 +366,23 @@ namespace Íjász
 
                 command = connection.CreateCommand();
                 command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSF, KOINSN) VALUES" +
-                    "('" + _verseny.azonosító + "', 'K10', '0-10', 1, 9, 1, 1, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K14', '10-14', 10, 13, 1, 1, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K18', '14-18', 14, 17, 1, 1, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K50', '18-50', 18, 49, 1, 1, 0, 0)," +
-                    "('" + _verseny.azonosító + "', 'K100', '50-100', 50, 99, 1, 1, 0, 0);";
+                    "('" + _verseny.Azonosito + "', 'K10', '0-10', 1, 9, 1, 1, 0, 0)," +
+                    "('" + _verseny.Azonosito + "', 'K14', '10-14', 10, 13, 1, 1, 0, 0)," +
+                    "('" + _verseny.Azonosito + "', 'K18', '14-18', 14, 17, 1, 1, 0, 0)," +
+                    "('" + _verseny.Azonosito + "', 'K50', '18-50', 18, 49, 1, 1, 0, 0)," +
+                    "('" + _verseny.Azonosito + "', 'K100', '50-100', 50, 99, 1, 1, 0, 0);";
                 command.ExecuteNonQuery();
 
                 command = connection.CreateCommand();
-                command.CommandText = "CREATE TABLE Eredmények_" + _verseny.azonosító + " (INNEVE  char(30) NOT NULL, INSOSZ INTEGER PRIMARY KEY AUTOINCREMENT, ITAZON char(10), INCSSZ int, IN10TA int," +
-                    "IN08TA int, IN05TA int, INMETA int, INOSZP int, INERSZ int, INMEGJ boolean);";
+                command.CommandText = "CREATE TABLE Eredmények_" + _verseny.Azonosito + " (INNEVE  char(30) NOT NULL, INSOSZ INTEGER PRIMARY KEY AUTOINCREMENT, ITAZON char(10), INCSSZ int, IN10TA int," +
+                    "IN08TA int, IN05TA int, INMETA int, INOSZP int, INERSZ int, INMEGJ boolean, INKOMO boolean, KOAZON char(10));";
                 command.ExecuteNonQuery();
 
                 command.Dispose();
                 connection.Close();
 
-                if (_verseny.versenysorozat != "") { Directory.CreateDirectory(_verseny.versenysorozat + "\\" + _verseny.azonosító); }
-                else { Directory.CreateDirectory(_verseny.azonosító); }
+                if (_verseny.VersenySorozat != "") { Directory.CreateDirectory(_verseny.VersenySorozat + "\\" + _verseny.Azonosito); }
+                else { Directory.CreateDirectory(_verseny.Azonosito); }
 
                 return true;
             }
@@ -384,8 +395,8 @@ namespace Íjász
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "UPDATE Verseny SET VEAZON = '" + _verseny.azonosító + "', VEMEGN = '" + _verseny.megnevezés + "', VEDATU = '" + _verseny.dátum + "' ," +
-                    "VSAZON = '" + _verseny.versenysorozat + "', VEOSPO = " + _verseny.összes + ", VEALSZ = " + _verseny.állomások + ", VEDUBE = " + Convert.ToInt32(_verseny.dupla_beirlap) + " WHERE VEAZON = '" + _azonosító + "';";
+                command.CommandText = "UPDATE Verseny SET VEAZON = '" + _verseny.Azonosito + "', VEMEGN = '" + _verseny.Megnevezes + "', VEDATU = '" + _verseny.Datum + "' ," +
+                    "VSAZON = '" + _verseny.VersenySorozat + "', VEOSPO = " + _verseny.Osszes + ", VEALSZ = " + _verseny.Allomasok + ", VEDUBE = " + Convert.ToInt32(_verseny.DublaBeirlap) + " WHERE VEAZON = '" + _azonosító + "';";
                 try
                 {
                     command.ExecuteNonQuery();
@@ -397,25 +408,25 @@ namespace Íjász
                     return false;
                 }
 
-                if (_azonosító != _verseny.azonosító)
+                if (_azonosító != _verseny.Azonosito)
                 {
                     command = connection.CreateCommand();
-                    command.CommandText = "UPDATE Korosztályok SET VEAZON = '" + _verseny.azonosító + "' WHERE VEAZON = '" + _azonosító + "';";
+                    command.CommandText = "UPDATE Korosztályok SET VEAZON = '" + _verseny.Azonosito + "' WHERE VEAZON = '" + _azonosító + "';";
                     command.ExecuteNonQuery();
 
                     command = connection.CreateCommand();
-                    command.CommandText = "ALTER TABLE Eredmények_" + _azonosító + " RENAME TO Eredmények_" + _verseny.azonosító + ";";
+                    command.CommandText = "ALTER TABLE Eredmények_" + _azonosító + " RENAME TO Eredmények_" + _verseny.Azonosito + ";";
                     command.ExecuteNonQuery();
                 }
 
                 command.Dispose();
                 connection.Close();
-                if (_azonosító != _verseny.azonosító)
+                if (_azonosító != _verseny.Azonosito)
                 {
                     try
                     {
                         Directory.Delete(_azonosító);
-                        Directory.CreateDirectory(_verseny.azonosító);
+                        Directory.CreateDirectory(_verseny.Azonosito);
                     }
                     catch (Exception)
                     {
@@ -728,7 +739,8 @@ namespace Íjász
             public int nők;
         };
 
-        public bool KorosztálySzámolás(string _verseny)
+        public bool 
+        KorosztálySzámolás(string _verseny)
         {
             List<Korosztály> korosztályok = Korosztályok(_verseny);
 
@@ -736,7 +748,12 @@ namespace Íjász
             {
                 foreach (Korosztály current in korosztályok)
                 {
-                    CountPair indulók = KorosztálySzámolás(_verseny, current.alsó_határ, current.felső_határ, current.nők, current.férfiak, true);
+                    CountPair indulók = KorosztálySzámolás(_verseny,
+                                                            current.alsó_határ, 
+                                                            current.felső_határ, 
+                                                            current.nők, 
+                                                            current.férfiak, 
+                                                            true);
 
                     connection.Open();
                     SQLiteCommand command = connection.CreateCommand();
@@ -751,16 +768,22 @@ namespace Íjász
             }
         }
 
-        public CountPair KorosztálySzámolás(string _azonosító, int _alsó, int _felső, bool _nők, bool _férfiak, bool _internal)
+        public CountPair
+        KorosztálySzámolás( string _azonosító, int _alsó, int _felső, bool _nők, bool _férfiak, bool _internal )
         {
-            if (!_internal) lock (Program.datalock) { return KorosztálySzámolás_Segéd(_azonosító, _alsó, _felső, _nők, _férfiak); }
-            else return KorosztálySzámolás_Segéd(_azonosító, _alsó, _felső, _nők, _férfiak);
+            if ( !_internal ) 
+            lock ( Program.datalock ) 
+            {
+                return KorosztálySzámolás_Segéd( _azonosító, _alsó, _felső, _nők, _férfiak ); 
+            }
+            else return KorosztálySzámolás_Segéd( _azonosító, _alsó, _felső, _nők, _férfiak );
         }
 
         /// <summary>
         /// Nincs lockolva, csak belső használatra!
         /// </summary>
-        private CountPair KorosztálySzámolás_Segéd(string _azonosító, int _alsó, int _felső, bool _nők, bool _férfiak)
+        private CountPair 
+        KorosztálySzámolás_Segéd(string _azonosító, int _alsó, int _felső, bool _nők, bool _férfiak)
         {
             CountPair count = new CountPair();
 
@@ -792,6 +815,157 @@ namespace Íjász
 
             return count;
         }
+
+        public int InduloKora( string _VEAZON, string _INNEVE )
+        {
+            lock ( Program.datalock )
+            {
+                int Value = 0;
+                connection.Open( );
+
+                SQLiteCommand command = connection.CreateCommand( );
+
+                command.CommandText = "select min(verseny.VEDATU), Indulók.INSZUL from verseny, indulók " +
+                                      "where verseny.VSAZON = (select verseny.vsazon from verseny " + 
+                                      "where verseny.veazon = '" + _VEAZON + "') and indulók.inneve = '" + _INNEVE + "';";
+                SQLiteDataReader reader = command.ExecuteReader( );
+                while ( reader.Read( ) )
+                {
+                    Value = ( new DateTime( 1, 1, 1 ) + ( Convert.ToDateTime( reader.GetString(0) ) - DateTime.Parse( reader.GetString(1) ) ) ).Year - 1;
+                }
+
+                command.Dispose( );
+                connection.Close( );
+
+                return Value;
+            }
+        }
+
+
+
+        //teszt
+        //működik de lassú ,a végén a módosítást egyszerre
+        /// <summary>
+        /// egy eredmenylap osszes indulojanak koazon-jat módosítja + visszaadja a korosztaly indulok szamat
+        /// régi korosztalyt törölni???!!!!4négy
+        /// </summary>
+        public bool
+        KorosztalyModositas( string _VEAZON )
+        {
+            /*  tudom az új korosztályt
+             *  tudom a versenyazonosító
+             *  végig kell menni az eredménylapon , updatelni akit lehet
+             *  ha kész ki kell számolni a korosztály indulókat
+             * 
+             */
+            List<Korosztály> list_korosztalyok = Program.database.Korosztályok( _VEAZON );
+            List<Eredmény> list_eredmenyek = Program.database.Eredmények( _VEAZON );
+            List<Induló> list_indulok = Program.database.Indulók( );
+
+            // a korosztályokat tuti módosítom -> array könnyebb
+            //kinullázom
+            Korosztály[] korosztalyok = list_korosztalyok.ToArray( );
+            for ( int i = 0; i < korosztalyok.Length; i++ )
+            {
+                korosztalyok[i].indulók_nők = 0;
+                korosztalyok[i].indulók_férfiak = 0;
+            }
+
+            //eredmenyeket tuti modosítóm -> array könnyebb
+            Eredmény[] eredmenyek = list_eredmenyek.ToArray( );
+
+            //kell a verseny az időpont miatt
+            Verseny? verseny = Program.database.Verseny( _VEAZON );
+
+
+            Induló[] indulok = list_indulok.ToArray( );
+
+            int countNemModosithato = 0;
+            int countModositott = 0;
+            int countMegjelentek = 0;
+            foreach ( Eredmény item in list_eredmenyek ) { if ( item.megjelent == true ) { countMegjelentek++; } }
+
+            for ( int k = 0; k < indulok.Length; k++ )
+            {
+                //a versenykor ennyi éves volt
+                int year = Program.database.InduloKora( verseny.Value.Azonosito, indulok[k].név );// ( new DateTime( 1, 1, 1 ) + ( Convert.ToDateTime( verseny.Value.Datum ) - DateTime.Parse( indulok[k].születés ) ) ).Year - 1;
+                for ( int j = 0; j < eredmenyek.Length; j++ )
+                {
+                    if ( indulok[k].név == eredmenyek[j].név )
+                    {
+                        //ha felülírt a korosztálya nem foglalkozok vele
+                        if ( eredmenyek[j].KorosztalyModositott == false )
+                        {
+                            for ( int i = 0; i < korosztalyok.Length; i++ )
+                            {
+                                //férfi, férfi korosztály
+                                if ( indulok[k].nem == "F" && korosztalyok[i].férfiak == true &&
+                                    ( year >= korosztalyok[i].alsó_határ && year <= korosztalyok[i].felső_határ ) )
+                                {
+                                    //csak a megjelentek???????
+                                    if ( eredmenyek[j].megjelent == true )
+                                    {
+                                        korosztalyok[i].indulók_férfiak++;
+                                    }
+
+                                    eredmenyek[j].KorosztalyAzonosito = korosztalyok[i].azonosító;
+                                    countModositott++;
+                                }
+                                //no, no korosztaly
+                                else if ( indulok[k].nem == "N" && korosztalyok[i].férfiak == true &&
+                                ( year >= korosztalyok[i].alsó_határ && year <= korosztalyok[i].felső_határ ) )
+                                {
+                                    if ( eredmenyek[j].megjelent == true )
+                                    {
+                                        korosztalyok[i].indulók_nők++;
+                                    }
+
+                                    eredmenyek[j].KorosztalyAzonosito = korosztalyok[i].azonosító;
+                                    countModositott++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for ( int q = 0; q < korosztalyok.Length; q++ )
+                            {
+                                if( korosztalyok[q].azonosító == eredmenyek[j].KorosztalyAzonosito && eredmenyek[j].megjelent == true)
+                                {
+                                    if ( indulok[k].nem == "F" ) { korosztalyok[q].indulók_férfiak++; }
+                                    else if ( indulok[k].nem == "N" ) { korosztalyok[q].indulók_nők++; }
+                                }
+                            }
+                            countNemModosithato++;
+                        }
+                    }
+                }
+            }
+            if ( countModositott + countNemModosithato != verseny.Value.Indulok )
+            {
+                MessageBox.Show( "A korosztályok nem megfelelőek!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return false;
+            }
+            //ha minden ok, akkor az új eredményeket, és korosztályokat el kell menteni
+            //átírni a database fgv-eket. hogy egyben 
+            for(int i= 0;i<korosztalyok.Length;i++)
+            {
+                Program.database.KorosztályMódosítás( korosztalyok[i].azonosító, korosztalyok[i] );
+            }
+
+            for(int i = 0;i<eredmenyek.Length;i++)
+            {
+                for (int j = 0; j < list_eredmenyek.Count; j++)
+    			{
+                    if(eredmenyek[i].név == list_eredmenyek[j].név)
+                    {
+                        Program.database.EredményMódosítás( verseny.Value.Azonosito, list_eredmenyek[j], eredmenyek[i] );
+                    }
+	    		}
+            }
+
+            return true;
+        }
+
         #endregion
 
         #region Íjtípusok
@@ -1191,12 +1365,12 @@ namespace Íjász
             }
         }
 
-        public List<Nyomtat.EgyesuletAdat> EredmenylapVersenyEgyesulet(string _VEAZON)
+        public List<Nyomtat.EGYESULETADAT> EredmenylapVersenyEgyesulet(string _VEAZON)
         {
             lock (Program.datalock)
             {
                 int c=1;
-                List<Nyomtat.EgyesuletAdat> egyesuletadatok = new List<Nyomtat.EgyesuletAdat>();
+                List<Nyomtat.EGYESULETADAT> egyesuletadatok = new List<Nyomtat.EGYESULETADAT>();
                 connection.Open();
                 SQLiteCommand command = connection.CreateCommand();
 
@@ -1213,7 +1387,7 @@ namespace Íjász
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    egyesuletadatok.Add( new Nyomtat.EgyesuletAdat(c,
+                    egyesuletadatok.Add( new Nyomtat.EGYESULETADAT(c,
                                                                                                reader.GetString(0),
                                                                                                reader.GetString(1),
                                                                                                reader.GetInt32(2)));
@@ -1335,7 +1509,7 @@ namespace Íjász
                 foreach (Verseny _verseny in versenyek)
                 {
                     SQLiteCommand command = connection.CreateCommand();
-                    command.CommandText = "UPDATE Eredmények_" + _verseny.azonosító + " SET INNEVE = '" + _új_név + "' WHERE INNEVE = '" + _eredeti_név + "';";
+                    command.CommandText = "UPDATE Eredmények_" + _verseny.Azonosito + " SET INNEVE = '" + _új_név + "' WHERE INNEVE = '" + _eredeti_név + "';";
                     command.ExecuteNonQuery();
                     command.Dispose();
                 }
@@ -1394,26 +1568,35 @@ namespace Íjász
         #endregion
 
         #region Eredmények
-        public List<Eredmény> Eredmények(string _azonosító)
+        public List<Eredmény> Eredmények( string _azonosító )
         {
-            lock (Program.datalock)
+            lock ( Program.datalock )
             {
-                List<Eredmény> data = new List<Eredmény>();
+                List<Eredmény> data = new List<Eredmény>( );
 
-                connection.Open();
+                connection.Open( );
 
-                SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ FROM Eredmények_" + _azonosító + ";";
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                SQLiteCommand command = connection.CreateCommand( );
+                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ, INKOMO, KOAZON FROM Eredmények_" + _azonosító + ";";
+                SQLiteDataReader reader = command.ExecuteReader( );
+                while ( reader.Read( ) )
                 {
-                    data.Add(new Eredmény(reader.GetString(0), reader.GetInt64(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5),
-                        reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetBoolean(10)));
+                    data.Add( new Eredmény( reader.GetString( 0 ),
+                                            reader.GetInt64( 1 ),
+                                            reader.GetString( 2 ),
+                                            reader.GetInt32( 3 ),
+                                            reader.GetInt32( 4 ),
+                                            reader.GetInt32( 5 ),
+                                            reader.GetInt32( 6 ),
+                                            reader.GetInt32( 7 ),
+                                            reader.GetInt32( 8 ),
+                                            reader.GetInt32( 9 ),
+                                            reader.GetBoolean( 10 ),
+                                            reader.GetBoolean( 11 ),
+                                            reader.GetString( 12 ) ) );
                 }
-
-
-                command.Dispose();
-                connection.Close();
+                command.Dispose( );
+                connection.Close( );
                 return data;
             }
         }
@@ -1422,23 +1605,34 @@ namespace Íjász
         {
             lock (Program.datalock)
             {
-                Nullable<Eredmény> eredmény = null;
+                Nullable<Eredmény> Data = null;
 
                 connection.Open();
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
+                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ, INKOMO, KOAZON FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
                 SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                while ( reader.Read( ) )
                 {
-                    eredmény = new Eredmény(reader.GetString(0), reader.GetInt64(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5),
-                        reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetBoolean(10));
+                    Data = new Eredmény( reader.GetString( 0 ),
+                                             reader.GetInt64( 1 ),
+                                             reader.GetString( 2 ),
+                                             reader.GetInt32( 3 ),
+                                             reader.GetInt32( 4 ),
+                                             reader.GetInt32( 5 ),
+                                             reader.GetInt32( 6 ),
+                                             reader.GetInt32( 7 ),
+                                             reader.GetInt32( 8 ),
+                                             reader.GetInt32( 9 ),
+                                             reader.GetBoolean( 10 ),
+                                             reader.GetBoolean( 11 ),
+                                             reader.GetString( 12 ) );
                 }
 
                 command.Dispose();
                 connection.Close();
 
-                return eredmény;
+                return Data;
             }
         }
 
@@ -1470,7 +1664,16 @@ namespace Íjász
                 eredmény = null;
             }
         }
-        public BeírásEredmény EredményBeírás(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent)
+
+        //ha a korosztálymódodított = true akkor be kell írni a korosztályt is, különben nem
+        //ELLENŐRIZVE JÓL MŰKÖDIK
+        public BeírásEredmény EredményBeírás(string _név, 
+                                            string _verseny, 
+                                            string _íjtípus, 
+                                            int _csapat, 
+                                            bool _megjelent, 
+                                            bool _korosztalymodositott,
+                                            string _korosztalyazonosito)
         {
             lock (Program.datalock)
             {
@@ -1480,27 +1683,41 @@ namespace Íjász
                 // Név meglétének ellenőrzése a versenyen
                 Eredmény? eredeti = null;
                 command = connection.CreateCommand();
-                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
+                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ, INKOMO, KOAZON FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
                 SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                while ( reader.Read( ) )
                 {
-                    eredeti = new Eredmény(reader.GetString(0), reader.GetInt64(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5),
-                        reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetBoolean(10));
+                    eredeti = new Eredmény( reader.GetString( 0 ),
+                                            reader.GetInt64( 1 ),
+                                            reader.GetString( 2 ),
+                                            reader.GetInt32( 3 ),
+                                            reader.GetInt32( 4 ),
+                                            reader.GetInt32( 5 ),
+                                            reader.GetInt32( 6 ),
+                                            reader.GetInt32( 7 ),
+                                            reader.GetInt32( 8 ),
+                                            reader.GetInt32( 9 ),
+                                            reader.GetBoolean( 10 ),
+                                            reader.GetBoolean( 11 ),
+                                            reader.GetString( 12 ) );
                 }
                 command.Dispose();
 
+                //eredmény módosítás
                 if (eredeti != null)
                 {
                     command = connection.CreateCommand();
-                    command.CommandText = "UPDATE Eredmények_" + _verseny + " SET ITAZON = '" + _íjtípus + "', INCSSZ = " + _csapat + ", INMEGJ = " + (_megjelent ? "1" : "0") + " WHERE INNEVE = '" + _név + "';";
+                    //módoítom a korosztályt
+                    command.CommandText = "UPDATE Eredmények_" + _verseny + " SET ITAZON = '" + _íjtípus + "', INCSSZ = " + _csapat + ", INMEGJ = " + ( _megjelent ? "1" : "0" ) + ", INKOMO = '" + ( _korosztalymodositott ? "1" : "0" ) + "', KOAZON = '" + _korosztalyazonosito + "' WHERE INNEVE = '" + _név + "';";
                     command.ExecuteNonQuery();
                     command.Dispose();
                 }
+                //új eredmény beírás -> nincs korosztályazonosító,csak ha korosztálymódosított = true
                 else
                 {
                     command = connection.CreateCommand();
-                    command.CommandText = "INSERT INTO Eredmények_" + _verseny + " (INNEVE, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ)" +
-                       "VALUES('" + _név + "', '" + _íjtípus + "', '" + _csapat + "', 0, 0, 0, 0, 0, 0, " + (_megjelent ? "1" : "0") + ");";
+                    command.CommandText = "INSERT INTO Eredmények_" + _verseny + " (INNEVE, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ, INKOMO, KOAZON) " +
+                       "VALUES('" + _név + "', '" + _íjtípus + "', '" + _csapat + "', 0, 0, 0, 0, 0, 0, " + ( _megjelent ? "1" : "0" ) + ( _korosztalymodositott ? ",1" : ",0" ) + ",'" + _korosztalyazonosito +  "');";
                     command.ExecuteNonQuery();
                     command.Dispose();
 
@@ -1513,12 +1730,23 @@ namespace Íjász
 
                 Eredmény? eredmény = null;
                 command = connection.CreateCommand();
-                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
+                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ, INKOMO, KOAZON FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
                 reader = command.ExecuteReader();
-                while (reader.Read())
+                while ( reader.Read( ) )
                 {
-                    eredmény = new Eredmény(reader.GetString(0), reader.GetInt64(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5),
-                        reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetBoolean(10));
+                    eredmény = new Eredmény( reader.GetString( 0 ),
+                                            reader.GetInt64( 1 ),
+                                            reader.GetString( 2 ),
+                                            reader.GetInt32( 3 ),
+                                            reader.GetInt32( 4 ),
+                                            reader.GetInt32( 5 ),
+                                            reader.GetInt32( 6 ),
+                                            reader.GetInt32( 7 ),
+                                            reader.GetInt32( 8 ),
+                                            reader.GetInt32( 9 ),
+                                            reader.GetBoolean( 10 ),
+                                            reader.GetBoolean( 11 ),
+                                            reader.GetString( 12 ) );
                 }
                 command.Dispose();
 
@@ -1527,7 +1755,7 @@ namespace Íjász
             }
         }
 
-        public BeírásEredmény EredményBeírás_Ellenőrzött(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent)
+        public BeírásEredmény EredményBeírás_Ellenőrzött( string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _korosztalymodositott )
         {
             lock (Program.datalock)
             {
@@ -1571,25 +1799,36 @@ namespace Íjász
                 command = connection.CreateCommand();
                 command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
                 reader = command.ExecuteReader();
-                while (reader.Read())
+                while ( reader.Read( ) )
                 {
-                    eredeti = new Eredmény(reader.GetString(0), reader.GetInt64(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5),
-                        reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetBoolean(10));
+                    eredeti = new Eredmény( reader.GetString( 0 ),
+                        reader.GetInt64( 1 ),
+                        reader.GetString( 2 ),
+                        reader.GetInt32( 3 ),
+                        reader.GetInt32( 4 ),
+                        reader.GetInt32( 5 ),
+                        reader.GetInt32( 6 ),
+                        reader.GetInt32( 7 ),
+                        reader.GetInt32( 8 ),
+                        reader.GetInt32( 9 ),
+                        reader.GetBoolean( 10 ),
+                        reader.GetBoolean( 11 ),
+                        reader.GetString( 12 ) );
                 }
                 command.Dispose();
 
                 if (eredeti != null)
                 {
                     command = connection.CreateCommand();
-                    command.CommandText = "UPDATE Eredmények_" + _verseny + " SET ITAZON = '" + _íjtípus + "', INCSSZ = " + _csapat + ", INMEGJ = " + (_megjelent ? "1" : "0") + " WHERE INNEVE = '" + _név + "';";
+                    command.CommandText = "UPDATE Eredmények_" + _verseny + " SET ITAZON = '" + _íjtípus + "', INCSSZ = " + _csapat + ", INMEGJ = " + ( _megjelent ? "1" : "0" ) + ", INKOMO = " + ( _korosztalymodositott ? "1" : "0" ) + " WHERE INNEVE = '" + _név + "';";
                     command.ExecuteNonQuery();
                     command.Dispose();
                 }
                 else
                 {
                     command = connection.CreateCommand();
-                    command.CommandText = "INSERT INTO Eredmények_" + _verseny + " (INNEVE, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ)" +
-                       "VALUES('" + _név + "', '" + _íjtípus + "', '" + _csapat + "', 0, 0, 0, 0, 0, 0, " + (_megjelent ? "1" : "0") + ");";
+                    command.CommandText = "INSERT INTO Eredmények_" + _verseny + " (INNEVE, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ,INKOMO)" +
+                       "VALUES('" + _név + "', '" + _íjtípus + "', '" + _csapat + "', 0, 0, 0, 0, 0, 0, " + ( _megjelent ? "1" : "0" ) + ( _korosztalymodositott ? "1" : "0" ) + ");";
                     command.ExecuteNonQuery();
                     command.Dispose();
 
@@ -1602,12 +1841,23 @@ namespace Íjász
 
                 Eredmény? eredmény = null;
                 command = connection.CreateCommand();
-                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
+                command.CommandText = "SELECT INNEVE, INSOSZ, ITAZON, INCSSZ, IN10TA, IN08TA, IN05TA, INMETA, INOSZP, INERSZ, INMEGJ,INKOMO, KOAZON FROM Eredmények_" + _verseny + " WHERE INNEVE = '" + _név + "';";
                 reader = command.ExecuteReader();
-                while (reader.Read())
+                while ( reader.Read( ) )
                 {
-                    eredmény = new Eredmény(reader.GetString(0), reader.GetInt64(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4), reader.GetInt32(5),
-                        reader.GetInt32(6), reader.GetInt32(7), reader.GetInt32(8), reader.GetInt32(9), reader.GetBoolean(10));
+                    eredmény = new Eredmény( reader.GetString( 0 ),
+                                            reader.GetInt64( 1 ),
+                                            reader.GetString( 2 ),
+                                            reader.GetInt32( 3 ),
+                                            reader.GetInt32( 4 ),
+                                            reader.GetInt32( 5 ),
+                                            reader.GetInt32( 6 ),
+                                            reader.GetInt32( 7 ),
+                                            reader.GetInt32( 8 ),
+                                            reader.GetInt32( 9 ),
+                                            reader.GetBoolean( 10 ),
+                                            reader.GetBoolean( 11 ),
+                                            reader.GetString( 12 ) );
                 }
                 command.Dispose();
 
@@ -1615,6 +1865,7 @@ namespace Íjász
                 return new BeírásEredmény(eredmény, eredeti, eredeti != null ? BeírásEredmény.Flag.MÓDOSÍTOTT : BeírásEredmény.Flag.HOZZÁADOTT);
             }
         }
+
 
         public Int64 EredményMódosítás(string _azonosító, Eredmény _eredeti, Eredmény _eredmény)
         {
@@ -1645,7 +1896,7 @@ namespace Íjász
                 command = connection.CreateCommand();
                 command.CommandText = "UPDATE Eredmények_" + _azonosító + " SET INNEVE = '" + _eredmény.név + "', ITAZON = '" + _eredmény.íjtípus + "', INCSSZ = '" + _eredmény.csapat + "', " +
                     "IN10TA = " + _eredmény.találat_10 + ", IN08TA = " + _eredmény.találat_08 + ", IN05TA = " + _eredmény.találat_05 + ", INMETA = " + _eredmény.mellé + ", " +
-                    "INOSZP = " + _eredmény.összpont + ", INERSZ = " + _eredmény.százalék + ", INMEGJ = " + (_eredmény.megjelent ? "1" : "0") + " WHERE INNEVE = '" + _eredeti.név + "';";
+                    "INOSZP = " + _eredmény.összpont + ", INERSZ = " + _eredmény.százalék + ", INMEGJ = " + (_eredmény.megjelent ? "1" : "0") + ", INKOMO = " +  ( _eredmény.KorosztalyModositott ? "'1'" : "'0'" )  + ", KOAZON= '" + _eredmény.KorosztalyAzonosito +   "' WHERE INNEVE = '" + _eredeti.név + "';";
                 command.ExecuteNonQuery();
 
                 command.Dispose();
@@ -1656,85 +1907,97 @@ namespace Íjász
 
         public Nullable<Eredmény> EredményMódosítás_Ellenőrzött(string _azonosító, Eredmény _eredeti, Eredmény _eredmény)
         {
-            lock (Program.datalock)
+            lock ( Program.datalock )
             {
                 bool found;
 
-                connection.Open();
+                connection.Open( );
                 SQLiteCommand command;
 
                 // Verseny meglétének és lezárásának ellenőrzése
                 found = false;
-                command = connection.CreateCommand();
+                command = connection.CreateCommand( );
                 command.CommandText = "SELECT VEAZON, VELEZAR FROM Verseny;";
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read()) { if (_azonosító == reader.GetString(0) && reader.GetBoolean(1) == false) found = true; }
-                command.Dispose();
+                SQLiteDataReader reader = command.ExecuteReader( );
+                while ( reader.Read( ) ) { if ( _azonosító == reader.GetString( 0 ) && reader.GetBoolean( 1 ) == false ) found = true; }
+                command.Dispose( );
 
-                if (!found) { connection.Close(); return null; };
+                if ( !found ) { connection.Close( ); return null; };
 
                 // Induló meglétének ellenőrzése
                 found = false;
-                command = connection.CreateCommand();
+                command = connection.CreateCommand( );
                 command.CommandText = "SELECT INNEVE FROM Indulók;";
-                reader = command.ExecuteReader();
-                while (reader.Read()) { if (_eredmény.név == reader.GetString(0)) found = true; }
-                command.Dispose();
+                reader = command.ExecuteReader( );
+                while ( reader.Read( ) ) { if ( _eredmény.név == reader.GetString( 0 ) ) found = true; }
+                command.Dispose( );
 
-                if (!found) { connection.Close(); return null; };
+                if ( !found ) { connection.Close( ); return null; };
 
                 // Íjtípus meglétének ellenőrzése
                 found = false;
-                command = connection.CreateCommand();
+                command = connection.CreateCommand( );
                 command.CommandText = "SELECT ITAZON FROM Íjtípusok;";
-                reader = command.ExecuteReader();
-                while (reader.Read()) { if (_eredmény.íjtípus == reader.GetString(0)) found = true; }
-                command.Dispose();
+                reader = command.ExecuteReader( );
+                while ( reader.Read( ) ) { if ( _eredmény.íjtípus == reader.GetString( 0 ) ) found = true; }
+                command.Dispose( );
 
-                if (!found) { connection.Close(); return null; };
+                if ( !found ) { connection.Close( ); return null; };
 
 
                 // Százalék számítás összespont lekérdezése után
                 int összespont = -666;
-                command = connection.CreateCommand();
+                command = connection.CreateCommand( );
                 command.CommandText = "SELECT VEOSPO FROM Verseny WHERE VEAZON = '" + _azonosító + "';";
-                reader = command.ExecuteReader();
-                while (reader.Read())
+                reader = command.ExecuteReader( );
+                while ( reader.Read( ) )
                 {
-                    összespont = reader.GetInt32(0);
+                    összespont = reader.GetInt32( 0 );
                 }
-                command.Dispose();
+                command.Dispose( );
 
-                if (!((_eredmény.találat_10 == 0 && _eredmény.találat_08 == 0 && _eredmény.találat_05 == 0 && _eredmény.mellé == 0)
-                    || (összespont == _eredmény.találat_10 + _eredmény.találat_08 + _eredmény.találat_05 + _eredmény.mellé)))
+                if ( !( ( _eredmény.találat_10 == 0 && _eredmény.találat_08 == 0 && _eredmény.találat_05 == 0 && _eredmény.mellé == 0 )
+                    || ( összespont == _eredmény.találat_10 + _eredmény.találat_08 + _eredmény.találat_05 + _eredmény.mellé ) ) )
                 {
-                    connection.Close(); return null;
+                    connection.Close( ); return null;
                 }
 
                 int összes = _eredmény.találat_10 * 10 + _eredmény.találat_08 * 8 + _eredmény.találat_05 * 5;
-                int százalék = (int)(((double)összes / (összespont * 10)) * 100);
+                int százalék = (int)( ( (double)összes / ( összespont * 10 ) ) * 100 );
 
                 // Adatbázis módosítás
-                command = connection.CreateCommand();
+                command = connection.CreateCommand( );
                 command.CommandText = "UPDATE Eredmények_" + _azonosító + " SET ITAZON = '" + _eredmény.íjtípus + "', INCSSZ = '" + _eredmény.csapat + "', " +
                     "IN10TA = " + _eredmény.találat_10 + ", IN08TA = " + _eredmény.találat_08 + ", IN05TA = " + _eredmény.találat_05 + ", INMETA = " + _eredmény.mellé + ", " +
-                    "INOSZP = " + összes + ", INERSZ = " + százalék + ", INMEGJ = " + (_eredmény.megjelent ? "1" : "0") + " WHERE INNEVE = '" + _eredeti.név + "';";
-                command.ExecuteNonQuery();
+                    "INOSZP = " + összes + ", INERSZ = " + százalék + ", INMEGJ = " + ( _eredmény.megjelent ? "1" : "0" ) + ", INKOMO = " + ( _eredmény.KorosztalyModositott ? "1" : "0" ) + " SET KOAZON = '" + _eredmény.KorosztalyAzonosito + "' WHERE INNEVE = '" + _eredeti.név + "';";
+                command.ExecuteNonQuery( );
 
                 // Sorszám, megjelent lekérdezése
                 Int64 sorszám = -666;
-                command = connection.CreateCommand();
+                command = connection.CreateCommand( );
                 command.CommandText = "SELECT INSOSZ FROM Eredmények_" + _azonosító + " WHERE INNEVE = '" + _eredmény.név + "';";
-                reader = command.ExecuteReader();
-                while (reader.Read())
+                reader = command.ExecuteReader( );
+                while ( reader.Read( ) )
                 {
-                    sorszám = reader.GetInt64(0);
+                    sorszám = reader.GetInt64( 0 );
                 }
-                command.Dispose();
+                command.Dispose( );
 
-                command.Dispose();
-                connection.Close();
-                return new Eredmény(_eredmény.név, sorszám, _eredmény.íjtípus, _eredmény.csapat, _eredmény.találat_10, _eredmény.találat_08, _eredmény.találat_05, _eredmény.mellé, összes, százalék, _eredmény.megjelent);
+                command.Dispose( );
+                connection.Close( );
+                return new Eredmény( _eredmény.név,
+                                    sorszám,
+                                    _eredmény.íjtípus,
+                                    _eredmény.csapat,
+                                    _eredmény.találat_10,
+                                    _eredmény.találat_08,
+                                    _eredmény.találat_05,
+                                    _eredmény.mellé,
+                                    összes,
+                                    százalék,
+                                    _eredmény.megjelent,
+                                    _eredmény.KorosztalyModositott,
+                                    _eredmény.KorosztalyAzonosito );
             }
         }
 

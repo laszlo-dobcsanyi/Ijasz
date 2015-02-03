@@ -77,7 +77,7 @@ namespace Íjász
             List<Verseny> versenyek = Program.database.Versenyek_Aktív();
             foreach (Verseny current in versenyek)
             {
-                Send(ServerCommand.VERSENY_HOZZÁADÁS, current.azonosító + ";" + current.összes + ";" + current.lezárva);
+                Send(ServerCommand.VERSENY_HOZZÁADÁS, current.Azonosito + ";" + current.Osszes + ";" + current.Lezarva);
             }
 
             List<Íjtípus> íjtípusok = Program.database.Íjtípusok();
@@ -160,7 +160,14 @@ namespace Íjász
                 case ClientCommand.INDULÓ_BEÍRÁS:
                     data = arguments[1].Split(new char[] { ';' });
                     if (data.Length != 6) { MessageBox.Show("Hálózati hiba!\nA kapott induló beírás adatok száma nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                    Program.mainform.eredmények_panel.Eredmény_Beírás_Hálózat(data[0], data[1], data[2], Convert.ToInt32(data[3]), Convert.ToBoolean(data[4]), Convert.ToBoolean(data[5]), this);
+                    Program.mainform.eredmények_panel.Eredmény_Beírás_Hálózat(data[0],
+                                                                              data[1], 
+                                                                              data[2], 
+                                                                              Convert.ToInt32(data[3]), 
+                                                                              Convert.ToBoolean(data[4]),
+                                                                              Convert.ToBoolean( data[5] ),
+                                                                              Convert.ToBoolean( data[6] ), 
+                                                                              this);
                     break;
 
                 case ClientCommand.INDULÓ_MÓDOSÍTÁS:
@@ -195,8 +202,22 @@ namespace Íjász
                     Eredmény? érték = Program.database.Eredmény(data[0], data[1]);
 
                     if (érték != null)
-                        Program.mainform.eredmények_panel.Eredmény_Módosítás_Hálózat(data[0], érték.Value, new Eredmény(data[1], null, data[2], Convert.ToInt32(data[3]),
-                            Convert.ToInt32(data[4]), Convert.ToInt32(data[5]), Convert.ToInt32(data[6]), Convert.ToInt32(data[7]), null, null, Convert.ToBoolean(data[8])), this);
+                        Program.mainform.eredmények_panel.Eredmény_Módosítás_Hálózat(data[0], 
+                            érték.Value, 
+                            new Eredmény(data[1], 
+                                         null, 
+                                         data[2], 
+                                         Convert.ToInt32(data[3]),
+                                         Convert.ToInt32(data[4]), 
+                                         Convert.ToInt32(data[5]), 
+                                         Convert.ToInt32(data[6]), 
+                                         Convert.ToInt32(data[7]), 
+                                         null, 
+                                         null, 
+                                         Convert.ToBoolean(data[8]),
+                                         Convert.ToBoolean(data[9]),
+                                         data[10]),
+                            this);
                     else
                         Send(ServerCommand.ERROR, "A módosítandó eredmény nem létezik!");
                     break;

@@ -85,12 +85,12 @@ namespace Íjász
 
         public void verseny_hozzáadás(Verseny _verseny)
         {
-            Broadcast(ServerCommand.VERSENY_HOZZÁADÁS, _verseny.azonosító + ";" + _verseny.összes + ";" + _verseny.lezárva);
+            Broadcast(ServerCommand.VERSENY_HOZZÁADÁS, _verseny.Azonosito + ";" + _verseny.Osszes + ";" + _verseny.Lezarva);
         }
 
         public void verseny_módosítás(string _azonosító, Verseny _verseny)
         {
-            Broadcast(ServerCommand.VERSENY_MÓDOSÍTÁS, _azonosító + ";" + _verseny.azonosító + ";" + _verseny.összes);
+            Broadcast(ServerCommand.VERSENY_MÓDOSÍTÁS, _azonosító + ";" + _verseny.Azonosito + ";" + _verseny.Osszes);
         }
 
         public void verseny_törlés(string _azonosító)

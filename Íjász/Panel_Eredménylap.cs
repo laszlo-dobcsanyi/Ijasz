@@ -41,7 +41,7 @@ namespace Íjász
             int cWidth = ClientRectangle.Width;
             int cHeight = ClientRectangle.Height;
 
-            Button btnNyomtat = new iButton("Nyomtat,",
+            Button btnNyomtat = new iButton("Nyomtat",
                                             new Point(cWidth - 96 - 150,cHeight - 32 - 16),
                                             new Size(96, 32),
                                             btnNyomtat_Click,
@@ -79,7 +79,7 @@ namespace Íjász
 
             List<Verseny> versenyek = Program.database.Versenyek();
             foreach (Verseny current in versenyek)
-                cboVersenyAzonosito.Items.Add(current.azonosító);
+                cboVersenyAzonosito.Items.Add(current.Azonosito);
             if (cboVersenyAzonosito.Items.Count != 0) cboVersenyAzonosito.SelectedIndex = 0;
 
             cboVersenyekSzama = new iComboBox( new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 33 * 16),
@@ -148,9 +148,9 @@ namespace Íjász
 
             foreach (Verseny current in versenyek)
             {
-                if (cboVersenyAzonosito.Text == current.azonosító)
+                if (cboVersenyAzonosito.Text == current.Azonosito)
                 {
-                    lblVersenyMegnevezes2.Text = current.megnevezés;
+                    lblVersenyMegnevezes2.Text = current.Megnevezes;
                 }
             }
             
@@ -182,7 +182,7 @@ namespace Íjász
             VersenyekSzama = 0;
             foreach (Verseny item in Versenyek)
             {
-                if (item.versenysorozat == cboVersenysorozatAzonosito.Text)
+                if (item.VersenySorozat == cboVersenysorozatAzonosito.Text)
                 {
                     VersenyekSzama++;
                     cboVersenyekSzama.Items.Add(VersenyekSzama);
@@ -201,9 +201,9 @@ namespace Íjász
             List<Verseny> Versenyek = Program.database.Versenyek();
             foreach (Verseny current in Versenyek)
             {
-                if (cboVersenyAzonosito.Text == current.azonosító)
+                if (cboVersenyAzonosito.Text == current.Azonosito)
                 {
-                    lblVersenyMegnevezes2.Text = current.megnevezés;
+                    lblVersenyMegnevezes2.Text = current.Megnevezes;
                 }
             }
         }
@@ -270,7 +270,7 @@ namespace Íjász
 
             if( chkVersenysorozat.CheckState == CheckState.Checked && chkEgyesulet.CheckState == CheckState.Checked  )
             {
-                Nyomtat.Dialog(Nyomtat.NyomtatEredmenylapVersenySorozatEgyesulet(cboVersenysorozatAzonosito.Text));
+                Nyomtat.Dialog( Nyomtat.NyomtatEredmenylapVersenysorozatEgyesulet( cboVersenysorozatAzonosito.Text ) );
             }
 
             if( chkVersenysorozat.CheckState == CheckState.Checked && chkReszletes.CheckState == CheckState.Checked  )
@@ -344,7 +344,7 @@ namespace Íjász
         public void 
         VersenyHozzaadas(Verseny _verseny)
         {
-            cboVersenyAzonosito.Items.Add(_verseny.azonosító);
+            cboVersenyAzonosito.Items.Add(_verseny.Azonosito);
         }
 
         public void
@@ -356,13 +356,13 @@ namespace Íjász
         public void 
         VersenyModositas(string _azonosito, Verseny _verseny)
         {
-            if (_azonosito != _verseny.azonosító)
+            if (_azonosito != _verseny.Azonosito)
             {
                 for (int current = 0; current < cboVersenyAzonosito.Items.Count; ++current)
                 {
                     if (_azonosito == cboVersenyAzonosito.Items[current].ToString())
                     {
-                        cboVersenyAzonosito.Items[current] = _verseny.azonosító;
+                        cboVersenyAzonosito.Items[current] = _verseny.Azonosito;
                         break;
                     }
                 }

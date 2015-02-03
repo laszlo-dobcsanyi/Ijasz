@@ -223,9 +223,9 @@ namespace Íjász
 
         private void InitializeEvents()
         {
-            versenysorozat_panel.versenysorozat_hozzáadva += verseny_panel.verseny_form.versenysorozat_hozzáadás;
-            versenysorozat_panel.versenysorozat_módosítva += verseny_panel.verseny_form.versenysorozat_módosítás;
-            versenysorozat_panel.versenysorozat_törölve += verseny_panel.verseny_form.versenysorozat_törlés;
+            versenysorozat_panel.versenysorozat_hozzáadva += verseny_panel.verseny_form.VersenySorozatHozzaadas;
+            versenysorozat_panel.versenysorozat_módosítva += verseny_panel.verseny_form.VersenySorozatModositas;
+            versenysorozat_panel.versenysorozat_törölve += verseny_panel.verseny_form.VeresenySorozatTorles;
 
             versenysorozat_panel.versenysorozat_hozzáadva += eredménylap_panel.VersenysorozatHozzáadás;
             versenysorozat_panel.versenysorozat_módosítva += eredménylap_panel.VersenysorozatModositas;
@@ -277,8 +277,8 @@ namespace Íjász
             eredmények_panel.eredmény_beírva += verseny_panel.eredmény_beírás;
             eredmények_panel.eredmény_törölve += verseny_panel.eredmény_törlés;
 
-            eredmények_panel.eredmény_beírva += verseny_panel.verseny_form.eredmény_beírás;
-            eredmények_panel.eredmény_törölve += verseny_panel.verseny_form.eredmény_törlés;
+            eredmények_panel.eredmény_beírva += verseny_panel.verseny_form.EredmenyBeiras;
+            eredmények_panel.eredmény_törölve += verseny_panel.verseny_form.EredmenyTorles;
 
             eredmények_panel.eredmény_beírva += indulók_panel.eredmények_beírás;
             eredmények_panel.eredmény_törölve += indulók_panel.eredmények_törlés;
@@ -353,12 +353,12 @@ namespace Íjász
     public class iTextBox : TextBox
     {
         public
-        iTextBox(Point _Location, int _MaxLength, Size _Size, EventHandler _TextChanged, Form _Form)
+        iTextBox(Point _Location, int? _MaxLength, Size _Size, EventHandler _TextChanged, Form _Form)
         {
 
             this.Size = _Size;
             this.Location = _Location;
-            this.MaxLength = _MaxLength;
+            if ( _MaxLength != null ) { this.MaxLength = _MaxLength.Value; }
             this.TextChanged += _TextChanged;
             _Form.Controls.Add(this);
         }
@@ -400,7 +400,7 @@ namespace Íjász
             //this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             this.FlatStyle = FlatStyle.Flat;
             this.CheckState = CheckState.Unchecked;
-            this.Click += _Click;
+            if ( _Click != null ) { this.Click += _Click; }
             _form.Controls.Add(this);
         }
 
@@ -413,8 +413,8 @@ namespace Íjász
             this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             this.FlatStyle = FlatStyle.Flat;
             this.CheckState = CheckState.Unchecked;
-            this.Click += _Click;
-            _control.Controls.Add(this);
+            if ( _Click != null ) { this.Click += _Click; }
+            _control.Controls.Add( this );
         }
     }
     

@@ -4,32 +4,35 @@ using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Íjász
 {
     public struct Verseny
     {
-        public string azonosító;
-        public string megnevezés;
-        public string dátum;
-        public string versenysorozat;
-        public int összes;
-        public int állomások;
-        public int indulók;
-        public bool lezárva;
-        public bool dupla_beirlap;
+        public string Azonosito;
+        public string Megnevezes;
+        public string Datum;
+        public string VersenySorozat;
+        public int Osszes;
+        public int Allomasok;
+        public int Indulok;
+        public bool Lezarva;
+        public bool DublaBeirlap;
 
-        public Verseny(string _azonosító, string _megnevezés, string _dátum, string _versenysorozat, int _összes, int _állomások, int _indulók, bool _lezárva, bool _dupla_beirlap)
+
+
+        public Verseny( string _Azonosito, string _Megnevezes, string _Datum, string _VersenySorozat, int _Osszes, int _Allomasok, int _Indulok, bool _Lezarva, bool _DublaBeirlap )
         {
-            azonosító = _azonosító;
-            megnevezés = _megnevezés;
-            dátum = _dátum;
-            versenysorozat = _versenysorozat;
-            összes = _összes;
-            állomások = _állomások;
-            indulók = _indulók;
-            lezárva = _lezárva;
-            dupla_beirlap = _dupla_beirlap;
+            Azonosito = _Azonosito;
+            Megnevezes = _Megnevezes;
+            Datum = _Datum;
+            VersenySorozat = _VersenySorozat;
+            Osszes = _Osszes;
+            Allomasok = _Allomasok;
+            Indulok = _Indulok;
+            Lezarva = _Lezarva;
+            DublaBeirlap = _DublaBeirlap;
         }
     }
 
@@ -72,30 +75,21 @@ namespace Íjász
             table.MultiSelect = false;
             table.ReadOnly = true;
             table.DataBindingComplete += table_DataBindingComplete;
-            table.CellDoubleClick += módosítás_Click;
+            table.CellDoubleClick += Modositas_Click;
 
-            ///
+            Button btnHozzaadas = new iButton( "Hozzáadás",
+                                                new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 32 - 32 ),
+                                                new Size( 96, 32 ),
+                                                btnHozzaadas_Click,
+                                                this );
 
-            Button hozzáadás = new Button();
-            hozzáadás.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            hozzáadás.Text = "Hozzáadás";
-            hozzáadás.Size = new System.Drawing.Size(96, 32);
-            hozzáadás.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16);
-            hozzáadás.Click += hozzáadás_Click;
-
-            Button törlés = new Button();
-            törlés.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-            törlés.Text = "Törlés";
-            törlés.Size = new System.Drawing.Size(96, 32);
-            törlés.Location = new System.Drawing.Point(table.Location.X + table.Size.Width + 16, ClientRectangle.Height - 32 - 16);
-            törlés.Click += törlés_Click;
-
-            ///
+            Button btnTorles = new iButton("Törlés",
+                                            new Point( ClientRectangle.Width - 96 - 16 , ClientRectangle.Height - 32 - 16 ),
+                                            new Size(96, 32),
+                                            btnTorles_Click,
+                                            this);
 
             Controls.Add(table);
-
-            Controls.Add(hozzáadás);
-            Controls.Add(törlés);
         }
 
         private DataTable CreateSource()
@@ -117,15 +111,15 @@ namespace Íjász
             foreach (Verseny current in versenysorozatok)
             {
                 DataRow row = data.NewRow();
-                row[0] = current.azonosító;
-                row[1] = current.megnevezés;
-                row[2] = current.dátum;
-                row[3] = current.versenysorozat;
-                row[4] = current.összes;
-                row[5] = current.állomások;
-                row[6] = current.indulók;
-                row[7] = current.lezárva;
-                row[8] = current.dupla_beirlap;
+                row[0] = current.Azonosito;
+                row[1] = current.Megnevezes;
+                row[2] = current.Datum;
+                row[3] = current.VersenySorozat;
+                row[4] = current.Osszes;
+                row[5] = current.Allomasok;
+                row[6] = current.Indulok;
+                row[7] = current.Lezarva;
+                row[8] = current.DublaBeirlap;
 
                 data.Rows.Add(row);
             }
@@ -144,19 +138,19 @@ namespace Íjász
             }
             else
             {
-                if (_verseny.azonosító.Contains(" ")) { MessageBox.Show("A versenyazonosító nem tartalmazhat szóközt!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (_verseny.Azonosito.Contains(" ")) { MessageBox.Show("A versenyazonosító nem tartalmazhat szóközt!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (!Program.database.ÚjVerseny(_verseny)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 DataRow row = data.NewRow();
-                row[0] = _verseny.azonosító;
-                row[1] = _verseny.megnevezés;
-                row[2] = _verseny.dátum;
-                row[3] = _verseny.versenysorozat;
-                row[4] = _verseny.összes;
-                row[5] = _verseny.állomások;
-                row[6] = _verseny.indulók;
-                row[7] = _verseny.lezárva;
-                row[8] = _verseny.dupla_beirlap;
+                row[0] = _verseny.Azonosito;
+                row[1] = _verseny.Megnevezes;
+                row[2] = _verseny.Datum;
+                row[3] = _verseny.VersenySorozat;
+                row[4] = _verseny.Osszes;
+                row[5] = _verseny.Allomasok;
+                row[6] = _verseny.Indulok;
+                row[7] = _verseny.Lezarva;
+                row[8] = _verseny.DublaBeirlap;
                 data.Rows.Add(row);
 
                 if (verseny_hozzáadva != null) verseny_hozzáadva(_verseny);
@@ -179,15 +173,15 @@ namespace Íjász
                 {
                     if (_azonosító == current[0].ToString())
                     {
-                        current[0] = _verseny.azonosító;
-                        current[1] = _verseny.megnevezés;
-                        current[2] = _verseny.dátum;
-                        current[3] = _verseny.versenysorozat;
-                        current[4] = _verseny.összes;
-                        current[5] = _verseny.állomások;
-                        current[6] = _verseny.indulók;
-                        current[7] = _verseny.lezárva;
-                        current[8] = _verseny.dupla_beirlap;
+                        current[0] = _verseny.Azonosito;
+                        current[1] = _verseny.Megnevezes;
+                        current[2] = _verseny.Datum;
+                        current[3] = _verseny.VersenySorozat;
+                        current[4] = _verseny.Osszes;
+                        current[5] = _verseny.Allomasok;
+                        current[6] = _verseny.Indulok;
+                        current[7] = _verseny.Lezarva;
+                        current[8] = _verseny.DublaBeirlap;
                         break;
                     }
                 }
@@ -308,7 +302,6 @@ namespace Íjász
             MessageBox.Show("Nem taláható a verseny?!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        ///
 
         void table_DataBindingComplete(object _sender, EventArgs _event)
         {
@@ -327,13 +320,13 @@ namespace Íjász
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
 
-        private void hozzáadás_Click(object _sender, EventArgs _event)
+        private void btnHozzaadas_Click(object _sender, EventArgs _event)
         {
             verseny_form = new Form_Verseny();
             verseny_form.ShowDialog();
         }
 
-        private void módosítás_Click(object _sender, EventArgs _event)
+        private void Modositas_Click( object _sender, EventArgs _event )
         {
             if (table.SelectedRows.Count != 1) return;
 
@@ -349,13 +342,16 @@ namespace Íjász
             verseny_form.ShowDialog();
         }
 
-        private void törlés_Click(object _sender, EventArgs _event)
+        private void btnTorles_Click(object _sender, EventArgs _event)
         {
             if (table.SelectedRows.Count != 1) return;
-            if (0 < (int)(data.Rows[table.SelectedRows[0].Index][5])) { MessageBox.Show("Ez a verseny nem törölhető, mivel van hozzárendelve eredmény!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //TODO: ez igy milyen?
+            Verseny? verseny = Program.database.Verseny( (string)( data.Rows[table.SelectedRows[0].Index][0] ) );
+            
+            if (verseny.Value.Indulok!=0) { MessageBox.Show("Ez a verseny nem törölhető, mivel van hozzárendelve eredmény!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (MessageBox.Show("Biztosan törli ezt a versenyt?", "Megerősítés", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
-            // TODO ezt egyben kellene!
+            // TODO: ezt egyben kellene!
             Program.mainform.versenysorozat_panel.Versenysorozat_VersenyCsökkentés(data.Rows[table.SelectedRows[0].Index][3].ToString());
             Verseny_Törlés(data.Rows[table.SelectedRows[0].Index][0].ToString());
         }
@@ -366,15 +362,15 @@ namespace Íjász
             private string eredeti_azonosító = null;
             private string eredeti_versenysorozat = null;
 
-            private TextBox box_azonosító;
-            private TextBox box_megnevezés;
+            private TextBox txtAzonosito;
+            private TextBox txtMegnevezes;
+            private TextBox txtLovesek;
+            private TextBox txtAllomasok;
             private DateTimePicker dátumválasztó;
-            private ComboBox combo_versenysorozat;
-            private CheckBox check_duplabeirlap;
-            private TextBox box_összes;
-            private TextBox box_állomások;
-            private Label label_indulók;
-            private Label label_lezárva;
+            private ComboBox cboVersenySorozat;
+            private CheckBox chkDuplaBeirolap;
+            private Label lblIndulok;
+            private Label lblLezarva;
 
             public Form_Verseny()
             {
@@ -385,267 +381,337 @@ namespace Íjász
 
             public Form_Verseny(Verseny _verseny)
             {
-                eredeti_azonosító = _verseny.azonosító;
-                eredeti_versenysorozat = _verseny.versenysorozat;
+                eredeti_azonosító = _verseny.Azonosito;
+                eredeti_versenysorozat = _verseny.VersenySorozat;
 
-                InitializeForm();
-                InitializeContent();
+                InitializeForm(_verseny);
+                InitializeContent(_verseny);
                 InitializeData(_verseny);
             }
 
-            private void InitializeForm()
+
+            #region Verseny Hozzáadás
+            private void InitializeForm( )
             {
                 Text = "Verseny";
-                ClientSize = new System.Drawing.Size(400 - 64, 358);
+                ClientSize = new Size( 400 - 64, 280 );
+                MinimumSize = ClientSize;
+                StartPosition = FormStartPosition.CenterScreen;
+                FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            }
+            
+            private void InitializeContent( )
+            {
+                Label lblAzonosito = new iLabel( "Azonosító:",
+                                                new Point( 16, 16 + 0 * 32 ),
+                                                this );
+
+                Label lblMegnevezes = new iLabel( "Megnevezés:",
+                                                new Point( lblAzonosito.Location.X, 16 + 1 * 32 ),
+                                                this );
+
+                Label lblDatum = new iLabel( "Dátum:",
+                                            new Point( lblAzonosito.Location.X, 16 + 2 * 32 ),
+                                            this );
+
+                Label lblVersenySorozat = new iLabel( "Versenysorozat:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 3 * 32 ),
+                                                    this );
+
+                Label lblLovesek = new iLabel( "Lövések száma:",
+                                                new Point( lblAzonosito.Location.X, 16 + 4 * 32 ),
+                                                this );
+
+                Label lblAllomasok = new iLabel( "Állomások száma:",
+                                                new Point( lblAzonosito.Location.X, 16 + 5 * 32 ),
+                                                this );
+
+                Label lblDuplaBeirolap = new iLabel( "Dupla beírólap:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 6 * 32 ),
+                                                    this );
+
+
+                txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Size.Width + 16 + 32, lblAzonosito.Location.Y ),
+                                            10,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
+
+                txtMegnevezes = new iTextBox( new Point( txtAzonosito.Location.X, lblMegnevezes.Location.Y ),
+                                            30,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
+
+                dátumválasztó = new DateTimePicker( );
+                dátumválasztó.Location = new Point( txtAzonosito.Location.X, lblDatum.Location.Y );
+                dátumválasztó.Size = txtAzonosito.Size;
+                dátumválasztó.Value = DateTime.Now;
+
+                cboVersenySorozat = new iComboBox( new Point( txtAzonosito.Location.X, lblVersenySorozat.Location.Y ),
+                                                   new Size( 128 + 64, 24 ),
+                                                   null,
+                                                   this );
+
+                cboVersenySorozat.Items.Add( "" );
+                List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
+                foreach ( Versenysorozat current in versenysorozatok ) { cboVersenySorozat.Items.Add( current.azonosító ); }
+
+
+                txtLovesek = new iTextBox( new Point( txtAzonosito.Location.X, lblLovesek.Location.Y ),
+                                            null,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
+
+                txtAllomasok = new iTextBox( new Point( txtAzonosito.Location.X, lblAllomasok.Location.Y ),
+                                            30,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
+
+
+                chkDuplaBeirolap = new iCheckBox( null,
+                                                new Point( txtAzonosito.Location.X, lblDuplaBeirolap.Location.Y ),
+                                                null,
+                                                this );
+                chkDuplaBeirolap.Size = txtAzonosito.Size;
+
+
+                Button btnRendben = new iButton( "Rendben",
+                                                new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
+                                                new Size( 96, 32 ),
+                                                btnRendben_Click,
+                                                this );
+
+                Controls.Add( dátumválasztó );
+            }
+
+            private void InitializeData()
+            {
+                dátumválasztó.Value = DateTime.Now;
+            }
+            #endregion
+
+            #region Verseny Módosítás
+            private void InitializeForm( Verseny _verseny )
+            {
+                Text = "Verseny";
+                ClientSize = new Size(400 - 64, 358);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             }
 
-            private void InitializeContent()
+            private void InitializeContent(Verseny _verseny )
             {
-                Label azonosító = new Label();
-                azonosító.Text = "Azonosító:";
-                azonosító.Location = new System.Drawing.Point(16, 16 + 0 * 32);
+                Label lblAzonosito = new iLabel( "Azonosító:",
+                                                new Point( 16, 16 + 0 * 32 ),
+                                                this );
 
-                Label megnevezés = new Label();
-                megnevezés.Text = "Megnevezés:";
-                megnevezés.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 1 * 32);
+                Label lblMegnevezes = new iLabel( "Megnevezés:",
+                                                new Point( lblAzonosito.Location.X, 16 + 1 * 32 ),
+                                                this );
 
-                Label dátum = new Label();
-                dátum.Text = "Dátum:";
-                dátum.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 2 * 32);
+                Label lblDatum = new iLabel( "Dátum:",
+                                            new Point( lblAzonosito.Location.X, 16 + 2 * 32 ),
+                                            this );
 
-                Label versenysorozat = new Label();
-                versenysorozat.Text = "Versenysorozat:";
-                versenysorozat.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 3 * 32);
+                Label lblVersenySorozat = new iLabel( "Versenysorozat:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 3 * 32 ),
+                                                    this );
 
-                Label összes = new Label();
-                összes.Text = "Lövések száma:";
-                összes.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 4 * 32);
+                Label lblLovesek = new iLabel( "Lövések száma:",
+                                                new Point( lblAzonosito.Location.X, 16 + 4 * 32 ),
+                                                this );
 
-                Label állomások = new Label();
-                állomások.Text = "Állomások száma:";
-                állomások.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 5 * 32);
+                Label lblAllomasok = new iLabel( "Állomások száma:",
+                                                new Point( lblAzonosito.Location.X, 16 + 5 * 32 ),
+                                                this );
 
-                Label indulók = new Label();
-                indulók.Text = "Indulók száma:";
-                indulók.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 6 * 32);
+                lblIndulok = new iLabel( "Indulók száma:",
+                                                new Point( lblAzonosito.Location.X, 16 + 6 * 32 ),
+                                                this );
 
-                Label duplabeirlap = new Label();
-                duplabeirlap.Text = "Dupla beírólap:";
-                duplabeirlap.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 7 * 32);
-              
-                Label lezárva = new Label();
-                lezárva.Text = "Lezárva:";
-                lezárva.Location = new System.Drawing.Point(azonosító.Location.X, 16 + 8 * 32);
-                
-                ///
+                Label lblDuplaBeirolap = new iLabel( "Dupla beírólap:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 7 * 32 ),
+                                                    this );
 
-                box_azonosító = new TextBox();
-                box_azonosító.Location = new System.Drawing.Point(azonosító.Location.X + azonosító.Size.Width + 16, azonosító.Location.Y);
-                box_azonosító.Size = new System.Drawing.Size(128 + 64, 24);
-                box_azonosító.MaxLength = 10;
+                lblLezarva = new iLabel( "Lezárva:",
+                                                new Point( lblAzonosito.Location.X, 16 + 8 * 32 ),
+                                                this );
 
-                box_megnevezés = new TextBox();
-                box_megnevezés.Location = new System.Drawing.Point(megnevezés.Location.X + megnevezés.Size.Width + 16, megnevezés.Location.Y);
-                box_megnevezés.Size = box_azonosító.Size;
-                box_megnevezés.MaxLength = 30;
 
-                dátumválasztó = new DateTimePicker();
-                dátumválasztó.Location = new System.Drawing.Point(dátum.Location.X + dátum.Size.Width + 16, dátum.Location.Y);
-                dátumválasztó.Size = box_azonosító.Size;
+                txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Size.Width + 16 + 32, lblAzonosito.Location.Y ),
+                                            10,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
+
+                txtMegnevezes = new iTextBox( new Point( txtAzonosito.Location.X, lblMegnevezes.Location.Y ),
+                                            30,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
+
+                dátumválasztó = new DateTimePicker( );
+                dátumválasztó.Location = new Point( txtAzonosito.Location.X, lblDatum.Location.Y );
+                dátumválasztó.Size = txtAzonosito.Size;
                 dátumválasztó.Value = DateTime.Now;
 
-                combo_versenysorozat = new ComboBox();
-                combo_versenysorozat.Location = new System.Drawing.Point(versenysorozat.Location.X + versenysorozat.Size.Width + 16, versenysorozat.Location.Y);
-                combo_versenysorozat.Size = box_azonosító.Size;
-                combo_versenysorozat.DropDownStyle = ComboBoxStyle.DropDownList;
+                cboVersenySorozat = new iComboBox( new Point( txtAzonosito.Location.X, lblVersenySorozat.Location.Y ),
+                                                   new Size( 128 + 64, 24 ),
+                                                   null,
+                                                   this );
 
-                box_összes = new TextBox();
-                box_összes.Location = new System.Drawing.Point(összes.Location.X + összes.Size.Width + 16, összes.Location.Y);
-                box_összes.Size = box_azonosító.Size;
+                cboVersenySorozat.Items.Add( "" );
+                List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
+                foreach ( Versenysorozat current in versenysorozatok ) { cboVersenySorozat.Items.Add( current.azonosító ); }
 
-                box_állomások = new TextBox();
-                box_állomások.Location = new System.Drawing.Point(állomások.Location.X + állomások.Size.Width + 16, állomások.Location.Y);
-                box_állomások.Size = box_azonosító.Size;
 
-                check_duplabeirlap = new CheckBox();
-                check_duplabeirlap.Location = new System.Drawing.Point(duplabeirlap.Location.X + duplabeirlap.Size.Width + 16, duplabeirlap.Location.Y);
-                check_duplabeirlap.Size = box_azonosító.Size;
+                txtLovesek = new iTextBox( new Point( txtAzonosito.Location.X, lblLovesek.Location.Y ),
+                                            null,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
 
-                label_indulók = new Label();
-                label_indulók.Location = new System.Drawing.Point(indulók.Location.X + indulók.Size.Width + 16, indulók.Location.Y);
-                label_indulók.Size = box_azonosító.Size;
+                txtAllomasok = new iTextBox( new Point( txtAzonosito.Location.X, lblAllomasok.Location.Y ),
+                                            30,
+                                            new Size( 128 + 64, 24 ),
+                                            null,
+                                            this );
 
-                label_lezárva = new Label();
-                label_lezárva.Location = new System.Drawing.Point(lezárva.Location.X + lezárva.Size.Width + 16, lezárva.Location.Y);
-                label_lezárva.Size = box_azonosító.Size;
-                
-                Button rendben = new Button();
-                rendben.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-                rendben.Text = "Rendben";
-                rendben.Size = new System.Drawing.Size(96, 32);
-                rendben.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16);
-                rendben.Click += rendben_Click;
 
-                ///
+                chkDuplaBeirolap = new iCheckBox( null,
+                                                new Point( txtAzonosito.Location.X, lblDuplaBeirolap.Location.Y ),
+                                                null,
+                                                this );
+                chkDuplaBeirolap.Size = txtAzonosito.Size;
 
-                combo_versenysorozat.Items.Add("");
-                List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok();
-                foreach (Versenysorozat current in versenysorozatok)
-                    combo_versenysorozat.Items.Add(current.azonosító);
+                lblIndulok = new iLabel( null,
+                                        new Point( txtAzonosito.Location.X, lblIndulok.Location.Y ),
+                                        this );
+                lblIndulok.Size = txtAzonosito.Size;
 
-                ///
+                lblLezarva = new iLabel( null,
+                                        new Point( txtAzonosito.Location.X, lblLezarva.Location.Y ),
+                                        this );
 
-                Controls.Add(azonosító);
-                Controls.Add(megnevezés);
-                Controls.Add(dátum);
-                Controls.Add(versenysorozat);
-                Controls.Add(összes);
-                Controls.Add(állomások);
-                Controls.Add(indulók);
-                Controls.Add(lezárva);
+                Button btnRendben = new iButton( "Rendben",
+                                                new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
+                                                new Size( 96, 32 ),
+                                                btnRendben_Click,
+                                                this );
 
-                Controls.Add(box_azonosító);
-                Controls.Add(box_megnevezés);
-                Controls.Add(dátumválasztó);
-                Controls.Add(combo_versenysorozat);
-                Controls.Add(box_összes);
-                Controls.Add(box_állomások);
-                Controls.Add(label_indulók);
-                Controls.Add(label_lezárva);
-                Controls.Add(duplabeirlap);
-                Controls.Add(check_duplabeirlap);
-
-                Controls.Add(rendben);
-            }
-
-            private void InitializeData()
-            {
-                box_azonosító.Text = "";
-                box_azonosító.Enabled = true;
-                box_megnevezés.Text = "";
-                dátumválasztó.Value = DateTime.Now;
-                combo_versenysorozat.Text = "";
-                box_összes.Text = "0";
-                box_állomások.Text = "0";
-                label_indulók.Text = "0";
-                label_lezárva.Text = "Hamis";
-                check_duplabeirlap.Checked = false;
+                Controls.Add( dátumválasztó );
             }
 
             private void InitializeData(Verseny _verseny)
             {
-                box_azonosító.Text = _verseny.azonosító;
-                box_azonosító.Enabled = (_verseny.indulók == 0) ? true : false;
-                box_megnevezés.Text = _verseny.megnevezés;
-                dátumválasztó.Value = DateTime.Parse(_verseny.dátum);
-                combo_versenysorozat.Text = _verseny.versenysorozat;
-                box_összes.Text = (_verseny.összes).ToString();
-                box_összes.Enabled = (_verseny.indulók == 0) ? true : false;
-                box_állomások.Text = (_verseny.állomások).ToString();
-                box_állomások.Enabled = (_verseny.indulók == 0) ? true : false;
-                label_indulók.Text = _verseny.indulók.ToString();
-                label_lezárva.Text = _verseny.lezárva ? "Igen" : "Nem";
-                check_duplabeirlap.Checked = _verseny.dupla_beirlap;
+                txtAzonosito.Text = _verseny.Azonosito;
+                txtAzonosito.Enabled = (_verseny.Indulok == 0) ? true : false;
+                txtMegnevezes.Text = _verseny.Megnevezes;
+                dátumválasztó.Value = DateTime.Parse(_verseny.Datum);
+                cboVersenySorozat.Text = _verseny.VersenySorozat;
+                txtLovesek.Text = (_verseny.Osszes).ToString();
+                txtLovesek.Enabled = ( _verseny.Indulok == 0 ) ? true : false;
+                txtAllomasok.Text = (_verseny.Allomasok).ToString();
+                txtAllomasok.Enabled = (_verseny.Indulok == 0) ? true : false;
+                lblIndulok.Text = _verseny.Indulok.ToString();
+                lblLezarva.Text = _verseny.Lezarva ? "Igen" : "Nem";
+                chkDuplaBeirolap.Checked = _verseny.DublaBeirlap;
             }
+            #endregion
 
             #region EventHandlers
-            public void versenysorozat_hozzáadás(Versenysorozat _versenysorozat)
+
+            public void VersenySorozatHozzaadas(Versenysorozat _versenysorozat)
             {
-                combo_versenysorozat.Items.Add(_versenysorozat.megnevezés + " (" + _versenysorozat.azonosító + ")");
+                cboVersenySorozat.Items.Add(_versenysorozat.megnevezés + " (" + _versenysorozat.azonosító + ")");
             }
 
-            public void versenysorozat_módosítás(string _azonosító, Versenysorozat _versenysorozat)
+            public void VersenySorozatModositas(string _azonosító, Versenysorozat _versenysorozat)
             {
                 if (_azonosító != _versenysorozat.azonosító)
                 {
-                    for (int current = 0; current < combo_versenysorozat.Items.Count; ++current)
+                    for ( int current = 0; current < cboVersenySorozat.Items.Count; ++current )
                     {
-                        if (_azonosító == combo_versenysorozat.Items[current].ToString())
+                        if ( _azonosító == cboVersenySorozat.Items[current].ToString( ) )
                         {
-                            combo_versenysorozat.Items[current] = _versenysorozat.azonosító;
+                            cboVersenySorozat.Items[current] = _versenysorozat.azonosító;
                             return;
                         }
                     }
                 }
             }
 
-            public void versenysorozat_törlés(string _azonosító)
+            public void VeresenySorozatTorles(string _azonosító)
             {
-                combo_versenysorozat.Items.Remove(_azonosító);
+                cboVersenySorozat.Items.Remove( _azonosító );
             }
 
-            ///
 
-            public void eredmény_beírás(string _azonosító, Database.BeírásEredmény _beírás)
+            public void EredmenyBeiras(string _azonosító, Database.BeírásEredmény _beírás)
             {
                 if (_beírás.flag == Database.BeírásEredmény.Flag.HOZZÁADOTT)
                 {
-                    if (_azonosító == eredeti_azonosító) label_indulók.Text = ((Convert.ToInt32(label_indulók.Text)) + 1).ToString();
+                    if (_azonosító == eredeti_azonosító) lblIndulok.Text = ((Convert.ToInt32(lblIndulok.Text)) + 1).ToString();
                 }
             }
 
-            public void eredmény_törlés(string _azonosító, Eredmény _eredmény)
+            public void EredmenyTorles(string _azonosító, Eredmény _eredmény)
             {
                 if (_azonosító == eredeti_azonosító)
                 {
-                    label_indulók.Text = ((Convert.ToInt32(label_indulók.Text)) - 1).ToString();
+                    lblIndulok.Text = ((Convert.ToInt32(lblIndulok.Text)) - 1).ToString();
                 }
             }
 
-
-            ///
-
-            private void rendben_Click(object _sender, EventArgs _event)
+            private void btnRendben_Click(object _sender, EventArgs _event)
             {
                 Regex rgx = new Regex("[^a-zA-Z0-9]");
-                box_azonosító.Text = rgx.Replace(box_azonosító.Text, "");
+                txtAzonosito.Text = rgx.Replace(txtAzonosito.Text, "");
 
-                if (!(0 < box_azonosító.Text.Length && box_azonosító.Text.Length <= 10)) { MessageBox.Show("Nem megfelelő az azonosító hossza (1 - 10 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!(0 < box_megnevezés.Text.Length && box_megnevezés.Text.Length <= 30)) { MessageBox.Show("Nem megfelelő a megnevezés hossza (1 - 30 hosszú kell legyen)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!Database.IsCorrectSQLText(box_megnevezés.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                int összes; try { összes = Convert.ToInt32(box_összes.Text); } catch { MessageBox.Show("Nem szám található a lövéseknél!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if ( !Database.IsCorrectSQLText( txtMegnevezes.Text ) ) { MessageBox.Show( "Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                int összes; try { összes = Convert.ToInt32(txtLovesek.Text); } catch { MessageBox.Show("Nem szám található a lövéseknél!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (összes < 1) { MessageBox.Show("Túl kevés a lövések száma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                int állomások; try { állomások = Convert.ToInt32(box_állomások.Text); } catch { MessageBox.Show("Nem szám található az állomásoknál!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if ((állomások < 1) || (30 < állomások)) { MessageBox.Show("Nem megfelelő az állomások száma (1-30)!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                int állomások; try { állomások = Convert.ToInt32(txtAllomasok.Text); } catch { MessageBox.Show("Nem szám található az állomásoknál!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (eredeti_azonosító != null)
                 {
-                    if ((0 < Convert.ToInt32(label_indulók.Text)) && (eredeti_azonosító != box_azonosító.Text))
+                    if ((0 < Convert.ToInt32(lblIndulok.Text)) && (eredeti_azonosító != txtAzonosito.Text))
                     { MessageBox.Show("Ez a verseny nem átnevezhető!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; };
 
-                    // TODO ezt sem kéne külön csinálni!
-                    if (combo_versenysorozat.Text != eredeti_versenysorozat)
+                    // TODO: ezt sem kéne külön csinálni!
+                    if (cboVersenySorozat.Text != eredeti_versenysorozat)
                     {
                         Program.mainform.versenysorozat_panel.Versenysorozat_VersenyCsökkentés(eredeti_versenysorozat);
-                        Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(combo_versenysorozat.Text);
+                        Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(cboVersenySorozat.Text);
                     }
 
-                    Program.mainform.verseny_panel.Verseny_Módosítás(eredeti_azonosító, new Verseny(box_azonosító.Text, 
-                                                                                                    box_megnevezés.Text, 
+                    Program.mainform.verseny_panel.Verseny_Módosítás(eredeti_azonosító, new Verseny(txtAzonosito.Text, 
+                                                                                                    txtMegnevezes.Text, 
                                                                                                     dátumválasztó.Value.ToShortDateString(),
-                                                                                                    combo_versenysorozat.Text, 
+                                                                                                    cboVersenySorozat.Text, 
                                                                                                     összes,
-                                                                                                    állomások, Convert.ToInt32(label_indulók.Text), 
-                                                                                                    label_lezárva.Text == "Igen" ? true : false, 
-                                                                                                    check_duplabeirlap.Checked ? true : false));
+                                                                                                    állomások, Convert.ToInt32(lblIndulok.Text), 
+                                                                                                    lblLezarva.Text == "Igen" ? true : false, 
+                                                                                                    chkDuplaBeirolap.Checked ? true : false));
                     
                 }
                 else
                 {
-                    // TODO ezt sem kéne külön csinálni!
-                    Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(combo_versenysorozat.Text);
-                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(box_azonosító.Text, 
-                                                                                box_megnevezés.Text, 
+                    // TODO: ezt sem kéne külön csinálni!
+                    Program.mainform.versenysorozat_panel.Versenysorozat_VersenyNövelés(cboVersenySorozat.Text);
+                    Program.mainform.verseny_panel.Verseny_Hozzáadás(new Verseny(txtAzonosito.Text, 
+                                                                                txtMegnevezes.Text, 
                                                                                 dátumválasztó.Value.ToShortDateString(), 
-                                                                                combo_versenysorozat.Text, 
+                                                                                cboVersenySorozat.Text, 
                                                                                 összes, 
                                                                                 állomások, 
                                                                                 0, 
                                                                                 false, 
-                                                                                check_duplabeirlap.Checked ? true : false));
+                                                                                chkDuplaBeirolap.Checked ? true : false));
                 }
 
                 Close();

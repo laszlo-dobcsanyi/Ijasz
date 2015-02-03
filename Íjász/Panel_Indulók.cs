@@ -573,192 +573,242 @@ namespace Íjász
         {
             public Form_Csapatlista csapatlista_form;
 
-            public ComboBox combo_verseny;
-            private Label label_név;
-            private ComboBox combo_íjtípus;
-            private ComboBox combo_csapat;
-            private CheckBox check_megjelent;
+            public ComboBox cboVerseny;
+            private Label lblIndulo;
+            private ComboBox cboIjtipus;
+            private ComboBox cboCsapat;
+            private CheckBox chkMegjelent;
+            private CheckBox chkKorosztalyFeluliras;
+            private ComboBox cboKorosztaly;
 
-            public Form_Induló_Teszt( string _név )
+            public Form_Induló_Teszt( string _Indulo )
             {
-                label_név = new Label();
-                label_név.Text = _név;
 
-                InitializeForm();
-                InitializeContent();
-                InitializeData();
+                InitializeForm( );
+                InitializeContent( _Indulo );
+                InitializeData( );
             }
 
 
-            private void InitializeForm()
+            private void InitializeForm( )
             {
                 Text = "Beírás";
-                ClientSize = new System.Drawing.Size(464 - 64, 200);
+                ClientSize = new System.Drawing.Size( 464 - 64, 300 );
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             }
 
-            private void InitializeContent()
+            private void InitializeContent( string _Indulo )
             {
-                Label név = new Label();
-                név.Text = "Név:";
-                név.Location = new System.Drawing.Point(32, 16 + 0 * 32);
+                Label lblNev = new iLabel( "Név:",
+                                            new Point( 32, 16 + 0 * 32 ),
+                                            this );
 
-                Label verseny = new Label();
-                verseny.Text = "Verseny:";
-                verseny.Location = new System.Drawing.Point(név.Location.X, 16 + 1 * 32);
-               
-                Label íjtípus = new Label();
-                íjtípus.Text = "Íjtípus:";
-                íjtípus.Location = new System.Drawing.Point(név.Location.X, 16 + 2 * 32);
+                Label lblVerseny = new iLabel( "Verseny:",
+                                                new Point( lblNev.Location.X, 16 + 1 * 32 ),
+                                                this );
 
-                Label csapat = new Label();
-                csapat.Text = "Csapatszám:";
-                csapat.Location = new System.Drawing.Point(név.Location.X, 16 + 3 * 32);
+                Label lblIjtipus = new iLabel( "Íjtípus:",
+                                               new Point( lblNev.Location.X, 16 + 2 * 32 ),
+                                               this );
 
-                Label megjelent = new Label();
-                megjelent.Text = "Megjelent:";
-                megjelent.Location = new System.Drawing.Point(név.Location.X, 16 + 4 * 32);
+                Label lblCsapat = new iLabel( "Csapatszám:",
+                                             new Point( lblNev.Location.X, 16 + 3 * 32 ),
+                                             this );
+
+                Label lblMegjelent = new iLabel( "Megjelent:",
+                                                 new Point( lblNev.Location.X, 16 + 4 * 32 ),
+                                                 this );
+
+                Label lblKorosztalyFeluliras = new iLabel( "Korosztály felülírása:",
+                                                           new Point( lblNev.Location.X, 16 + 5 * 32 ),
+                                                           this );
+
+                Label lblKorosztalyAzonosito = new iLabel( "Új Korosztály azonosítója:",
+                                                            new Point( lblNev.Location.X, 16 + 6 * 32 ),
+                                                            this );
 
 
-                ///
+                lblIndulo = new iLabel( _Indulo,
+                                        new Point( lblNev.Location.X + lblNev.Size.Width + 16 + 3 * 32, lblNev.Location.Y ),
+                                        this );
+                lblIndulo.AutoSize = false;
+                lblIndulo.Size = new Size( 128 + 64, 24 );
 
-                label_név.Location = new System.Drawing.Point(név.Location.X + név.Size.Width + 16, név.Location.Y);
-                label_név.Size = new System.Drawing.Size(128 + 64, 24);
 
-                combo_verseny = new ComboBox();
-                combo_verseny.Location = new System.Drawing.Point(verseny.Location.X + verseny.Size.Width + 16, verseny.Location.Y);
-                combo_verseny.Size = label_név.Size;
-                combo_verseny.DropDownStyle = ComboBoxStyle.DropDownList;
-                combo_verseny.SelectedIndexChanged += combo_verseny_SelectedIndexChanged;
+                cboVerseny = new iComboBox( new Point( lblIndulo.Location.X, lblVerseny.Location.Y ),
+                                            lblIndulo.Size,
+                                            cboVerseny_SelectedIndexChanged,
+                                            this );
 
-                combo_íjtípus = new ComboBox();
-                combo_íjtípus.Location = new System.Drawing.Point(íjtípus.Location.X + íjtípus.Size.Width + 16, íjtípus.Location.Y);
-                combo_íjtípus.Size = label_név.Size;
-                combo_íjtípus.DropDownStyle = ComboBoxStyle.DropDownList;
+                List<Verseny> versenyek = Program.database.Versenyek( );
+                foreach ( Verseny current in versenyek ) { cboVerseny.Items.Add( current.Azonosito ); }
 
-                combo_csapat = new ComboBox();
-                combo_csapat.Location = new System.Drawing.Point(csapat.Location.X + csapat.Size.Width + 16, csapat.Location.Y);
-                combo_csapat.Size = label_név.Size;
-                combo_csapat.DropDownStyle = ComboBoxStyle.DropDownList;
+                cboIjtipus = new iComboBox( new Point( lblIndulo.Location.X, lblIjtipus.Location.Y ),
+                                            lblIndulo.Size,
+                                            null,
+                                            this );
 
-                for (int i = 0; i < 45; i++) combo_csapat.Items.Add(i + 1);
-                combo_csapat.SelectedItem = combo_csapat.Items[0];
+                List<Íjtípus> ijtipusok = Program.database.Íjtípusok( );
+                foreach ( Íjtípus current in ijtipusok ) { cboIjtipus.Items.Add( current.azonosító ); }
 
-                check_megjelent = new CheckBox();
-                check_megjelent.Location = new System.Drawing.Point(combo_csapat.Location.X, megjelent.Location.Y);
+                cboCsapat = new iComboBox( new Point( lblIndulo.Location.X, lblCsapat.Location.Y ),
+                                           lblIndulo.Size,
+                                           null,
+                                           this );
+                for ( int i = 0; i < 45; i++ ) { cboCsapat.Items.Add( i + 1 ); }
+                cboCsapat.SelectedItem = cboCsapat.Items[0];
 
-                Button rendben = new Button();
-                rendben.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                rendben.Text = "Rendben";
-                rendben.Size = new System.Drawing.Size(96, 32);
-                rendben.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16);
-                rendben.Click += rendben_Click;
 
-                Button csapatok_megtekint = new Button();
-                csapatok_megtekint.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                csapatok_megtekint.Text = "Csapatok megtekintése";
-                csapatok_megtekint.Size = new System.Drawing.Size(96, 32);
-                csapatok_megtekint.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - rendben.Width - 32, ClientRectangle.Height - 32 - 16);
-                csapatok_megtekint.Click += csapatok_megtekint_Click;
 
-                ///
+                chkMegjelent = new iCheckBox( "",
+                                            new Point( lblIndulo.Location.X, lblMegjelent.Location.Y ),
+                                            null,
+                                            this );
 
-                List<Verseny> versenyek = Program.database.Versenyek();
-                foreach (Verseny current in versenyek)
-                    combo_verseny.Items.Add(current.azonosító);
-               
-                List<Íjtípus> íjtípusok = Program.database.Íjtípusok();
-                foreach (Íjtípus current in íjtípusok)
-                    combo_íjtípus.Items.Add(current.azonosító); 
+                chkKorosztalyFeluliras = new iCheckBox( null,
+                                                        new Point( lblIndulo.Location.X, lblKorosztalyFeluliras.Location.Y ),
+                                                        chkKorosztalyFeluliras_Click,
+                                                        this );
 
-                ///
+                cboKorosztaly = new iComboBox( new Point( lblIndulo.Location.X, lblKorosztalyAzonosito.Location.Y ),
+                                                          lblIndulo.Size,
+                                                          null,
+                                                          this );
+                cboKorosztaly.Enabled = false;
 
-                Controls.Add(combo_verseny);
+                Button btnRendben = new iButton( "Rendben",
+                                                new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
+                                                new Size( 96, 32 ),
+                                                btnRendben_Click,
+                                                this );
 
-                Controls.Add(név);
-                Controls.Add(íjtípus);
-                Controls.Add(csapat);
-                Controls.Add(megjelent);
-
-                Controls.Add(verseny);
-                Controls.Add(label_név);
-                Controls.Add(combo_íjtípus);
-                Controls.Add(combo_csapat);
-                Controls.Add(rendben);
-                Controls.Add(csapatok_megtekint);
-                Controls.Add(check_megjelent);
+                Button btnCsapatok = new iButton( "Csapatok megtekintése",
+                                                new Point( ClientRectangle.Width - 96 - btnRendben.Width - 32, ClientRectangle.Height - 32 - 16 ),
+                                                new Size( 96, 32 ),
+                                                btnCsapatok_Click,
+                                                this );
             }
 
-            private void InitializeData()
+            private void
+            InitializeData(  )
             {
                 // Lefut a combo_verseny_SelectedIndexChanged, majd az beállít mindent!
-                combo_verseny.SelectedIndex = lastindex;
+                cboVerseny.SelectedIndex = lastindex;
+                cboKorosztaly.Items.Clear( );
+                List<Korosztály> korosztalyok = Program.database.Korosztályok( cboVerseny.Text );
+                foreach ( Korosztály item in korosztalyok )
+                {
+                    cboKorosztaly.Items.Add( item.megnevezés );
+                }
+                if ( cboKorosztaly.Items.Count != 0 ) { cboKorosztaly.SelectedIndex = 0; }
+                Eredmény? eredmény = Program.database.Eredmény( cboVerseny.Text, lblIndulo.Text );
+                if ( eredmény != null ) { cboKorosztaly.Text = eredmény.Value.KorosztalyAzonosito; }
             }
 
             #region EventHandlers
-            private void combo_verseny_SelectedIndexChanged(object _sender, EventArgs _event)
+
+            private void
+            cboVerseny_SelectedIndexChanged( object _sender, EventArgs _event )
             {
-                Eredmény? eredmény = Program.database.Eredmény(combo_verseny.Text, label_név.Text);
-                if (eredmény != null)
+                Eredmény? eredmény = Program.database.Eredmény( cboVerseny.Text, lblIndulo.Text );
+                if ( eredmény != null )
                 {
-                    combo_íjtípus.SelectedItem = eredmény.Value.íjtípus;
-                    combo_csapat.SelectedItem = eredmény.Value.csapat;
-                    check_megjelent.Checked = eredmény.Value.megjelent;
+                    cboIjtipus.SelectedItem = eredmény.Value.íjtípus;
+                    cboCsapat.SelectedItem = eredmény.Value.csapat;
+                    chkMegjelent.Checked = eredmény.Value.megjelent;
+                    chkKorosztalyFeluliras.Checked = eredmény.Value.KorosztalyModositott;
+                    cboKorosztaly.Text = eredmény.Value.KorosztalyAzonosito;
                 }
                 else
                 {
-                    combo_íjtípus.SelectedIndex = 0;
-                    combo_csapat.SelectedIndex = 0;
-                    check_megjelent.Checked = false;
+                    cboIjtipus.SelectedIndex = 0;
+                    cboCsapat.SelectedIndex = 0;
+                    chkMegjelent.Checked = false;
                 }
             }
 
-            private void rendben_Click(object _sender, EventArgs _event)
+            private void
+            btnRendben_Click( object _sender, EventArgs _event )
             {
-                if (combo_verseny.SelectedItem == null) { MessageBox.Show("Nincs kiválasztva verseny!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (combo_íjtípus.SelectedItem == null) { MessageBox.Show("Nincs kiválasztva íjtípus!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!Database.IsCorrectSQLText(combo_csapat.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (Program.database.Verseny_Lezárva(combo_verseny.Text)) { MessageBox.Show("A verseny már le van zárva!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if ( cboVerseny.SelectedItem == null ) { MessageBox.Show( "Nincs kiválasztva verseny!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                if ( cboIjtipus.SelectedItem == null ) { MessageBox.Show( "Nincs kiválasztva íjtípus!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                if ( !Database.IsCorrectSQLText( cboCsapat.Text ) ) { MessageBox.Show( "Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                if ( Program.database.Verseny_Lezárva( cboVerseny.Text ) ) { MessageBox.Show( "A verseny már le van zárva!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
 
-                Program.mainform.eredmények_panel.Eredmény_Beírás(label_név.Text, combo_verseny.Text, combo_íjtípus.Text, combo_csapat.SelectedIndex + 1, check_megjelent.Checked);
-
-                if (MessageBox.Show("Nyomtassak beírólapot ennek a versenyzőnek: " + label_név.Text + "?", "Nyomtatás", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                List<Korosztály> korosztalyok = Program.database.Korosztályok( cboVerseny.Text );
+                string KOAZON = null;
+                foreach ( Korosztály korosztaly in korosztalyok )
                 {
-                    Eredmény? eredmény = Program.database.Eredmény(combo_verseny.Text, label_név.Text);
-                    
-                    foreach(DataRow item in Program.mainform.verseny_panel.data.Rows)
+                    if ( korosztaly.megnevezés == cboKorosztaly.Text ) { KOAZON = korosztaly.azonosító; }
+                }
+
+                Program.mainform.eredmények_panel.Eredmény_Beírás( lblIndulo.Text,
+                                                                    cboVerseny.Text,
+                                                                    cboIjtipus.Text,
+                                                                    cboCsapat.SelectedIndex + 1,
+                                                                    chkMegjelent.Checked,
+                                                                    chkKorosztalyFeluliras.Checked,
+                                                                    KOAZON);
+
+                if ( MessageBox.Show( "Nyomtassak beírólapot ennek a versenyzőnek: " + lblIndulo.Text + "?", "Nyomtatás", MessageBoxButtons.YesNo ) == DialogResult.Yes )
+                {
+                    Eredmény? eredmény = Program.database.Eredmény( cboVerseny.Text, lblIndulo.Text );
+
+                    foreach ( DataRow item in Program.mainform.verseny_panel.data.Rows )
                     {
-                        Verseny? verseny = Program.database.Verseny(combo_verseny.Text);
-                        if ((string)item[0] == combo_verseny.Text && verseny.Value.dupla_beirlap==false )
+                        Verseny? verseny = Program.database.Verseny( cboVerseny.Text );
+                        if ( (string)item[0] == cboVerseny.Text && verseny.Value.DublaBeirlap == false )
                         {
-                            Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                            Nyomtat.print( Nyomtat.nyomtat_beirlap( cboVerseny.Text, eredmény.Value ) );
                         }
-                        else if ((string)item[0] == combo_verseny.Text && verseny.Value.dupla_beirlap == true)
+                        else if ( (string)item[0] == cboVerseny.Text && verseny.Value.DublaBeirlap == true )
                         {
-                            Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
-                            Nyomtat.print(Nyomtat.nyomtat_beirlap(combo_verseny.Text, eredmény.Value));
+                            Nyomtat.print( Nyomtat.nyomtat_beirlap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.print( Nyomtat.nyomtat_beirlap( cboVerseny.Text, eredmény.Value ) );
                         }
                     }
-                    
+
                 }
 
-                lastindex = combo_verseny.SelectedIndex;
-                Close();
+                lastindex = cboVerseny.SelectedIndex;
+                Close( );
             }
 
-            private void csapatok_megtekint_Click(object sender, EventArgs e)
+            private void
+            btnCsapatok_Click( object sender, EventArgs e )
             {
-                if (combo_verseny.SelectedItem == null)
+                if ( cboVerseny.SelectedItem == null )
                 {
                     return;
                 }
-                csapatlista_form = new Form_Csapatlista(combo_verseny.Text);
-                csapatlista_form.ShowDialog();
+                csapatlista_form = new Form_Csapatlista( cboVerseny.Text );
+                csapatlista_form.ShowDialog( );
                 return;
             }
 
+            private void
+            chkKorosztalyFeluliras_Click( object _sender, EventArgs _event )
+            {
+                CheckBox chkTemp = _sender as CheckBox;
+                if ( chkTemp.Checked == true )
+                {
+                    cboKorosztaly.Enabled = true;
+                }
+                else
+                {
+                    cboKorosztaly.Enabled = false;
+                }
+
+                cboKorosztaly.Items.Clear( );
+                List<Korosztály> korosztalyok = Program.database.Korosztályok( cboVerseny.Text );
+                foreach ( Korosztály item in korosztalyok )
+                {
+                    cboKorosztaly.Items.Add( item.megnevezés );
+                }
+                if ( cboKorosztaly.Items.Count != 0 ) { cboKorosztaly.SelectedIndex = 0; }
+            }
             #endregion
         }
 

@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Íjász
 {
@@ -83,13 +84,22 @@ namespace Íjász
 
             ///
 
+
+            Button hozzáadás = new Button( );
+            hozzáadás.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            hozzáadás.Text = "Hozzáadás";
+            hozzáadás.Size = new System.Drawing.Size( 96, 32 );
+            hozzáadás.Location = new System.Drawing.Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 );
+            hozzáadás.Click += hozzáadás_Click;
+
             Button törlés = new Button();
             törlés.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             törlés.Text = "Törlés";
             törlés.Size = new System.Drawing.Size(96, 32);
             törlés.Location = new System.Drawing.Point(table.Location.X + table.Size.Width + 16, ClientRectangle.Height - 32 - 16);
             törlés.Click += törlés_Click;
-            
+
+
             Button számolás = new Button();
             számolás.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             számolás.Text = "Számolás";
@@ -97,19 +107,18 @@ namespace Íjász
             számolás.Location = new System.Drawing.Point(törlés.Location.X + törlés.Size.Width + 16, törlés.Location.Y);
             számolás.Click += számolás_Click;
 
-            Button hozzáadás = new Button();
-            hozzáadás.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            hozzáadás.Text = "Hozzáadás";
-            hozzáadás.Size = new System.Drawing.Size(96, 32);
-            hozzáadás.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16);
-            hozzáadás.Click += hozzáadás_Click;
 
+            Button btnKorosztalyEredmenyek = new iButton( "Korosztály eredmények",
+                                                        new System.Drawing.Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 64 ),
+                                                        new Size( 96, 32 ),
+                                                        btnKorosztalyEredmenyek_Click,
+                                                        this );
             ///
 
             List<Verseny> versenyek = Program.database.Versenyek();
 
              foreach(Verseny current in versenyek)
-                box_vazon.Items.Add(current.azonosító);
+                box_vazon.Items.Add(current.Azonosito);
 
             if (0 < box_vazon.Items.Count) box_vazon.SelectedIndex = 0;
 
@@ -246,7 +255,8 @@ namespace Íjász
         //Csak belső használatra, nincs invokeolva!
         public void Verseny_Számolás(string _verseny)
         {
-            if (!Program.database.KorosztálySzámolás(_verseny)) { MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+            //if ( !Program.database.KorosztálySzámolás( _verseny ) ) { MessageBox.Show( "Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            if ( !Program.database.KorosztalyModositas( _verseny ) ) { MessageBox.Show( "Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
 
             if (_verseny == box_vazon.SelectedItem.ToString())
             {
@@ -274,20 +284,39 @@ namespace Íjász
         #endregion
 
         #region EventHandlers
+
+        private void
+        btnKorosztalyEredmenyek_Click(object _sender, EventArgs _event)
+        {
+            if ( ( table.SelectedRows.Count == 0 ) || ( table.SelectedRows[0].Index == data.Rows.Count ) ) return;
+
+            foreach ( DataGridViewRow current in table.Rows )
+            {
+                if ( table.SelectedRows[0] == current )
+                {
+                    FormKorosztalyEredmeny korosztály = new FormKorosztalyEredmeny( box_vazon.Text, current.Cells[1].Value.ToString( ));
+                    korosztály.ShowDialog( );
+                    break;
+                }
+            }
+
+        }
+
+
         public void verseny_hozzáadás(Verseny _verseny)
         {
-            box_vazon.Items.Add(_verseny.azonosító);
+            box_vazon.Items.Add(_verseny.Azonosito);
         }
 
         public void verseny_módosítás(string _azonosító, Verseny _verseny)
         {
-            if (_azonosító != _verseny.azonosító)
+            if (_azonosító != _verseny.Azonosito)
             {
                 for (int current = 0; current < box_vazon.Items.Count; ++current)
                 {
                     if (_azonosító == box_vazon.Items[current].ToString())
                     {
-                        box_vazon.Items[current] = _verseny.azonosító;
+                        box_vazon.Items[current] = _verseny.Azonosito;
                         break;
                     }
                 }
@@ -383,19 +412,47 @@ namespace Íjász
             Verseny_Számolás(box_vazon.SelectedItem.ToString());
         }
 
+
+        //korosztályt ne lehessen törölni ha van hozzárendelve fix induló
         private void törlés_Click(object _sender, EventArgs _event)
         {
+            List<Eredmény> eredmenyek = Program.database.Eredmények( box_vazon.Text );
+
+            List<string> nevek = new List<string>( );
+
+
             if (box_vazon.SelectedItem == null) return;
             if ((table.SelectedRows.Count == 0) || (table.SelectedRows[0].Index == data.Rows.Count)) return;
             //if ((int)data.Rows[table.SelectedRows[0].Index][4] != 0) { MessageBox.Show("Ez a korosztály nem törölhető, mivel van hozzárendelve eredmény!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-            if (MessageBox.Show("Biztosan törli ezt a korosztályt?", "Megerősítés", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             foreach (DataGridViewRow current in table.Rows)
             {
                 if (table.SelectedRows[0] == current)
                 {
-
+                    foreach ( Eredmény eredmeny in eredmenyek )
+                    {
+                        if ( eredmeny.KorosztalyModositott == true &&
+                            eredmeny.KorosztalyAzonosito == current.Cells[1].Value.ToString( ) )
+                        { 
+                            nevek.Add("\n" + eredmeny.név);
+                            
+                        }
+                    }
+                    string errorstring = "Ez a korosztály nem törölhető, mivel van hozzárendelve módosított eredmény!";
+                    if(nevek.Count != 0)
+                    {
+                        foreach ( string nev in nevek )
+                        {
+                            errorstring += nev;
+                        }
+                        MessageBox.Show( errorstring,
+                                             "Hiba", 
+                                             MessageBoxButtons.OK,
+                                             MessageBoxIcon.Error );
+                            return; 
+                    }
+                    if ( MessageBox.Show( "Biztosan törli ezt a korosztályt?", "Megerősítés", MessageBoxButtons.YesNo, MessageBoxIcon.Question ) != DialogResult.Yes ) return;
                     Korosztály_Törlés(current.Cells[0].Value.ToString(), current.Cells[1].Value.ToString());
 
                 }
@@ -597,6 +654,94 @@ namespace Íjász
                 Close();
             }
             #endregion
+        }
+
+
+        public sealed class FormKorosztalyEredmeny : Form
+        {
+            private DataTable data;
+            private DataGridView table;
+
+            public FormKorosztalyEredmeny( string _VEAZON, string _KOAZON )
+            {
+                InitializeForm( _VEAZON,  _KOAZON);
+                InitializeContent( _VEAZON, _KOAZON );
+            }
+
+            private void InitializeForm( string _VEAZON, string _KOAZON)
+            {
+                Text = "Indulók (" + _VEAZON + ")";
+                ClientSize = new System.Drawing.Size( 435 + 8, 500 );
+                MinimumSize = ClientSize;
+                StartPosition = FormStartPosition.CenterScreen;
+                FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            }
+
+            private void InitializeContent(string _VEAZON, string _KOAZON )
+            {
+
+                table = new DataGridView( );
+                table.Dock = DockStyle.Left;
+                table.RowHeadersVisible = false;
+                table.AllowUserToResizeRows = false;
+                table.AllowUserToResizeColumns = false;
+                table.AllowUserToAddRows = false;
+                table.Width = 443;
+                table.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                table.MultiSelect = false;
+                table.ReadOnly = true;
+                table.DataSource = CreateSource(  _VEAZON, _KOAZON  );
+                table.DataBindingComplete += table_DataBindingComplete;
+
+                Controls.Add( table );
+
+            }
+
+            private DataTable CreateSource( string _VEAZON, string _KOAZON )
+            {
+
+                data = new DataTable( );
+                data.Columns.Add( new DataColumn( "Név", System.Type.GetType( "System.String" ) ) );
+                data.Columns.Add( new DataColumn( "Korosztály", System.Type.GetType( "System.String" ) ) );
+                data.Columns.Add( new DataColumn( "Életkor", System.Type.GetType( "System.String" ) ) );
+                data.Columns.Add( new DataColumn( "Módosított", System.Type.GetType( "System.String" ) ) );
+
+
+                Verseny verseny = Program.database.Verseny( _VEAZON ).Value;
+                List<Eredmény> eredmenyek = Program.database.Eredmények( _VEAZON );
+
+                for ( int i = 0; i < eredmenyek.Count;i++ )
+                {
+                    if(eredmenyek[i].megjelent == true && eredmenyek[i].KorosztalyAzonosito == _KOAZON)
+                    {
+                        Induló indulo = Program.database.Induló( eredmenyek[i].név ).Value;
+                        DataRow row = data.NewRow( );
+                        row[0] = eredmenyek[i].név;
+                        row[1] = eredmenyek[i].KorosztalyAzonosito;
+                        row[2] = Program.database.InduloKora( verseny.Azonosito, indulo.név );
+                        row[3] = ( eredmenyek[i].KorosztalyModositott == true ) ? "I" : "N";
+                        data.Rows.Add( row );
+                    }
+                }
+                    return data;
+            }
+
+            private void table_DataBindingComplete( object _sender, EventArgs _event )
+            {
+                table.DataBindingComplete -= table_DataBindingComplete;
+
+                table.Columns[0].Width = 200;
+                table.Columns[1].Width = 80;
+                table.Columns[2].Width = 80;
+                table.Columns[3].Width = 80;
+
+                foreach ( DataGridViewColumn column in table.Columns ) column.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                //rendezés
+                table.Sort( table.Columns[2], System.ComponentModel.ListSortDirection.Ascending );
+
+            }
+
         }
     }
 }

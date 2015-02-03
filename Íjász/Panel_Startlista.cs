@@ -57,7 +57,7 @@ namespace Íjász
             List<Verseny> Versenyek = Program.database.Versenyek();
             foreach (Verseny current in Versenyek)
             {
-                cboVersenyAzonosito.Items.Add(current.azonosító);
+                cboVersenyAzonosito.Items.Add(current.Azonosito);
             }
 
             if (cboVersenyAzonosito.Items.Count != 0)
@@ -79,9 +79,9 @@ namespace Íjász
 
             foreach (Verseny current in Versenyek)
             {
-                if (cboVersenyAzonosito.Text == current.azonosító)
+                if (cboVersenyAzonosito.Text == current.Azonosito)
                 {
-                    lblMegnevezes2.Text = current.megnevezés;
+                    lblMegnevezes2.Text = current.Megnevezes;
                 }
             }
             chkNevezesiLista = new CheckBox();
@@ -97,7 +97,7 @@ namespace Íjász
             chkCsapatlista.AutoSize = true;
             chkCsapatlista.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             chkCsapatlista.FlatStyle = FlatStyle.Flat;
-            chkCsapatlista.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 40 * 16,
+            chkCsapatlista.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 39 * 16,
                                                                ClientRectangle.Height - 32 - 38 * 16);
 
             chkNemMegjelent = new CheckBox();
@@ -131,9 +131,9 @@ namespace Íjász
             List<Verseny> Versenyek = Program.database.Versenyek();
             foreach (Verseny current in Versenyek)
             {
-                if (cboVersenyAzonosito.Text == current.azonosító)
+                if (cboVersenyAzonosito.Text == current.Azonosito)
                 {
-                    lblMegnevezes2.Text = current.megnevezés;
+                    lblMegnevezes2.Text = current.Megnevezes;
                 }
             }
         }
@@ -195,7 +195,7 @@ namespace Íjász
         public void
         VersenyHozzaadas(Verseny _verseny)
         {
-            cboVersenyAzonosito.Items.Add(_verseny.azonosító);
+            cboVersenyAzonosito.Items.Add(_verseny.Azonosito);
         }
 
         public void
@@ -207,13 +207,13 @@ namespace Íjász
         public void
         VersenyModositas(string _versenyazonosito, Verseny _verseny)
         {
-            if (_versenyazonosito != _verseny.azonosító)
+            if (_versenyazonosito != _verseny.Azonosito)
             {
                 for (int current = 0; current < cboVersenyAzonosito.Items.Count; ++current)
                 {
                     if (_versenyazonosito == cboVersenyAzonosito.Items[current].ToString())
                     {
-                        cboVersenyAzonosito.Items[current] = _verseny.azonosító;
+                        cboVersenyAzonosito.Items[current] = _verseny.Azonosito;
                         break;
                     }
                 }

@@ -18,8 +18,22 @@ namespace Íjász
         public int? összpont;
         public int? százalék;
         public bool megjelent;
+        public bool KorosztalyModositott;
+        public string KorosztalyAzonosito;
 
-        public Eredmény(string _név, Int64? _sorszám, string _íjtípus, int _csapat, int _találat_10, int _találat_08, int _találat_05, int _mellé, int? _összpont, int? _százalék, bool _megjelent)
+        public Eredmény( string _név,
+                         Int64? _sorszám,
+                         string _íjtípus,
+                         int _csapat,
+                         int _találat_10,
+                         int _találat_08,
+                         int _találat_05,
+                         int _mellé,
+                         int? _összpont,
+                         int? _százalék,
+                         bool _megjelent,
+                         bool _KorosztalyModositott,
+                         string _KorosztalyAzonosito )
         {
             név = _név;
             sorszám = _sorszám;
@@ -32,6 +46,8 @@ namespace Íjász
             összpont = _összpont;
             százalék = _százalék;
             megjelent = _megjelent;
+            KorosztalyModositott = _KorosztalyModositott;
+            KorosztalyAzonosito = _KorosztalyAzonosito;
         }
     }
 
@@ -114,7 +130,7 @@ namespace Íjász
 
             List<Verseny> versenyek = Program.database.Versenyek();
             foreach (Verseny current in versenyek)
-                combo_versenyek.Items.Add(current.azonosító);
+                combo_versenyek.Items.Add(current.Azonosito);
 
             if (0 < combo_versenyek.Items.Count) combo_versenyek.SelectedIndex = 0;
 
@@ -158,14 +174,18 @@ namespace Íjász
             data.Columns.Add(new DataColumn("Mellé", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("Összes", System.Type.GetType("System.Int32")));
             data.Columns.Add(new DataColumn("%", System.Type.GetType("System.Int32")));
-            data.Columns.Add(new DataColumn("Megjelent", System.Type.GetType("System.Boolean")));
+            data.Columns.Add( new DataColumn( "Megjelent", System.Type.GetType( "System.Boolean" ) ) );
+            data.Columns.Add( new DataColumn( "KorosztalyModositott", System.Type.GetType( "System.Boolean" ) ) );
+            data.Columns.Add( new DataColumn( "Korosztaly", System.Type.GetType( "System.String" ) ) );
 
             return data;
         }
 
         #region Accessors
-        private delegate void Eredmény_Beírás_Callback(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent);
-        public void Eredmény_Beírás(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent)
+
+        //ÁTNÉZVE
+        private delegate void Eredmény_Beírás_Callback(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _modositott, string _korosztalyazonosito );
+        public void Eredmény_Beírás(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _modositott, string _korosztalyazonosito)
         {
             if (InvokeRequired)
             {
@@ -174,7 +194,13 @@ namespace Íjász
             }
             else
             {
-                Database.BeírásEredmény beírás = Program.database.EredményBeírás(_név, _verseny, _íjtípus, _csapat, _megjelent);
+                Database.BeírásEredmény beírás = Program.database.EredményBeírás(_név,
+                                                                                _verseny, 
+                                                                                _íjtípus, 
+                                                                                _csapat, 
+                                                                                _megjelent,
+                                                                                _modositott,
+                                                                                _korosztalyazonosito);
                 if (beírás.eredmény == null) { MessageBox.Show("Adatbázis hiba a beírás során!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (_verseny == combo_versenyek.Text)
                 {
@@ -218,6 +244,7 @@ namespace Íjász
             table.Sort(table.Columns[0], System.ComponentModel.ListSortDirection.Ascending);
         }
 
+        //ÁTNÉZVE
         private delegate void Eredmény_Módosítás_Callback(string _azonosító, Eredmény _eredeti, Eredmény _eredmény);
         public void Eredmény_Módosítás(string _azonosító, Eredmény _eredeti, Eredmény _eredmény)
         {
@@ -286,17 +313,17 @@ namespace Íjász
 
         ///
 
-        private delegate void Eredmény_Beírás_Hálózat_Callback(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _nyomtat, Connection _connection);
-        public void Eredmény_Beírás_Hálózat(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _nyomtat, Connection _connection)
+        private delegate void Eredmény_Beírás_Hálózat_Callback( string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _nyomtat, bool _KorosztalyModositott, Connection _connection );
+        public void Eredmény_Beírás_Hálózat(string _név, string _verseny, string _íjtípus, int _csapat, bool _megjelent, bool _nyomtat, bool _KorosztalyModositott, Connection _connection)
         {
             if (InvokeRequired)
             {
                 Eredmény_Beírás_Hálózat_Callback callback = new Eredmény_Beírás_Hálózat_Callback(Eredmény_Beírás_Hálózat);
-                Invoke(callback, new object[] { _név, _verseny, _íjtípus, _csapat, _megjelent, _nyomtat, _connection });
+                Invoke(callback, new object[] { _név, _verseny, _íjtípus, _csapat, _megjelent, _nyomtat,_KorosztalyModositott, _connection });
             }
             else
             {
-                Database.BeírásEredmény beírás = Program.database.EredményBeírás_Ellenőrzött(_név, _verseny, _íjtípus, _csapat, _megjelent);
+                Database.BeírásEredmény beírás = Program.database.EredményBeírás_Ellenőrzött(_név, _verseny, _íjtípus, _csapat, _megjelent,_KorosztalyModositott );
                 if (beírás.eredmény == null)
                 {
                     _connection.Send(ServerCommand.ERROR, "Hiba az eredmény beírásakor!");
@@ -349,7 +376,7 @@ namespace Íjász
                     Verseny? verseny = Program.database.Verseny(_verseny);
                     if (_nyomtat)
                     {
-                        if (verseny.Value.dupla_beirlap)
+                        if (verseny.Value.DublaBeirlap)
                         {
                             Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
                             Nyomtat.print(Nyomtat.nyomtat_beirlap(_verseny, beírás.eredmény.Value));
@@ -412,18 +439,18 @@ namespace Íjász
         #region EventHandlers
         public void verseny_hozzáadás(Verseny _verseny)
         {
-            combo_versenyek.Items.Add(_verseny.azonosító);
+            combo_versenyek.Items.Add(_verseny.Azonosito);
         }
 
         public void verseny_módosítás(string _azonosító, Verseny _verseny)
         {
-            if (_azonosító != _verseny.azonosító)
+            if (_azonosító != _verseny.Azonosito)
             {
                 for (int current = 0; current < combo_versenyek.Items.Count; ++current)
                 {
                     if (_azonosító == combo_versenyek.Items[current].ToString())
                     {
-                        combo_versenyek.Items[current] = _verseny.azonosító;
+                        combo_versenyek.Items[current] = _verseny.Azonosito;
                         break;
                     }
                 }
@@ -483,6 +510,10 @@ namespace Íjász
             table.Columns[9].Width = 45;
             table.Columns[10].Width = 58;
 
+            table.Columns[11].Visible = false;
+            table.Columns[12].Visible = false;
+
+
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
 
             //rendezés
@@ -509,6 +540,8 @@ namespace Íjász
                 row[8] = current.összpont;
                 row[9] = current.százalék;
                 row[10] = current.megjelent;
+                row[11] = current.KorosztalyModositott;
+                row[12] = current.KorosztalyAzonosito;
 
                 data.Rows.Add(row);
             }
@@ -523,19 +556,22 @@ namespace Íjász
             if (table.SelectedRows.Count == 0) { MessageBox.Show("Nem megfelelő a kiválasztott eredmények száma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
             if (lezárva) { MessageBox.Show("A verseny már le van zárva!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; };
 
-            Form_Eredmény eredmény_form = new Form_Eredmény(combo_versenyek.Text, verseny_összpont, new Eredmény(
-                table.SelectedRows[0].Cells[0].Value.ToString(),
-                Convert.ToInt32(table.SelectedRows[0].Cells[1].Value),
-                table.SelectedRows[0].Cells[2].Value.ToString(),
-                Convert.ToInt32(table.SelectedRows[0].Cells[3].Value),
-                Convert.ToInt32(table.SelectedRows[0].Cells[4].Value),
-                Convert.ToInt32(table.SelectedRows[0].Cells[5].Value),
-                Convert.ToInt32(table.SelectedRows[0].Cells[6].Value),
-                Convert.ToInt32(table.SelectedRows[0].Cells[7].Value),
-                Convert.ToInt32(table.SelectedRows[0].Cells[8].Value),
-                Convert.ToInt32(table.SelectedRows[0].Cells[9].Value),
-                Convert.ToBoolean(table.SelectedRows[0].Cells[10].Value)
-                ));
+            Form_Eredmény eredmény_form = new Form_Eredmény(combo_versenyek.Text, 
+                                                            verseny_összpont, 
+                                                            new Eredmény(table.SelectedRows[0].Cells[0].Value.ToString(),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[1].Value),
+                                                                         table.SelectedRows[0].Cells[2].Value.ToString(),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[3].Value),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[4].Value),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[5].Value),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[6].Value),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[7].Value),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[8].Value),
+                                                                         Convert.ToInt32(table.SelectedRows[0].Cells[9].Value),
+                                                                         Convert.ToBoolean(table.SelectedRows[0].Cells[10].Value),
+                                                                         Convert.ToBoolean(table.SelectedRows[0].Cells[11].Value),
+                                                                         table.SelectedRows[0].Cells[12].Value.ToString())
+                );
             eredmény_form.ShowDialog();
         }
 
@@ -563,7 +599,9 @@ namespace Íjász
                         Convert.ToInt32(current.Cells[7].Value),
                         Convert.ToInt32(current.Cells[8].Value),
                         Convert.ToInt32(current.Cells[9].Value),
-                        Convert.ToBoolean(current.Cells[10].Value)
+                        Convert.ToBoolean(current.Cells[10].Value),
+                        Convert.ToBoolean(current.Cells[11].Value),
+                        current.Cells[12].Value.ToString()
                         ));
                 }
             }
@@ -644,7 +682,9 @@ namespace Íjász
                         Convert.ToInt32(table.SelectedRows[0].Cells[7].Value),
                         Convert.ToInt32(table.SelectedRows[0].Cells[8].Value),
                         Convert.ToInt32(table.SelectedRows[0].Cells[9].Value),
-                        Convert.ToBoolean(table.SelectedRows[0].Cells[10].Value)
+                        Convert.ToBoolean(table.SelectedRows[0].Cells[10].Value),
+                        Convert.ToBoolean(table.SelectedRows[0].Cells[11].Value),
+                        table.SelectedRows[0].Cells[12].Value.ToString()
                         ));
                     eredmény_form.ShowDialog();
                 }
@@ -947,8 +987,19 @@ namespace Íjász
                 if (!((találat_10 == 0 && találat_8 == 0 && találat_5 == 0 && találat_mellé == 0) || (összespont == találat_10 + találat_8 + találat_5 + találat_mellé))) { MessageBox.Show("Nem megfelelő a lövések darabszáma!\n" + "Lövések darabszáma: " + (összespont).ToString() + "\nBeírt lövések: " + (találat_10 + találat_8 + találat_5 + találat_mellé).ToString(), "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 Program.mainform.eredmények_panel.Eredmény_Módosítás(verseny_azonosító, eredeti,
-                    new Eredmény(eredeti.név, eredeti.sorszám, eredeti.íjtípus, eredeti.csapat, Convert.ToInt32(box_találat_10.Text),
-                        Convert.ToInt32(box_találat_8.Text), Convert.ToInt32(box_találat_5.Text), Convert.ToInt32(box_mellé.Text), összes, százalék, box_megjelent.Checked));
+                    new Eredmény(eredeti.név,
+                        eredeti.sorszám, 
+                        eredeti.íjtípus, 
+                        eredeti.csapat, 
+                        Convert.ToInt32(box_találat_10.Text),
+                        Convert.ToInt32(box_találat_8.Text),
+                        Convert.ToInt32(box_találat_5.Text), 
+                        Convert.ToInt32(box_mellé.Text), 
+                        összes, 
+                        százalék, 
+                        box_megjelent.Checked,
+                        eredeti.KorosztalyModositott,
+                        eredeti.KorosztalyAzonosito));
 
                 Close();
             }
@@ -972,7 +1023,7 @@ namespace Íjász
                 List<Verseny> versenyek = Program.database.Versenyek();
                 foreach (Verseny item in versenyek)
                 {
-                    if (item.azonosító == verseny_azonosító) { label_százalék.Text = ((int)(((double)Convert.ToInt32(label_összes.Text) / (item.összes * 10)) * 100)).ToString() + "%"; return; }
+                    if (item.Azonosito == verseny_azonosító) { label_százalék.Text = ((int)(((double)Convert.ToInt32(label_összes.Text) / (item.Osszes * 10)) * 100)).ToString() + "%"; return; }
                 }
             }
             #endregion
