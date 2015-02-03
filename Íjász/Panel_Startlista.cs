@@ -147,7 +147,7 @@ namespace Íjász
 
             if (chkCsapatlista.Checked == true)
             {
-                Nyomtat.Dialog(Nyomtat.nyomtat_csapatlista(cboVersenyAzonosito.Text));
+                Nyomtat.Dialog(Nyomtat.NyomtatCsapatlista(cboVersenyAzonosito.Text));
 
                 return;
                 // Nyomtat.print("NEVEZLISTA.docx");

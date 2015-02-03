@@ -2024,6 +2024,42 @@ namespace Íjász
         }
         #endregion
 
+
+        #region Nyomtat
+
+        #region CsapatList
+
+        public List<Nyomtat.CSAPATLISTA.CSAPAT>
+        CsapatLista(string _VEAZON)
+        {
+            lock ( Program.datalock )
+            {
+                List<Nyomtat.CSAPATLISTA.CSAPAT> Data = new List<Nyomtat.CSAPATLISTA.CSAPAT>( );
+                connection.Open( );
+
+                SQLiteCommand command = connection.CreateCommand( );
+
+                command.CommandText = "select distinct Eredmények_" +  _VEAZON + ".INCSSZ, count(Eredmények_" + _VEAZON + " .INCSSZ) " + 
+                                      "from Eredmények_" + _VEAZON + " group by INCSSZ order by INCSSZ;";
+                SQLiteDataReader reader = command.ExecuteReader( );
+                while ( reader.Read( ) )
+                {
+                    if( reader.GetInt32(1) > 0 )
+                    {
+                        Data.Add( new Nyomtat.CSAPATLISTA.CSAPAT( reader.GetInt32( 0 ) ) );
+                    }
+                }
+
+                command.Dispose( );
+                connection.Close( );
+
+                return Data;
+            }
+        }
+
+        #endregion
+
+        #endregion
         public void Dispose()
         {
             connection.Close();
