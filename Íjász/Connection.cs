@@ -71,7 +71,7 @@ namespace Íjász
             List<Induló> indulók = Program.database.Indulók();
             foreach (Induló current in indulók)
             {
-                Send(ServerCommand.INDULÓ_HOZZÁADÁS, current.név + ";" + current.nem + ";" + current.születés + ";" + current.engedély + ";" + current.egyesület + ";" + current.eredmények);
+                Send(ServerCommand.INDULÓ_HOZZÁADÁS, current.Nev + ";" + current.Nem + ";" + current.SzuletesiDatum + ";" + current.Engedely + ";" + current.Egyesulet + ";" + current.Eredmenyek);
             }
 
             List<Verseny> versenyek = Program.database.Versenyek_Aktív();
@@ -83,7 +83,7 @@ namespace Íjász
             List<Íjtípus> íjtípusok = Program.database.Íjtípusok();
             foreach (Íjtípus current in íjtípusok)
             {
-                Send(ServerCommand.ÍJTÍPUS_HOZZÁADÁS, current.azonosító);
+                Send(ServerCommand.ÍJTÍPUS_HOZZÁADÁS, current.Azonosito);
             }
         }
 
@@ -190,8 +190,8 @@ namespace Íjász
                     List<Eredmény> eredmények = Program.database.Eredmények(arguments[1]);
                     foreach (Eredmény eredmény in eredmények)
                     {
-                        Send(ServerCommand.EREDMÉNY_ADAT, arguments[1] + ";" + eredmény.név + ";" + eredmény.sorszám + ";" + eredmény.íjtípus + ";" + eredmény.csapat + ";" + eredmény.találat_10 + ";"
-                            + eredmény.találat_08 + ";" + eredmény.találat_05 + ";" + eredmény.mellé + ";" + eredmény.összpont.Value + ";" + eredmény.százalék.Value + ";" + eredmény.megjelent);
+                        Send(ServerCommand.EREDMÉNY_ADAT, arguments[1] + ";" + eredmény.Nev + ";" + eredmény.Sorszam + ";" + eredmény.Ijtipus + ";" + eredmény.Csapat + ";" + eredmény.Talalat10 + ";"
+                            + eredmény.Talalat8 + ";" + eredmény.Talalat5 + ";" + eredmény.Melle + ";" + eredmény.Osszpont.Value + ";" + eredmény.Szazalek.Value + ";" + eredmény.Megjelent);
                     }
                     break;
 

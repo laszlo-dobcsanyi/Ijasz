@@ -7,45 +7,45 @@ namespace Íjász
 {
     public struct Eredmény
     {
-        public string név;
-        public Int64? sorszám;
-        public string íjtípus;
-        public int csapat;
-        public int találat_10;
-        public int találat_08;
-        public int találat_05;
-        public int mellé;
-        public int? összpont;
-        public int? százalék;
-        public bool megjelent;
+        public string Nev;
+        public Int64? Sorszam;
+        public string Ijtipus;
+        public int Csapat;
+        public int Talalat10;
+        public int Talalat8;
+        public int Talalat5;
+        public int Melle;
+        public int? Osszpont;
+        public int? Szazalek;
+        public bool Megjelent;
         public bool KorosztalyModositott;
         public string KorosztalyAzonosito;
 
-        public Eredmény( string _név,
-                         Int64? _sorszám,
-                         string _íjtípus,
-                         int _csapat,
-                         int _találat_10,
-                         int _találat_08,
-                         int _találat_05,
-                         int _mellé,
-                         int? _összpont,
-                         int? _százalék,
-                         bool _megjelent,
+        public Eredmény( string _Nev,
+                         Int64? _Sorszam,
+                         string _Ijtipus,
+                         int _Csapat,
+                         int _Talalat10,
+                         int _Talalat8,
+                         int _Talalat5,
+                         int _Melle,
+                         int? _Osszpont,
+                         int? _Szazalek,
+                         bool _Megjelent,
                          bool _KorosztalyModositott,
                          string _KorosztalyAzonosito )
         {
-            név = _név;
-            sorszám = _sorszám;
-            íjtípus = _íjtípus;
-            csapat = _csapat;
-            találat_10 = _találat_10;
-            találat_08 = _találat_08;
-            találat_05 = _találat_05;
-            mellé = _mellé;
-            összpont = _összpont;
-            százalék = _százalék;
-            megjelent = _megjelent;
+            Nev = _Nev;
+            Sorszam = _Sorszam;
+            Ijtipus = _Ijtipus;
+            Csapat = _Csapat;
+            Talalat10 = _Talalat10;
+            Talalat8 = _Talalat8;
+            Talalat5 = _Talalat5;
+            Melle = _Melle;
+            Osszpont = _Osszpont;
+            Szazalek = _Szazalek;
+            Megjelent = _Megjelent;
             KorosztalyModositott = _KorosztalyModositott;
             KorosztalyAzonosito = _KorosztalyAzonosito;
         }
@@ -207,30 +207,30 @@ namespace Íjász
                     if (beírás.flag == Database.BeírásEredmény.Flag.HOZZÁADOTT)
                     {
                         DataRow row = data.NewRow();
-                            row[0] = beírás.eredmény.Value.név;
-                            row[1] = beírás.eredmény.Value.sorszám;
-                            row[2] = beírás.eredmény.Value.íjtípus;
-                            row[3] = beírás.eredmény.Value.csapat;
-                            row[4] = beírás.eredmény.Value.találat_10;
-                            row[5] = beírás.eredmény.Value.találat_08;
-                            row[6] = beírás.eredmény.Value.találat_05;
-                            row[7] = beírás.eredmény.Value.mellé;
-                            row[8] = beírás.eredmény.Value.összpont;
-                            row[9] = beírás.eredmény.Value.százalék;
-                            row[10] = beírás.eredmény.Value.megjelent;
+                            row[0] = beírás.eredmény.Value.Nev;
+                            row[1] = beírás.eredmény.Value.Sorszam;
+                            row[2] = beírás.eredmény.Value.Ijtipus;
+                            row[3] = beírás.eredmény.Value.Csapat;
+                            row[4] = beírás.eredmény.Value.Talalat10;
+                            row[5] = beírás.eredmény.Value.Talalat8;
+                            row[6] = beírás.eredmény.Value.Talalat5;
+                            row[7] = beírás.eredmény.Value.Melle;
+                            row[8] = beírás.eredmény.Value.Osszpont;
+                            row[9] = beírás.eredmény.Value.Szazalek;
+                            row[10] = beírás.eredmény.Value.Megjelent;
                         data.Rows.Add(row);
                     }
                     else
                     {
                         foreach (DataRow current in data.Rows)
                         {
-                            if (beírás.eredmény.Value.név == (string)current[0])
+                            if (beírás.eredmény.Value.Nev == (string)current[0])
                             {
-                                current[0] = beírás.eredmény.Value.név;
+                                current[0] = beírás.eredmény.Value.Nev;
                                 //current[1] = beírás.eredmény.sorszám;
-                                current[2] = beírás.eredmény.Value.íjtípus;
-                                current[3] = beírás.eredmény.Value.csapat;
-                                current[10] = beírás.eredmény.Value.megjelent;
+                                current[2] = beírás.eredmény.Value.Ijtipus;
+                                current[3] = beírás.eredmény.Value.Csapat;
+                                current[10] = beírás.eredmény.Value.Megjelent;
                                 break;
                             }
                         }
@@ -261,18 +261,18 @@ namespace Íjász
                 {
                     foreach (DataRow current in data.Rows)
                     {
-                        if (_eredeti.név == current[0].ToString())
+                        if (_eredeti.Nev == current[0].ToString())
                         {
                             //current[0] = _eredmény.név;
                             //current[1] = _eredmény.sorszám;
                             //current[2] = _eredmény.íjtípus;
                             //current[3] = _eredmény.csapat;
-                            current[4] = _eredmény.találat_10;
-                            current[5] = _eredmény.találat_08;
-                            current[6] = _eredmény.találat_05;
-                            current[7] = _eredmény.mellé;
-                            current[8] = _eredmény.összpont;
-                            current[9] = _eredmény.százalék;
+                            current[4] = _eredmény.Talalat10;
+                            current[5] = _eredmény.Talalat8;
+                            current[6] = _eredmény.Talalat5;
+                            current[7] = _eredmény.Melle;
+                            current[8] = _eredmény.Osszpont;
+                            current[9] = _eredmény.Szazalek;
                             //current[10] = _eredmény.megjelent;
                             break;
                         }
@@ -299,7 +299,7 @@ namespace Íjász
                 {
                     foreach (DataRow current in data.Rows)
                     {
-                        if (_eredmény.név == current[0].ToString())
+                        if (_eredmény.Nev == current[0].ToString())
                         {
                             data.Rows.Remove(current);
                             break;
@@ -336,36 +336,36 @@ namespace Íjász
                         if (beírás.flag == Database.BeírásEredmény.Flag.HOZZÁADOTT)
                         {
                             DataRow row = data.NewRow();
-                            row[0] = beírás.eredmény.Value.név;
-                            row[1] = beírás.eredmény.Value.sorszám;
-                            row[2] = beírás.eredmény.Value.íjtípus;
-                            row[3] = beírás.eredmény.Value.csapat;
-                            row[4] = beírás.eredmény.Value.találat_10;
-                            row[5] = beírás.eredmény.Value.találat_08;
-                            row[6] = beírás.eredmény.Value.találat_05;
-                            row[7] = beírás.eredmény.Value.mellé;
-                            row[8] = beírás.eredmény.Value.összpont;
-                            row[9] = beírás.eredmény.Value.százalék;
-                            row[10] = beírás.eredmény.Value.megjelent;
+                            row[0] = beírás.eredmény.Value.Nev;
+                            row[1] = beírás.eredmény.Value.Sorszam;
+                            row[2] = beírás.eredmény.Value.Ijtipus;
+                            row[3] = beírás.eredmény.Value.Csapat;
+                            row[4] = beírás.eredmény.Value.Talalat10;
+                            row[5] = beírás.eredmény.Value.Talalat8;
+                            row[6] = beírás.eredmény.Value.Talalat5;
+                            row[7] = beírás.eredmény.Value.Melle;
+                            row[8] = beírás.eredmény.Value.Osszpont;
+                            row[9] = beírás.eredmény.Value.Szazalek;
+                            row[10] = beírás.eredmény.Value.Megjelent;
                             data.Rows.Add(row);
                         }
                         else
                         {
                             foreach (DataRow current in data.Rows)
                             {
-                                if (beírás.eredmény.Value.név == (string)current[0])
+                                if (beírás.eredmény.Value.Nev == (string)current[0])
                                 {
-                                    current[0] = beírás.eredmény.Value.név;
+                                    current[0] = beírás.eredmény.Value.Nev;
                                     //current[1] = _eredmény.sorszám;
-                                    current[2] = beírás.eredmény.Value.íjtípus;
-                                    current[3] = beírás.eredmény.Value.csapat;
+                                    current[2] = beírás.eredmény.Value.Ijtipus;
+                                    current[3] = beírás.eredmény.Value.Csapat;
                                     //current[4] = beírás.eredmény.Value.találat_10;
                                     //current[5] = beírás.eredmény.Value.találat_08;
                                     //current[6] = beírás.eredmény.Value.találat_05;
                                     //current[7] = beírás.eredmény.Value.mellé;
                                     //current[8] = beírás.eredmény.Value.összpont;
                                     //current[9] = beírás.eredmény.Value.százalék;
-                                    current[10] = beírás.eredmény.Value.megjelent;
+                                    current[10] = beírás.eredmény.Value.Megjelent;
                                     break;
                                 }
                             }
@@ -378,12 +378,12 @@ namespace Íjász
                     {
                         if (verseny.Value.DublaBeirlap)
                         {
-                            Nyomtat.print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
-                            Nyomtat.print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
+                            Nyomtat.Print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
+                            Nyomtat.Print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
                         }
                         else
                         {
-                            Nyomtat.print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
+                            Nyomtat.Print( Nyomtat.NyomtatBeirolap( _verseny, beírás.eredmény.Value ) );
                         }
                     }
                 }
@@ -412,19 +412,19 @@ namespace Íjász
                     {
                         foreach (DataRow current in data.Rows)
                         {
-                            if (_eredeti.név == current[0].ToString())
+                            if (_eredeti.Nev == current[0].ToString())
                             {
-                                current[0] = eredmény.Value.név;
-                                current[1] = eredmény.Value.sorszám;
-                                current[2] = eredmény.Value.íjtípus;
-                                current[3] = eredmény.Value.csapat;
-                                current[4] = eredmény.Value.találat_10;
-                                current[5] = eredmény.Value.találat_08;
-                                current[6] = eredmény.Value.találat_05;
-                                current[7] = eredmény.Value.mellé;
-                                current[8] = eredmény.Value.összpont;
-                                current[9] = eredmény.Value.százalék;
-                                current[10] = eredmény.Value.megjelent;
+                                current[0] = eredmény.Value.Nev;
+                                current[1] = eredmény.Value.Sorszam;
+                                current[2] = eredmény.Value.Ijtipus;
+                                current[3] = eredmény.Value.Csapat;
+                                current[4] = eredmény.Value.Talalat10;
+                                current[5] = eredmény.Value.Talalat8;
+                                current[6] = eredmény.Value.Talalat5;
+                                current[7] = eredmény.Value.Melle;
+                                current[8] = eredmény.Value.Osszpont;
+                                current[9] = eredmény.Value.Szazalek;
+                                current[10] = eredmény.Value.Megjelent;
                                 break;
                             }
                         }
@@ -529,17 +529,17 @@ namespace Íjász
             foreach (Eredmény current in eredmények)
             {
                 DataRow row = data.NewRow();
-                row[0] = current.név;
-                row[1] = current.sorszám;
-                row[2] = current.íjtípus;
-                row[3] = current.csapat;
-                row[4] = current.találat_10;
-                row[5] = current.találat_08;
-                row[6] = current.találat_05;
-                row[7] = current.mellé;
-                row[8] = current.összpont;
-                row[9] = current.százalék;
-                row[10] = current.megjelent;
+                row[0] = current.Nev;
+                row[1] = current.Sorszam;
+                row[2] = current.Ijtipus;
+                row[3] = current.Csapat;
+                row[4] = current.Talalat10;
+                row[5] = current.Talalat8;
+                row[6] = current.Talalat5;
+                row[7] = current.Melle;
+                row[8] = current.Osszpont;
+                row[9] = current.Szazalek;
+                row[10] = current.Megjelent;
                 row[11] = current.KorosztalyModositott;
                 row[12] = current.KorosztalyAzonosito;
 
@@ -836,11 +836,11 @@ namespace Íjász
 
                 List<Induló> indulók = Program.database.Indulók();
                 foreach (Induló current in indulók)
-                    combo_név.Items.Add(current.név);
+                    combo_név.Items.Add(current.Nev);
 
                 List<Íjtípus> íjtípusok = Program.database.Íjtípusok();
                 foreach (Íjtípus current in íjtípusok)
-                    combo_íjtípus.Items.Add(current.azonosító);
+                    combo_íjtípus.Items.Add(current.Azonosito);
 
                 for (int i = 0; i < 35; i++) combo_csapat.Items.Add(i + 1);
 
@@ -873,20 +873,20 @@ namespace Íjász
 
             private void InitializeData(Eredmény _eredmény)
             {
-                combo_név.Text = _eredmény.név;
+                combo_név.Text = _eredmény.Nev;
                 combo_név.Enabled = false;
-                combo_íjtípus.Text = _eredmény.íjtípus;
+                combo_íjtípus.Text = _eredmény.Ijtipus;
                 combo_íjtípus.Enabled = false;
-                combo_csapat.SelectedItem = Convert.ToInt32(_eredmény.csapat);
+                combo_csapat.SelectedItem = Convert.ToInt32(_eredmény.Csapat);
                 combo_csapat.Enabled = false;
 
-                box_találat_10.Text = _eredmény.találat_10.ToString();
-                box_találat_8.Text = _eredmény.találat_08.ToString();
-                box_találat_5.Text = _eredmény.találat_05.ToString();
-                box_mellé.Text = _eredmény.mellé.ToString();
-                label_összes.Text = _eredmény.összpont.ToString();
-                label_százalék.Text = _eredmény.százalék.ToString() + "%";
-                box_megjelent.Checked = _eredmény.megjelent;
+                box_találat_10.Text = _eredmény.Talalat10.ToString();
+                box_találat_8.Text = _eredmény.Talalat8.ToString();
+                box_találat_5.Text = _eredmény.Talalat5.ToString();
+                box_mellé.Text = _eredmény.Melle.ToString();
+                label_összes.Text = _eredmény.Osszpont.ToString();
+                label_százalék.Text = _eredmény.Szazalek.ToString() + "%";
+                box_megjelent.Checked = _eredmény.Megjelent;
                 box_megjelent.Enabled = false;
             }
 
@@ -915,18 +915,18 @@ namespace Íjász
             #region EventHandlers
             public void íjtípus_hozzáadás(Íjtípus _íjtípus)
             {
-                combo_íjtípus.Items.Add(_íjtípus.azonosító);
+                combo_íjtípus.Items.Add(_íjtípus.Azonosito);
             }
 
             public void íjtípus_módosítás(string _azonosító, Íjtípus _íjtípus)
             {
-                if (_azonosító != _íjtípus.azonosító)
+                if (_azonosító != _íjtípus.Azonosito)
                 {
                     for (int current = 0; current < combo_íjtípus.Items.Count; ++current)
                     {
                         if (_azonosító == combo_íjtípus.Items[current].ToString())
                         {
-                            combo_íjtípus.Items[current] = _íjtípus.azonosító;
+                            combo_íjtípus.Items[current] = _íjtípus.Azonosito;
                             break;
                         }
                     }
@@ -940,18 +940,18 @@ namespace Íjász
 
             public void induló_hozzáadás(Induló _induló)
             {
-                combo_név.Items.Add(_induló.név);
+                combo_név.Items.Add(_induló.Nev);
             }
 
             public void induló_módosítás(Induló _eredeti, Induló _uj)
             {
-                if (_eredeti.név != _uj.név)
+                if (_eredeti.Nev != _uj.Nev)
                 {
                     for (int current = 0; current < combo_név.Items.Count; ++current)
                     {
-                        if (_eredeti.név == combo_név.Items[current].ToString())
+                        if (_eredeti.Nev == combo_név.Items[current].ToString())
                         {
-                            combo_név.Items[current] = _uj.név;
+                            combo_név.Items[current] = _uj.Nev;
                             break;
                         }
                     }
@@ -961,7 +961,7 @@ namespace Íjász
 
             public void induló_törlés(Induló _indulo)
             {
-                combo_név.Items.Remove(_indulo.név);
+                combo_név.Items.Remove(_indulo.Nev);
             }
 
             private void rendben_Click(object _sender, EventArgs _event)
@@ -987,10 +987,10 @@ namespace Íjász
                 if (!((találat_10 == 0 && találat_8 == 0 && találat_5 == 0 && találat_mellé == 0) || (összespont == találat_10 + találat_8 + találat_5 + találat_mellé))) { MessageBox.Show("Nem megfelelő a lövések darabszáma!\n" + "Lövések darabszáma: " + (összespont).ToString() + "\nBeírt lövések: " + (találat_10 + találat_8 + találat_5 + találat_mellé).ToString(), "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 Program.mainform.eredmények_panel.Eredmény_Módosítás(verseny_azonosító, eredeti,
-                    new Eredmény(eredeti.név,
-                        eredeti.sorszám, 
-                        eredeti.íjtípus, 
-                        eredeti.csapat, 
+                    new Eredmény(eredeti.Nev,
+                        eredeti.Sorszam, 
+                        eredeti.Ijtipus, 
+                        eredeti.Csapat, 
                         Convert.ToInt32(box_találat_10.Text),
                         Convert.ToInt32(box_találat_8.Text),
                         Convert.ToInt32(box_találat_5.Text), 

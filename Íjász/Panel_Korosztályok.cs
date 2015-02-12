@@ -4,31 +4,43 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
 
+
 namespace Íjász
 {
     public struct Korosztály
     {
-        public string verseny;
-        public string azonosító;
-        public string megnevezés;
-        public int alsó_határ;
-        public int felső_határ;
-        public bool nők;
-        public bool férfiak;
-        public int indulók_nők;
-        public int indulók_férfiak;
+        public string Verseny;
+        public string Azonosito;
+        public string Megnevezes;
+        public int AlsoHatar;
+        public int FelsoHatar;
+        public bool Nokre;
+        public bool Ferfiakra;
+        public int InduloNok;
+        public int InduloFerfiak;
+        public bool Egyben;
 
-        public Korosztály(string _verseny, string _azonosító, string _megnevezés, int _alsó, int _felső, bool _nők, bool _férfiak, int _indulók_nők, int _indulók_férfiak)
+        public Korosztály( string _Verseny,
+                           string _Azonosito,
+                           string _Megnevezes,
+                           int _AlsoHatar,
+                           int _FelsoHatar,
+                           bool _Nokre,
+                           bool _Ferfiakra,
+                           int _InduloNok,
+                           int _InduloFerfiak,
+                           bool _Egyben )
         {
-            verseny = _verseny;
-            azonosító = _azonosító;
-            megnevezés = _megnevezés;
-            alsó_határ = _alsó;
-            felső_határ = _felső;
-            nők = _nők;
-            férfiak = _férfiak;
-            indulók_nők = _indulók_nők;
-            indulók_férfiak = _indulók_férfiak;
+            Verseny = _Verseny;
+            Azonosito = _Azonosito;
+            Megnevezes = _Megnevezes;
+            AlsoHatar = _AlsoHatar;
+            FelsoHatar = _FelsoHatar;
+            Nokre = _Nokre;
+            Ferfiakra = _Ferfiakra;
+            InduloNok = _InduloNok;
+            InduloFerfiak = _InduloFerfiak;
+            Egyben = _Egyben;
         }
     }
 
@@ -62,7 +74,7 @@ namespace Íjász
             table.AllowUserToResizeRows = false;
             table.AllowUserToResizeColumns = false;
             table.AllowUserToAddRows = false;
-            table.Width = 603;
+            table.Width = 653;
             table.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             table.MultiSelect = false;
             table.ReadOnly = true;
@@ -74,11 +86,11 @@ namespace Íjász
             Label label_vazon = new Label();
             label_vazon.Text = "Verseny azonosítója:";
             label_vazon.AutoSize = true;
-            label_vazon.Location = new System.Drawing.Point(table.Location.X + table.Size.Width + 16, 16 + 0 * 32);
+            label_vazon.Location = new Point(table.Location.X + table.Size.Width + 16, 16 + 0 * 32);
 
 
             box_vazon = new ComboBox();
-            box_vazon.Location = new System.Drawing.Point(table.Location.X + table.Size.Width + 16 + 4 * 32, 16 + 0 * 32);
+            box_vazon.Location = new Point(table.Location.X + table.Size.Width + 16 + 4 * 32, 16 + 0 * 32);
             box_vazon.DropDownStyle = ComboBoxStyle.DropDownList;
             box_vazon.SelectedIndexChanged += box_vazon_SelectedIndexChanged;
 
@@ -88,30 +100,30 @@ namespace Íjász
             Button hozzáadás = new Button( );
             hozzáadás.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             hozzáadás.Text = "Hozzáadás";
-            hozzáadás.Size = new System.Drawing.Size( 96, 32 );
-            hozzáadás.Location = new System.Drawing.Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 );
+            hozzáadás.Size = new Size( 96, 32 );
+            hozzáadás.Location = new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 );
             hozzáadás.Click += hozzáadás_Click;
 
             Button törlés = new Button();
             törlés.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             törlés.Text = "Törlés";
-            törlés.Size = new System.Drawing.Size(96, 32);
-            törlés.Location = new System.Drawing.Point(table.Location.X + table.Size.Width + 16, ClientRectangle.Height - 32 - 16);
+            törlés.Size = new Size(96, 32);
+            törlés.Location = new Point(table.Location.X + table.Size.Width + 16, ClientRectangle.Height - 32 - 16);
             törlés.Click += törlés_Click;
 
 
             Button számolás = new Button();
             számolás.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             számolás.Text = "Számolás";
-            számolás.Size = new System.Drawing.Size(96, 32);
-            számolás.Location = new System.Drawing.Point(törlés.Location.X + törlés.Size.Width + 16, törlés.Location.Y);
+            számolás.Size = new Size(96, 32);
+            számolás.Location = new Point(törlés.Location.X + törlés.Size.Width + 16, törlés.Location.Y);
             számolás.Click += számolás_Click;
 
 
-            Button btnKorosztalyEredmenyek = new iButton( "Korosztály eredmények",
-                                                        new System.Drawing.Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 64 ),
+            Button btnKorosztalyEredmenyek = new iButton( "Tagok",
+                                                        new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 64 ),
                                                         new Size( 96, 32 ),
-                                                        btnKorosztalyEredmenyek_Click,
+                                                        btnKorosztalyTagok,
                                                         this );
             ///
 
@@ -147,7 +159,8 @@ namespace Íjász
             data.Columns.Add(new DataColumn("Nők", System.Type.GetType("System.Boolean")));
             data.Columns.Add(new DataColumn("Férfiak", System.Type.GetType("System.Boolean")));
             data.Columns.Add(new DataColumn("# Nők", System.Type.GetType("System.Int32")));
-            data.Columns.Add(new DataColumn("# Férfiak", System.Type.GetType("System.Int32")));
+            data.Columns.Add( new DataColumn( "# Férfiak", System.Type.GetType( "System.Int32" ) ) );
+            data.Columns.Add( new DataColumn( "Egyben", System.Type.GetType( "System.Boolean" ) ) );
 
             return data;
         }
@@ -165,18 +178,19 @@ namespace Íjász
             {
                 if (!Program.database.ÚjKorosztály(_korosztály)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-                if (_korosztály.verseny == box_vazon.SelectedItem.ToString())
+                if (_korosztály.Verseny == box_vazon.SelectedItem.ToString())
                 {
                     DataRow row = data.NewRow();
-                    row[0] = _korosztály.verseny;
-                    row[1] = _korosztály.azonosító;
-                    row[2] = _korosztály.megnevezés;
-                    row[3] = _korosztály.alsó_határ;
-                    row[4] = _korosztály.felső_határ;
-                    row[5] = _korosztály.nők;
-                    row[6] = _korosztály.férfiak;
-                    row[7] = _korosztály.indulók_nők;
-                    row[8] = _korosztály.indulók_férfiak;
+                    row[0] = _korosztály.Verseny;
+                    row[1] = _korosztály.Azonosito;
+                    row[2] = _korosztály.Megnevezes;
+                    row[3] = _korosztály.AlsoHatar;
+                    row[4] = _korosztály.FelsoHatar;
+                    row[5] = _korosztály.Nokre;
+                    row[6] = _korosztály.Ferfiakra;
+                    row[7] = _korosztály.InduloNok;
+                    row[8] = _korosztály.InduloFerfiak;
+                    row[9] = _korosztály.Egyben;
 
                     data.Rows.Add(row);
                 }
@@ -199,21 +213,22 @@ namespace Íjász
             {
                 if (!Program.database.KorosztályMódosítás(_azonosító, _korosztály)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-                if (_korosztály.verseny == box_vazon.SelectedItem.ToString())
+                if (_korosztály.Verseny == box_vazon.SelectedItem.ToString())
                 {
                     foreach (DataRow current in data.Rows)
                     {
                         if (_azonosító == current[1].ToString())
                         {
-                            current[0] = _korosztály.verseny;
-                            current[1] = _korosztály.azonosító;
-                            current[2] = _korosztály.megnevezés;
-                            current[3] = _korosztály.alsó_határ;
-                            current[4] = _korosztály.felső_határ;
-                            current[5] = _korosztály.nők;
-                            current[6] = _korosztály.férfiak;
-                            current[7] = _korosztály.indulók_nők;
-                            current[8] = _korosztály.indulók_férfiak;
+                            current[0] = _korosztály.Verseny;
+                            current[1] = _korosztály.Azonosito;
+                            current[2] = _korosztály.Megnevezes;
+                            current[3] = _korosztály.AlsoHatar;
+                            current[4] = _korosztály.FelsoHatar;
+                            current[5] = _korosztály.Nokre;
+                            current[6] = _korosztály.Ferfiakra;
+                            current[7] = _korosztály.InduloNok;
+                            current[8] = _korosztály.InduloFerfiak;
+                            current[9] = _korosztály.Egyben;
 
                             break;
                         }
@@ -267,15 +282,16 @@ namespace Íjász
                 foreach (Korosztály current in korosztályok)
                 {
                     DataRow row = data.NewRow();
-                    row[0] = current.verseny;
-                    row[1] = current.azonosító;
-                    row[2] = current.megnevezés;
-                    row[3] = current.alsó_határ;
-                    row[4] = current.felső_határ;
-                    row[5] = current.nők;
-                    row[6] = current.férfiak;
-                    row[7] = current.indulók_nők;
-                    row[8] = current.indulók_férfiak;
+                    row[0] = current.Verseny;
+                    row[1] = current.Azonosito;
+                    row[2] = current.Megnevezes;
+                    row[3] = current.AlsoHatar;
+                    row[4] = current.FelsoHatar;
+                    row[5] = current.Nokre;
+                    row[6] = current.Ferfiakra;
+                    row[7] = current.InduloNok;
+                    row[8] = current.InduloFerfiak;
+                    row[9] = current.Egyben;
 
                     data.Rows.Add(row);
                 }
@@ -286,7 +302,7 @@ namespace Íjász
         #region EventHandlers
 
         private void
-        btnKorosztalyEredmenyek_Click(object _sender, EventArgs _event)
+        btnKorosztalyTagok(object _sender, EventArgs _event)
         {
             if ( ( table.SelectedRows.Count == 0 ) || ( table.SelectedRows[0].Index == data.Rows.Count ) ) return;
 
@@ -344,6 +360,7 @@ namespace Íjász
             table.Columns[6].Width = 40;
             table.Columns[7].Width = 60;
             table.Columns[8].Width = 60;
+            table.Columns[9].Width = 50;
 
             foreach (DataGridViewColumn column in table.Columns) column.SortMode = DataGridViewColumnSortMode.NotSortable;
             //rendezés
@@ -359,15 +376,16 @@ namespace Íjász
             foreach (Korosztály current in korosztályok)
             {
                 DataRow row = data.NewRow();
-                row[0] = current.verseny;
-                row[1] = current.azonosító;
-                row[2] = current.megnevezés;
-                row[3] = current.alsó_határ;
-                row[4] = current.felső_határ;
-                row[5] = current.nők;
-                row[6] = current.férfiak;
-                row[7] = current.indulók_nők;
-                row[8] = current.indulók_férfiak;
+                row[0] = current.Verseny;
+                row[1] = current.Azonosito;
+                row[2] = current.Megnevezes;
+                row[3] = current.AlsoHatar;
+                row[4] = current.FelsoHatar;
+                row[5] = current.Nokre;
+                row[6] = current.Ferfiakra;
+                row[7] = current.InduloNok;
+                row[8] = current.InduloFerfiak;
+                row[9] = current.Egyben;
 
                 data.Rows.Add(row);
             }
@@ -397,7 +415,8 @@ namespace Íjász
                         (bool)current.Cells[5].Value,
                         (bool)current.Cells[6].Value,
                         Convert.ToInt32(current.Cells[7].Value),
-                        Convert.ToInt32(current.Cells[8].Value)));
+                        Convert.ToInt32(current.Cells[8].Value),
+                        (bool)current.Cells[9].Value));
 
                     korosztály.ShowDialog();
                     break;
@@ -435,7 +454,7 @@ namespace Íjász
                         if ( eredmeny.KorosztalyModositott == true &&
                             eredmeny.KorosztalyAzonosito == current.Cells[1].Value.ToString( ) )
                         { 
-                            nevek.Add("\n" + eredmeny.név);
+                            nevek.Add("\n" + eredmeny.Nev);
                             
                         }
                     }
@@ -465,14 +484,16 @@ namespace Íjász
             private string eredeti_azonosító = null;
             private string eredeti_verseny = null;
 
-            private TextBox text_kazon;
-            private TextBox text_megn;
-            private TextBox text_felso;
-            private TextBox text_also;
-            private CheckBox box_nők;
-            private CheckBox box_férfiak;
-            private Label text_indulo_nő;
-            private Label text_indulo_férfi;
+            private TextBox txtAzonosito;
+            private TextBox txtMegnevezes;
+            private TextBox txtFelso;
+            private TextBox txtAlso;
+            private CheckBox chkNok;
+            private CheckBox chkFerfiak;
+            private Label txtNo;
+            private Label txtFerfi;
+
+            private CheckBox chkEgyben;
 
             public Form_Korosztály(string _verseny)
             {
@@ -487,169 +508,282 @@ namespace Íjász
             {
                 eredeti_verseny = _verseny;
 
-                InitializeForm();
-                InitializeContent();
+                InitializeForm( _verseny, _korosztály );
+                InitializeContent(  _verseny,  _korosztály );
                 InitializeData(_korosztály);
             }
 
-            private void InitializeForm()
+            private void 
+            InitializeForm()
             {
                 Text = "Korosztály";
-                ClientSize = new System.Drawing.Size(400 - 64, 264);
+                ClientSize = new Size(400 - 64, 254);
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             }
 
-            private void InitializeContent()
+            private void
+            InitializeForm( string _verseny, Korosztály _korosztály )
             {
-                Label label_kazon = new Label();
-                label_kazon.Text = "Azonosító:";
-                label_kazon.Location = new System.Drawing.Point(16, 16 + 0 * 32);
-
-                Label label_megnevezés = new Label();
-                label_megnevezés.Text = "Megnevezés:";
-                label_megnevezés.Location = new System.Drawing.Point(label_kazon.Location.X, 16 + 1 * 32);
-
-                Label label_also = new Label();
-                label_also.Text = "Alsó életkorhatár:";
-                label_also.Location = new System.Drawing.Point(label_kazon.Location.X, 16 + 2 * 32);
-
-                Label label_felso = new Label();
-                label_felso.Text = "Felső életkorhatár:";
-                label_felso.Location = new System.Drawing.Point(label_kazon.Location.X, 16 + 3 * 32);
-
-                Label nők = new Label();
-                nők.Text = "Nők:";
-                nők.Location = new System.Drawing.Point(label_kazon.Location.X, 16 + 4 * 32);
-                nők.Size = new System.Drawing.Size(64, 24);
-
-                Label férfiak = new Label();
-                férfiak.Text = "Férfiak:";
-                férfiak.Location = new System.Drawing.Point(label_kazon.Location.X + 128, 16 + 4 * 32);
-                férfiak.Size = new System.Drawing.Size(64, 24);
-
-                Label label_indulok_nő = new Label();
-                label_indulok_nő.Text = "Nő indulók:";
-                label_indulok_nő.Location = new System.Drawing.Point(label_kazon.Location.X, 16 + 5 * 32);
-
-                Label label_indulok_férfi = new Label();
-                label_indulok_férfi.Text = "Férfi indulók:";
-                label_indulok_férfi.Location = new System.Drawing.Point(label_kazon.Location.X, 16 + 6 * 32);
-
-                ///
-
-                text_kazon = new TextBox();
-                text_kazon.Location = new System.Drawing.Point(label_kazon.Location.X + label_kazon.Width + 32, label_kazon.Location.Y);
-
-                text_megn = new TextBox();
-                text_megn.Location = new System.Drawing.Point(text_kazon.Location.X, label_megnevezés.Location.Y);
-
-                text_also = new TextBox();
-                text_also.Location = new System.Drawing.Point(text_kazon.Location.X, label_also.Location.Y);
-
-                text_felso = new TextBox();
-                text_felso.Location = new System.Drawing.Point(text_kazon.Location.X, label_felso.Location.Y);
-
-                box_nők = new CheckBox();
-                box_nők.Location = new System.Drawing.Point(nők.Location.X + nők.Size.Width + 16, nők.Location.Y);
-
-                box_férfiak = new CheckBox();
-                box_férfiak.Location = new System.Drawing.Point(férfiak.Location.X + férfiak.Size.Width + 16, férfiak.Location.Y);
-
-                text_indulo_nő = new Label();
-                text_indulo_nő.Location = new System.Drawing.Point(text_kazon.Location.X, label_indulok_nő.Location.Y);
-                text_indulo_nő.Size = new System.Drawing.Size(64, 24);
-
-                text_indulo_férfi = new Label();
-                text_indulo_férfi.Location = new System.Drawing.Point(text_kazon.Location.X, label_indulok_férfi.Location.Y);
-                text_indulo_férfi.Size = new System.Drawing.Size(64, 24);
-
-                ///
-
-                Button rendben = new Button();
-                rendben.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                rendben.Text = "Rendben";
-                rendben.Size = new System.Drawing.Size(96, 32);
-                rendben.Location = new System.Drawing.Point(ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16);
-                rendben.Click += rendben_Click;
-
-                ///
-               
-                Controls.Add(label_kazon);
-                Controls.Add(label_megnevezés);
-                Controls.Add(label_also);
-                Controls.Add(label_felso);
-                Controls.Add(nők);
-                Controls.Add(férfiak);
-                Controls.Add(label_indulok_nő);
-                Controls.Add(label_indulok_férfi);
-
-                Controls.Add(text_kazon);
-                Controls.Add(text_megn);
-                Controls.Add(text_also);
-                Controls.Add(text_felso);
-                Controls.Add(box_nők);
-                Controls.Add(box_férfiak);
-                Controls.Add(text_indulo_nő);
-                Controls.Add(text_indulo_férfi);
-
-                Controls.Add(rendben);
+                Text = "Korosztály";
+                ClientSize = new Size( 400 - 64, 304 );
+                MinimumSize = ClientSize;
+                StartPosition = FormStartPosition.CenterScreen;
+                FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             }
+
+            private void InitializeContent( )
+            {
+                Label lblAzonosito = new iLabel( "Azonosító:",
+                                                new Point( 16, 16 + 0 * 32 ),
+                                                this );
+
+                Label lblMegnevezes = new iLabel( "Megnevezés:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 1 * 32 ),
+                                                    this );
+
+                Label lblAlso = new iLabel( "Alsó életkorhatár:",
+                                            new Point( lblAzonosito.Location.X, 16 + 2 * 32 ),
+                                            this );
+
+                Label lblFelso = new iLabel( "Felső életkorhatár:",
+                                            new Point( lblAzonosito.Location.X, 16 + 3 * 32 ),
+                                            this );
+
+                Label lblNok = new iLabel( "Nők:",
+                                            new Point( lblAzonosito.Location.X, 16 + 4 * 32 ),
+                                            this );
+                lblNok.Size = new Size( 64, 24 );
+
+                Label lblFerfiak = new iLabel( "Férfiak:",
+                                                new Point( lblAzonosito.Location.X + 128, 16 + 4 * 32 ),
+                                                this );
+                lblFerfiak.Size = new Size( 64, 24 );
+
+
+                Label lblEgyben = new iLabel( "Egyben:",
+                                            new Point( lblAzonosito.Location.X, 16 + 5 * 32 ),
+                                            this );
+
+                txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Width + 32 + 16, lblAzonosito.Location.Y ),
+                                                                       null,
+                                                                       null,
+                                                                       null,
+                                                                       this );
+
+                txtMegnevezes = new iTextBox( new Point( txtAzonosito.Location.X, lblMegnevezes.Location.Y ),
+                                              null,
+                                              null,
+                                              null,
+                                              this );
+
+                txtAlso = new iTextBox( new Point( txtAzonosito.Location.X, lblAlso.Location.Y ),
+                                        null,
+                                        null,
+                                        null,
+                                        this );
+
+                txtFelso = new iTextBox( new Point( txtAzonosito.Location.X, lblFelso.Location.Y ),
+                                        null,
+                                        null,
+                                        null,
+                                        this );
+
+                chkNok = new iCheckBox( null,
+                                        new Point( lblNok.Location.X + lblNok.Size.Width + 16, lblNok.Location.Y ),
+                                        null,
+                                        this );
+
+                chkFerfiak = new iCheckBox( null,
+                                            new Point( lblFerfiak.Location.X + lblFerfiak.Size.Width + 16, lblFerfiak.Location.Y ),
+                                            null,
+                                            this );
+
+
+                chkEgyben = new iCheckBox( null,
+                                         new Point( txtAzonosito.Location.X, lblEgyben.Location.Y ),
+                                         null,
+                                         this );
+
+                ///
+
+                Button btnRrendben = new iButton( "Rendben",
+                                                 new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
+                                                 new Size( 96, 32 ),
+                                                 btnRendben_Click,
+                                                 this );
+            }
+
+            private void InitializeContent( string _verseny, Korosztály _korosztály )
+            {
+                Label lblAzonosito = new iLabel( "Azonosító:",
+                                                new Point( 16, 16 + 0 * 32 ),
+                                                this );
+
+                Label lblMegnevezes = new iLabel( "Megnevezés:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 1 * 32 ),
+                                                    this );
+
+                Label lblAlso = new iLabel( "Alsó életkorhatár:",
+                                            new Point( lblAzonosito.Location.X, 16 + 2 * 32 ),
+                                            this );
+
+                Label lblFelso = new iLabel( "Felső életkorhatár:",
+                                            new Point( lblAzonosito.Location.X, 16 + 3 * 32 ),
+                                            this );
+
+                Label lblNok = new iLabel( "Nők:",
+                                            new Point( lblAzonosito.Location.X, 16 + 4 * 32 ),
+                                            this );
+                lblNok.Size = new Size( 64, 24 );
+
+                Label lblFerfiak = new iLabel( "Férfiak:",
+                                                new Point( lblAzonosito.Location.X + 128, 16 + 4 * 32 ),
+                                                this );
+                lblFerfiak.Size = new Size( 64, 24 );
+
+                Label lblNoIndulok = new iLabel( "Nő indulók:",
+                                                new Point( lblAzonosito.Location.X, 16 + 6 * 32 ),
+                                                this );
+
+                Label lblFerfiIndulok = new iLabel( "Férfi indulók:",
+                                                    new Point( lblAzonosito.Location.X, 16 + 7 * 32 ),
+                                                    this );
+
+                Label lblEgyben = new iLabel( "Egyben:",
+                                            new Point( lblAzonosito.Location.X, 16 + 5 * 32 ),
+                                            this );
+
+                txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Width + 32 + 16, lblAzonosito.Location.Y ),
+                                                                       null,
+                                                                       null,
+                                                                       null,
+                                                                       this );
+
+                txtMegnevezes = new iTextBox( new Point( txtAzonosito.Location.X, lblMegnevezes.Location.Y ),
+                                              null,
+                                              null,
+                                              null,
+                                              this );
+
+                txtAlso = new iTextBox( new Point( txtAzonosito.Location.X, lblAlso.Location.Y ),
+                                        null,
+                                        null,
+                                        null,
+                                        this );
+
+                txtFelso = new iTextBox( new Point( txtAzonosito.Location.X, lblFelso.Location.Y ),
+                                        null,
+                                        null,
+                                        null,
+                                        this );
+
+                chkNok = new iCheckBox( null,
+                                        new Point( lblNok.Location.X + lblNok.Size.Width + 16, lblNok.Location.Y ),
+                                        null,
+                                        this );
+
+                chkFerfiak = new iCheckBox( null,
+                                            new Point( lblFerfiak.Location.X + lblFerfiak.Size.Width + 16, lblFerfiak.Location.Y ),
+                                            null,
+                                            this );
+
+                txtNo = new iLabel( null,
+                                    new Point( txtAzonosito.Location.X, lblNoIndulok.Location.Y ),
+                                    this );
+                txtNo.Size = new Size( 64, 24 );
+
+                txtFerfi = new iLabel( null,
+                                       new Point( txtAzonosito.Location.X, lblFerfiIndulok.Location.Y ),
+                                       this );
+                txtFerfi.Size = new Size( 64, 24 );
+
+                chkEgyben = new iCheckBox( null,
+                                         new Point( txtAzonosito.Location.X, lblEgyben.Location.Y ),
+                                         null,
+                                         this );
+
+                ///
+
+                Button btnRrendben = new iButton( "Rendben",
+                                                 new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
+                                                 new Size( 96, 32 ),
+                                                 btnRendben_Click,
+                                                 this );
+            }
+
 
             private void InitializeData()
             {
-                text_megn.Text = "";
-                text_also.Text = "";
-                text_felso.Text = "";
-                box_nők.Checked = true;
-                box_férfiak.Checked = true;
-                text_indulo_nő.Text = "";
-                text_indulo_férfi.Text = "";
-                text_kazon.Text = "";
+                chkNok.Checked = true;
+                chkFerfiak.Checked = true;
             }
 
             private void InitializeData(Korosztály _korosztály)
             {
-                eredeti_azonosító = _korosztály.azonosító;
-                eredeti_verseny = _korosztály.verseny;
+                eredeti_azonosító = _korosztály.Azonosito;
+                eredeti_verseny = _korosztály.Verseny;
 
-                text_kazon.Text = _korosztály.azonosító;
-                text_megn.Text = _korosztály.megnevezés;
-                text_also.Text = _korosztály.alsó_határ.ToString();
-                text_felso.Text = _korosztály.felső_határ.ToString();
-                box_nők.Checked = _korosztály.nők;
-                box_férfiak.Checked = _korosztály.férfiak;
-                text_indulo_nő.Text = _korosztály.indulók_nők.ToString();
-                text_indulo_férfi.Text = _korosztály.indulók_férfiak.ToString();
+                txtAzonosito.Text = _korosztály.Azonosito;
+                txtMegnevezes.Text = _korosztály.Megnevezes;
+                txtAlso.Text = _korosztály.AlsoHatar.ToString();
+                txtFelso.Text = _korosztály.FelsoHatar.ToString();
+                chkNok.Checked = _korosztály.Nokre;
+                chkFerfiak.Checked = _korosztály.Ferfiakra;
+                txtNo.Text = _korosztály.InduloNok.ToString();
+                txtFerfi.Text = _korosztály.InduloFerfiak.ToString();
+                chkEgyben.Checked = _korosztály.Egyben;
             }
 
             #region EventHandlers
-            private void rendben_Click(object _sender, EventArgs _event)
+            private void btnRendben_Click(object _sender, EventArgs _event)
             {
-                if (text_kazon.Text.Length == 0 || text_kazon.Text.Length > 10) { MessageBox.Show("Korosztályazonosító hossza nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!Database.IsCorrectSQLText(text_kazon.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (txtAzonosito.Text.Length == 0 || txtAzonosito.Text.Length > 10) { MessageBox.Show("Korosztályazonosító hossza nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Database.IsCorrectSQLText(txtAzonosito.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-                if (text_megn.Text.Length == 0 || text_megn.Text.Length > 30) { MessageBox.Show("Korosztály megnevezése hossza nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                if (!Database.IsCorrectSQLText(text_megn.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (txtMegnevezes.Text.Length == 0 || txtMegnevezes.Text.Length > 30) { MessageBox.Show("Korosztály megnevezése hossza nem megfelelő!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Database.IsCorrectSQLText(txtMegnevezes.Text)) { MessageBox.Show("Nem megengedett karakterek a mezőben!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 int alsó = 0, felső = 0;
 
-                try { alsó = Convert.ToInt32(text_also.Text); }
+                try { alsó = Convert.ToInt32(txtAlso.Text); }
                 catch { MessageBox.Show("Nem megfelelő az alsó életkor formátuma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
-                try { felső = Convert.ToInt32(text_felso.Text); }
+                try { felső = Convert.ToInt32(txtFelso.Text); }
                 catch { MessageBox.Show("Nem megfelelő a felső életkor formátuma!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 if (alsó <= 0) { MessageBox.Show("Alsó korhatár túl kicsi!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (felső <= alsó) { MessageBox.Show("A felső korhatárnak nagyobbnak kell lenni, mint az alsónak", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (100 < felső) { if (MessageBox.Show("Felső korhatár túl magas, biztosan hagyjuk így?", "Korhatár", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK) return; }
 
-                Database.CountPair indulók = Program.database.KorosztálySzámolás(eredeti_verseny, alsó, felső, box_nők.Checked, box_férfiak.Checked, false);
+                Database.CountPair indulók = Program.database.KorosztálySzámolás(eredeti_verseny, alsó, felső, chkNok.Checked, chkFerfiak.Checked, false);
                 if (eredeti_azonosító != null)
-                    Program.mainform.korosztályok_panel.Korosztály_Módosítás(eredeti_azonosító, new Korosztály(eredeti_verseny, text_kazon.Text, text_megn.Text, alsó, felső, box_nők.Checked, box_férfiak.Checked, indulók.nők, indulók.férfiak));
+                {
+                    Program.mainform.korosztályok_panel.Korosztály_Módosítás(eredeti_azonosító, new Korosztály(eredeti_verseny,
+                                                                                                               txtAzonosito.Text, 
+                                                                                                               txtMegnevezes.Text, 
+                                                                                                               alsó, 
+                                                                                                               felső, 
+                                                                                                               chkNok.Checked, 
+                                                                                                               chkFerfiak.Checked, 
+                                                                                                               indulók.nők, 
+                                                                                                               indulók.férfiak,
+                                                                                                               chkEgyben.Checked));
+                }
                 else
-                    Program.mainform.korosztályok_panel.Korosztály_Hozzáadás(new Korosztály(eredeti_verseny, text_kazon.Text, text_megn.Text, alsó, felső, box_nők.Checked, box_férfiak.Checked, indulók.nők, indulók.férfiak));
+                {
+                    Program.mainform.korosztályok_panel.Korosztály_Hozzáadás(new Korosztály(eredeti_verseny,
+                                                                                            txtAzonosito.Text, 
+                                                                                            txtMegnevezes.Text, 
+                                                                                            alsó, 
+                                                                                            felső, 
+                                                                                            chkNok.Checked, 
+                                                                                            chkFerfiak.Checked, 
+                                                                                            indulók.nők, 
+                                                                                            indulók.férfiak,
+                                                                                            chkEgyben.Checked));
+                }
 
                 Close();
             }
@@ -671,7 +805,7 @@ namespace Íjász
             private void InitializeForm( string _VEAZON, string _KOAZON)
             {
                 Text = "Indulók (" + _VEAZON + ")";
-                ClientSize = new System.Drawing.Size( 435 + 8, 500 );
+                ClientSize = new Size( 435 + 8, 500 );
                 MinimumSize = ClientSize;
                 StartPosition = FormStartPosition.CenterScreen;
                 FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -686,7 +820,7 @@ namespace Íjász
                 table.AllowUserToResizeRows = false;
                 table.AllowUserToResizeColumns = false;
                 table.AllowUserToAddRows = false;
-                table.Width = 443;
+                table.Width = 520 + 3;
                 table.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 table.MultiSelect = false;
                 table.ReadOnly = true;
@@ -702,6 +836,7 @@ namespace Íjász
 
                 data = new DataTable( );
                 data.Columns.Add( new DataColumn( "Név", System.Type.GetType( "System.String" ) ) );
+                data.Columns.Add( new DataColumn( "Nem", System.Type.GetType( "System.String" ) ) );
                 data.Columns.Add( new DataColumn( "Korosztály", System.Type.GetType( "System.String" ) ) );
                 data.Columns.Add( new DataColumn( "Életkor", System.Type.GetType( "System.String" ) ) );
                 data.Columns.Add( new DataColumn( "Módosított", System.Type.GetType( "System.String" ) ) );
@@ -712,14 +847,15 @@ namespace Íjász
 
                 for ( int i = 0; i < eredmenyek.Count;i++ )
                 {
-                    if(eredmenyek[i].megjelent == true && eredmenyek[i].KorosztalyAzonosito == _KOAZON)
+                    if(eredmenyek[i].Megjelent == true && eredmenyek[i].KorosztalyAzonosito == _KOAZON)
                     {
-                        Induló indulo = Program.database.Induló( eredmenyek[i].név ).Value;
+                        Induló indulo = Program.database.Induló( eredmenyek[i].Nev ).Value;
                         DataRow row = data.NewRow( );
-                        row[0] = eredmenyek[i].név;
-                        row[1] = eredmenyek[i].KorosztalyAzonosito;
-                        row[2] = Program.database.InduloKora( verseny.Azonosito, indulo.név );
-                        row[3] = ( eredmenyek[i].KorosztalyModositott == true ) ? "I" : "N";
+                        row[0] = eredmenyek[i].Nev;
+                        row[1] = indulo.Nem;
+                        row[2] = eredmenyek[i].KorosztalyAzonosito;
+                        row[3] = Program.database.InduloKora( verseny.Azonosito, indulo.Nev );
+                        row[4] = ( eredmenyek[i].KorosztalyModositott == true ) ? "I" : "N";
                         data.Rows.Add( row );
                     }
                 }
@@ -734,11 +870,12 @@ namespace Íjász
                 table.Columns[1].Width = 80;
                 table.Columns[2].Width = 80;
                 table.Columns[3].Width = 80;
+                table.Columns[4].Width = 80;
 
                 foreach ( DataGridViewColumn column in table.Columns ) column.SortMode = DataGridViewColumnSortMode.NotSortable;
 
                 //rendezés
-                table.Sort( table.Columns[2], System.ComponentModel.ListSortDirection.Ascending );
+                table.Sort( table.Columns[3], System.ComponentModel.ListSortDirection.Ascending );
 
             }
 

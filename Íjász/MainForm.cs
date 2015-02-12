@@ -353,10 +353,10 @@ namespace Íjász
     public class iTextBox : TextBox
     {
         public
-        iTextBox(Point _Location, int? _MaxLength, Size _Size, EventHandler _TextChanged, Form _Form)
+        iTextBox(Point _Location, int? _MaxLength, Size? _Size, EventHandler _TextChanged, Form _Form)
         {
 
-            this.Size = _Size;
+            if ( _Size != null ) { this.Size = _Size.Value; }
             this.Location = _Location;
             if ( _MaxLength != null ) { this.MaxLength = _MaxLength.Value; }
             this.TextChanged += _TextChanged;

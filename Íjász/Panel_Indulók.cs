@@ -8,21 +8,26 @@ namespace Íjász
 {
     public struct Induló
     {
-        public string név;
-        public string nem;
-        public string születés;
-        public string engedély;
-        public string egyesület;
-        public int eredmények;
+        public string Nev;
+        public string Nem;
+        public string SzuletesiDatum;
+        public string Engedely;
+        public string Egyesulet;
+        public int Eredmenyek;
 
-        public Induló(string _név, string _nem, string _születés, string _engedély, string _egyesület, int _eredmények)
+        public Induló(string _Nev,
+                      string _Nem,
+                      string _SzuletesiDatum,
+                      string _Engedely,
+                      string _Egyesulet,
+                      int _Eredmenyek)
         {
-            név = _név;
-            nem = _nem;
-            születés = _születés;
-            engedély = _engedély;
-            egyesület = _egyesület;
-            eredmények = _eredmények;
+            Nev = _Nev;
+            Nem = _Nem;
+            SzuletesiDatum = _SzuletesiDatum;
+            Engedely = _Engedely;
+            Egyesulet = _Egyesulet;
+            Eredmenyek = _Eredmenyek;
         }
     }
    
@@ -128,12 +133,12 @@ namespace Íjász
             foreach (Induló current in indulók)
             {
                 DataRow row = data.NewRow();
-                row[0] = current.név;
-                row[1] = current.nem;
-                row[2] = current.születés;
-                row[3] = current.engedély;
-                row[4] = current.egyesület;
-                row[5] = current.eredmények;
+                row[0] = current.Nev;
+                row[1] = current.Nem;
+                row[2] = current.SzuletesiDatum;
+                row[3] = current.Engedely;
+                row[4] = current.Egyesulet;
+                row[5] = current.Eredmenyek;
 
                 data.Rows.Add(row);
             }
@@ -154,11 +159,11 @@ namespace Íjász
                 if (!Program.database.ÚjInduló(_induló)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 DataRow row = data.NewRow();
-                row[0] = _induló.név;
-                row[1] = _induló.nem;
-                row[2] = _induló.születés;
-                row[3] = _induló.engedély;
-                row[4] = _induló.egyesület;
+                row[0] = _induló.Nev;
+                row[1] = _induló.Nem;
+                row[2] = _induló.SzuletesiDatum;
+                row[3] = _induló.Engedely;
+                row[4] = _induló.Egyesulet;
                 row[5] = 0; //
 
                 data.Rows.Add(row);
@@ -177,20 +182,20 @@ namespace Íjász
             }
             else
             {
-                if (!Program.database.IndulóMódosítás(_eredeti.név, _uj)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Program.database.IndulóMódosítás(_eredeti.Nev, _uj)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 foreach (DataRow current in data.Rows)
                 {
-                    if (_eredeti.név == current[0].ToString())
+                    if (_eredeti.Nev == current[0].ToString())
                     {
-                        current[0] = _uj.név;
-                        current[1] = _uj.nem;
-                        current[2] = _uj.születés;
-                        current[3] = _uj.engedély;
-                        current[4] = _uj.egyesület;
+                        current[0] = _uj.Nev;
+                        current[1] = _uj.Nem;
+                        current[2] = _uj.SzuletesiDatum;
+                        current[3] = _uj.Engedely;
+                        current[4] = _uj.Egyesulet;
 
                         // Jól legyen broadcastolva a módosítás!
-                        _uj.eredmények = (int)current[5];
+                        _uj.Eredmenyek = (int)current[5];
                         break;
                     }
                 }
@@ -198,10 +203,10 @@ namespace Íjász
                 if (induló_módosítva != null) induló_módosítva(_eredeti, _uj);
 
 
-                if (_eredeti.név != _uj.név && 0 < _uj.eredmények)
+                if (_eredeti.Nev != _uj.Nev && 0 < _uj.Eredmenyek)
                 {
-                    if (!Program.database.Induló_EredményekÁtnevezése(_eredeti.név, _uj.név)) { MessageBox.Show("Adatbázis hiba!\nLEHETETLEN!!!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
-                    if (induló_átnevezve != null) induló_átnevezve(_eredeti.név, _uj.név);
+                    if (!Program.database.Induló_EredményekÁtnevezése(_eredeti.Nev, _uj.Nev)) { MessageBox.Show("Adatbázis hiba!\nLEHETETLEN!!!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                    if (induló_átnevezve != null) induló_átnevezve(_eredeti.Nev, _uj.Nev);
                 }
 
             }
@@ -217,11 +222,11 @@ namespace Íjász
             }
             else
             {
-                if (!Program.database.IndulóTörlés(_indulo.név)) { MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
+                if (!Program.database.IndulóTörlés(_indulo.Nev)) { MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 foreach (DataRow current in data.Rows)
                 {
-                    if (_indulo.név == current[0].ToString())
+                    if (_indulo.Nev == current[0].ToString())
                     {
                         data.Rows.Remove(current);
                         break;
@@ -240,7 +245,7 @@ namespace Íjász
             {
                 foreach (DataRow current in data.Rows)
                 {
-                    if (_beírás.eredmény.Value.név == (string)current[0])
+                    if (_beírás.eredmény.Value.Nev == (string)current[0])
                     {
                         current[5] = ((int)current[5]) + 1;
                         break;
@@ -253,7 +258,7 @@ namespace Íjász
         {
             foreach (DataRow current in data.Rows)
             {
-                if (_eredmény.név == (string)current[0])
+                if (_eredmény.Nev == (string)current[0])
                 {
                     current[5] = ((int)current[5]) - 1;
                     break;
@@ -383,7 +388,7 @@ namespace Íjász
 
             public Form_Induló(Induló _induló)
             {
-                eredeti_név = _induló.név;
+                eredeti_név = _induló.Nev;
 
                 InitializeForm();
                 InitializeContent();
@@ -505,14 +510,14 @@ namespace Íjász
 
             private void InitializeData(Induló _induló)
             {
-                box_név.Text = _induló.név;
-                box_nem.Text = _induló.nem == "N" ? "Nő" : "Férfi";
-                box_nem.Enabled = (_induló.eredmények > 0 ? false : true);
-                date_születés.Value = DateTime.Parse(_induló.születés);
-                date_születés.Enabled = (_induló.eredmények > 0 ? false : true);
-                box_engedély.Text = _induló.engedély;
-                eredmények_száma.Text = _induló.eredmények.ToString();
-                cboEgyesulet.Text = _induló.egyesület;
+                box_név.Text = _induló.Nev;
+                box_nem.Text = _induló.Nem == "N" ? "Nő" : "Férfi";
+                box_nem.Enabled = (_induló.Eredmenyek > 0 ? false : true);
+                date_születés.Value = DateTime.Parse(_induló.SzuletesiDatum);
+                date_születés.Enabled = (_induló.Eredmenyek > 0 ? false : true);
+                box_engedély.Text = _induló.Engedely;
+                eredmények_száma.Text = _induló.Eredmenyek.ToString();
+                cboEgyesulet.Text = _induló.Egyesulet;
             }
 
             private void rendben_Click(object _sender, EventArgs _event)
@@ -651,7 +656,7 @@ namespace Íjász
                                             this );
 
                 List<Íjtípus> ijtipusok = Program.database.Íjtípusok( );
-                foreach ( Íjtípus current in ijtipusok ) { cboIjtipus.Items.Add( current.azonosító ); }
+                foreach ( Íjtípus current in ijtipusok ) { cboIjtipus.Items.Add( current.Azonosito ); }
 
                 cboCsapat = new iComboBox( new Point( lblIndulo.Location.X, lblCsapat.Location.Y ),
                                            lblIndulo.Size,
@@ -700,7 +705,7 @@ namespace Íjász
                 List<Korosztály> korosztalyok = Program.database.Korosztályok( cboVerseny.Text );
                 foreach ( Korosztály item in korosztalyok )
                 {
-                    cboKorosztaly.Items.Add( item.megnevezés );
+                    cboKorosztaly.Items.Add( item.Megnevezes );
                 }
                 if ( cboKorosztaly.Items.Count != 0 ) { cboKorosztaly.SelectedIndex = 0; }
                 Eredmény? eredmény = Program.database.Eredmény( cboVerseny.Text, lblIndulo.Text );
@@ -715,9 +720,9 @@ namespace Íjász
                 Eredmény? eredmény = Program.database.Eredmény( cboVerseny.Text, lblIndulo.Text );
                 if ( eredmény != null )
                 {
-                    cboIjtipus.SelectedItem = eredmény.Value.íjtípus;
-                    cboCsapat.SelectedItem = eredmény.Value.csapat;
-                    chkMegjelent.Checked = eredmény.Value.megjelent;
+                    cboIjtipus.SelectedItem = eredmény.Value.Ijtipus;
+                    cboCsapat.SelectedItem = eredmény.Value.Csapat;
+                    chkMegjelent.Checked = eredmény.Value.Megjelent;
                     chkKorosztalyFeluliras.Checked = eredmény.Value.KorosztalyModositott;
                     cboKorosztaly.Text = eredmény.Value.KorosztalyAzonosito;
                 }
@@ -741,7 +746,7 @@ namespace Íjász
                 string KOAZON = null;
                 foreach ( Korosztály korosztaly in korosztalyok )
                 {
-                    if ( korosztaly.megnevezés == cboKorosztaly.Text ) { KOAZON = korosztaly.azonosító; }
+                    if ( korosztaly.Megnevezes == cboKorosztaly.Text ) { KOAZON = korosztaly.Azonosito; }
                 }
 
                 Program.mainform.eredmények_panel.Eredmény_Beírás( lblIndulo.Text,
@@ -761,12 +766,12 @@ namespace Íjász
                         Verseny? verseny = Program.database.Verseny( cboVerseny.Text );
                         if ( (string)item[0] == cboVerseny.Text && verseny.Value.DublaBeirlap == false )
                         {
-                            Nyomtat.print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.Print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
                         }
                         else if ( (string)item[0] == cboVerseny.Text && verseny.Value.DublaBeirlap == true )
                         {
-                            Nyomtat.print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
-                            Nyomtat.print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.Print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
+                            Nyomtat.Print( Nyomtat.NyomtatBeirolap( cboVerseny.Text, eredmény.Value ) );
                         }
                     }
 
@@ -805,7 +810,7 @@ namespace Íjász
                 List<Korosztály> korosztalyok = Program.database.Korosztályok( cboVerseny.Text );
                 foreach ( Korosztály item in korosztalyok )
                 {
-                    cboKorosztaly.Items.Add( item.megnevezés );
+                    cboKorosztaly.Items.Add( item.Megnevezes );
                 }
                 if ( cboKorosztaly.Items.Count != 0 ) { cboKorosztaly.SelectedIndex = 0; }
             }
@@ -898,7 +903,7 @@ namespace Íjász
                 List<Eredmény> eredmények = Program.database.Eredmények(azonosító);
                 foreach (Eredmény item in eredmények)
                 {
-                    if (item.csapat == (int)dataGridView1.SelectedRows[0].Cells[0].Value)
+                    if (item.Csapat == (int)dataGridView1.SelectedRows[0].Cells[0].Value)
                     {
                         dataGridView2.DataSource = CreateSource2();
                     }
@@ -924,8 +929,8 @@ namespace Íjász
                 List<Eredmény> eredmények = Program.database.Eredmények(azonosító);
                 foreach (Eredmény item in eredmények)
                 {
-                    int a = Convert.ToInt32(data.Rows[Convert.ToInt32(item.csapat) - 1][1]);
-                    data.Rows[Convert.ToInt32(item.csapat) - 1][1] = a + 1;
+                    int a = Convert.ToInt32(data.Rows[Convert.ToInt32(item.Csapat) - 1][1]);
+                    data.Rows[Convert.ToInt32(item.Csapat) - 1][1] = a + 1;
                 }
                 return data;
             }
@@ -953,21 +958,21 @@ namespace Íjász
                 int seged = (int)dataGridView1.SelectedRows[0].Cells[0].Value;
                 foreach (Eredmény item in eredmények)
                 {
-                    if (item.csapat == seged)
+                    if (item.Csapat == seged)
                     {
                         DataRow row = data.NewRow();
                         foreach (Induló inner in indulók)
                         {
-                            if (inner.név == item.név)
+                            if (inner.Nev == item.Nev)
                             {
-                                row[3] = (new DateTime(1, 1, 1) + (DateTime.Now - DateTime.Parse(inner.születés))).Year - 1;
-                                row[4] = inner.egyesület;
+                                row[3] = (new DateTime(1, 1, 1) + (DateTime.Now - DateTime.Parse(inner.SzuletesiDatum))).Year - 1;
+                                row[4] = inner.Egyesulet;
 
                             }
                         }
-                        row[0] = item.sorszám;
-                        row[1] = item.név + (item.megjelent ? "(megjelent)" : "(nem jelent meg)");
-                        row[2] = item.íjtípus;
+                        row[0] = item.Sorszam;
+                        row[1] = item.Nev + (item.Megjelent ? "(megjelent)" : "(nem jelent meg)");
+                        row[2] = item.Ijtipus;
                         data.Rows.Add(row);
                     }
                 }

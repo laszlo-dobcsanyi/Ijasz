@@ -7,17 +7,20 @@ namespace Íjász
 {
     public struct Íjtípus
     {
-        public string azonosító;
-        public string megnevezés;
-        public int sorszám;
-        public int eredmények;
+        public string Azonosito;
+        public string Megnevezes;
+        public int Sorszam;
+        public int Eredmenyek;
 
-        public Íjtípus(string _azonosító, string _megnevezés, int _sorszám, int _eredmények)
+        public Íjtípus( string _Azonosito,
+                       string _Megnevezes,
+                       int _Sorszam,
+                       int _Eredmenyek )
         {
-            azonosító = _azonosító;
-            megnevezés = _megnevezés;
-            sorszám = _sorszám;
-            eredmények = _eredmények;
+            Azonosito = _Azonosito;
+            Megnevezes = _Megnevezes;
+            Sorszam = _Sorszam;
+            Eredmenyek = _Eredmenyek;
         }
     }
 
@@ -94,10 +97,10 @@ namespace Íjász
             foreach (Íjtípus current in íjtípusok)
             {
                 DataRow row = data.NewRow();
-                row[0] = current.azonosító;
-                row[1] = current.megnevezés;
-                row[2] = current.sorszám;
-                row[3] = current.eredmények;
+                row[0] = current.Azonosito;
+                row[1] = current.Megnevezes;
+                row[2] = current.Sorszam;
+                row[3] = current.Eredmenyek;
 
                 data.Rows.Add(row);
             }           
@@ -118,10 +121,10 @@ namespace Íjász
                 if (!Program.database.ÚjÍjtípus(_íjtípus)) { MessageBox.Show("Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
 
                 DataRow row = data.NewRow();
-                row[0] = _íjtípus.azonosító;
-                row[1] = _íjtípus.megnevezés;
-                row[2] = _íjtípus.sorszám;
-                row[3] = _íjtípus.eredmények;
+                row[0] = _íjtípus.Azonosito;
+                row[1] = _íjtípus.Megnevezes;
+                row[2] = _íjtípus.Sorszam;
+                row[3] = _íjtípus.Eredmenyek;
 
                 data.Rows.Add(row);
 
@@ -145,9 +148,9 @@ namespace Íjász
                 {
                     if (_azonosító == current[0].ToString())
                     {
-                        current[0] = _íjtípus.azonosító;
-                        current[1] = _íjtípus.megnevezés;
-                        current[2] = _íjtípus.sorszám;
+                        current[0] = _íjtípus.Azonosito;
+                        current[1] = _íjtípus.Megnevezes;
+                        current[2] = _íjtípus.Sorszam;
                         break;
                     }
                 }
@@ -218,20 +221,20 @@ namespace Íjász
         {
             if (_beírás.flag == Database.BeírásEredmény.Flag.HOZZÁADOTT)
             {
-                Íjtípus_EredményekNövelés(_beírás.eredmény.Value.íjtípus);
+                Íjtípus_EredményekNövelés(_beírás.eredmény.Value.Ijtipus);
             }
 
             if (_beírás.flag == Database.BeírásEredmény.Flag.MÓDOSÍTOTT)
             {
-                Íjtípus_EredményekNövelés(_beírás.eredmény.Value.íjtípus);
-                Íjtípus_EredményekCsökkentés(_beírás.eredeti.Value.íjtípus);
+                Íjtípus_EredményekNövelés(_beírás.eredmény.Value.Ijtipus);
+                Íjtípus_EredményekCsökkentés(_beírás.eredeti.Value.Ijtipus);
             }
         }
 
 
         public void eredmények_törlés(string _azonosító, Eredmény _eredmény)
         {
-            Íjtípus_EredményekCsökkentés(_eredmény.íjtípus);
+            Íjtípus_EredményekCsökkentés(_eredmény.Ijtipus);
         }
 
         ///
@@ -369,13 +372,13 @@ namespace Íjász
 
             private void InitializeData(Íjtípus _íjtípus)
             {
-                eredeti_azonosító = _íjtípus.azonosító;
+                eredeti_azonosító = _íjtípus.Azonosito;
 
-                text_íjazon.Text = _íjtípus.azonosító;
-                text_íjazon.Enabled = (_íjtípus.eredmények > 0 ? false : true);
-                text_listsorszam.Text = _íjtípus.sorszám.ToString();
-                text_megn.Text = _íjtípus.megnevezés;
-                label_eredmények.Text = _íjtípus.eredmények.ToString();
+                text_íjazon.Text = _íjtípus.Azonosito;
+                text_íjazon.Enabled = (_íjtípus.Eredmenyek > 0 ? false : true);
+                text_listsorszam.Text = _íjtípus.Sorszam.ToString();
+                text_megn.Text = _íjtípus.Megnevezes;
+                label_eredmények.Text = _íjtípus.Eredmenyek.ToString();
             }
 
             #region EventHandlers

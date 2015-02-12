@@ -13,10 +13,8 @@ namespace Íjász
         Label lblVersenysorozatAzonosito;
         Label lblVersenysorozatMegnevezes = new Label();
         Label lblVersenysorozatMegnevezes2 = new Label();
-        Label lblVersenyekSzama = new Label();
         ComboBox cboVersenyAzonosito;
         ComboBox cboVersenysorozatAzonosito;
-        ComboBox cboVersenyekSzama;
         CheckBox chkTeljes;
         CheckBox chkMisz;
         CheckBox chkEgyesulet;
@@ -27,7 +25,6 @@ namespace Íjász
         CheckBox chkVerseny;
         CheckBox chkVersenysorozat;
 
-        int VersenyekSzama;
 
         public
         Panel_Eredménylap()
@@ -52,12 +49,9 @@ namespace Íjász
                                                     new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 36 * 16),
                                                     this);
   
-            lblVersenyekSzama = new iLabel("Versenyek száma:",
-                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 33 * 16),
-                                            this);
 
             lblVersenyAzonosito = new iLabel("Verseny azonosító:",
-                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 30 * 16),
+                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 33 * 16),
                                             this);
 
             lblVersenyNyomtat = new iLabel("Versenyt nyomtat:",
@@ -69,10 +63,10 @@ namespace Íjász
                                                     this);
 
             Label lblEredmeny = new iLabel("Eredménylap típus:",
-                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 27 * 16),
+                                            new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 30 * 16),
                                             this);
 
-            cboVersenyAzonosito = new iComboBox(new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 30 * 16),
+            cboVersenyAzonosito = new iComboBox(new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 33 * 16),
                                                 new Size(128, 24),
                                                 cboVersenyek_SelectedIndexChanged,
                                                 this);
@@ -82,10 +76,6 @@ namespace Íjász
                 cboVersenyAzonosito.Items.Add(current.Azonosito);
             if (cboVersenyAzonosito.Items.Count != 0) cboVersenyAzonosito.SelectedIndex = 0;
 
-            cboVersenyekSzama = new iComboBox( new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 33 * 16),
-                                                new Size(128, 24),
-                                                cboVersenyekSzama_SelectedIndexChanged,
-                                                this);
 
             cboVersenysorozatAzonosito = new iComboBox( new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 36 * 16),
                                                         new Size(128, 24),
@@ -98,7 +88,7 @@ namespace Íjász
             if (cboVersenysorozatAzonosito.Items.Count != 0) cboVersenysorozatAzonosito.SelectedIndex = 0;
 
             lblVersenyMegnevezes = new iLabel("Verseny megnevezés: ",
-                                                     new Point(cWidth - 96 - 32 * 16,cHeight - 32 - 30 * 16),
+                                                     new Point(cWidth - 96 - 32 * 16,cHeight - 32 - 33 * 16),
                                                      this);
 
             lblVersenyMegnevezes2 = new iLabel( "",
@@ -115,22 +105,22 @@ namespace Íjász
                                                       this);
 
             chkTeljes = new iCheckBox("Teljes",
-                                      new Point(cWidth - 96 - 45 * 16,cHeight - 32 - 27 * 16 - 8),
+                                      new Point(cWidth - 96 - 45 * 16,cHeight - 32 - 30 * 16 - 8),
                                       Eredmenylap_Click,
                                       this);
 
             chkMisz = new iCheckBox("MÍSZ",
-                                new Point(cWidth - 96 - 41 * 16,cHeight - 32 - 27 * 16 - 8),
+                                new Point(cWidth - 96 - 41 * 16,cHeight - 32 - 30 * 16 - 8),
                                 Eredmenylap_Click,
                                 this);
 
             chkEgyesulet = new iCheckBox("Egyesület",
-                                         new Point( cWidth - 96 - 36 * 16,cHeight - 32 - 27 * 16 - 8 ),
+                                         new Point( cWidth - 96 - 36 * 16,cHeight - 32 - 30 * 16 - 8 ),
                                          Eredmenylap_Click,
                                          this);
 
             chkReszletes= new iCheckBox("Részletes",
-                                         new Point(cWidth - 96 - 31 * 16, cHeight - 32 - 27 * 16 - 8),
+                                         new Point(cWidth - 96 - 31 * 16, cHeight - 32 - 30 * 16 - 8),
                                          Eredmenylap_Click,
                                          this);
 
@@ -177,22 +167,7 @@ namespace Íjász
                 }
             }
 
-            cboVersenyekSzama.Items.Clear();
-            List<Verseny> Versenyek = Program.database.Versenyek();
-            VersenyekSzama = 0;
-            foreach (Verseny item in Versenyek)
-            {
-                if (item.VersenySorozat == cboVersenysorozatAzonosito.Text)
-                {
-                    VersenyekSzama++;
-                    cboVersenyekSzama.Items.Add(VersenyekSzama);
-                }
-            }
-
-            if (VersenyekSzama!=0)
-            {
-                cboVersenyekSzama.SelectedIndex = 0;
-            }
+          
         }
 
         private void 
@@ -206,12 +181,6 @@ namespace Íjász
                     lblVersenyMegnevezes2.Text = current.Megnevezes;
                 }
             }
-        }
-
-        private void 
-        cboVersenyekSzama_SelectedIndexChanged(object sender, EventArgs _event)
-        {
-            //TODO vagy ezmiez??
         }
 
         private void 
@@ -229,36 +198,34 @@ namespace Íjász
                 //nincs eredménylap
             if (chkTeljes.Checked == false && chkMisz.Checked == false && chkEgyesulet.Checked == false && chkReszletes.Checked == false) return;
 
-                // nincs verseny a vs-ban
-            if (chkVersenysorozat.Checked && VersenyekSzama == 0) return;
 
             if ( chkVerseny.CheckState == CheckState.Checked && chkTeljes.CheckState == CheckState.Checked)
             {
 
-                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_verseny_teljes(cboVersenyAzonosito.Text));
+                Nyomtat.Dialog( Nyomtat.NyomtatEredmenylapVersenyTeljes( cboVersenyAzonosito.Text ) );
                 return;
             }
 
             if (chkVerseny.CheckState == CheckState.Checked && chkMisz.CheckState == CheckState.Checked)
             {
 
-                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_verseny_misz(cboVersenyAzonosito.Text));
+                Nyomtat.Dialog( Nyomtat.NyomtatEredmenylapVersenyMisz( cboVersenyAzonosito.Text ) );
                 return;
             }
 
             if (chkVersenysorozat.CheckState == CheckState.Checked && chkTeljes.CheckState == CheckState.Checked)
             {
 
-                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_versenysorozat_teljes(
-                                    cboVersenysorozatAzonosito.Text, Convert.ToInt32(cboVersenyekSzama.Text)));
+                Nyomtat.Dialog( Nyomtat.NyomtatEredmenylapVersenysorozatTeljes(
+                                    cboVersenysorozatAzonosito.Text));
                 return;
             }
 
             if (chkVersenysorozat.CheckState == CheckState.Checked && chkMisz.CheckState == CheckState.Checked)
             {
 
-                Nyomtat.Dialog(Nyomtat.nyomtat_eredmenylap_versenysorozat_misz(
-                                    cboVersenysorozatAzonosito.Text, Convert.ToInt32(cboVersenyekSzama.Text)));
+                Nyomtat.Dialog( Nyomtat.NyomtatEredmenylapVersenysorozatMisz(
+                                    cboVersenysorozatAzonosito.Text));
                 return;
             }
 
@@ -326,7 +293,6 @@ namespace Íjász
                 cboVersenyAzonosito.Enabled = false;
                 chkVerseny.Checked = false;
                 cboVersenysorozatAzonosito.Enabled = true;
-                cboVersenyekSzama.Enabled = true;
                 chkVersenysorozat.Checked = true;
                 chkReszletes.Enabled = true;
             }
@@ -336,7 +302,6 @@ namespace Íjász
                 chkVersenysorozat.Checked = false;
                 cboVersenyAzonosito.Enabled = true;
                 cboVersenysorozatAzonosito.Enabled = false;
-                cboVersenyekSzama.Enabled = false;
                 chkReszletes.Enabled = false;
             }
         }

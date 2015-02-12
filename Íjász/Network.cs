@@ -63,12 +63,12 @@ namespace Íjász
         #region Broadcast
         public void induló_hozzáadás(Induló _induló)
         {
-            Broadcast(ServerCommand.INDULÓ_HOZZÁADÁS, _induló.név + ";" + _induló.nem + ";" + _induló.születés + ";" + _induló.engedély + ";" + _induló.egyesület + ";" + _induló.eredmények);
+            Broadcast(ServerCommand.INDULÓ_HOZZÁADÁS, _induló.Nev + ";" + _induló.Nem + ";" + _induló.SzuletesiDatum + ";" + _induló.Engedely + ";" + _induló.Egyesulet + ";" + _induló.Eredmenyek);
         }
 
         public void induló_módosítás(Induló _eredeti, Induló _uj)
         {
-            Broadcast(ServerCommand.INDULÓ_MÓDOSÍTÁS, _eredeti.név + ";" + _uj.név + ";" + _uj.nem + ";" + _uj.születés + ";" + _uj.engedély + ";" + _uj.egyesület + ";" + _uj.eredmények);
+            Broadcast(ServerCommand.INDULÓ_MÓDOSÍTÁS, _eredeti.Nev + ";" + _uj.Nev + ";" + _uj.Nem + ";" + _uj.SzuletesiDatum + ";" + _uj.Engedely + ";" + _uj.Egyesulet + ";" + _uj.Eredmenyek);
         }
 
         public void induló_átnevezés(string _eredeti_név, string _új_név)
@@ -78,7 +78,7 @@ namespace Íjász
 
         public void induló_törlés(Induló _indulo)
         {
-            Broadcast(ServerCommand.INDULÓ_TÖRLÉS, _indulo.név);
+            Broadcast(ServerCommand.INDULÓ_TÖRLÉS, _indulo.Nev);
         }
 
         //
@@ -112,12 +112,12 @@ namespace Íjász
 
         public void íjtípus_hozzáadás(Íjtípus _íjtípus)
         {
-            Broadcast(ServerCommand.ÍJTÍPUS_HOZZÁADÁS, _íjtípus.azonosító);
+            Broadcast(ServerCommand.ÍJTÍPUS_HOZZÁADÁS, _íjtípus.Azonosito);
         }
 
         public void íjtípus_módosítás(string _azonosító, Íjtípus _íjtípus)
         {
-            Broadcast(ServerCommand.ÍJTÍPUS_MÓDOSÍTÁS, _azonosító + ";" + _íjtípus.azonosító);
+            Broadcast(ServerCommand.ÍJTÍPUS_MÓDOSÍTÁS, _azonosító + ";" + _íjtípus.Azonosito);
         }
 
         public void íjtípus_törlés(string _azonosító)
@@ -130,24 +130,24 @@ namespace Íjász
         public void eredmény_beírás(string _azonosító, Database.BeírásEredmény _beírás)
         {
             if (_beírás.flag == Database.BeírásEredmény.Flag.HOZZÁADOTT)
-                Broadcast(ServerCommand.EREDMÉNY_BEÍRÁS_HOZZÁADÁS, _azonosító + ";" + _beírás.eredmény.Value.név + ";" + _beírás.eredmény.Value.sorszám.Value + ";" + _beírás.eredmény.Value.íjtípus + ";" +
-                    _beírás.eredmény.Value.csapat + ";" + _beírás.eredmény.Value.megjelent);
+                Broadcast(ServerCommand.EREDMÉNY_BEÍRÁS_HOZZÁADÁS, _azonosító + ";" + _beírás.eredmény.Value.Nev + ";" + _beírás.eredmény.Value.Sorszam.Value + ";" + _beírás.eredmény.Value.Ijtipus + ";" +
+                    _beírás.eredmény.Value.Csapat + ";" + _beírás.eredmény.Value.Megjelent);
 
             if (_beírás.flag == Database.BeírásEredmény.Flag.MÓDOSÍTOTT)
-                Broadcast(ServerCommand.EREDMÉNY_BEÍRÁS_MÓDOSÍTÁS, _azonosító + ";" + _beírás.eredmény.Value.név + ";" + _beírás.eredmény.Value.íjtípus + ";" +
-                    _beírás.eredmény.Value.csapat + ";" + _beírás.eredmény.Value.megjelent);
+                Broadcast(ServerCommand.EREDMÉNY_BEÍRÁS_MÓDOSÍTÁS, _azonosító + ";" + _beírás.eredmény.Value.Nev + ";" + _beírás.eredmény.Value.Ijtipus + ";" +
+                    _beírás.eredmény.Value.Csapat + ";" + _beírás.eredmény.Value.Megjelent);
         }
 
         public  void eredmény_módosítás(string _azonosító, Eredmény _eredeti, Eredmény _eredmény)
         {
-            Broadcast(ServerCommand.EREDMÉNY_MÓDOSÍTÁS, _azonosító + ";" + _eredmény.név + ";" + _eredmény.találat_10 + ";" + _eredmény.találat_08 + ";" + _eredmény.találat_05 + ";" + _eredmény.mellé + ";" + 
-                _eredmény.összpont.Value + ";" + _eredmény.százalék.Value);
-
+            Broadcast(ServerCommand.EREDMÉNY_MÓDOSÍTÁS, _azonosító + ";" + _eredmény.Nev + ";" + _eredmény.Talalat10 + ";" + _eredmény.Talalat8 + ";" + _eredmény.Talalat5 + ";" + _eredmény.Melle + ";" + 
+                _eredmény.Osszpont.Value + ";" + _eredmény.Szazalek.Value);
+            
         }
 
         public void eredmény_törlés(string _azonosító, Eredmény _eredmény)
         {
-            Broadcast(ServerCommand.EREDMÉNY_TÖRLÉS, _azonosító + ";" + _eredmény.név);
+            Broadcast(ServerCommand.EREDMÉNY_TÖRLÉS, _azonosító + ";" + _eredmény.Nev);
         }
         #endregion
 

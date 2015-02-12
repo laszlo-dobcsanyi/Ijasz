@@ -323,9 +323,9 @@ namespace Íjász
         public void 
         InduloHozzaadas(Induló _indulo)
         {
-            if(_indulo.egyesület=="") return ;
+            if(_indulo.Egyesulet=="") return ;
 
-            if(!Program.database.EgyesuletTagokNoveles(_indulo.egyesület))
+            if(!Program.database.EgyesuletTagokNoveles(_indulo.Egyesulet))
             {
                  MessageBox.Show("Adatbázis hiba!", 
                                  "Hiba", 
@@ -336,7 +336,7 @@ namespace Íjász
 
             foreach(DataRow current in data.Rows)
             {
-                if( _indulo.egyesület==current[0].ToString() )
+                if( _indulo.Egyesulet==current[0].ToString() )
                 {
                     current[6] = (int)current[6]+1;
                 }
@@ -346,8 +346,8 @@ namespace Íjász
         public void
         InduloTorles(Induló _indulo)
         {
-            if(_indulo.egyesület=="") return;
-            if(!Program.database.EgyesuletTagokCsokkentes(_indulo.egyesület))
+            if(_indulo.Egyesulet=="") return;
+            if(!Program.database.EgyesuletTagokCsokkentes(_indulo.Egyesulet))
             {
                 MessageBox.Show("Adatbázis hiba!",
                                 "Hiba",
@@ -357,7 +357,7 @@ namespace Íjász
 
             foreach(DataRow current in data.Rows)
             {
-                if(_indulo.egyesület==current[0].ToString())
+                if(_indulo.Egyesulet==current[0].ToString())
                 {
                     current[6] = (int)current[6]-1;
                 }
@@ -367,10 +367,10 @@ namespace Íjász
         public void
         InduloModositas( Induló _eredeti, Induló _uj )
         {
-            if( _eredeti.egyesület == _uj.egyesület ) return;
+            if( _eredeti.Egyesulet == _uj.Egyesulet ) return;
 
-            if( (!Program.database.EgyesuletTagokCsokkentes(_eredeti.egyesület) ||
-                (!Program.database.EgyesuletTagokNoveles(_uj.egyesület))))
+            if( (!Program.database.EgyesuletTagokCsokkentes(_eredeti.Egyesulet) ||
+                (!Program.database.EgyesuletTagokNoveles(_uj.Egyesulet))))
             {
                 MessageBox.Show("Adatbázis hiba!",
                 "Hiba",
@@ -380,11 +380,11 @@ namespace Íjász
 
             foreach (DataRow current in data.Rows)
             {
-                if (_eredeti.egyesület == current[0].ToString())
+                if (_eredeti.Egyesulet == current[0].ToString())
                 {
                     current[6] = (int)current[6]-1;
                 }
-                if( _uj.egyesület == current[0].ToString() )
+                if( _uj.Egyesulet == current[0].ToString() )
                 {
                     current[6] = (int)current[6]+1;
                 }
