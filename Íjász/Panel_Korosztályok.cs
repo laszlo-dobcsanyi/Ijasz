@@ -757,6 +757,7 @@ namespace Íjász
                 if (felső <= alsó) { MessageBox.Show("A felső korhatárnak nagyobbnak kell lenni, mint az alsónak", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 if (100 < felső) { if (MessageBox.Show("Felső korhatár túl magas, biztosan hagyjuk így?", "Korhatár", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK) return; }
 
+                
                 Database.CountPair indulók = Program.database.KorosztálySzámolás(eredeti_verseny, alsó, felső, chkNok.Checked, chkFerfiak.Checked, false);
                 if (eredeti_azonosító != null)
                 {

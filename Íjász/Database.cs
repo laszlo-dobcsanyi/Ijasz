@@ -24,7 +24,7 @@ namespace Íjász
 
                 //Create tables
                 SQLiteCommand command = connection.CreateCommand();
-                
+
                 command.CommandText =
                     "CREATE TABLE Verzió (PRVERZ int);" +
                     "CREATE TABLE Versenysorozat (VSAZON char(10) PRIMARY KEY, VSMEGN char(30), VSVESZ int);" +
