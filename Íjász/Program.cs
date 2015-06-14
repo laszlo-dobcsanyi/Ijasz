@@ -20,8 +20,8 @@ namespace Íjász
         [STAThread]
         public static void Main()
         {
-            try
-            {
+           // try
+           // {
                 network = new Network();
                 database = new Database();
 
@@ -52,15 +52,15 @@ namespace Íjász
                 Application.Run(mainform);
 
                 network.Shutdown();
-            }
-            catch (Exception e)
+         //   }
+           /* catch (Exception e)
             {
                 MessageBox.Show("Váratlan hiba:\n- " + e.Message + "\n\nAz Íjászt újra kell indítani!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 network.Shutdown();
 
                 System.Environment.Exit(1);
-            }
+            }*/
         }
 
         private static void timer_Tick(object _sender, EventArgs _event)
