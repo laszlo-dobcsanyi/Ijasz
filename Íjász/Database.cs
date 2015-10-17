@@ -366,12 +366,12 @@ namespace Íjász
 
 
             command = connection.CreateCommand( );
-            command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSF, KOINSN) VALUES" +
-                "('" + _verseny.Azonosito + "', 'K10', '0-10', 1, 9, 1, 1, 0, 0)," +
-                "('" + _verseny.Azonosito + "', 'K14', '10-14', 10, 13, 1, 1, 0, 0)," +
-                "('" + _verseny.Azonosito + "', 'K18', '14-18', 14, 17, 1, 1, 0, 0)," +
-                "('" + _verseny.Azonosito + "', 'K50', '18-50', 18, 49, 1, 1, 0, 0)," +
-                "('" + _verseny.Azonosito + "', 'K100', '50-100', 50, 99, 1, 1, 0, 0);";
+            command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSF, KOINSN,KOEGYB) VALUES" +
+                "('" + _verseny.Azonosito + "', 'K10', '0-10', 1, 9, 1, 1, 0, 0,0)," +
+                "('" + _verseny.Azonosito + "', 'K14', '10-14', 10, 13, 1, 1, 0, 0,0)," +
+                "('" + _verseny.Azonosito + "', 'K18', '14-18', 14, 17, 1, 1, 0, 0,0)," +
+                "('" + _verseny.Azonosito + "', 'K50', '18-50', 18, 49, 1, 1, 0, 0,0)," +
+                "('" + _verseny.Azonosito + "', 'K100', '50-100', 50, 99, 1, 1, 0, 0,0);";
             command.ExecuteNonQuery( );
 
             command = connection.CreateCommand( );
