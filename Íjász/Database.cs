@@ -3,6 +3,7 @@ using System.IO;
 using System.Data.SQLite;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Íjász
 {
@@ -58,7 +59,8 @@ namespace Íjász
 
          lock ( Program.datalock )
          {
-            SQLiteConnection cnnOut = new SQLiteConnection("Data Source=backup\\" + _name + ".db;foreign keys=True");
+            //SQLiteConnection cnnOut = new SQLiteConnection("Data Source=backup\\" + _name + ".db;foreign keys=True");
+            SQLiteConnection cnnOut = new SQLiteConnection("Data Source=backup.db;foreign keys=True");
             connection.Open( );
             cnnOut.Open( );
             connection.BackupDatabase( cnnOut, "main", "main", -1, null, -1 );
@@ -941,7 +943,8 @@ namespace Íjász
                      {
                         for ( int q = 0 ; q < korosztalyok.Length ; q++ )
                         {
-                           if ( korosztalyok[ q ].Azonosito == eredmenyek[ j ].KorosztalyAzonosito && eredmenyek[ j ].Megjelent == true )
+                           if ( korosztalyok[ q ].Azonosito == eredmenyek[ j ].KorosztalyAzonosito && 
+                              eredmenyek[ j ].Megjelent == true )
                            {
                               if ( indulok[ k ].Nem == "F" ) { korosztalyok[ q ].InduloFerfiak++; }
                               else if ( indulok[ k ].Nem == "N" ) { korosztalyok[ q ].InduloNok++; }
@@ -985,6 +988,106 @@ namespace Íjász
 
          return true;
       }
+
+      //NOTE(mate): ez váltja ki az InduloKora számolást
+      public struct KOROSZTALYSEGED
+      {
+         public List<string> Nevek;
+         public string Datum;
+
+         public KOROSZTALYSEGED( List<string> _Nevek, string _Datum )
+         {
+            Nevek = _Nevek;
+            Datum = _Datum;
+         }
+      }
+
+      public int LINQ_InduloKora( List<KOROSZTALYSEGED> KorosztalySeged, Induló _indulo )
+      {
+         int Value = -666;
+
+         foreach ( var indulo in KorosztalySeged )
+         {
+            foreach ( var nev in indulo.Nevek )
+            {
+               if ( _indulo.Nev == nev )
+               {
+                  Value = ( new DateTime( 1, 1, 1 ) + ( Convert.ToDateTime( indulo.Datum ) - DateTime.Parse( _indulo.SzuletesiDatum ) ) ).Year - 1;
+                  return Value;
+               }
+            }
+         }
+         return Value;
+      }
+
+      public void LINQ_KorosztalyModositas( string _VEAZON )
+      {
+         var Korosztalyok_ = Program.database.Korosztályok(_VEAZON);
+         var Eredmenyek = Program.database.Eredmények(_VEAZON);
+         var Indulok_ = Program.database.Indulók();
+         var verseny = Program.database.Verseny(_VEAZON);
+         var versenyek = Program.database.Versenyek();
+         var KorosztalySeged = new List<KOROSZTALYSEGED>();
+
+         //NOTE(mate): minden versenydatumhoz kiszedem az indulok nevet az eredmenyekbol
+         foreach ( var item in versenyek )
+         {
+            var nevek = Program.database.Eredmények(item.Azonosito).Select( q=>q.Nev );
+            KorosztalySeged.Add( new KOROSZTALYSEGED( nevek.ToList( ), item.Datum ) );
+         }
+
+         //NOTE(mate): lerendezem datum szerint, és minden névhez csak a legkorábbi dátumot hagyom benne 
+         KorosztalySeged.OrderBy( q => q.Datum );
+         KorosztalySeged.GroupBy( q => q.Nevek ).Select( grp => grp.First( ) );
+
+         //NOTE(mate): összerakom az indulókat
+
+         var Indulok = from indulo in Indulok_
+                       from korosztaly in Korosztalyok_
+                       join eredmeny in Eredmenyek on indulo.Nev equals eredmeny.Nev
+                       let Kor = LINQ_InduloKora(KorosztalySeged,indulo)
+                       where ( Kor >= korosztaly.AlsoHatar && Kor <= korosztaly.FelsoHatar &&
+                           ( ( indulo.Nem == "F" && korosztaly.Ferfiakra == true ) || ( indulo.Nem == "N" && korosztaly.Nokre == true ) ) )
+                       select new
+                       {
+                          indulo.Nev,
+                          indulo.Nem,
+                          eredmeny.KorosztalyModositott,
+                          eredmeny.KorosztalyAzonosito,
+                          eredmeny.Megjelent,
+                          KOAZON = eredmeny.KorosztalyModositott == true ? eredmeny.KorosztalyAzonosito : korosztaly.Azonosito
+                       };
+
+         //NOTE(mate): kiszámolom az induloférfiakat/indulonoket
+         var Korosztalyok = Korosztalyok_.ToArray();
+         string commandText = null;
+
+         for ( int i = 0 ; i < Korosztalyok.Count( ) ; i++ )
+         {
+            Korosztalyok[ i ].InduloFerfiak = Indulok.Count( indulo => indulo.Nem.Equals( "F" ) && indulo.KOAZON.Equals( Korosztalyok[ i ].Azonosito ) && indulo.Megjelent.Equals( true ) );
+            Korosztalyok[ i ].InduloNok = Indulok.Count( indulo => indulo.Nem.Equals( "N" ) && indulo.KOAZON.Equals( Korosztalyok[ i ].Azonosito ) && indulo.Megjelent.Equals( true ) );
+            commandText += "UPDATE Korosztályok SET KOINSF = " + Korosztalyok[ i ].InduloFerfiak + ", KOINSN = " + Korosztalyok[ i ].InduloNok + " WHERE KOAZON = '" + Korosztalyok[ i ].Azonosito + "' AND VEAZON = '" + _VEAZON + "';";
+
+         }
+
+         //NOTE(mate): frissítem az eredményeket
+         foreach ( var item in Indulok )
+         {
+            commandText += "UPDATE Eredmények_" + _VEAZON + " SET KOAZON= '" + item.KOAZON + "' WHERE INNEVE = '" + item.Nev + "';";
+         }
+
+
+         lock ( Program.datalock )
+         {
+            connection.Open( );
+            SQLiteCommand command = connection.CreateCommand();
+            command.CommandText = commandText;
+            try { command.ExecuteNonQuery( ); }
+            catch ( System.Data.SQLite.SQLiteException ) { return; }
+            finally { command.Dispose( ); connection.Close( ); }
+         }
+      }
+
 
       #endregion
 
