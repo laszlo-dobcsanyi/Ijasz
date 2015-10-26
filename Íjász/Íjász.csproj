@@ -123,6 +123,9 @@
     <Compile Include="Panel_Korosztályok.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Panel_Oklevelek.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Panel_Startlista.cs">
       <SubType>Component</SubType>
     </Compile>

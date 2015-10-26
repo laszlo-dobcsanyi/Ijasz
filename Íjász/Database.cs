@@ -34,6 +34,7 @@ namespace Íjász
                 "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
                 "CREATE TABLE Egyesuletek (EGAZON char(30) PRIMARY KEY,EGCIME char(30),EGVENE char(30),EGVET1 char(30),EGVET2 char(30),EGVEM1 char(30),EGVEM2 char(30),EGLIST boolean,EGTASZ int);" +
                 "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30),INERSZ int, EGAZON char(10));" +
+                "CREATE TABLE Oklevelek (OKAZON char(10) PRIMARY KEY, OKTIP char(30), OKNEVE int, OKHELY int, OKKATE int, OKHESZ int, OKDATU int, OKEGYE int );" +
                 "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
 
@@ -943,7 +944,7 @@ namespace Íjász
                      {
                         for ( int q = 0 ; q < korosztalyok.Length ; q++ )
                         {
-                           if ( korosztalyok[ q ].Azonosito == eredmenyek[ j ].KorosztalyAzonosito && 
+                           if ( korosztalyok[ q ].Azonosito == eredmenyek[ j ].KorosztalyAzonosito &&
                               eredmenyek[ j ].Megjelent == true )
                            {
                               if ( indulok[ k ].Nem == "F" ) { korosztalyok[ q ].InduloFerfiak++; }
@@ -2145,6 +2146,95 @@ namespace Íjász
             return true;
          }
       }
+      #endregion
+
+      #region Oklevelek
+
+      public List<Oklevel> Oklevelek( )
+      {
+         List<Oklevel> Value = new List<Oklevel>();
+
+         lock ( Program.datalock )
+         {
+            connection.Open( );
+            SQLiteCommand command = connection.CreateCommand();
+            command.CommandText = "select OKAZON, OKTIP, OKNEVE, OKHELY, OKKATE, OKHESZ, OKDATU, OKEGYE from Oklevelek;";
+            var reader = command.ExecuteReader();
+            while ( reader.Read( ) )
+            {
+               Value.Add( new Oklevel( reader.GetString( 0 ),
+                                       reader.GetString( 1 ),
+                                       reader.GetInt32( 2 ),
+                                       reader.GetInt32( 3 ),
+                                       reader.GetInt32( 4 ),
+                                       reader.GetInt32( 5 ),
+                                       reader.GetInt32( 6 ),
+                                       reader.GetInt32( 7 ) ));
+            }
+
+            command.Dispose( );
+            connection.Close( );
+         }
+         return Value;
+      }
+
+      public bool UjOklevel( Oklevel _Oklevel )
+      {
+         bool value = false;
+
+         lock ( Program.datalock )
+         {
+            connection.Open( );
+            SQLiteCommand command = connection.CreateCommand();
+
+            command.CommandText = "insert into Oklevelek(OKAZON, OKTIP, OKNEVE, OKHELY, OKKATE, OKHESZ, OKDATU, OKEGYE) " + 
+               "VALUES( '" + _Oklevel.Azonosito + "', '" + _Oklevel.Tipus + "', " + _Oklevel.Nev + "," + _Oklevel.Helyezes +
+               "," + _Oklevel.Kategoria + "," + _Oklevel.Helyszin + "," + _Oklevel.Datum + "," + _Oklevel.Egyesulet + " );";
+
+            command.ExecuteNonQuery( );
+            command.Dispose( );
+            connection.Close( );
+            value = true;
+         }
+
+         return value;
+      }
+
+      public bool OklevelTorles( string _azonosito)
+      {
+         lock ( Program.datalock )
+         {
+            connection.Open( );
+
+            SQLiteCommand command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM Oklevelek WHERE OKAZON = '" + _azonosito + "';";
+            command.ExecuteNonQuery( );
+
+            command.Dispose( );
+            connection.Close( );
+
+            return true;
+         }
+      }
+
+
+      /*
+      
+                 lock ( Program.datalock )
+         {
+
+            command = connection.CreateCommand( );
+            command.CommandText = "INSERT INTO Korosztályok (VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSF, KOINSN, KOEGYB) VALUES('" + _korosztály.Verseny + "', '" + _korosztály.Azonosito + "', '" + _korosztály.Megnevezes + "', " +
+                +_korosztály.AlsoHatar + ", " + _korosztály.FelsoHatar + ", " + ( _korosztály.Nokre ? "1" : "0" ) + ", " + ( _korosztály.Ferfiakra ? "1" : "0" ) + ", " + _korosztály.InduloFerfiak + ", " + _korosztály.InduloFerfiak + ( _korosztály.Egyben ? " ,1" : " ,0" ) + ");";
+
+            command.ExecuteNonQuery( );
+            command.Dispose( );
+            connection.Close( );
+
+            return true;
+         }
+
+   */
       #endregion
 
 
