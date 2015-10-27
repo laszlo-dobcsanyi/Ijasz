@@ -6,7 +6,120 @@ using System.Drawing;
 
 namespace Íjász
 {
+
+   // INNEVE char(30) PRIMARY KEY,
+   // INNEME char(1) NOT NULL, 
+   // INSZUL char(20) NOT NULL, 
+   // INVEEN char(30),
+   // INERSZ int, 
+   // EGAZON char(10));" +
    public struct Induló
+   {
+      private string m_Nev;
+      private string m_Nem;
+      private string m_SzuletesiDatum;
+      private string m_Engedely;
+      private string m_Egyesulet;
+      private int    m_Eredmenyek;
+
+
+      public string Nev
+      {
+         get { return m_Nev; }
+         set
+         {
+            if ( ( value.Length > 30 ) || ( value.Length == 0 ) )
+            {
+               MessageBox.Show( "Nem megfelelő a név hossza ( " + value + " )", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return;
+            }
+            m_Nev = value;
+         }
+      }
+      public string Nem
+      {
+         get { return m_Nem; }
+         set
+         {
+            if ( value.ToString() != "F" && value.ToString()!= "N" )
+            {
+               MessageBox.Show( "Nem megfelelő a nem ( " + value + " )!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error );
+               return;
+            }
+            m_Nem = value;
+         }
+      }
+      public string SzuletesiDatum
+      {
+         get { return m_SzuletesiDatum; }
+         set
+         {
+            if ( value.Length > 20 || value.Length == 0 ) { MessageBox.Show( "Nem megfelelő a dátum ( " + value + " )!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            try { Convert.ToDateTime( value ); }
+            catch ( Exception ) { MessageBox.Show( "Nem megfelelő a születési dátum ( " + value + " )!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            m_SzuletesiDatum = value;
+         }
+      }
+      public string Engedely
+      {
+         get { return m_Engedely; }
+         set
+         {
+            if ( value.Length >= 30 ) { MessageBox.Show( "Nem megfelelő az engedély ( " + value + " )!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            m_Engedely = value;
+         }
+      }
+      public string Egyesulet
+      {
+         get { return m_Egyesulet; }
+         set
+         {
+            if ( value.Length > 30 ) { MessageBox.Show( "Nem megfelelő az egyesulet ( " + value + " " + value.Length + " )!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            m_Egyesulet = value;
+         }
+      }
+      public int Eredmenyek
+      {
+         get { return m_Eredmenyek; }
+         set
+         {
+            try { Convert.ToInt32( m_Eredmenyek ); }
+            catch ( Exception ) { MessageBox.Show( "Nem megfelelő az eredmenyek ( " + value + " )!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            m_Eredmenyek = value;
+         }
+      }
+
+      public Induló( string _Nev,
+               string _Nem,
+               string _SzuletesiDatum,
+               string _Engedely,
+               string _Egyesulet,
+               int _Eredmenyek )
+         : this( )
+      {
+         Nev = _Nev;
+         Nem = _Nem;
+         SzuletesiDatum = _SzuletesiDatum;
+         Engedely = _Engedely;
+         Egyesulet = _Egyesulet;
+         Eredmenyek = _Eredmenyek;
+      }
+
+
+      /*
+   public string SzuletesiDatum{get{};set;}
+   public string Engedely{get{};set;}
+   public string Egyesulet{get{};set;}
+   public int    Eredmenyek{get{};set;}
+   */
+   }
+
+
+
+
+
+
+
+   public struct Induló2
    {
       public string Nev;
       public string Nem;
@@ -15,7 +128,13 @@ namespace Íjász
       public string Egyesulet;
       public int Eredmenyek;
 
-      public Induló( string _Nev,
+
+
+
+
+
+
+      public Induló2( string _Nev,
                     string _Nem,
                     string _SzuletesiDatum,
                     string _Engedely,

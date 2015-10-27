@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System;
 using System.Collections;
+using System.Linq;
 
 namespace Íjász
 {
@@ -35,8 +36,7 @@ namespace Íjász
                Verseny verseny = Program.database.Verseny( _VEAZON ).Value;
                List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
                List<Eredmény> eredmenyek = Program.database.Eredmények( _VEAZON );
-               int MegjelentIndulok = 0;
-               foreach ( Eredmény item in eredmenyek ) { if ( item.Megjelent == true ) { MegjelentIndulok++; } }
+
 
                foreach ( Versenysorozat item in versenysorozatok )
                {
@@ -51,7 +51,7 @@ namespace Íjász
                VEMEGN = verseny.Megnevezes;
                VEDATU = verseny.Datum;
                VEOSPO = verseny.Osszes;
-               VEINSZ = MegjelentIndulok;
+               VEINSZ = eredmenyek.Count( eredmeny => eredmeny.Megjelent.Equals( true ) );
             }
          }
 
@@ -334,7 +334,7 @@ namespace Íjász
          public VERSENYADATOK VersenyAdatok;
          public List<VERSENYZOADAT> VersenyzoAdatok;
       };
-
+         
       public struct BEIROLAP
       {
          public struct VERSENYADATOK
