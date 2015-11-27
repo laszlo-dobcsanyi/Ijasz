@@ -25,7 +25,6 @@ namespace Íjász
         CheckBox chkVerseny;
         CheckBox chkVersenysorozat;
 
-
         public
         Panel_Eredménylap()
         {
@@ -43,12 +42,10 @@ namespace Íjász
                                             new Size(96, 32),
                                             btnNyomtat_Click,
                                             this);
- 
 
             lblVersenysorozatAzonosito = new iLabel("Versenysorozat azonosító:",
                                                     new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 36 * 16),
                                                     this);
-  
 
             lblVersenyAzonosito = new iLabel("Verseny azonosító:",
                                             new Point(cWidth - 96 - 52 * 16,cHeight - 32 - 33 * 16),
@@ -75,7 +72,6 @@ namespace Íjász
             foreach (Verseny current in versenyek)
                 cboVersenyAzonosito.Items.Add(current.Azonosito);
             if (cboVersenyAzonosito.Items.Count != 0) cboVersenyAzonosito.SelectedIndex = 0;
-
 
             cboVersenysorozatAzonosito = new iComboBox( new Point(cWidth - 96 - 42 * 16,cHeight - 32 - 36 * 16),
                                                         new Size(128, 24),
@@ -124,7 +120,6 @@ namespace Íjász
                                          Eredmenylap_Click,
                                          this);
 
-
             chkVerseny = new iCheckBox("",
                                         new Point(cWidth - 96 - 48 * 16,cHeight - 32 - 41 * 16 - 12),
                                         Versenysorozat_Click,
@@ -134,7 +129,6 @@ namespace Íjász
                                                new Point(cWidth - 96 - 48 * 16,cHeight - 32 - 39 * 16 - 12),
                                                Versenysorozat_Click,
                                                this);
-                                                
 
             foreach (Verseny current in versenyek)
             {
@@ -167,7 +161,6 @@ namespace Íjász
                 }
             }
 
-          
         }
 
         private void 
@@ -197,7 +190,6 @@ namespace Íjász
             
                 //nincs eredménylap
             if (chkTeljes.Checked == false && chkMisz.Checked == false && chkEgyesulet.Checked == false && chkReszletes.Checked == false) return;
-
 
             if ( chkVerseny.CheckState == CheckState.Checked && chkTeljes.CheckState == CheckState.Checked)
             {

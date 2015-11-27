@@ -21,7 +21,6 @@ namespace Íjász
         public bool DublaBeirlap;
 
 
-
         public Verseny( string _Azonosito, string _Megnevezes, string _Datum, string _VersenySorozat, int _Osszes, int _Allomasok, int _Indulok, bool _Lezarva, bool _DublaBeirlap )
         {
             Azonosito = _Azonosito;
@@ -302,7 +301,6 @@ namespace Íjász
             MessageBox.Show("Nem taláható a verseny?!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-
         void table_DataBindingComplete(object _sender, EventArgs _event)
         {
             table.DataBindingComplete -= table_DataBindingComplete;
@@ -356,7 +354,7 @@ namespace Íjász
             Verseny_Törlés(data.Rows[table.SelectedRows[0].Index][0].ToString());
         }
         #endregion
-
+      /*
         public sealed class Form_Verseny : Form
         {
             private string eredeti_azonosító = null;
@@ -388,7 +386,6 @@ namespace Íjász
                 InitializeContent(_verseny);
                 InitializeData(_verseny);
             }
-
 
             #region Verseny Hozzáadás
             private void InitializeForm( )
@@ -430,7 +427,6 @@ namespace Íjász
                                                     new Point( lblAzonosito.Location.X, 16 + 6 * 32 ),
                                                     this );
 
-
                 txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Size.Width + 16 + 32, lblAzonosito.Location.Y ),
                                             10,
                                             new Size( 128 + 64, 24 ),
@@ -457,7 +453,6 @@ namespace Íjász
                 List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
                 foreach ( Versenysorozat current in versenysorozatok ) { cboVersenySorozat.Items.Add( current.azonosító ); }
 
-
                 txtLovesek = new iTextBox( new Point( txtAzonosito.Location.X, lblLovesek.Location.Y ),
                                             null,
                                             new Size( 128 + 64, 24 ),
@@ -470,13 +465,11 @@ namespace Íjász
                                             null,
                                             this );
 
-
                 chkDuplaBeirolap = new iCheckBox( null,
                                                 new Point( txtAzonosito.Location.X, lblDuplaBeirolap.Location.Y ),
                                                 null,
                                                 this );
                 chkDuplaBeirolap.Size = txtAzonosito.Size;
-
 
                 Button btnRendben = new iButton( "Rendben",
                                                 new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
@@ -541,7 +534,6 @@ namespace Íjász
                                                 new Point( lblAzonosito.Location.X, 16 + 8 * 32 ),
                                                 this );
 
-
                 txtAzonosito = new iTextBox( new Point( lblAzonosito.Location.X + lblAzonosito.Size.Width + 16 + 32, lblAzonosito.Location.Y ),
                                             10,
                                             new Size( 128 + 64, 24 ),
@@ -568,7 +560,6 @@ namespace Íjász
                 List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
                 foreach ( Versenysorozat current in versenysorozatok ) { cboVersenySorozat.Items.Add( current.azonosító ); }
 
-
                 txtLovesek = new iTextBox( new Point( txtAzonosito.Location.X, lblLovesek.Location.Y ),
                                             null,
                                             new Size( 128 + 64, 24 ),
@@ -580,7 +571,6 @@ namespace Íjász
                                             new Size( 128 + 64, 24 ),
                                             null,
                                             this );
-
 
                 chkDuplaBeirolap = new iCheckBox( null,
                                                 new Point( txtAzonosito.Location.X, lblDuplaBeirolap.Location.Y ),
@@ -650,7 +640,6 @@ namespace Íjász
                 cboVersenySorozat.Items.Remove( _azonosító );
             }
 
-
             public void EredmenyBeiras(string _azonosító, Database.BeírásEredmény _beírás)
             {
                 if (_beírás.flag == Database.BeírásEredmény.Flag.HOZZÁADOTT)
@@ -718,5 +707,6 @@ namespace Íjász
             }
             #endregion
         }
+      */
     }
 }

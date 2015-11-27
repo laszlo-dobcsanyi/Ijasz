@@ -102,43 +102,89 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Connection.cs" />
-    <Compile Include="Database.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="Database\Egyesületek.cs" />
+    <Compile Include="Database\Eredmények.cs" />
+    <Compile Include="Database\Induló.cs" />
+    <Compile Include="Database\Korosztályok.cs" />
+    <Compile Include="Database\Oklevelek.cs" />
+    <Compile Include="Database\Verseny.cs" />
+    <Compile Include="Database\Versenysorozat.cs" />
+    <Compile Include="Database\Íjtípusok.cs" />
+    <Compile Include="Form\Egyesületek\Form_Egyesulet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Eredmények\Form_Eredmény.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Indulók\Form_Csapatlista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Indulók\Form_Induló.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Indulók\Form_Induló_Teszt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Korosztályok\FormKorosztalyEredmeny.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Korosztályok\Form_Korosztály.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Oklevelek\Form_Oklevel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Verseny\Form_Verseny.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Versenysorozat\Form_Versenysorozat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Íjtípusok\Form_Íjtípus.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Network.cs" />
-    <Compile Include="Nyomtat.cs" />
-    <Compile Include="Panel_Egyesuletek.cs">
+    <Compile Include="Nyomtat\Nyomtat.cs" />
+    <Compile Include="Form\Egyesületek\Panel_Egyesuletek.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Eredmények.cs">
+    <Compile Include="Form\Eredmények\Panel_Eredmények.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Eredménylap.cs">
+    <Compile Include="Form\Eredménylap\Panel_Eredménylap.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Indulók.cs">
+    <Compile Include="Form\Indulók\Panel_Indulók.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Nyomtat\Eredménylap\EredménylapVerseny.cs" />
+    <Compile Include="Nyomtat\Eredménylap\EredménylapVersenysorozat.cs" />
+    <Compile Include="Nyomtat\Startlista\Beírólap.cs" />
+    <Compile Include="Nyomtat\Startlista\Csapatlista.cs" />
+    <Compile Include="Nyomtat\Startlista\NevezésiLista.cs" />
     <Compile Include="Panel_Kapcsolatok.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Korosztályok.cs">
+    <Compile Include="Form\Korosztályok\Panel_Korosztályok.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Oklevelek.cs">
+    <Compile Include="Form\Oklevelek\Panel_Oklevelek.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Startlista.cs">
+    <Compile Include="Form\Startlista\Panel_Startlista.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Verseny.cs">
+    <Compile Include="Form\Verseny\Panel_Verseny.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Panel_Versenysorozat.cs">
+    <Compile Include="Form\Versenysorozat\Panel_Versenysorozat.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Panel_Íjtípusok.cs">
+    <Compile Include="Form\Íjtípusok\Panel_Íjtípusok.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -173,6 +219,7 @@
   <ItemGroup>
     <Content Include="Íjász.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

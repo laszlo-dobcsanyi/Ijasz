@@ -63,8 +63,6 @@ namespace Íjász
             selected_address = IPAddress.Parse(address_list.SelectedItem.ToString());
             selected = true;
         }
-
-
         private class SpecificAddressForm : Form
         {
             public bool accepted = false;

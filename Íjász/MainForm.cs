@@ -4,10 +4,8 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace Íjász
-{
-   public sealed class MainForm : Form
-   {
+namespace Íjász {
+   public sealed class MainForm : Form {
       public Panel_Versenysorozat versenysorozat_panel;
       public Panel_Verseny verseny_panel;
       public Panel_Korosztályok korosztályok_panel;
@@ -24,27 +22,26 @@ namespace Íjász
       public TabControl menu;
       private StatusStrip status;
 
-      public MainForm( )
-      {
+      public MainForm( ) {
          InitializeForm( );
          InitializeContent( );
          InitializeEvents( );
+
       }
 
-      private void InitializeForm( )
-      {
+      private void InitializeForm( ) {
          Text = "Íjász szerver címe: " + Program.network.GetEndPoint( ).ToString( );
          ClientSize = new System.Drawing.Size( 1024, 768 );
          MinimumSize = ClientSize;
          StartPosition = FormStartPosition.CenterScreen;
       }
 
-      private void InitializeContent( )
-      {
+      private void InitializeContent( ) {
+
          #region Status
-         ToolStripStatusLabel Tulajdonos = new ToolStripStatusLabel(Program.Tulajdonos_Megnevezés);
-         ToolStripStatusLabel Készítők = new ToolStripStatusLabel("Belinyák Nándor és Társai. \u00A9 2014");
-         ToolStripStatusLabel Verzió = new ToolStripStatusLabel("Verzió: 0.9.5-2015.01.28");
+         ToolStripStatusLabel Tulajdonos = new ToolStripStatusLabel( Program.Tulajdonos_Megnevezés );
+         ToolStripStatusLabel Készítők = new ToolStripStatusLabel( "Belinyák Nándor és Társai. \u00A9 2014" );
+         ToolStripStatusLabel Verzió = new ToolStripStatusLabel( "Verzió: 0.9.5-2015.01.28" );
          Készítők.BorderSides = ToolStripStatusLabelBorderSides.Left;
          Verzió.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
@@ -55,61 +52,60 @@ namespace Íjász
          #endregion
 
          #region Menü
-         TabPage Versenysorozat = new TabPage("Versenysorozatok");
+         TabPage Versenysorozat = new TabPage( "Versenysorozatok" );
          versenysorozat_panel = new Panel_Versenysorozat( );
          versenysorozat_panel.Dock = DockStyle.Fill;
          Versenysorozat.Controls.Add( versenysorozat_panel );
 
-         TabPage Verseny = new TabPage("Versenyek");
+         TabPage Verseny = new TabPage( "Versenyek" );
          verseny_panel = new Panel_Verseny( );
          verseny_panel.Dock = DockStyle.Fill;
          Verseny.Controls.Add( verseny_panel );
 
-         TabPage Korosztályok = new TabPage("Korosztályok");
+         TabPage Korosztályok = new TabPage( "Korosztályok" );
          korosztályok_panel = new Panel_Korosztályok( );
          korosztályok_panel.Dock = DockStyle.Fill;
          Korosztályok.Controls.Add( korosztályok_panel );
 
-         TabPage Íjtípusok = new TabPage("Íjtípusok");
+         TabPage Íjtípusok = new TabPage( "Íjtípusok" );
          íjtípusok_panel = new Panel_Íjtípusok( );
          íjtípusok_panel.Dock = DockStyle.Fill;
          Íjtípusok.Controls.Add( íjtípusok_panel );
 
-         TabPage Egyesuletek = new TabPage("Egyesületek");
+         TabPage Egyesuletek = new TabPage( "Egyesületek" );
          egyesuletek_panel = new Panel_Egyesuletek( );
          egyesuletek_panel.Dock = DockStyle.Fill;
          Egyesuletek.Controls.Add( egyesuletek_panel );
 
-         TabPage Indulók = new TabPage("Indulók");
+         TabPage Indulók = new TabPage( "Indulók" );
          indulók_panel = new Panel_Indulók( );
          indulók_panel.Dock = DockStyle.Fill;
          Indulók.Controls.Add( indulók_panel );
 
-         TabPage Eredmények = new TabPage("Eredmények");
+         TabPage Eredmények = new TabPage( "Eredmények" );
          eredmények_panel = new Panel_Eredmények( );
          eredmények_panel.Dock = DockStyle.Fill;
          Eredmények.Controls.Add( eredmények_panel );
 
-         TabPage Kapcsolatok = new TabPage("Kapcsolatok");
+         TabPage Kapcsolatok = new TabPage( "Kapcsolatok" );
          kapcsolatok_panel = new Panel_Kapcsolatok( );
          kapcsolatok_panel.Dock = DockStyle.Fill;
          Kapcsolatok.Controls.Add( kapcsolatok_panel );
 
-         TabPage Startlista = new TabPage("Startlisták");
+         TabPage Startlista = new TabPage( "Startlisták" );
          startlista_panel = new Panel_Startlista( );
          startlista_panel.Dock = DockStyle.Fill;
          Startlista.Controls.Add( startlista_panel );
 
-         TabPage Eredménylap = new TabPage("Eredménylapok");
+         TabPage Eredménylap = new TabPage( "Eredménylapok" );
          eredménylap_panel = new Panel_Eredménylap( );
          eredménylap_panel.Dock = DockStyle.Fill;
          Eredménylap.Controls.Add( eredménylap_panel );
 
-         TabPage Oklevelek = new TabPage("Oklevelek");
+         TabPage Oklevelek = new TabPage( "Oklevelek" );
          oklevelek_panel = new Panel_Oklevelek( );
          oklevelek_panel.Dock = DockStyle.Fill;
          Oklevelek.Controls.Add( oklevelek_panel );
-
 
          //
 
@@ -133,7 +129,7 @@ namespace Íjász
          menu.Dock = DockStyle.Fill;
          #endregion
 
-         Button BackupButton = new Button();
+         Button BackupButton = new Button( );
          BackupButton.Text = "Biztonsági mentés";
          BackupButton.Location = new Point( ClientSize.Width - 128, 0 );
          BackupButton.Size = new System.Drawing.Size( 128, 24 );
@@ -147,52 +143,48 @@ namespace Íjász
          BackupButton.BringToFront( );
       }
 
-      void menu_DrawItem( object sender, DrawItemEventArgs e )
-      {
 
-         TabPage currentab = menu.TabPages[e.Index];
-         SolidBrush textbrush = new SolidBrush(Color.Black);
-         Rectangle itemrect = menu.GetTabRect(e.Index);
-         StringFormat sf = new StringFormat();
+
+      void menu_DrawItem( object sender, DrawItemEventArgs e ) {
+
+         TabPage currentab = menu.TabPages[ e.Index ];
+         SolidBrush textbrush = new SolidBrush( Color.Black );
+         Rectangle itemrect = menu.GetTabRect( e.Index );
+         StringFormat sf = new StringFormat( );
          sf.Alignment = StringAlignment.Center;
          sf.LineAlignment = StringAlignment.Center;
 
-         if ( Convert.ToBoolean( e.State & DrawItemState.Selected ) )
-         {
-            Font f = new Font(menu.Font.Name, menu.Font.Size + 1, FontStyle.Bold);
+         if ( Convert.ToBoolean( e.State & DrawItemState.Selected ) ) {
+            Font f = new Font( menu.Font.Name, menu.Font.Size + 1, FontStyle.Bold );
             e.Graphics.DrawString( currentab.Text, f, textbrush, itemrect, sf );
          }
-         else e.Graphics.DrawString( currentab.Text, e.Font, textbrush, itemrect, sf );
+         else
+            e.Graphics.DrawString( currentab.Text, e.Font, textbrush, itemrect, sf );
          textbrush.Dispose( );
 
       }
 
-      private void BackupButton_Click( object _sender, EventArgs _event )
-      {
+      private void BackupButton_Click( object _sender, EventArgs _event ) {
          //Program.database.CreateBackup("adat_biztonsági_" + DateTime.Now.ToString().Trim(new Char[] { '-' }).Replace(' ', '_').Replace('.', '-').Replace(':', '-'));
-         Backup_Form mentés = new Backup_Form();
+         Backup_Form mentés = new Backup_Form( );
          mentés.ShowDialog( );
       }
-      private class Backup_Form : Form
-      {
+      private class Backup_Form : Form {
          private TextBox név_box;
-         public Backup_Form( )
-         {
+         public Backup_Form( ) {
             InitializeForm( );
             InitializeContent( );
          }
 
-         private void InitializeForm( )
-         {
+         private void InitializeForm( ) {
             Text = "Biztonsági mentés";
             ClientSize = new System.Drawing.Size( 256 + 64, 96 );
             MinimumSize = ClientSize;
             StartPosition = FormStartPosition.CenterScreen;
          }
 
-         private void InitializeContent( )
-         {
-            Label név = new Label();
+         private void InitializeContent( ) {
+            Label név = new Label( );
             név.Text = "Mentés neve:";
             név.Location = new Point( 16, 16 );
             név.Size = new Size( 48, 16 );
@@ -201,7 +193,7 @@ namespace Íjász
             név_box.Location = new Point( név.Location.X + név.Size.Width + 16, név.Location.Y );
             név_box.Size = new Size( 128, 24 );
 
-            Button mentés = new Button();
+            Button mentés = new Button( );
             mentés.Text = "Mentés";
             mentés.Location = new Point( név_box.Location.X + név_box.Size.Width + 16, név_box.Location.Y + név_box.Size.Height + 16 );
             mentés.Size = new Size( 64, 32 );
@@ -215,9 +207,8 @@ namespace Íjász
          }
 
          #region EventHandlers
-         private void mentés_Click( object _sender, EventArgs _event )
-         {
-            Regex rgx = new Regex("[^a-zA-Z0-9_ ]");
+         private void mentés_Click( object _sender, EventArgs _event ) {
+            Regex rgx = new Regex( "[^a-zA-Z0-9_ ]" );
             név_box.Text = rgx.Replace( név_box.Text, "" );
 
             if ( név_box.Text.Length == 0 || 30 <= név_box.Text.Length ) { MessageBox.Show( "A mentés nevének hossza nem megfelelő!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
@@ -228,8 +219,7 @@ namespace Íjász
          #endregion
       }
 
-      private void InitializeEvents( )
-      {
+      private void InitializeEvents( ) {
          versenysorozat_panel.versenysorozat_hozzáadva += verseny_panel.verseny_form.VersenySorozatHozzaadas;
          versenysorozat_panel.versenysorozat_módosítva += verseny_panel.verseny_form.VersenySorozatModositas;
          versenysorozat_panel.versenysorozat_törölve += verseny_panel.verseny_form.VeresenySorozatTorles;
@@ -263,6 +253,11 @@ namespace Íjász
          verseny_panel.verseny_törölve += Program.network.verseny_törlés;
          verseny_panel.verseny_lezárva += Program.network.verseny_lezárás;
          verseny_panel.verseny_megnyitva += Program.network.verseny_megnyitás;
+
+         verseny_panel.verseny_hozzáadva += oklevelek_panel.verseny_hozzáadás;
+         verseny_panel.verseny_törölve += oklevelek_panel.verseny_törlés;
+         verseny_panel.verseny_módosítva += oklevelek_panel.verseny_módosítás;
+
 
          //
 
@@ -306,12 +301,10 @@ namespace Íjász
    }
    //-------------
 
-   public class iButton : Button
-   {
+   public class iButton : Button {
 
       public
-      iButton( string _Text, Point _Location, Size _Size, EventHandler _Click, Form _Form )
-      {
+      iButton( string _Text, Point _Location, Size _Size, EventHandler _Click, Form _Form ) {
          this.Text = _Text;
          this.Location = _Location;
          this.Size = _Size;
@@ -321,8 +314,7 @@ namespace Íjász
       }
 
       public
-      iButton( string _Text, Point _Location, Size _Size, EventHandler _Click, Control _Control )
-      {
+      iButton( string _Text, Point _Location, Size _Size, EventHandler _Click, Control _Control ) {
          this.Text = _Text;
          this.Location = _Location;
          this.Size = _Size;
@@ -332,11 +324,9 @@ namespace Íjász
       }
    }
 
-   public class iLabel : Label
-   {
+   public class iLabel : Label {
       public
-      iLabel( string _Text, Point _Location, Form _Form )
-      {
+      iLabel( string _Text, Point _Location, Form _Form ) {
          this.Text = _Text;
          this.Location = _Location;
          //this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
@@ -346,8 +336,7 @@ namespace Íjász
       }
 
       public
-      iLabel( string _Text, Point _Location, Control _Control )
-      {
+      iLabel( string _Text, Point _Location, Control _Control ) {
          this.Text = _Text;
          this.Location = _Location;
          this.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
@@ -357,11 +346,9 @@ namespace Íjász
       }
    }
 
-   public class iTextBox : TextBox
-   {
+   public class iTextBox : TextBox {
       public
-      iTextBox( Point _Location, int? _MaxLength, Size? _Size, EventHandler _TextChanged, Form _Form )
-      {
+      iTextBox( Point _Location, int? _MaxLength, Size? _Size, EventHandler _TextChanged, Form _Form ) {
 
          if ( _Size != null ) { this.Size = _Size.Value; }
          this.Location = _Location;
@@ -371,11 +358,9 @@ namespace Íjász
       }
    }
 
-   public class iComboBox : ComboBox
-   {
+   public class iComboBox : ComboBox {
       public
-      iComboBox( Point _Location, Size _Size, EventHandler _SelectedIndexChanged, Control _Control )
-      {
+      iComboBox( Point _Location, Size _Size, EventHandler _SelectedIndexChanged, Control _Control ) {
          this.Location = _Location;
          this.Size = _Size;
          this.SelectedIndexChanged += _SelectedIndexChanged;
@@ -385,8 +370,7 @@ namespace Íjász
       }
 
       public
-      iComboBox( Point _Location, Size _Size, EventHandler _SelectedIndexChanged, Form _Form )
-      {
+      iComboBox( Point _Location, Size _Size, EventHandler _SelectedIndexChanged, Form _Form ) {
          this.Location = _Location;
          this.Size = _Size;
          this.SelectedIndexChanged += _SelectedIndexChanged;
@@ -396,11 +380,9 @@ namespace Íjász
       }
    }
 
-   public class iCheckBox : CheckBox
-   {
+   public class iCheckBox : CheckBox {
       public
-      iCheckBox( string _Text, Point _Location, EventHandler _Click, Form _form )
-      {
+      iCheckBox( string _Text, Point _Location, EventHandler _Click, Form _form ) {
          this.Text = _Text;
          this.Location = _Location;
          this.AutoSize = true;
@@ -412,8 +394,7 @@ namespace Íjász
       }
 
       public
-      iCheckBox( string _Text, Point _Location, EventHandler _Click, Control _control )
-      {
+      iCheckBox( string _Text, Point _Location, EventHandler _Click, Control _control ) {
          this.Text = _Text;
          this.Location = _Location;
          this.AutoSize = true;

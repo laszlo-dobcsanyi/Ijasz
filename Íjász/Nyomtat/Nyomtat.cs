@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Íjász
 {
-   public static class Nyomtat
+   public static partial class Nyomtat
    {
       public static Form dialog;
       public static string DialogFileName;
@@ -36,7 +36,6 @@ namespace Íjász
                Verseny verseny = Program.database.Verseny( _VEAZON ).Value;
                List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok( );
                List<Eredmény> eredmenyek = Program.database.Eredmények( _VEAZON );
-
 
                foreach ( Versenysorozat item in versenysorozatok )
                {
@@ -75,7 +74,6 @@ namespace Íjász
             public string INEGYE;
             public int INCSSZ;
             public string ITMEGN;
-
 
             public VERSENYZOADAT( string _INNEVE, int _INSOSZ, int _INSZUL, string _INEGYE, int _INCSSZ, string _ITMEGN )
             {
@@ -334,7 +332,7 @@ namespace Íjász
          public VERSENYADATOK VersenyAdatok;
          public List<VERSENYZOADAT> VersenyzoAdatok;
       };
-         
+
       public struct BEIROLAP
       {
          public struct VERSENYADATOK
@@ -632,7 +630,6 @@ namespace Íjász
             }
             return Data;
          }
-
 
          public List<INDULO>
          Osszesindulo( string _VEAZON )
@@ -1080,7 +1077,6 @@ namespace Íjász
          public string Megnevezes;
          public List<EGYESULETADAT> Egyesuletek;
 
-
          public EREDMENYLAPVERSENYSOROZATEGYESULET( string _VSAZON ) : this( )
          {
             Versenysorozat tmpvs = Program.database.Versenysorozat(_VSAZON).Value;
@@ -1209,7 +1205,6 @@ namespace Íjász
                }
             }
          }
-
 
          /*az a baj, hogy a korosztály azonosítója és megnevezése alsó,felső lehet ugyanaz, 
          de ha az egyben más, akkor nem lehet összevonni-> tárolni kell mindent a korosztályról???
@@ -1380,7 +1375,6 @@ namespace Íjász
 
             VersenyAzonositok = new List<string>( );
 
-
             List<Verseny> versenyek = Program.database.Versenyek();
 
             IComparer<Verseny> Compare = new OrderVerseny();
@@ -1424,38 +1418,38 @@ namespace Íjász
                }
             }
 
-         for ( int i = ( OsszesIndulo.Count - 1 ) ; i >= 0 ; i--)
-         {
-            for ( int j = i -1; j >= 0 ; j-- )
+            for ( int i = ( OsszesIndulo.Count - 1 ) ; i >= 0 ; i-- )
             {
-               if ( OsszesIndulo[ i ].Verseny != OsszesIndulo[ j ].Verseny &&
-                     OsszesIndulo[ i ].Nev == OsszesIndulo[ j ].Nev &&
-                     OsszesIndulo[ i ].Korosztaly == OsszesIndulo[ j ].Korosztaly &&
-                     OsszesIndulo[ i ].KorosztalyEgyben == OsszesIndulo[ j ].KorosztalyEgyben &&
-                     OsszesIndulo[ i ].Ijtipus == OsszesIndulo[ j ].Ijtipus )
+               for ( int j = i - 1 ; j >= 0 ; j-- )
                {
-                     OsszesIndulo[ i ].Eredmenyek.Add( OsszesIndulo[ j ].Eredmenyek[0]);
+                  if ( OsszesIndulo[ i ].Verseny != OsszesIndulo[ j ].Verseny &&
+                        OsszesIndulo[ i ].Nev == OsszesIndulo[ j ].Nev &&
+                        OsszesIndulo[ i ].Korosztaly == OsszesIndulo[ j ].Korosztaly &&
+                        OsszesIndulo[ i ].KorosztalyEgyben == OsszesIndulo[ j ].KorosztalyEgyben &&
+                        OsszesIndulo[ i ].Ijtipus == OsszesIndulo[ j ].Ijtipus )
+                  {
+                     OsszesIndulo[ i ].Eredmenyek.Add( OsszesIndulo[ j ].Eredmenyek[ 0 ] );
                      OsszesIndulo.RemoveAt( j );
                      i--;
+                  }
                }
             }
-         }
 
-         for ( int i = OsszesIndulo.Count - 1 ; i >= 0 ; i-- )
-         {
-            int sum = 0;
-            foreach ( EREDMENY item in OsszesIndulo[ i ].Eredmenyek )
+            for ( int i = OsszesIndulo.Count - 1 ; i >= 0 ; i-- )
             {
-               sum += item.Pont;
+               int sum = 0;
+               foreach ( EREDMENY item in OsszesIndulo[ i ].Eredmenyek )
+               {
+                  sum += item.Pont;
+               }
+
+               INDULO tmp = OsszesIndulo[i];
+               tmp.OsszPont = sum;
+               OsszesIndulo.RemoveAt( i );
+               OsszesIndulo.Add( tmp );
+
             }
-
-            INDULO tmp = OsszesIndulo[i];
-            tmp.OsszPont = sum;
-            OsszesIndulo.RemoveAt( i );
-            OsszesIndulo.Add( tmp );
-
-         }
-         return OsszesIndulo;
+            return OsszesIndulo;
          }
 
          public List<INDULO> Seged2( string _VEAZON )
@@ -1466,7 +1460,6 @@ namespace Íjász
             List<Eredmény> eredmények = Program.database.Eredmények( _VEAZON );
             List<Korosztály> korosztalyok = Program.database.Korosztályok( _VEAZON );
             Verseny verseny = Program.database.Verseny( _VEAZON ).Value;
-
 
             foreach ( Eredmény eredmeny in eredmények )
             {
@@ -1770,7 +1763,6 @@ namespace Íjász
             return Data;
          }
 
-
          public
          EREDMENYLAPVESENYSOROZATTELJES( string _VSAZON )
              : this( )
@@ -1781,7 +1773,6 @@ namespace Íjász
             VersenyekSzama = temp.versenyek;
 
             VersenyAzonositok = new List<string>( );
-
 
             List<Verseny> versenyek = Program.database.Versenyek();
 
@@ -1811,7 +1802,6 @@ namespace Íjász
 
          }
 
-
          #region Seged
          public List<INDULO> Seged1( string _VSAZON )
          {
@@ -1828,7 +1818,6 @@ namespace Íjász
                }
             }
 
-
             for ( int i = OsszesIndulo.Count - 1 ; i >= 0 ; i-- )
             {
                for ( int j = i - 1 ; j >= 0 ; j-- )
@@ -1838,7 +1827,7 @@ namespace Íjász
                       OsszesIndulo[ i ].Korosztaly == OsszesIndulo[ j ].Korosztaly &&
                       OsszesIndulo[ i ].Ijtipus == OsszesIndulo[ j ].Ijtipus )
                   {
-                     OsszesIndulo[ i ].Eredmenyek.Add( OsszesIndulo[j].Eredmenyek[0]);
+                     OsszesIndulo[ i ].Eredmenyek.Add( OsszesIndulo[ j ].Eredmenyek[ 0 ] );
                      OsszesIndulo.RemoveAt( j );
                      i--;
                   }
@@ -1930,7 +1919,6 @@ namespace Íjász
 
          public List<INDULO> OsszesIndulo;
          public List<IJTIPUS> IjTipusok;
-
 
       }
 
@@ -2177,7 +2165,6 @@ namespace Íjász
             return Data;
          }
 
-
          public
          EREDMENYLAPVESENYSOROZATMISZ( string _VSAZON )
              : this( )
@@ -2188,7 +2175,6 @@ namespace Íjász
             VersenyekSzama = temp.versenyek;
 
             VersenyAzonositok = new List<string>( );
-
 
             List<Verseny> versenyek = Program.database.Versenyek( );
 
@@ -2218,7 +2204,6 @@ namespace Íjász
 
          }
 
-
          #region Seged
          public List<INDULO> Seged1( string _VSAZON )
          {
@@ -2235,17 +2220,16 @@ namespace Íjász
                }
             }
 
-
             for ( int i = OsszesIndulo.Count - 1 ; i >= 0 ; i-- )
             {
-               for ( int j = i- 1 ; j >= 0 ; j-- )
+               for ( int j = i - 1 ; j >= 0 ; j-- )
                {
                   if ( OsszesIndulo[ i ].Verseny != OsszesIndulo[ j ].Verseny &&
                       OsszesIndulo[ i ].Nev == OsszesIndulo[ j ].Nev &&
                       OsszesIndulo[ i ].Korosztaly == OsszesIndulo[ j ].Korosztaly &&
                       OsszesIndulo[ i ].Ijtipus == OsszesIndulo[ j ].Ijtipus )
                   {
-                     OsszesIndulo[ i ].Eredmenyek.Add( OsszesIndulo[j].Eredmenyek[0]);
+                     OsszesIndulo[ i ].Eredmenyek.Add( OsszesIndulo[ j ].Eredmenyek[ 0 ] );
                      OsszesIndulo.RemoveAt( j );
                      i--;
                   }
@@ -2339,1499 +2323,8 @@ namespace Íjász
          public List<INDULO> OsszesIndulo;
          public List<IJTIPUS> IjTipusok;
 
-
       }
 
-
-      static public string
-      NyomtatCsapatlista( string _VEAZON )
-      {
-         string FileName = null;
-         CSAPATLISTA Data = new CSAPATLISTA( _VEAZON );
-
-         #region Feliratok 
-         string HeadLine = "C S A P A T L I S T A";
-         string VersenyAzonosito = "Verseny azonosító, név: ";
-         string VersenyIdo = "Verseny ideje: ";
-         string VersenyOsszPont = "Verseny össz pontszám: ";
-         string VersenyIndulokSzama = "Indulók száma: ";
-         string VersenySorozat = "Versenysorozat azonosító, név: ";
-         #endregion
-
-         if ( Data.VersenyAdatok.VSAZON != null )
-         {
-            FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "CSAPATLISTA.docx";
-         }
-         else
-         {
-            FileName = _VEAZON + "\\" + "CSAPATLISTA.docx";
-         }
-
-         var document = DocX.Create( FileName );
-         document.AddHeaders( );
-         PageNumber( document );
-
-         #region címbekezdés
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( HeadLine );
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés + "\n" );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         #region header
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph();
-         paragraph_1.Append( VersenyAzonosito );
-
-         paragraph_1.Append( _VEAZON + ", " + Data.VersenyAdatok.VEMEGN );
-         paragraph_1.Bold( );
-         titleFormat2.Bold = false;
-         paragraph_1.Append( "\n" + VersenyIdo );
-         paragraph_1.Append( Data.VersenyAdatok.VEDATU );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t\t" + VersenyOsszPont );
-         paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t\t" + VersenyIndulokSzama );
-         paragraph_1.Append( Data.VersenyAdatok.VEINSZ.ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\n" + VersenySorozat );
-         paragraph_1.Append( Data.VersenyAdatok.VSAZON + ", " + Data.VersenyAdatok.VSMEGN );
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-         #endregion
-
-         #region Data
-         for ( int i = 0 ; i < Data.Csapatok.Count ; i++ )
-         {
-            Table table = document.AddTable( Data.Csapatok[i].versenyzoadatok.Count + 1, 6 );
-            table.Alignment = Alignment.center;
-
-            table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( "Csapat" ).Bold( );
-            table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Sorszám" ).Bold( );
-            table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( "Név" ).Bold( );
-            table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( "Íjtípus" ).Bold( );
-            table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( "Kor" ).Bold( );
-            table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( "Egyesület" ).Bold( );
-
-
-            int q = 1;
-            foreach ( CSAPATLISTA.VERSENYZOADAT versenyzo in Data.Csapatok[ i ].versenyzoadatok )
-            {
-               table.Rows[ q ].Cells[ 0 ].Paragraphs[ 0 ].Append( versenyzo.INCSSZ.ToString( ) );
-               table.Rows[ q ].Cells[ 1 ].Paragraphs[ 0 ].Append( versenyzo.INSOSZ.ToString( ) );
-               table.Rows[ q ].Cells[ 2 ].Paragraphs[ 0 ].Append( versenyzo.INNEVE );
-               table.Rows[ q ].Cells[ 3 ].Paragraphs[ 0 ].Append( versenyzo.ITMEGN );
-               table.Rows[ q ].Cells[ 4 ].Paragraphs[ 0 ].Append( versenyzo.INSZUL.ToString( ) );
-               table.Rows[ q ].Cells[ 5 ].Paragraphs[ 0 ].Append( versenyzo.INEGYE );
-               q++;
-            }
-            CsapatlistaTablazatFormazas( table );
-            document.InsertTable( table );
-            if ( i != Data.Csapatok.Count - 1 )
-            {
-               document.InsertSectionPageBreak( );
-            }
-         }
-         #endregion
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "CSAPATLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-
-         return FileName;
-
-      }
-
-      static public string
-      NyomtatBeirolap( string _VEAZON, Eredmény _eredmény )
-      {
-         BEIROLAP Data = new BEIROLAP( _VEAZON, _eredmény );
-
-
-         #region Feliratok
-
-         string Alairas1 = "\n\n\n       ------------------------------      ------------------------------";
-         string Alairas2 = "                                 Beíró aláírása                                               Versenyző aláírása";
-
-         string HeadLine = "B E Í R Ó L A P";
-         string VersenyAzonosito = "Verseny azonosító, név: ";
-         string VersenyIdo = "Verseny ideje: ";
-         string VersenyOsszPont = "Verseny össz pontszám: ";
-         string VersenySorozat = "Versenysorozat azonosító, név: ";
-         string Sorszam = "Versenyző nevezés sorszám: ";
-         string Csapat = "Csapatszám: ";
-         string Nev = "Név: ";
-         string Kor = "Betöltött kor: ";
-         string Nem = "Nem: ";
-         string Egyesulet = "Egyesület: ";
-         string Engedely = "Versenyengedélyszám: ";
-         string Ijtipus = "Íj típus: ";
-         string Korosztaly = "Korosztály: ";
-         #endregion
-
-         string FileName=null;
-
-         if ( Data.VersenyAdatok.VSAZON != null )
-         {
-            FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "BEIRLAP.docx";
-         }
-         else
-         {
-            FileName = _VEAZON + "\\" + "BEIRLAP.docx";
-         }
-
-         var document = DocX.Create(FileName);
-         document.MarginBottom = 10;
-         document.AddHeaders( );
-
-         #region Title
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 10D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( HeadLine );
-         title.Alignment = Alignment.center;
-         title.AppendLine( Program.Tulajdonos_Megnevezés + "\n" );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         #region Data
-
-         Table table = document.AddTable(Data.VersenyAdatok.VEALSZ + 3, 8);
-         table.Alignment = Alignment.center;
-
-         table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( "Sorszám" ).Bold( );
-         table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Lőállás" ).Bold( );
-         table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( "10 pont" ).Bold( );
-         table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( "8 pont" ).Bold( );
-         table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( "5 pont" ).Bold( );
-         table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( "Mellé" ).Bold( );
-         table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( "Összesen" ).Bold( );
-         table.Rows[ 0 ].Cells[ 7 ].Paragraphs[ 0 ].Append( "Göngyölt" ).Bold( );
-
-         for ( int i = 1 ; i <= Data.VersenyAdatok.VEALSZ ; i++ )
-         {
-            table.Rows[ i ].Cells[ 0 ].Paragraphs[ 0 ].Append( ( i ).ToString( ) );
-         }
-
-         table.Rows[ Data.VersenyAdatok.VEALSZ + 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Össz darab" ).Bold( );
-         table.Rows[ Data.VersenyAdatok.VEALSZ + 2 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Össz pont" ).Bold( );
-         #endregion
-
-         #region Header
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = document.InsertParagraph(VersenyAzonosito, false, titleFormat2);
-
-         Table header_table = document.AddTable(4,3);
-
-
-         header_table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Sorszam );
-         titleFormat2.Size = 18D;
-         header_table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].InsertText( Data.VersenyzoAdatok.INSOSZ.ToString( ), false, titleFormat2 );
-
-         header_table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Csapat );
-         header_table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.INCSSZ.ToString( ) ).Bold( );
-
-         header_table.Rows[ 1 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Nev );
-         titleFormat2.Size = _eredmény.Nev.Length > 20 ? 14D : 18D;
-         header_table.Rows[ 1 ].Cells[ 0 ].Paragraphs[ 0 ].InsertText( _eredmény.Nev.ToString( ), false, titleFormat2 );
-
-         header_table.Rows[ 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Kor );
-         header_table.Rows[ 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.INBEEK.ToString( ) ).Bold( );
-
-         header_table.Rows[ 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Nem );
-         header_table.Rows[ 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.INNEME.ToString( ) ).Bold( );
-
-         header_table.Rows[ 2 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Egyesulet );
-         header_table.Rows[ 2 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.INEGYE.ToString( ) ).Bold( );
-
-         header_table.Rows[ 2 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Engedely );
-         header_table.Rows[ 2 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.INVEEN.ToString( ) ).Bold( );
-
-         header_table.Rows[ 3 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Ijtipus );
-         header_table.Rows[ 3 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.ITMEGN.ToString( ) ).Bold( );
-
-         header_table.Rows[ 3 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Korosztaly );
-         header_table.Rows[ 3 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok.KOMEGN.ToString( ) ).Bold( );
-
-         BeirolapHeaderTablazatFormazas( header_table );
-         document.InsertTable( header_table );
-         Paragraph temp = document.InsertParagraph();
-
-
-         paragraph_1.Append( _VEAZON + ", " + Data.VersenyAdatok.VEMEGN );
-         paragraph_1.Bold( );
-         titleFormat2.Bold = false;
-         paragraph_1.Append( "\n" + VersenyIdo );
-         paragraph_1.Append( Data.VersenyAdatok.VEDATU );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t\t" + VersenyOsszPont );
-         paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\n" + VersenySorozat );
-
-         if ( Data.VersenyAdatok.VSAZON != null )
-         {
-            paragraph_1.Append( Data.VersenyAdatok.VSAZON + ", " + Data.VersenyAdatok.VSMEGN );
-         }
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-         #endregion
-
-         BeirolapTablazatFormazas( table );
-         document.InsertTable( table );
-
-         Paragraph paragraph_3 = document.InsertParagraph(Alairas1, false, titleFormat2);
-         paragraph_3.AppendLine( Alairas2 );
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "BEIRLAP.DOCX ", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return FileName;
-      }
-
-      static public string
-      NyomtatNevezesiLista( string _VEAZON, bool _NemMegjelentNyomtat )
-      {
-         NEVEZESILISTA Data = new NEVEZESILISTA( _VEAZON, _NemMegjelentNyomtat );
-
-         #region Feliratok
-         string HeadLine;
-         string Indulok;
-
-         if ( _NemMegjelentNyomtat )
-         {
-            HeadLine = "H I Á N Y Z Ó K  L I S T A";
-            Indulok = "Hiányzók száma: ";
-
-         }
-         else
-         {
-            HeadLine = "N E V E Z É S I  L I S T A";
-            Indulok = "Indulók száma: ";
-
-         }
-         string VersenyAzonosito = "Verseny azonosító, név: ";
-         string VersenyIdo = "Verseny ideje: ";
-         string VersenyOsszPont = "Verseny össz pontszám: ";
-         string VersenySorozat = "Versenysorozat azonosító, név: ";
-         #endregion
-
-         #region FileName
-
-         string FileName;
-
-         if ( _NemMegjelentNyomtat )
-         {
-            if ( Data.VersenyAdatok.VSAZON != null )
-            {
-               FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "NEVEZLISTANEMMEGJELENT.docx";
-            }
-            else
-            {
-               FileName = _VEAZON + "\\" + "NEVEZLISTANEMMEGJELENT.docx";
-            }
-         }
-         else
-         {
-            if ( Data.VersenyAdatok.VSAZON != null )
-            {
-               FileName = Data.VersenyAdatok.VSAZON + "\\" + Data.VersenyAdatok.VEAZON + "\\" + "NEVEZLISTA.docx";
-            }
-            else
-            {
-               FileName = _VEAZON + "\\" + "NEVEZLISTA.docx";
-            }
-         }
-         #endregion
-
-         var document = DocX.Create( FileName );
-         PageNumber( document );
-         document.DifferentFirstPage = true;
-
-         #region FirstPageFooter
-
-         Footer footer = document.Footers.first;
-
-         Table FooterTable = footer.InsertTable( 1, 2 );
-         FooterTable.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "1. oldal" );
-         FooterTable.AutoFit = AutoFit.ColumnWidth;
-         FooterTable.Rows[ 0 ].Cells[ 0 ].Width = document.PageWidth - 200;
-         FooterTable.Rows[ 0 ].Cells[ 1 ].Width = 60;
-
-         Border c = new Border( Novacode.BorderStyle.Tcbs_none, BorderSize.seven, 0, Color.Black );
-         FooterTable.SetBorder( TableBorderType.InsideH, c );
-         FooterTable.SetBorder( TableBorderType.InsideV, c );
-         FooterTable.SetBorder( TableBorderType.Bottom, c );
-         FooterTable.SetBorder( TableBorderType.Top, c );
-         FooterTable.SetBorder( TableBorderType.Left, c );
-         FooterTable.SetBorder( TableBorderType.Right, c );
-         #endregion
-
-         #region címbekezdés
-
-         var titleFormat = new Formatting( );
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         document.AddHeaders( );
-         Header FirstPageHeader = document.Headers.first;
-
-
-         Paragraph title = FirstPageHeader.InsertParagraph();
-         title.Append( HeadLine );
-         title.Alignment = Alignment.center;
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés + "\n" );
-         title.Bold( );
-         titleFormat.Position = 12;
-
-         #endregion
-
-         #region header
-
-         var titleFormat2 = new Formatting( );
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = FirstPageHeader.InsertParagraph( VersenyAzonosito, false, titleFormat2 );
-
-         paragraph_1.Append( Data.VersenyAdatok.VEAZON + ", " + Data.VersenyAdatok.VEMEGN );
-         paragraph_1.Bold( );
-         titleFormat2.Bold = false;
-         paragraph_1.Append( "\n" + VersenyIdo );
-         paragraph_1.Append( Data.VersenyAdatok.VEDATU );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t\t" + VersenyOsszPont );
-         paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t\t" + Indulok );
-         paragraph_1.Append( Data.VersenyAdatok.VEINSZ.ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\n" + VersenySorozat );
-         paragraph_1.Append( Data.VersenyAdatok.VSAZON + ", " + Data.VersenyAdatok.VSMEGN );
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-         #endregion
-
-         #region HeaderTable
-
-         Header TablazatFejlec = document.Headers.odd;
-
-         Table HeaderTable = document.AddTable( 1, 6 );
-         HeaderTable.AutoFit = AutoFit.ColumnWidth;
-
-         HeaderTable.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( "Sorszám" );
-         HeaderTable.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Név" );
-         HeaderTable.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( "Íjtípus" );
-         HeaderTable.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( "Kor" );
-         HeaderTable.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( "Egyesület" );
-         HeaderTable.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( "Csapat" );
-
-         NevezesiListaTablazatFormazas( HeaderTable );
-         TablazatFejlec.InsertTable( HeaderTable );
-
-         #endregion
-
-
-         #region táblázat formázás
-
-         Table table = document.AddTable( Data.VersenyAdatok.VEINSZ + 1, 6 );
-
-         table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( "Sorszám" );
-         table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Név" );
-         table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( "Íjtípus" );
-         table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( "Kor" );
-         table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( "Egyesület" );
-         table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( "Csapat" );
-         #endregion
-
-         #region táblázat adatok betöltése
-
-         for ( int i = 0 ; i < Data.VersenyAdatok.VEINSZ ; i++ )
-         {
-            table.Rows[ i + 1 ].Cells[ 0 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok[ i ].INSOSZ.ToString( ) );
-            table.Rows[ i + 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok[ i ].INNEVE );
-            table.Rows[ i + 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok[ i ].ITMEGN );
-            table.Rows[ i + 1 ].Cells[ 3 ].Paragraphs[ 0 ].Append( ( Data.VersenyzoAdatok[ i ].INSZUL.ToString( ) ) );
-            table.Rows[ i + 1 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok[ i ].INEGYE );
-            table.Rows[ i + 1 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.VersenyzoAdatok[ i ].INCSSZ.ToString( ) );
-         }
-         #endregion
-
-         NevezesiListaTablazatFormazas( table );
-         document.InsertTable( table );
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "NEVEZLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return FileName;
-
-      }
-
-      static public string
-      NyomtatEredmenylapVersenyTeljes( string _VEAZON )
-      {
-         string filename = null;
-
-         EREDMENYLAPVERSENYTELJES Data = new EREDMENYLAPVERSENYTELJES( _VEAZON );
-
-         #region alap stringek
-         string headline = "EREDMÉNYLAP";
-         string típus = "***TELJES***";
-         string st_vazon_vnev = "Verseny azonosítója, neve: ";
-         string st_ido = "Verseny ideje: ";
-         string st_vosszp = "Verseny összpontszáma: ";
-         string st_insz = "Indulók száma: ";
-         string st_vsorazon = "Versenysorozat azonosítója, neve: ";
-         #endregion
-
-         if ( Data.VersenyAdatok.VSAZON != null )
-         {
-            filename = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "ERLAPVETELJ.docx";
-         }
-         else
-         {
-            filename = _VEAZON + "\\" + "ERLAPVETELJ.docx";
-         }
-         var document = DocX.Create(filename);
-         document.AddHeaders( );
-         document.MarginBottom = 10;
-         PageNumber( document );
-         #region header
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( headline );
-         title.AppendLine( típus );
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph();
-         paragraph_1.AppendLine( st_vazon_vnev );
-
-         paragraph_1.Append( _VEAZON + "," + Data.VersenyAdatok.VEMEGN );
-         paragraph_1.Bold( );
-         titleFormat2.Bold = false;
-         paragraph_1.Append( "\n" + st_ido );
-         paragraph_1.Append( Data.VersenyAdatok.VEDATU );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t" + st_vosszp );
-         paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t" + st_insz );
-         paragraph_1.Append( Data.VersenyAdatok.VEINSZ.ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\n" + st_vsorazon );
-         paragraph_1.Append( Data.VersenyAdatok.VSAZON + "," + Data.VersenyAdatok.VSMEGN );
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-
-         for ( int i = 0 ; i < Data.Ijtipusok.Count ; i++ )
-         {
-            Table table = null;
-            for ( int j = 0 ; j < Data.Ijtipusok[ i ].Korosztalyok.Count ; j++ )
-            {
-               if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 ||
-                   Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 ||
-                   Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-               {
-                  Paragraph adatok = document.InsertParagraph( );
-                  adatok.Append( "Ijtipusok: " );
-                  adatok.Append( Data.Ijtipusok[ i ].Megnevezes );
-                  adatok.Bold( );
-                  adatok.AppendLine( "    Korosztály: " );
-                  adatok.Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Megnevezes );
-                  adatok.Bold( );
-
-                  if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 )
-                  {
-                     Paragraph np = document.InsertParagraph( );
-                     np.Append( "      Nők: " );
-                     np.Bold( );
-                  }
-
-                  for ( int k = 0 ; k < Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Sorszam.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].OsszPont.ToString( ) + " pont" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Szazalek.ToString( ) + " %" );
-                     EredmenyLapVersenyTablazatFormazas( table );
-
-                     document.InsertTable( table );
-                  }
-                  if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Férfiak: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Sorszam.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].OsszPont.ToString( ) + " pont" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Szazalek.ToString( ) + " %" );
-                     EredmenyLapVersenyTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-                  if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Egyben: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Sorszam.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].OsszPont.ToString( ) + " pont" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Szazalek.ToString( ) + " %" );
-                     EredmenyLapVersenyTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-               }
-            }
-         }
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "ERLAPVETELJ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return filename;
-      }
-
-      static public string
-      NyomtatEredmenylapVersenyMisz( string _VEAZON )
-      {
-         string FileName = null;
-
-         EREDMENYLAPVERSENYMISZ Data = new EREDMENYLAPVERSENYMISZ( _VEAZON );
-
-         #region Feliratok
-         string HeadLine = "EREDMÉNYLAP";
-         string Tipus = "***MISZ***";
-         string VersenyAzonosito = "Verseny azonosítója, neve: ";
-         string VersenyIdo = "Verseny ideje: ";
-         string VersenyOsszPont = "Verseny összpontszáma: ";
-         string VersenyIndulok = "Indulók száma: ";
-         string VersenySorozat = "Versenysorozat azonosítója, neve: ";
-         #endregion
-
-         #region FileName
-         if ( Data.VersenyAdatok.VSAZON != null )
-         {
-            FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "ERLAPVEMISZ.docx";
-         }
-         else
-         {
-            FileName = _VEAZON + "\\" + "ERLAPVEMISZ.docx";
-         }
-         #endregion
-
-         var document = DocX.Create( FileName );
-         document.AddHeaders( );
-         document.MarginBottom = 10;
-         PageNumber( document );
-
-         #region Header
-
-         var titleFormat = new Formatting( );
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph( );
-         title.Append( HeadLine );
-         title.AppendLine( Tipus );
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         var titleFormat2 = new Formatting( );
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph( );
-         paragraph_1.AppendLine( VersenyAzonosito );
-
-         paragraph_1.Append( _VEAZON + "," + Data.VersenyAdatok.VEMEGN );
-         paragraph_1.Bold( );
-         titleFormat2.Bold = false;
-         paragraph_1.Append( "\n" + VersenyIdo );
-         paragraph_1.Append( Data.VersenyAdatok.VEDATU );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t" + VersenyOsszPont );
-         paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t" + VersenyIndulok );
-         paragraph_1.Append( Data.VersenyAdatok.VEINSZ.ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\n" + VersenySorozat );
-         paragraph_1.Append( Data.VersenyAdatok.VSAZON + "," + Data.VersenyAdatok.VSMEGN );
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-
-         for ( int i = 0 ; i < Data.Ijtipusok.Count ; i++ )
-         {
-            Table table = null;
-            for ( int j = 0 ; j < Data.Ijtipusok[ i ].Korosztalyok.Count ; j++ )
-            {
-               if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 ||
-                   Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 ||
-                   Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-               {
-                  Paragraph adatok = document.InsertParagraph( );
-                  adatok.Append( "Ijtipusok: " );
-                  adatok.Append( Data.Ijtipusok[ i ].Megnevezes );
-                  adatok.Bold( );
-                  adatok.AppendLine( "    Korosztály: " );
-                  adatok.Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Megnevezes );
-                  adatok.Bold( );
-
-                  if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 )
-                  {
-                     Paragraph np = document.InsertParagraph( );
-                     np.Append( "      Nők: " );
-                     np.Bold( );
-                  }
-
-                  for ( int k = 0 ; k < Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Sorszam.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].OsszPont.ToString( ) + " pont" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Szazalek.ToString( ) + " %" );
-                     EredmenyLapVersenyTablazatFormazas( table );
-
-                     document.InsertTable( table );
-                  }
-                  if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Férfiak: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Sorszam.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].OsszPont.ToString( ) + " pont" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Szazalek.ToString( ) + " %" );
-                     EredmenyLapVersenyTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-                  if ( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Egyben: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Sorszam.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].OsszPont.ToString( ) + " pont" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.Ijtipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Szazalek.ToString( ) + " %" );
-                     EredmenyLapVersenyTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-               }
-            }
-         }
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "ERLAPVEMISZ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return FileName;
-      }
-
-      static public string
-      NyomtatEredmenylapVersenyEgyesulet( string _VEAZON )
-      {
-         EREDMENYLAPVERSENYEGYESULET Data = new EREDMENYLAPVERSENYEGYESULET(_VEAZON);
-
-         string FileName = null;
-
-         #region alap stringek
-         string Cim = "EREDMÉNYLAP";
-         string Tipus = "***egyesület***";
-         string Verseny = "Verseny azonosítója, neve: ";
-         string Ido = "Verseny ideje: ";
-         string Osszpont = "Verseny összpontszáma: ";
-         string VersenySorozat = "Versenysorozat azonosítója, neve: ";
-         #endregion
-
-         if ( Data.VersenyAdatok.VSAZON != null )
-         {
-            FileName = Data.VersenyAdatok.VSAZON + "\\" + _VEAZON + "\\" + "ERLAPVEEGYE.docx";
-         }
-         else
-         {
-            FileName = _VEAZON + "\\" + "ERLAPVEEGYE.docx";
-         }
-
-         var document = DocX.Create(FileName);
-         document.AddHeaders( );
-         PageNumber( document );
-
-         #region header
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( Cim );
-         title.AppendLine( Tipus );
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         #region Title
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph();
-         paragraph_1.AppendLine( Verseny );
-
-         paragraph_1.Append( _VEAZON + ", " + Data.VersenyAdatok.VEMEGN );
-         paragraph_1.Bold( );
-         titleFormat2.Bold = false;
-         paragraph_1.Append( "\n" + Ido );
-         paragraph_1.Append( Data.VersenyAdatok.VEDATU );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\t" + Osszpont );
-         paragraph_1.Append( ( Data.VersenyAdatok.VEOSPO * 10 ).ToString( ) );
-         paragraph_1.Bold( );
-         paragraph_1.Append( "\n" + VersenySorozat );
-         paragraph_1.Append( Data.VersenyAdatok.VSAZON + "," + Data.VersenyAdatok.VSMEGN );
-         paragraph_1.AppendLine( );
-         paragraph_1.Bold( );
-         #endregion
-
-         Table table = document.AddTable(1, 4);
-         table.Alignment = Alignment.center;
-
-         table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( "Sorrend" ).Bold( );
-         table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Egyesület neve" ).Bold( );
-         table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( "Egyesület címe" ).Bold( );
-         table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( "ÖsszPont" ).Bold( );
-
-
-
-         for ( int i = 0 ; i < Data.Egyesuletek.Count ; i++ )
-         {
-            table.InsertRow( );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 0 ].Paragraphs[ 0 ].Append( i + 1 + "." );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.Egyesuletek[ i ].Nev );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Egyesuletek[ i ].Cim );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Egyesuletek[ i ].OsszPont.ToString( ) );
-         }
-         EgyesuletTablazatFormazas( table );
-
-         document.InsertTable( table );
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "CSAPATLISTA.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-
-         return FileName;
-      }
-
-      static public string
-      NyomtatEredmenylapVersenysorozatEgyesulet( string _VSAZON )
-      {
-         string FileName = _VSAZON + "\\" + "ERLAPVSEGYE.docx";
-         EREDMENYLAPVERSENYSOROZATEGYESULET Data = new EREDMENYLAPVERSENYSOROZATEGYESULET(_VSAZON);
-
-
-         #region alap stringek
-         string Cim = "EREDMÉNYLAP";
-         string Tipus = "***egyesület***";
-         string VersenySorozat = "Versenysorozat azonosítója, neve: ";
-         #endregion
-
-
-
-         var document = DocX.Create(FileName);
-         document.AddHeaders( );
-         PageNumber( document );
-
-         #region header
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( Cim );
-         title.AppendLine( Tipus );
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         #region Title
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph();
-
-         paragraph_1.Append( "\n" + VersenySorozat );
-         paragraph_1.Append( Data.Azonosito + "," + Data.Megnevezes );
-         paragraph_1.AppendLine( );
-         paragraph_1.Bold( );
-
-         #endregion
-
-         Table table = document.AddTable(1, 4);
-         table.Alignment = Alignment.center;
-
-         table.Rows[ 0 ].Cells[ 0 ].Paragraphs[ 0 ].Append( "Sorrend" ).Bold( );
-         table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( "Egyesület neve" ).Bold( );
-         table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( "Egyesület címe" ).Bold( );
-         table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( "ÖsszPont" ).Bold( );
-
-
-
-         for ( int i = 0 ; i < Data.Egyesuletek.Count ; i++ )
-         {
-            table.InsertRow( );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 0 ].Paragraphs[ 0 ].Append( i + 1 + "." );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( Data.Egyesuletek[ i ].Nev );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.Egyesuletek[ i ].Cim );
-            table.Rows[ table.Rows.Count - 1 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.Egyesuletek[ i ].OsszPont.ToString( ) );
-         }
-         EgyesuletTablazatFormazas( table );
-
-         document.InsertTable( table );
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "ERLAPVSEGYE.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-
-         return FileName;
-      }
-
-      static public string
-      NyomtatEredmenylapVersenySorozatReszletes( string _VSAZON )
-      {
-         string FileName = _VSAZON + "\\" + "ERLAPVSRESZ.docx";
-         EREDMENYLAPVERSENYSOROZATRESZLETES Data = new EREDMENYLAPVERSENYSOROZATRESZLETES(_VSAZON);
-
-
-
-         var document = DocX.Create(FileName);
-         document.AddHeaders( );
-         document.PageLayout.Orientation = Novacode.Orientation.Landscape;
-         document.MarginLeft = 20;
-         document.MarginRight = 20;
-         document.MarginTop = 20;
-         document.MarginBottom = 20;
-         PageNumber( document );
-
-
-         #region alap stringek
-         string Cim = "EREDMÉNYLAP";
-         string Tipus = "***részletes***";
-         string VersenySorozat = "Versenysorozat azonosítója, neve: ";
-         #endregion
-
-         #region header
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( Cim );
-         title.AppendLine( Tipus );
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         #region Title
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph();
-
-         paragraph_1.Append( "\n" + VersenySorozat );
-         paragraph_1.Append( Data.Azonosito + "," + Data.Megnevezes ).Bold( );
-         paragraph_1.Bold( );
-
-         #endregion
-
-         #region HeaderTable
-         Table HeaderTable = document.AddTable(1, Data.VersenyekSzama + 5);
-         HeaderTable.AutoFit = AutoFit.ColumnWidth;
-         for ( int z = 0 ; z < HeaderTable.Rows.Count ; z++ )
-         {
-            HeaderTable.Rows[ z ].Cells[ 0 ].Width = 30;
-            HeaderTable.Rows[ z ].Cells[ 1 ].Width = 50;
-            HeaderTable.Rows[ z ].Cells[ 2 ].Width = 200;
-            HeaderTable.Rows[ z ].Cells[ 3 ].Width = 300;
-            for ( int q = 4 ; q < HeaderTable.Rows[ z ].Cells.Count - 1 ; q++ )
-            {
-               HeaderTable.Rows[ z ].Cells[ q ].Width = 70;
-            }
-            HeaderTable.Rows[ z ].Cells[ HeaderTable.Rows[ 0 ].Cells.Count - 1 ].Width = 100;
-            HeaderTable.Rows[ z ].Height = 27;
-         }
-
-         for ( int z = 0 ; z < Data.VersenyAzonositok.Count ; z++ )
-         {
-            HeaderTable.Rows[ 0 ].Cells[ z + 4 ].Paragraphs[ 0 ].Append( Data.VersenyAzonositok[ z ] ).Bold( );
-            HeaderTable.Rows[ 0 ].Cells[ z + 4 ].Paragraphs[ 0 ].FontSize( 8D );
-
-         }
-         HeaderTable.Rows[ 0 ].Cells[ HeaderTable.Rows[ 0 ].Cells.Count - 1 ].Paragraphs[ 0 ].Append( "Összesen" ).Bold( ); ;
-         HeaderTable.Rows[ 0 ].Cells[ HeaderTable.Rows[ 0 ].Cells.Count - 1 ].Paragraphs[ 0 ].FontSize( 8D );
-
-         HeaderTable.AutoFit = AutoFit.ColumnWidth;
-         EredmenyLapReszletesTablazatFormazas( HeaderTable );
-
-         header.InsertTable( HeaderTable );
-         #endregion
-
-         for ( int i = 0 ; i < Data.IjTipusok.Count ; i++ )
-         {
-            Table table = null;
-            for ( int j = 0 ; j < Data.IjTipusok[ i ].Korosztalyok.Count ; j++ )
-            {
-               if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 ||
-                    Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 ||
-                    Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-               {
-                  Paragraph adatok = document.InsertParagraph();
-                  adatok.Append( "Íjtípus: " );
-                  adatok.Append( Data.IjTipusok[ i ].Megnevezes );
-                  adatok.Bold( );
-                  adatok.AppendLine( "    Korosztály: " );
-                  adatok.Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Megnevezes );
-                  adatok.Bold( );
-
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 )
-                  {
-                     Paragraph np = document.InsertParagraph();
-                     np.Append( "      Nők: " );
-                     np.Bold( );
-                  }
-
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, Data.VersenyekSzama + 5 );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Nev );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Egyesulet );
-                     for ( int m = 0 ; m < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Eredmenyek.Count ; m++ )
-                     {
-                        for ( int n = 0 ; n < Data.VersenyekSzama ; n++ )
-                        {
-                           if ( HeaderTable.Rows[ 0 ].Cells[ 4 + n ].Paragraphs[ 0 ].Text == Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Eredmenyek[ m ].Verseny )
-                           {
-                              table.Rows[ table.Rows.Count - 1 ].Cells[ n + 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Eredmenyek[ m ].Pont.ToString( ) );
-                           }
-                        }
-                     }
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ Data.VersenyekSzama + 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].OsszPont.ToString( ) + " pont" ).Bold( );
-
-                     for ( int ii = 0 ; ii < table.Rows.Count ; ii++ )
-                     {
-                        for ( int jj = 0 ; jj < Data.VersenyekSzama ; jj++ )
-                        {
-                           if ( table.Rows[ ii ].Cells[ jj + 4 ].Paragraphs[ 0 ].Text == "" )
-                           {
-                              table.Rows[ ii ].Cells[ jj + 4 ].Paragraphs[ 0 ].Append( "0" );
-                           }
-                        }
-                     }
-
-                     EredmenyLapReszletesTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph();
-                     fp.Append( "      Férfiak: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, Data.VersenyekSzama + 5 );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Nev );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Egyesulet );
-                     for ( int m = 0 ; m < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Eredmenyek.Count ; m++ )
-                     {
-                        for ( int n = 0 ; n < Data.VersenyekSzama ; n++ )
-                        {
-                           if ( HeaderTable.Rows[ 0 ].Cells[ 4 + n ].Paragraphs[ 0 ].Text == Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Eredmenyek[ m ].Verseny )
-                           {
-                              table.Rows[ table.Rows.Count - 1 ].Cells[ n + 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Eredmenyek[ m ].Pont.ToString( ) );
-                           }
-                        }
-                     }
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ Data.VersenyekSzama + 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].OsszPont.ToString( ) + " pont" ).Bold( );
-                     for ( int ii = 0 ; ii < table.Rows.Count ; ii++ )
-                     {
-                        for ( int jj = 0 ; jj < Data.VersenyekSzama ; jj++ )
-                        {
-                           if ( table.Rows[ ii ].Cells[ jj + 4 ].Paragraphs[ 0 ].Text == "" )
-                           {
-                              table.Rows[ ii ].Cells[ jj + 4 ].Paragraphs[ 0 ].Append( "0" );
-                           }
-                        }
-                     }
-                     EredmenyLapReszletesTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Egyben: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, Data.VersenyekSzama + 5 );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Nev );
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Egyesulet );
-                     for ( int m = 0 ; m < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Eredmenyek.Count ; m++ )
-                     {
-                        for ( int n = 0 ; n < Data.VersenyekSzama ; n++ )
-                        {
-                           if ( HeaderTable.Rows[ 0 ].Cells[ 4 + n ].Paragraphs[ 0 ].Text == Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Eredmenyek[ m ].Verseny )
-                           {
-                              table.Rows[ table.Rows.Count - 1 ].Cells[ n + 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Eredmenyek[ m ].Pont.ToString( ) );
-                           }
-                        }
-                     }
-                     table.Rows[ table.Rows.Count - 1 ].Cells[ Data.VersenyekSzama + 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].OsszPont.ToString( ) + " pont" ).Bold( );
-                     for ( int ii = 0 ; ii < table.Rows.Count ; ii++ )
-                     {
-                        for ( int jj = 0 ; jj < Data.VersenyekSzama ; jj++ )
-                        {
-                           if ( table.Rows[ ii ].Cells[ jj + 4 ].Paragraphs[ 0 ].Text == "" )
-                           {
-                              table.Rows[ ii ].Cells[ jj + 4 ].Paragraphs[ 0 ].Append( "0" );
-                           }
-                        }
-                     }
-                     EredmenyLapReszletesTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-               }
-
-            }
-
-         }
-
-
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "ERLAPVSRESZ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return FileName;
-      }
-
-      static public string
-      NyomtatEredmenylapVersenysorozatTeljes( string _VSAZON )
-      {
-         EREDMENYLAPVESENYSOROZATTELJES Data = new EREDMENYLAPVESENYSOROZATTELJES( _VSAZON );
-
-         string filename = _VSAZON + "\\" + "ERLAPVSTELJ.docx";
-         var document = DocX.Create(filename);
-         document.AddHeaders( );
-         PageNumber( document );
-         #region alap stringek
-         string headline = "EREDMÉNYLAP";
-         string típus = "***teljes***";
-         string st_vsorazon = "Versenysorozat azonosítója, neve: ";
-         string megnevezés = null;
-         #endregion
-
-         #region header
-
-         var titleFormat = new Formatting();
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph();
-         title.Append( headline );
-         title.AppendLine( típus );
-
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés + "\n" );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         var titleFormat2 = new Formatting();
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph();
-         //megnevezés
-         List<Versenysorozat> vsor = Program.database.Versenysorozatok();
-
-         foreach ( Versenysorozat item in vsor )
-         {
-            if ( _VSAZON == item.azonosító )
-            {
-               megnevezés = item.megnevezés;
-               break;
-            }
-         }
-
-         paragraph_1.Append( st_vsorazon );
-         paragraph_1.Append( _VSAZON + ", " + megnevezés );
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-
-         #region formázás
-
-         for ( int i = 0 ; i < Data.IjTipusok.Count ; i++ )
-         {
-            Table table = null;
-            for ( int j = 0 ; j < Data.IjTipusok[ i ].Korosztalyok.Count ; j++ )
-            {
-               if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 ||
-                   Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 ||
-                   Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-               {
-                  Paragraph adatok = document.InsertParagraph( );
-                  adatok.Append( "IjTipusok: " );
-                  adatok.Append( Data.IjTipusok[ i ].Megnevezes );
-                  adatok.Bold( );
-                  adatok.AppendLine( "    Korosztály: " );
-                  adatok.Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Megnevezes );
-                  adatok.Bold( );
-
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 )
-                  {
-                     Paragraph np = document.InsertParagraph( );
-                     np.Append( "      Nők: " );
-                     np.Bold( );
-                  }
-
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].EletKor.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].AtlagSzazalek + " %" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].OsszPont.ToString( ) + " pont" );
-                     EredmenyLapVersenySorozatTablazatFormazas( table );
-
-                     document.InsertTable( table );
-                  }
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Férfiak: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].EletKor.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].AtlagSzazalek + " %" ); ;
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].OsszPont.ToString( ) + " pont" );
-                     EredmenyLapVersenySorozatTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Egyben: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].EletKor.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].AtlagSzazalek + " %" ); ;
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].OsszPont.ToString( ) + " pont" );
-                     EredmenyLapVersenySorozatTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-
-               }
-            }
-         }
-
-
-
-         #endregion
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "ERLAPVSTELJ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return filename;
-      }
-
-      static public string
-      NyomtatEredmenylapVersenysorozatMisz( string _VSAZON )
-      {
-         EREDMENYLAPVESENYSOROZATMISZ Data = new EREDMENYLAPVESENYSOROZATMISZ( _VSAZON );
-
-         string filename = _VSAZON + "\\" + "ERLAPVSMISZ.docx";
-         var document = DocX.Create( filename );
-         document.AddHeaders( );
-         PageNumber( document );
-         #region alap stringek
-         string headline = "EREDMÉNYLAP";
-         string típus = "***MISZ***";
-         string st_vsorazon = "Versenysorozat azonosítója, neve: ";
-         string megnevezés = null;
-         #endregion
-
-         #region header
-
-         var titleFormat = new Formatting( );
-         titleFormat.Size = 14D;
-         titleFormat.Position = 1;
-         titleFormat.Spacing = 5;
-         titleFormat.Bold = true;
-
-         Header header = document.Headers.odd;
-
-         Paragraph title = header.InsertParagraph( );
-         title.Append( headline );
-         title.AppendLine( típus );
-
-         title.Alignment = Alignment.center;
-
-         titleFormat.Size = 10D;
-         title.AppendLine( Program.Tulajdonos_Megnevezés + "\n" );
-         title.Bold( );
-         titleFormat.Position = 12;
-         #endregion
-
-         var titleFormat2 = new Formatting( );
-         titleFormat2.Size = 10D;
-         titleFormat2.Position = 1;
-
-         Paragraph paragraph_1 = header.InsertParagraph( );
-         //megnevezés
-         List<Versenysorozat> vsor = Program.database.Versenysorozatok( );
-
-         foreach ( Versenysorozat item in vsor )
-         {
-            if ( _VSAZON == item.azonosító )
-            {
-               megnevezés = item.megnevezés;
-               break;
-            }
-         }
-
-         paragraph_1.Append( st_vsorazon );
-         paragraph_1.Append( _VSAZON + ", " + megnevezés );
-         paragraph_1.Bold( );
-         paragraph_1.AppendLine( );
-
-         #region formázás
-
-         for ( int i = 0 ; i < Data.IjTipusok.Count ; i++ )
-         {
-            Table table = null;
-            for ( int j = 0 ; j < Data.IjTipusok[ i ].Korosztalyok.Count ; j++ )
-            {
-               if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 ||
-                   Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 ||
-                   Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-               {
-                  Paragraph adatok = document.InsertParagraph( );
-                  adatok.Append( "IjTipusok: " );
-                  adatok.Append( Data.IjTipusok[ i ].Megnevezes );
-                  adatok.Bold( );
-                  adatok.AppendLine( "    Korosztály: " );
-                  adatok.Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Megnevezes );
-                  adatok.Bold( );
-
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count != 0 )
-                  {
-                     Paragraph np = document.InsertParagraph( );
-                     np.Append( "      Nők: " );
-                     np.Bold( );
-                  }
-
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].EletKor.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].AtlagSzazalek + " %" );
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Nok[ k ].OsszPont.ToString( ) + " pont" );
-                     EredmenyLapVersenySorozatTablazatFormazas( table );
-
-                     document.InsertTable( table );
-                  }
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Férfiak: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].EletKor.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].AtlagSzazalek + " %" ); ;
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Ferfiak[ k ].OsszPont.ToString( ) + " pont" );
-                     EredmenyLapVersenySorozatTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-                  if ( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count != 0 )
-                  {
-                     Paragraph fp = document.InsertParagraph( );
-                     fp.Append( "      Egyben: " );
-                     fp.Bold( );
-                  }
-                  for ( int k = 0 ; k < Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben.Count ; k++ )
-                  {
-                     table = document.AddTable( 1, 7 );
-                     table.Rows[ 0 ].Cells[ 1 ].Paragraphs[ 0 ].Append( ( k + 1 ) + "." );
-                     table.Rows[ 0 ].Cells[ 2 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Nev );
-                     table.Rows[ 0 ].Cells[ 3 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].EletKor.ToString( ) );
-                     table.Rows[ 0 ].Cells[ 4 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].Egyesulet );
-                     table.Rows[ 0 ].Cells[ 5 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].AtlagSzazalek + " %" ); ;
-                     table.Rows[ 0 ].Cells[ 6 ].Paragraphs[ 0 ].Append( Data.IjTipusok[ i ].Korosztalyok[ j ].Indulok.Egyben[ k ].OsszPont.ToString( ) + " pont" );
-                     EredmenyLapVersenySorozatTablazatFormazas( table );
-                     document.InsertTable( table );
-                  }
-               }
-            }
-         }
-
-
-
-         #endregion
-
-         try { document.Save( ); }
-         catch ( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "ERLAPVSMISZ.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
-         return filename;
-      }
 
       #region Tablazatok Formazas
 

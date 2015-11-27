@@ -16,7 +16,6 @@ namespace Íjász
 
         public static string Tulajdonos_Megnevezés = "Turul Koppány Íjászai HE, Hunvér Kft.";
 
-
         [STAThread]
         public static void Main()
         {
