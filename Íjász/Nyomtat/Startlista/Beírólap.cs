@@ -9,8 +9,7 @@ namespace Íjász
 {
    public static partial class Nyomtat
    {
-      static public string
-   NyomtatBeirolap( string _VEAZON, Eredmény _eredmény )
+      static public string NyomtatBeirolap( string _VEAZON, Eredmény _eredmény )
       {
          BEIROLAP Data = new BEIROLAP( _VEAZON, _eredmény );
 
