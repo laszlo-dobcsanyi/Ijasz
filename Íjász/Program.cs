@@ -28,7 +28,7 @@ namespace Íjász {
 
             System.Environment.Exit( 2 );
          }
-
+         
          AddressForm addressform;
          do {
             addressform = new AddressForm( );
@@ -36,7 +36,7 @@ namespace Íjász {
             if ( !addressform.selected )
                return;
          } while ( !( addressform.selected && network.Start( addressform.selected_address, addressform.selected_port ) ) );
-
+         
          mainform = new MainForm( );
 
          Timer timer = new Timer( );

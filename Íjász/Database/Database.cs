@@ -12,7 +12,6 @@ namespace Íjász
 
       public static int Verzió = 3;
       private SQLiteConnection connection;
-
       public Database( )
       {
          connection = new SQLiteConnection( "Data Source=adat.db; Version=3; New=False; Compress=True;" );
@@ -35,7 +34,7 @@ namespace Íjász
                 "CREATE TABLE Íjtípusok (ITAZON char(10) PRIMARY KEY, ITMEGN char(30), ITLISO int, ITERSZ int);" +
                 "CREATE TABLE Egyesuletek (EGAZON char(30) PRIMARY KEY,EGCIME char(30),EGVENE char(30),EGVET1 char(30),EGVET2 char(30),EGVEM1 char(30),EGVEM2 char(30),EGLIST boolean,EGTASZ int);" +
                 "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30),INERSZ int, EGAZON char(10));" +
-                "CREATE TABLE Oklevelek (OKAZON char(10) PRIMARY KEY, OKTIP char(30), OKNEVEX int, OKNEVEY int, OKHELYX int, OKHELYY int, OKKATEX int, OKKATEY int, OKHESZX int,OKHESZY int,  OKDATUX int, OKDATUY int, OKEGYEX int,OKEGYEY int  );" +
+                "CREATE TABLE Oklevelek (OKAZON char(10) PRIMARY KEY, OKTIP char(30), OKNEVEX int, OKNEVEY int, OKNEVEH int, OKHELYX int, OKHELYY int, OKHELYH int,  OKKATEX int, OKKATEY int, OKKATEH int, OKHESZX int,OKHESZY int, OKHESZH int, OKDATUX int, OKDATUY int, OKDATUH int, OKEGYEX int,OKEGYEY int, OKEGYEH int  );" +
                 "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
             if ( command.ExecuteNonQuery( ) != 0 ) { }// MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
