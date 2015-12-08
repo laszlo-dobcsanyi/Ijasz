@@ -21,27 +21,24 @@ namespace Íjász {
                 public string   VSAZON;
                 public string   VSMEGN;
 
-                public
-                VERSENYADATOK( string _VEAZON ) {
-                    VSAZON = null;
-                    VSMEGN = null;
+                public VERSENYADATOK( string _VEAZON ) {
                     Verseny verseny = Program.database.Verseny(_VEAZON).Value;
                     List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok();
                     List<Eredmény> eredmenyek = Program.database.Eredmények(_VEAZON);
 
-                    foreach( Versenysorozat item in versenysorozatok ) {
-                        if( item.azonosító == verseny.VersenySorozat ) {
-                            VSAZON = item.azonosító;
-                            VSMEGN = item.megnevezés;
-                            break;
-                        }
-                    }
-                    VEAZON = verseny.Azonosito;
-                    VEMEGN = verseny.Megnevezes;
-                    VEDATU = verseny.Datum;
-                    VEOSPO = verseny.Osszes;
-                    VEINSZ = eredmenyek.Count( eredmeny => eredmeny.Megjelent.Equals( true ) );
+                    this = ( from versenysorozat in versenysorozatok
+                             where versenysorozat.azonosító.Equals( verseny.VersenySorozat )
+                             select new VERSENYADATOK {
+                                 VEAZON = verseny.Azonosito,
+                                 VEDATU = verseny.Datum,
+                                 VEINSZ = eredmenyek.Count( eredmeny => eredmeny.Megjelent.Equals( true ) ),
+                                 VEMEGN = verseny.Megnevezes,
+                                 VEOSPO = verseny.Osszes,
+                                 VSAZON = versenysorozat.azonosító,
+                                 VSMEGN = versenysorozat.megnevezés
+                             } ).First( );
                 }
+
             }
 
             public struct CSAPAT {
@@ -102,8 +99,7 @@ namespace Íjász {
                 return list_csapatok;
             }
 
-            public List<VERSENYZOADAT>
-            VersenyzoAdatok( string _VEAZON, int _Csapat ) {
+            public List<VERSENYZOADAT> VersenyzoAdatok( string _VEAZON, int _Csapat ) {
                 List<VERSENYZOADAT> Data = new List<VERSENYZOADAT>();
 
                 List<Eredmény> eredmenyek = Program.database.Eredmények(_VEAZON);
@@ -133,6 +129,31 @@ namespace Íjász {
                 IComparer<VERSENYZOADAT> Comparer2 = new CSAPATLISTA.VERSENYZOADAT.RendezNev();
                 Data.Sort( Comparer2 );
 
+                return Data;
+            }
+
+            public List<VERSENYZOADAT> VersenyzoAdatokLINQ( string _VEAZON, int _Csapat ) {
+                List<VERSENYZOADAT> Data = new List<VERSENYZOADAT>();
+
+                List<Eredmény> eredmenyek = Program.database.Eredmények(_VEAZON);
+                List<Induló> indulok = Program.database.Indulók();
+                List<Íjtípus> ijtipusok = Program.database.Íjtípusok();
+
+               Data = ((from eredmeny in eredmenyek
+                             join indulo in indulok
+                             on eredmeny.Nev equals indulo.Nev
+                             join ijtipus in ijtipusok
+                             on eredmeny.Ijtipus equals ijtipus.Azonosito
+                             where eredmeny.Megjelent.Equals(true) && eredmeny.Csapat.Equals(_Csapat)
+                             select new VERSENYZOADAT{
+                                 INCSSZ = eredmeny.Csapat,
+                                 INEGYE = indulo.Egyesulet,
+                                 INNEVE = indulo.Nev,
+                                 INSOSZ = (int)eredmeny.Sorszam,
+                                 INSZUL = Program.database.InduloKora(_VEAZON,eredmeny.Nev),
+                                 ITMEGN = ijtipus.Megnevezes
+                             }).OrderBy(q => q.INCSSZ).ThenBy( z => z.INNEVE)).ToList();
+                             
                 return Data;
             }
 
@@ -2308,6 +2329,7 @@ namespace Íjász {
             dialog.DialogResult = DialogResult.OK;
             return;
         }
+
         #endregion
     }
 }

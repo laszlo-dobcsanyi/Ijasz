@@ -134,5 +134,58 @@ namespace Íjász {
                 return true;
             }
         }
+
+        public Oklevel Oklevel( string _azonosito ) {
+            Oklevel Value = new Oklevel();
+
+            lock ( Program.datalock ) {
+                connection.Open( );
+                SQLiteCommand command = connection.CreateCommand( );
+                command.CommandText = "select OKAZON, OKTIP," +
+                        " OKNEVEX, OKNEVEY, OKNEVEH," +
+                        " OKHELYX, OKHELYY, OKHELYH," +
+                        " OKKATEX, OKKATEY, OKKATEH," +
+                        " OKHESZX, OKHESZY, OKHESZH," +
+                        " OKDATUX, OKDATUY, OKDATUH," +
+                        " OKEGYEX, OKEGYEY, OKEGYEH" +
+                        " from Oklevelek where OKAZON = '" + _azonosito + "';";
+                var reader = command.ExecuteReader( );
+                while( reader.Read( ) ) {
+                   Value =  new Oklevel( reader.GetString( 0 ),
+                                            reader.GetString( 1 ),
+
+                                            reader.GetInt32( 2 ),
+                                            reader.GetInt32( 3 ),
+                                            reader.GetInt32( 4 ),
+
+                                            reader.GetInt32( 5 ),
+                                            reader.GetInt32( 6 ),
+                                            reader.GetInt32( 7 ),
+
+
+                                            reader.GetInt32( 8 ),
+                                            reader.GetInt32( 9 ),
+                                            reader.GetInt32( 10 ),
+
+                                            reader.GetInt32( 11 ),
+                                            reader.GetInt32( 12 ),
+                                            reader.GetInt32( 13 ),
+
+                                            reader.GetInt32( 14 ),
+                                            reader.GetInt32( 15 ),
+                                            reader.GetInt32( 16 ),
+
+                                            reader.GetInt32( 17 ),
+                                            reader.GetInt32( 18 ),
+                                            reader.GetInt32( 19 )
+                                            ) ;
+                }
+
+                command.Dispose( );
+                connection.Close( );
+            }
+            return Value;
+        }
+
     }
 }

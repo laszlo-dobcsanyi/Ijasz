@@ -161,6 +161,7 @@
     <Compile Include="Nyomtat\Eredménylap\EredménylapVerseny.cs" />
     <Compile Include="Nyomtat\Eredménylap\EredménylapVersenysorozat.cs" />
     <Compile Include="Nyomtat\Oklevél\VersenyOklevel.cs" />
+    <Compile Include="Nyomtat\Oklevél\VersenysorozatOklevel.cs" />
     <Compile Include="Nyomtat\Startlista\Beírólap.cs" />
     <Compile Include="Nyomtat\Startlista\Csapatlista.cs" />
     <Compile Include="Nyomtat\Startlista\NevezésiLista.cs" />

@@ -119,7 +119,7 @@ namespace Íjász {
             menu.TabPages.Add(Startlista);
             menu.TabPages.Add(Eredménylap);
             menu.TabPages.Add(Oklevelek);
-            menu.TabPages.Add(Kapcsolatok);
+            //menu.TabPages.Add(Kapcsolatok);
 #if DEBUG
     menu.SelectedTab = Oklevelek;
 #endif
@@ -132,9 +132,9 @@ namespace Íjász {
             #endregion
 
             Button BackupButton = new Button();
-            BackupButton.Text = "Biztonsági mentés";
-            BackupButton.Location = new Point(ClientSize.Width - 128, 0);
-            BackupButton.Size = new System.Drawing.Size(128, 24);
+            BackupButton.Text = "Mentés";
+            BackupButton.Location = new Point(ClientSize.Width - 64, 0);
+            BackupButton.Size = new System.Drawing.Size(64, 24);
             BackupButton.Anchor = AnchorStyles.Right | AnchorStyles.Top;
             BackupButton.Click += BackupButton_Click;
 
