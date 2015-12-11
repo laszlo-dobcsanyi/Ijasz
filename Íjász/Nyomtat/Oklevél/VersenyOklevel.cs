@@ -1,6 +1,8 @@
-﻿using Novacode;
+﻿using System;
+using Novacode;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -10,25 +12,71 @@ namespace Íjász {
         /// <summary>kiszedi az első _Limit eredményt, meghívja rájuk a NyomtatOklevelVersenyVersenyzo fgv-t </summary>
         static public void NyomtatOklevelVerseny( string _VEAZON, Oklevel _Oklevel, int _Limit ) {
             List<OKLEVELVERSENYZO> versenyzok = new List<OKLEVELVERSENYZO>();
-            //NOTE(mate): mi van ha nincs elég versenyző??? nem cink :D
-            List<Eredmény> eredmenyek = (Program.database.Eredmények(_VEAZON).OrderBy(eredmeny => eredmeny.Osszpont).Take(_Limit)).ToList();
-            var indulok = Program.database.Indulók();
+
+            EREDMENYLAPVERSENYTELJES Data = new EREDMENYLAPVERSENYTELJES( _VEAZON );
             string versenydatum = Program.database.Verseny(_VEAZON).Value.Datum;
-            List<OKLEVELVERSENYZO> eredmenyek2 = (from indulo in indulok
-                                                  join eredmeny in eredmenyek on indulo.Nev equals eredmeny.Nev
-                                                  select new OKLEVELVERSENYZO
-                                                  {
-                                                      Nev = indulo.Nev,
-                                                      Egyesulet = indulo.Egyesulet,
-                                                      Helyezes = 0,
-                                                      Datum = versenydatum
-                                                  }).ToList();
 
-            var q = eredmenyek2.ToArray();
+            foreach( var test in Data.Ijtipusok ) {
+                foreach( var korosztaly in test.Korosztalyok ) {
+                    if( korosztaly.Egyben == true ) {
+                        //var indtest = korosztaly.Indulok.Egyben.Take(_Limit).ToList(); //NOTE(mate): nem kell orderby a EREDMENYLAPVERSENYTELJES megcsinálja
+                        List<OKLEVELVERSENYZO> ind = (from indulo in korosztaly.Indulok.Egyben
+                                                      select new OKLEVELVERSENYZO{
+                                                          Nev = indulo.Nev,
+                                                          Egyesulet = indulo.Egyesulet,
+                                                          Helyezes = 0,
+                                                          Datum = versenydatum
+                                                      }).Take(_Limit).ToList();
+                        var q = ind.ToArray();
 
-            for( int i = 0; i < q.Count( ); ++i ) {
-                q[i].Helyezes = i + 1;
-                NyomtatOklevelVersenyVersenyzo( _Oklevel, q[i] );
+                        for( int i = 0; i < q.Count( ); ++i ) {
+                            q[i].Helyezes = i + 1;
+                        }
+
+                        versenyzok.AddRange(q.ToList());
+
+                    }
+                    else {
+                        List<OKLEVELVERSENYZO> ind = (from indulo in korosztaly.Indulok.Nok
+                                                      select new OKLEVELVERSENYZO{
+                                                          Nev = indulo.Nev,
+                                                          Egyesulet = indulo.Egyesulet,
+                                                          Helyezes = 0,
+                                                          Datum = versenydatum
+                                                      }).Take(_Limit).ToList();
+                        var q = ind.ToArray();
+
+                        for( int i = 0; i < q.Count( ); ++i ) {
+                            q[i].Helyezes = i + 1;
+                        }
+                        versenyzok.AddRange( q.ToList( ) );
+                        ind = null;
+                        ind = (from indulo in korosztaly.Indulok.Ferfiak
+                                                      select new OKLEVELVERSENYZO{
+                                                          Nev = indulo.Nev,
+                                                          Egyesulet = indulo.Egyesulet,
+                                                          Helyezes = 0,
+                                                          Datum = versenydatum
+                                                      }).Take(_Limit).ToList();
+                         q = ind.ToArray();
+
+                        for( int i = 0; i < q.Count( ); ++i ) {
+                            q[i].Helyezes = i + 1;
+                        }
+
+                        versenyzok.AddRange( q.ToList( ) );
+                    }
+                }
+            }
+
+            string path = Data.VersenyAdatok.VSAZON != null ? Data.VersenyAdatok.VSAZON + "/" + Data.VersenyAdatok.VEAZON + "/" + "Oklevelek" : Data.VersenyAdatok.VEAZON + "/" + "Oklevelek";
+
+            if (!Directory.Exists(path)) {
+                Directory.CreateDirectory( path );
+            }
+
+            foreach( var oklevelversenyzo in versenyzok) {
+                NyomtatOklevelVersenyVersenyzo(_Oklevel,oklevelversenyzo,path);
             }
         }
 
@@ -40,14 +88,11 @@ namespace Íjász {
 
         }
 
-        static public string NyomtatOklevelVersenyVersenyzo( Oklevel _Oklevel, OKLEVELVERSENYZO _Versenyzo ) {
-            //TODO(mate): egyedi filename? egyesével lehessen nyomtatni....?????
-            //NOTE(mate): _oklevelből: 4 * (x,y)
-            //NOTE(mate): az oklevel sablont le kell sortolni y szerint!
+        public static string NyomtatOklevelVersenyVersenyzo( Oklevel _Oklevel, OKLEVELVERSENYZO _Versenyzo, string _Path) {
             double Pixel = 3.779528f;
 
-            string filename = null;
-            var document = DocX.Create("oklevel_" + _Versenyzo.Nev + ".docx");
+            string filename = _Path + "/" + _Versenyzo.Nev + ".docx";
+            var document = DocX.Create(filename);
 
             /* 
                oldal ||  w(cm)  |  h(cm)  ||  w  |  h   ||
@@ -55,9 +100,11 @@ namespace Íjász {
                 A5   ||   148   |   210   || 558 | 793  ||
             */
 
-            //NOTE(mate): A5
+            // NOTE(mate): A5
+            /*
             document.PageHeight = (float)( 210.0f * Pixel );
             document.PageWidth = (float)( 148.0f * Pixel );
+            */
             //NOTE(mate): nincs margo
             document.MarginBottom = 1;
             document.MarginLeft = 9;
@@ -101,10 +148,8 @@ namespace Íjász {
 
             Seged = Seged.OrderBy( o => o.Y ).ToList( );
 
-            //NOTE(mate): ver 0.2
-
             List<Table> Tables = new List<Table>();
-            Table t = null;// = document.AddTable(1,2);
+            Table t = null;
             Tables.Add( t );
             Tables.Add( t );
             Tables.Add( t );
@@ -141,91 +186,8 @@ namespace Íjász {
                 }
             }
 
-            #region ver 0.1
-            //NOTE(mate): ver 0.1 
-            /*
-                        Table table1 = document.AddTable(1, 2);
-                        table1.Rows[0].Height = (int)Seged[0].Y;
-                        table1.Rows[0].Cells[0].Width = (int)Seged[0].X;
-                        table1.Rows[0].Cells[1].Width = (int)Seged[0].H;
-                        table1.Rows[0].Cells[1].InsertParagraph( Seged[0].Value );
-                        table1.Rows[0].Cells[1].Paragraphs[0].Alignment = Alignment.center;
-                        table1.Rows[0].Cells[1].Paragraphs[1].Alignment = Alignment.center;
-                        table1.Rows[0].Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                        table1.Rows[0].Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-
-                        Table table2 = document.AddTable(1, 2);
-                        table2.Rows[0].Height = (int)( Seged[1].Y - Seged[0].Y );
-                        table2.Rows[0].Cells[0].Width = (int)Seged[1].X;
-                        table2.Rows[0].Cells[1].Width = (int)Seged[1].H;
-                        table2.Rows[0].Cells[1].InsertParagraph( Seged[1].Value );
-                        table2.Rows[0].Cells[1].Paragraphs[0].Alignment = Alignment.center;
-                        table2.Rows[0].Cells[1].Paragraphs[1].Alignment = Alignment.center;
-                        table2.Rows[0].Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                        table2.Rows[0].Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-
-                        Table table3 = document.AddTable(1, 2);
-                        table3.Rows[0].Height = (int)( Seged[2].Y - Seged[1].Y );
-                        table3.Rows[0].Cells[0].Width = (int)Seged[2].X;
-                        table3.Rows[0].Cells[1].Width = (int)Seged[2].H;
-                        table3.Rows[0].Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                        table3.Rows[0].Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                        table3.Rows[0].Cells[1].InsertParagraph( Seged[2].Value );
-                        table3.Rows[0].Cells[1].Paragraphs[0].Alignment = Alignment.center;
-                        table3.Rows[0].Cells[1].Paragraphs[1].Alignment = Alignment.center;
-
-                        Table table4 = document.AddTable(1, 2);
-                        table4.Rows[0].Height = (int)( Seged[3].Y - Seged[2].Y);
-                        table4.Rows[0].Cells[0].Width = (int)Seged[3].X;
-                        table4.Rows[0].Cells[1].Width = (int)Seged[3].H;
-                        table4.Rows[0].Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-                        table4.Rows[0].Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-                        table4.Rows[0].Cells[1].InsertParagraph( Seged[3].Value );
-                        table4.Rows[0].Cells[1].Paragraphs[0].Alignment = Alignment.center;
-                        table4.Rows[0].Cells[1].Paragraphs[1].Alignment = Alignment.center;
-
-                        //Border d = new Border(Novacode.BorderStyle.Tcbs_single, BorderSize.five, 0, Color.Black);
-
-                        table1.SetBorder( TableBorderType.InsideH, c );
-                        table1.SetBorder( TableBorderType.InsideV, c );
-                        table1.SetBorder( TableBorderType.Bottom, c );
-                        table1.SetBorder( TableBorderType.Top, c );
-                        table1.SetBorder( TableBorderType.Left, c );
-                        table1.SetBorder( TableBorderType.Right, c );
-
-                        table2.SetBorder( TableBorderType.InsideH, c );
-                        table2.SetBorder( TableBorderType.InsideV, c );
-                        table2.SetBorder( TableBorderType.Bottom, c );
-                        table2.SetBorder( TableBorderType.Top, c );
-                        table2.SetBorder( TableBorderType.Left, c );
-                        table2.SetBorder( TableBorderType.Right, c );
-
-                        table3.SetBorder( TableBorderType.InsideH, c );
-                        table3.SetBorder( TableBorderType.InsideV, c );
-                        table3.SetBorder( TableBorderType.Bottom, c );
-                        table3.SetBorder( TableBorderType.Top, c );
-                        table3.SetBorder( TableBorderType.Left, c );
-                        table3.SetBorder( TableBorderType.Right, c );
-
-                        table4.SetBorder( TableBorderType.InsideH, c );
-                        table4.SetBorder( TableBorderType.InsideV, c );
-                        table4.SetBorder( TableBorderType.Bottom, c );
-                        table4.SetBorder( TableBorderType.Top, c );
-                        table4.SetBorder( TableBorderType.Left, c );
-                        table4.SetBorder( TableBorderType.Right, c );
-
-                        document.InsertTable( table1 );
-                        document.InsertParagraph( ).Hide( );
-                        document.InsertTable( table2 );
-                        document.InsertParagraph( ).Hide( );
-                        document.InsertTable( table3 );
-                        document.InsertParagraph( ).Hide( );
-                        document.InsertTable( table4 );
-            */
-            #endregion
-
             try { document.Save( ); }
-            catch( System.Exception ) { MessageBox.Show( "A dokumentum meg van nyitva!", "OKLEVEL.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
+            catch( System.Exception ) { MessageBox.Show( @"A dokumentum meg van nyitva!", @"OKLEVEL.DOCX", MessageBoxButtons.OK, MessageBoxIcon.Error ); }
 
             return filename;
         }

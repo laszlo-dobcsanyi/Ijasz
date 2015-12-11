@@ -22,22 +22,26 @@ namespace Íjász {
                 public string   VSMEGN;
 
                 public VERSENYADATOK( string _VEAZON ) {
+                    VSAZON = null;
+                    VSMEGN = null;
                     Verseny verseny = Program.database.Verseny(_VEAZON).Value;
                     List<Versenysorozat> versenysorozatok = Program.database.Versenysorozatok();
                     List<Eredmény> eredmenyek = Program.database.Eredmények(_VEAZON);
 
-                    this = ( from versenysorozat in versenysorozatok
-                             where versenysorozat.azonosító.Equals( verseny.VersenySorozat )
-                             select new VERSENYADATOK {
-                                 VEAZON = verseny.Azonosito,
-                                 VEDATU = verseny.Datum,
-                                 VEINSZ = eredmenyek.Count( eredmeny => eredmeny.Megjelent.Equals( true ) ),
-                                 VEMEGN = verseny.Megnevezes,
-                                 VEOSPO = verseny.Osszes,
-                                 VSAZON = versenysorozat.azonosító,
-                                 VSMEGN = versenysorozat.megnevezés
-                             } ).First( );
+                    foreach( Versenysorozat item in versenysorozatok ) {
+                        if( item.azonosító == verseny.VersenySorozat ) {
+                            VSAZON = item.azonosító;
+                            VSMEGN = item.megnevezés;
+                            break;
+                        }
+                    }
+                    VEAZON = verseny.Azonosito;
+                    VEMEGN = verseny.Megnevezes;
+                    VEDATU = verseny.Datum;
+                    VEOSPO = verseny.Osszes;
+                    VEINSZ = eredmenyek.Count( eredmeny => eredmeny.Megjelent.Equals( true ) );
                 }
+
 
             }
 
@@ -93,6 +97,15 @@ namespace Íjász {
 
                 for( int i = 0; i < csapatok.Length; i++ ) {
                     csapatok[i].versenyzoadatok = VersenyzoAdatok( _VEAZON, csapatok[i].INCSSZ );
+                    var test = VersenyzoAdatok( _VEAZON, csapatok[i].INCSSZ );
+
+                    var firstnotsec =  csapatok[i].versenyzoadatok.Except(test);
+                    var secondnotfirst = test.Except( csapatok[i].versenyzoadatok );
+
+                    if( firstnotsec.Count( ) != 0 || secondnotfirst.Count( ) != 0 ) {
+                        Console.WriteLine( );
+                    }
+
                 }
 
                 list_csapatok = new List<CSAPAT>( csapatok );
@@ -139,21 +152,21 @@ namespace Íjász {
                 List<Induló> indulok = Program.database.Indulók();
                 List<Íjtípus> ijtipusok = Program.database.Íjtípusok();
 
-               Data = ((from eredmeny in eredmenyek
-                             join indulo in indulok
-                             on eredmeny.Nev equals indulo.Nev
-                             join ijtipus in ijtipusok
-                             on eredmeny.Ijtipus equals ijtipus.Azonosito
-                             where eredmeny.Megjelent.Equals(true) && eredmeny.Csapat.Equals(_Csapat)
-                             select new VERSENYZOADAT{
-                                 INCSSZ = eredmeny.Csapat,
-                                 INEGYE = indulo.Egyesulet,
-                                 INNEVE = indulo.Nev,
-                                 INSOSZ = (int)eredmeny.Sorszam,
-                                 INSZUL = Program.database.InduloKora(_VEAZON,eredmeny.Nev),
-                                 ITMEGN = ijtipus.Megnevezes
-                             }).OrderBy(q => q.INCSSZ).ThenBy( z => z.INNEVE)).ToList();
-                             
+                Data = ( ( from eredmeny in eredmenyek
+                           join indulo in indulok
+                           on eredmeny.Nev equals indulo.Nev
+                           join ijtipus in ijtipusok
+                           on eredmeny.Ijtipus equals ijtipus.Azonosito
+                           where eredmeny.Megjelent.Equals( true ) && eredmeny.Csapat.Equals( _Csapat )
+                           select new VERSENYZOADAT {
+                               INCSSZ = eredmeny.Csapat,
+                               INEGYE = indulo.Egyesulet,
+                               INNEVE = indulo.Nev,
+                               INSOSZ = (int)eredmeny.Sorszam,
+                               INSZUL = Program.database.InduloKora( _VEAZON, eredmeny.Nev ),
+                               ITMEGN = ijtipus.Megnevezes
+                           } ).OrderBy( q => q.INCSSZ ).ThenBy( z => z.INNEVE ) ).ToList( );
+
                 return Data;
             }
 
@@ -2293,8 +2306,7 @@ namespace Íjász {
             Process.Start( info );
         }
 
-        static public void
-        Dialog( string _FileName ) {
+        static public void Dialog( string _FileName ) {
             DialogFileName = _FileName;
             dialog = new Form( );
             dialog.StartPosition = FormStartPosition.CenterScreen;
@@ -2315,6 +2327,7 @@ namespace Íjász {
             dialog.ShowDialog( );
         }
 
+       
         #region EventHandlers
         static void btnIgen_Click( object _sender, EventArgs _event ) {
             Nyomtat.Print( DialogFileName );
