@@ -2041,6 +2041,7 @@ namespace Íjász {
 
         }
 
+
         public struct OKLEVELVERSENYSOROZAT {
 
         }

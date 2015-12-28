@@ -26,6 +26,8 @@ namespace Íjász {
         TextBox txt_EgyesuletY;
         TextBox txt_EgyesuletH;
 
+
+
         //NOTE(mate): új sablon
         public Form_Oklevel( ) {
             InitializeForm( );
