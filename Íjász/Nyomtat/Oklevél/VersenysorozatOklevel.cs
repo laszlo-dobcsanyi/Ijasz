@@ -7,7 +7,7 @@ namespace Íjász {
     public partial class Nyomtat {
 
         static public void NyomtatOklevelVersenysorozat( string _VEAZON, Oklevel _Oklevel, int _Limit ) {
-
+            
 
         }
 

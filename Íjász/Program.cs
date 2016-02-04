@@ -21,13 +21,13 @@ namespace Íjász {
          network = new Network( );
          database = new Database( );
 
-         if ( !database.IsCorrectVersion( ) ) {
-            MessageBox.Show( "Az adatbázis hibás vagy verziója nem megfelelő, le kell először futtatni az Íjász adatbázis kezelőt!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error );
+         //if ( !database.IsCorrectVersion( ) ) {
+         //   MessageBox.Show( "Az adatbázis hibás vagy verziója nem megfelelő, le kell először futtatni az Íjász adatbázis kezelőt!", "Hiba!", MessageBoxButtons.OK, MessageBoxIcon.Error );
 
-            network.Shutdown( );
+         //   network.Shutdown( );
 
-            System.Environment.Exit( 2 );
-         }
+         //   System.Environment.Exit( 2 );
+         //}
          
          AddressForm addressform;
          do {

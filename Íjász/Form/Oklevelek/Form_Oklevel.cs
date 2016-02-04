@@ -5,28 +5,193 @@ using System.Windows.Forms;
 //NOTE(mate): sablon típusa nem módosítható !!!
 namespace Íjász {
     public sealed class Form_Oklevel : Form {
-        TextBox txt_Azonosito;
-        ComboBox cbo_Tipus;
-        TextBox txt_NevX;
-        TextBox txt_NevY;
-        TextBox txt_NevH;
-        TextBox txt_HelyezesX;
-        TextBox txt_HelyezesY;
-        TextBox txt_HelyezesH;
-        TextBox txt_KategoriaX;
-        TextBox txt_KategoriaY;
-        TextBox txt_KategoriaH;
-        TextBox txt_HelyszinX;
-        TextBox txt_HelyszinY;
-        TextBox txt_HelyszinH;
-        TextBox txt_DatumX;
-        TextBox txt_DatumY;
-        TextBox txt_DatumH;
-        TextBox txt_EgyesuletX;
-        TextBox txt_EgyesuletY;
-        TextBox txt_EgyesuletH;
+        bool modositas;  
+        
+        #region Controls
+        TextBox txtAzonosito;
+        ComboBox cboTipus;
+        ComboBox cboBetuTipus;
 
+        TextBox txtVersenyX;
+        TextBox txtVersenyY;
+        TextBox txtVersenyH;
+        CheckBox chkVersenyBold;
+        CheckBox chkVersenyItalic;
+        CheckBox chkVersenyLeft;
+        CheckBox chkVersenyRight;
+        CheckBox chkVersenyMiddle;
+        TextBox txtVersenyM;
 
+        TextBox txtVersenySorozatX;
+        TextBox txtVersenySorozatY;
+        TextBox txtVersenySorozatH;
+        CheckBox chkVersenySorozatBold;
+        CheckBox chkVersenySorozatItalic;
+        CheckBox chkVersenySorozatLeft;
+        CheckBox chkVersenySorozatRight;
+        CheckBox chkVersenySorozatMiddle;
+        TextBox txtVersenySorozatM;
+
+        TextBox txtHelyezesX;
+        TextBox txtHelyezesY;
+        TextBox txtHelyezesH;
+        CheckBox chkHelyezesBold;
+        CheckBox chkHelyezesItalic;
+        CheckBox chkHelyezesLeft;
+        CheckBox chkHelyezesRight;
+        CheckBox chkHelyezesMiddle;
+        TextBox txtHelyezesM;
+
+        TextBox txtInduloX;
+        TextBox txtInduloY;
+        TextBox txtInduloH;
+        CheckBox chkInduloBold;
+        CheckBox chkInduloItalic;
+        CheckBox chkInduloLeft;
+        CheckBox chkInduloRight;
+        CheckBox chkInduloMiddle;
+        TextBox txtInduloM;
+
+        TextBox txtEgyesuletX;
+        TextBox txtEgyesuletY;
+        TextBox txtEgyesuletH;
+        CheckBox chkEgyesuletBold;
+        CheckBox chkEgyesuletItalic;
+        CheckBox chkEgyesuletLeft;
+        CheckBox chkEgyesuletRight;
+        CheckBox chkEgyesuletMiddle;
+        TextBox txtEgyesuletM;
+
+        TextBox txtIjtipusX;
+        TextBox txtIjtipusY;
+        TextBox txtIjtipusH;
+        CheckBox chkIjtipusBold;
+        CheckBox chkIjtipusItalic;
+        CheckBox chkIjtipusLeft;
+        CheckBox chkIjtipusRight;
+        CheckBox chkIjtipusMiddle;
+        TextBox txtIjtipusM;
+
+        TextBox txtKorosztalyX;
+        TextBox txtKorosztalyY;
+        TextBox txtKorosztalyH;
+        CheckBox chkKorosztalyBold;
+        CheckBox chkKorosztalyItalic;
+        CheckBox chkKorosztalyLeft;
+        CheckBox chkKorosztalyRight;
+        CheckBox chkKorosztalyMiddle;
+        TextBox txtKorosztalyM;
+
+        TextBox txtInduloNemeX;
+        TextBox txtInduloNemeY;
+        TextBox txtInduloNemeH;
+        CheckBox chkInduloNemeBold;
+        CheckBox chkInduloNemeItalic;
+        CheckBox chkInduloNemeLeft;
+        CheckBox chkInduloNemeRight;
+        CheckBox chkInduloNemeMiddle;
+        TextBox txtInduloNemeM;
+
+        TextBox txtDatumX;
+        TextBox txtDatumY;
+        TextBox txtDatumH;
+        CheckBox chkDatumBold;
+        CheckBox chkDatumItalic;
+        CheckBox chkDatumLeft;
+        CheckBox chkDatumRight;
+        CheckBox chkDatumMiddle;
+        TextBox txtDatumM;
+        #endregion
+
+        public void LoadTestData( ) {
+            cboTipus.SelectedIndex = 0;
+            cboBetuTipus.SelectedIndex = 0;
+
+            chkVersenyBold.CheckState = CheckState.Checked;
+            chkVersenyItalic.CheckState = CheckState.Unchecked;
+            //chkVersenyLeft.CheckState = CheckState.Checked;
+            //chkVersenyRight.CheckState = CheckState.Unchecked;
+            //chkVersenyMiddle.CheckState = CheckState.Unchecked;
+            chkVersenySorozatBold.CheckState = CheckState.Checked;
+            chkVersenySorozatItalic.CheckState = CheckState.Unchecked;
+            chkVersenySorozatLeft.CheckState = CheckState.Checked;
+            chkVersenySorozatRight.CheckState = CheckState.Unchecked;
+            chkVersenySorozatMiddle.CheckState = CheckState.Unchecked;
+            chkHelyezesBold.CheckState = CheckState.Checked;
+            chkHelyezesItalic.CheckState = CheckState.Unchecked;
+            chkHelyezesLeft.CheckState = CheckState.Checked;
+            chkHelyezesRight.CheckState = CheckState.Unchecked;
+            chkHelyezesMiddle.CheckState = CheckState.Unchecked;
+            chkInduloBold.CheckState = CheckState.Checked;
+            chkInduloItalic.CheckState = CheckState.Unchecked;
+            chkInduloLeft.CheckState = CheckState.Checked;
+            chkInduloRight.CheckState = CheckState.Unchecked;
+            chkInduloMiddle.CheckState = CheckState.Unchecked;
+            chkEgyesuletBold.CheckState = CheckState.Checked;
+            chkEgyesuletItalic.CheckState = CheckState.Unchecked;
+            chkEgyesuletLeft.CheckState = CheckState.Checked;
+            chkEgyesuletRight.CheckState = CheckState.Unchecked;
+            chkEgyesuletMiddle.CheckState = CheckState.Unchecked;
+            chkIjtipusBold.CheckState = CheckState.Checked;
+            chkIjtipusItalic.CheckState = CheckState.Unchecked;
+            chkIjtipusLeft.CheckState = CheckState.Checked;
+            chkIjtipusRight.CheckState = CheckState.Unchecked;
+            chkIjtipusMiddle.CheckState = CheckState.Unchecked;
+            chkKorosztalyBold.CheckState = CheckState.Checked;
+            chkKorosztalyItalic.CheckState = CheckState.Unchecked;
+            chkKorosztalyLeft.CheckState = CheckState.Checked;
+            chkKorosztalyRight.CheckState = CheckState.Unchecked;
+            chkKorosztalyMiddle.CheckState = CheckState.Unchecked;
+            chkInduloNemeBold.CheckState = CheckState.Checked;
+            chkInduloNemeItalic.CheckState = CheckState.Unchecked;
+            chkInduloNemeLeft.CheckState = CheckState.Checked;
+            chkInduloNemeRight.CheckState = CheckState.Unchecked;
+            chkInduloNemeMiddle.CheckState = CheckState.Unchecked;
+            chkDatumBold.CheckState = CheckState.Checked;
+            chkDatumItalic.CheckState = CheckState.Unchecked;
+            chkDatumLeft.CheckState = CheckState.Checked;
+            chkDatumRight.CheckState = CheckState.Unchecked;
+            chkDatumMiddle.CheckState = CheckState.Unchecked;
+
+            int c = -1;
+            txtAzonosito.Text = ( ++c ).ToString( );
+            txtVersenyX.Text = ( ++c ).ToString( );
+            txtVersenyY.Text = ( ++c ).ToString( );
+            txtVersenyH.Text = ( ++c ).ToString( );
+            txtVersenyM.Text = ( ++c ).ToString( );
+            txtVersenySorozatX.Text = ( ++c ).ToString( );
+            txtVersenySorozatY.Text = ( ++c ).ToString( );
+            txtVersenySorozatH.Text = ( ++c ).ToString( );
+            txtVersenySorozatM.Text = ( ++c ).ToString( );
+            txtHelyezesX.Text = ( ++c ).ToString( );
+            txtHelyezesY.Text = ( ++c ).ToString( );
+            txtHelyezesH.Text = ( ++c ).ToString( );
+            txtHelyezesM.Text = ( ++c ).ToString( );
+            txtInduloX.Text = ( ++c ).ToString( );
+            txtInduloY.Text = ( ++c ).ToString( );
+            txtInduloH.Text = ( ++c ).ToString( );
+            txtInduloM.Text = ( ++c ).ToString( );
+            txtEgyesuletX.Text = ( ++c ).ToString( );
+            txtEgyesuletY.Text = ( ++c ).ToString( );
+            txtEgyesuletH.Text = ( ++c ).ToString( );
+            txtEgyesuletM.Text = ( ++c ).ToString( );
+            txtIjtipusX.Text = ( ++c ).ToString( );
+            txtIjtipusY.Text = ( ++c ).ToString( );
+            txtIjtipusH.Text = ( ++c ).ToString( );
+            txtIjtipusM.Text = ( ++c ).ToString( );
+            txtKorosztalyX.Text = ( ++c ).ToString( );
+            txtKorosztalyY.Text = ( ++c ).ToString( );
+            txtKorosztalyH.Text = ( ++c ).ToString( );
+            txtKorosztalyM.Text = ( ++c ).ToString( );
+            //txtInduloNemeX.Text = ( ++c ).ToString( );
+            //txtInduloNemeY.Text = ( ++c ).ToString( );
+            //txtInduloNemeH.Text = ( ++c ).ToString( );
+            //txtInduloNemeM.Text = ( ++c ).ToString( );
+            txtDatumX.Text = ( ++c ).ToString( );
+            txtDatumY.Text = ( ++c ).ToString( );
+            txtDatumH.Text = ( ++c ).ToString( );
+            txtDatumM.Text = ( ++c ).ToString( );
+        }
 
         //NOTE(mate): új sablon
         public Form_Oklevel( ) {
@@ -36,23 +201,15 @@ namespace Íjász {
         }
 
         public Form_Oklevel( Oklevel _Oklevel ) {
-
-            if( _Oklevel.Tipus.Equals( "Verseny" ) ) {
-                InitializeForm_Verseny( );
-                InitializeContent_Verseny( _Oklevel );
-                InitializeData_Verseny( _Oklevel );
-            }
-            else if( _Oklevel.Tipus.Equals( "Versenysorozat" ) ) {
-                InitializeForm_Versenysorozat( );
-                InitializeContent_Versenysorozat( _Oklevel );
-                InitializeData_Versenysorozat( _Oklevel );
-            }
+            InitializeForm( );
+            InitializeContent( );
+            InitializeData( _Oklevel );
         }
 
         //NOTE(mate): új sablon
         private void InitializeForm( ) {
             Text = "Új sablon szerkesztő";
-            ClientSize = new Size( 420 , 350 );
+            ClientSize = new Size( 720 , 500 );
             MinimumSize = ClientSize;
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
@@ -61,452 +218,783 @@ namespace Íjász {
             int cWidth = ClientRectangle.Width;
             int cHeight = ClientRectangle.Height;
 
+            int labelPos = -1;
+
+            int columnPos1 = 7;
+            int columnPos2 = columnPos1 + 6;
+            int columnPos3 = columnPos2 + 6;
+            int columnPos4 = columnPos3 + 2;
+            int columnPos5 = columnPos4 + 2;
+            int columnPos6 = columnPos5 + 8;
+            int columnPos7 = columnPos6 + 2;
+            int columnPos8 = columnPos7 + 2;
+            int columnPos9 = columnPos8 + 2;
+            
+            Size textBoxSize = new Size(64 - 16,28);
+
             #region Labels
+
             Label lblAzonosito = new Label {
                 Text = "Azonosító:",
-                Location = new Point( 16, 1 * 16 ),
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             Label lblTipus = new Label {
                 Text = "Típus:",
-                Location = new Point( 16, 3 * 16 ),
+                Location = new Point( 16, (labelPos += 2) * 16 ),
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoSize = true
+            };
+            Label lblBetuTipus = new Label {
+                Text = "Betűtípus:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             Label lblFelirat = new Label {
-                Text = "                         Szélesség(mm)          Magasság(mm)                 Hossz(mm)",
-                Location = new Point( 16, 5 * 16 ),
+                Text = "                         Szélesség(mm)          Magasság(mm)       Hossz(mm)                      Format                 Méret                          Igazítás",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
 
-
-
-            Label lblNev = new Label {
-                Text = "Név:",
-                Location = new Point( 16, 7 * 16 ),
+            Label lblVerseny = new Label {
+                Text = "Verseny:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoSize = true
+            };
+            Label lblVersenySorozat = new Label {
+                Text = "Versenysorozat:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             Label lblHelyezes = new Label {
                 Text = "Helyezés:",
-                Location = new Point( 16, 9 * 16 ),
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
-            Label lblKategoria = new Label {
-                Text = "Kategória:",
-                Location = new Point( 16, 11 * 16 ),
+            Label lblIndulo= new Label {
+                Text = "Induló:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
-            Label lblHelyszin = new Label {
-                Text = "Helyszín:",
-                Location = new Point( 16, 13 * 16 ),
-                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
-            };
-            Label lblDatum = new Label {
-                Text = "Dátum:",
-                Location = new Point( 16, 15 * 16 ),
-                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
-            };
-            Label lblEgyesulet = new Label {
+            Label lblEgyesulet= new Label {
                 Text = "Egyesület:",
-                Location = new Point( 16, 17 * 16 ),
+                Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
+            Label lblIjtipus= new Label {
+                Text = "Íjtípus:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoSize = true
+            };
+            Label lblKorosztaly= new Label {
+                Text = "Korosztály:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoSize = true
+            };
+            Label lblInduloNeme= new Label {
+                Text = "Induló neme:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoSize = true
+            };
+            Label lblDatum= new Label {
+                Text = "Dátum:",
+                Location = new Point( 16, (labelPos += 2) * 16 ),
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoSize = true
+            };
+            Controls.Add( lblAzonosito );
+            Controls.Add( lblTipus );
+            Controls.Add( lblBetuTipus );
+            Controls.Add( lblFelirat );
+            Controls.Add( lblVerseny );
+            Controls.Add( lblVersenySorozat );
+            Controls.Add( lblHelyezes );
+            Controls.Add( lblIndulo );
+            Controls.Add( lblEgyesulet );
+            Controls.Add( lblIjtipus );
+            Controls.Add( lblKorosztaly );
+            Controls.Add( lblInduloNeme );
+            Controls.Add( lblDatum );
             #endregion
 
-            txt_Azonosito = new TextBox {
-                Location = new Point( 5 * 16, 1 * 16 - 8 )
+            txtAzonosito = new TextBox {
+                Location = new Point( columnPos1 * 16, lblAzonosito.Location.Y - 8 )
             };
-            cbo_Tipus = new ComboBox {
-                Location = new Point( 5 * 16, 3 * 16 - 8 ),
-                Size = new Size( 128, 24 ),
+            cboTipus = new ComboBox {
+                Location = new Point( columnPos1 * 16, lblTipus.Location.Y - 8 ),
+                Size = new Size(128,16),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cbo_Tipus.Items.Add( "Verseny" );
-            cbo_Tipus.Items.Add( "Versenysorozat" );
-            cbo_Tipus.SelectedIndexChanged += Cbo_Tipus_SelectedIndexChanged;
+            cboTipus.Items.Add( "Verseny" );
+            cboTipus.Items.Add( "Versenysorozat" );
+            cboTipus.SelectedIndexChanged += Cbo_Tipus_SelectedIndexChanged;
 
-            txt_NevX = new TextBox {
-                Location = new Point( 5 * 16, 7 * 16 - 4 )
-            };
-            txt_NevY = new TextBox {
-                Location = new Point( 12 * 16, 7 * 16 - 4 )
-            };
-            txt_NevH = new TextBox {
-                Location = new Point( 19 * 16, 7* 16 - 4 )
-            };
-
-            txt_HelyezesX = new TextBox {
-                Location = new Point( 5 * 16, 9 * 16 - 4 )
-            };
-            txt_HelyezesY = new TextBox {
-                Location = new Point( 12 * 16, 9 * 16 - 4 )
-            };
-            txt_HelyezesH = new TextBox {
-                Location = new Point( 19 * 16, 9 * 16 - 4 )
-            };
-
-            txt_KategoriaX = new TextBox {
-                Location = new Point( 5 * 16, 11 * 16 - 4 )
-            };
-            txt_KategoriaY = new TextBox {
-                Location = new Point( 12 * 16, 11 * 16 - 4 )
-            };
-            txt_KategoriaH = new TextBox {
-                Location = new Point( 19 * 16, 11 * 16 - 4 )
-            };
-
-            txt_HelyszinX = new TextBox {
-                Location = new Point( 5 * 16, 13 * 16 - 4 )
-            };
-            txt_HelyszinY = new TextBox {
-                Location = new Point( 12 * 16, 13 * 16 - 4 )
-            };
-            txt_HelyszinH = new TextBox {
-                Location = new Point( 19 * 16, 13 * 16 - 4 )
-            };
-
-            txt_DatumX = new TextBox {
-                Location = new Point( 5 * 16, 15 * 16 - 4 )
-            };
-            txt_DatumY = new TextBox {
-                Location = new Point( 12 * 16, 15 * 16 - 4 )
-            };
-            txt_DatumH = new TextBox {
-                Location = new Point( 19 * 16, 15 * 16 - 4 )
-            };
-
-            txt_EgyesuletX = new TextBox {
-                Location = new Point( 5 * 16, 17 * 16 - 4 )
-            };
-            txt_EgyesuletY = new TextBox {
-                Location = new Point( 12 * 16, 17 * 16 - 4 )
-            };
-            txt_EgyesuletH = new TextBox {
-                Location = new Point( 19 * 16, 17 * 16 - 4 )
-            };
-
-            Button btnRendben = new Button {
+            cboBetuTipus = new ComboBox {
+                Location = new Point( columnPos1 * 16, lblBetuTipus.Location.Y - 8 ),
+                Size = new Size( 128, 16 ),
+                DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                Text = "Rendben",
-                Location = new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
-                Size = new Size( 96, 32 )
             };
-            btnRendben.Click += btnRendben_Click;
-            Controls.Add( btnRendben );
+            cboBetuTipus.Items.Add( "TODO betűtípus" );
 
-            Controls.Add( lblAzonosito );
-            Controls.Add( lblTipus );
-            Controls.Add( lblFelirat );
-            Controls.Add( lblNev );
-            Controls.Add( lblHelyezes );
-            Controls.Add( lblKategoria );
-            Controls.Add( lblHelyszin );
-            Controls.Add( lblDatum );
-            Controls.Add( lblEgyesulet );
+            Controls.Add( txtAzonosito );
+            Controls.Add( cboTipus );
+            Controls.Add( cboBetuTipus );
 
-            Controls.Add( txt_Azonosito );
-            Controls.Add( cbo_Tipus );
+            #region Verseny
 
-            Controls.Add( txt_NevX );
-            Controls.Add( txt_NevY );
-            Controls.Add( txt_NevH );
-
-            Controls.Add( txt_HelyezesX );
-            Controls.Add( txt_HelyezesY );
-            Controls.Add( txt_HelyezesH );
-
-            Controls.Add( txt_KategoriaX );
-            Controls.Add( txt_KategoriaY );
-            Controls.Add( txt_KategoriaH );
-
-            Controls.Add( txt_HelyszinX );
-            Controls.Add( txt_HelyszinY );
-            Controls.Add( txt_HelyszinH );
-
-            Controls.Add( txt_DatumX );
-            Controls.Add( txt_DatumY );
-            Controls.Add( txt_DatumH );
-
-            Controls.Add( txt_EgyesuletX );
-            Controls.Add( txt_EgyesuletY );
-            Controls.Add( txt_EgyesuletH );
-        }
-        private void InitializeData( ) {
-
-        }
-
-        //NOTE(mate): verseny sablon modosito
-        private void InitializeForm_Verseny( ) {
-            Text = "Verseny sablon szerkesztő";
-            ClientSize = new Size( 430 , 200 );
-            MinimumSize = ClientSize;
-            StartPosition = FormStartPosition.CenterScreen;
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
-        }
-        private void InitializeData_Verseny( Oklevel _Oklevel ) {
-            txt_Azonosito.Text = _Oklevel.Azonosito;
-            cbo_Tipus.Text = _Oklevel.Tipus;
-            txt_NevX.Text = _Oklevel.NevX.ToString( );
-            txt_NevY.Text = _Oklevel.NevY.ToString( );
-            txt_NevH.Text = _Oklevel.NevH.ToString( );
-            txt_HelyezesX.Text = _Oklevel.HelyezesX.ToString( );
-            txt_HelyezesY.Text = _Oklevel.HelyezesY.ToString( );
-            txt_HelyezesH.Text = _Oklevel.HelyezesH.ToString( );
-            // txt_Kategoria.Text = _Oklevel.Kategoria.ToString( );
-            // txt_Helyszin.Text = _Oklevel.Helyszin.ToString( );
-            txt_DatumX.Text = _Oklevel.DatumX.ToString( );
-            txt_DatumY.Text = _Oklevel.DatumY.ToString( );
-            txt_DatumH.Text = _Oklevel.DatumH.ToString( );
-            txt_EgyesuletX.Text = _Oklevel.EgyesuletX.ToString( );
-            txt_EgyesuletY.Text = _Oklevel.EgyesuletY.ToString( );
-            txt_EgyesuletH.Text = _Oklevel.EgyesuletH.ToString( );
-        }
-        private void InitializeContent_Verseny( Oklevel _oklevel ) {
-            int cWidth = ClientRectangle.Width;
-            int cHeight = ClientRectangle.Height;
-
-            #region Labels
-            Label lblNev = new Label {
-                Text = "Név:",
-                Location = new Point( 16, 1 * 16 ),
+            txtVersenyX = new TextBox {
+                Location = new Point( columnPos1 * 16, lblVerseny.Location.Y - 4 ),
+                Size = textBoxSize
+            };
+            txtVersenyY = new TextBox {
+                Location = new Point( columnPos2 * 16, lblVerseny.Location.Y - 4 ),
+                Size = textBoxSize
+            };
+            txtVersenyH = new TextBox {
+                Location = new Point( columnPos3 * 16, lblVerseny.Location.Y - 4 ),
+                Size = textBoxSize
+            };
+            chkVersenyBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblVerseny.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblHelyezes = new Label {
-                Text = "Helyezés:",
-                Location = new Point( 16, 3 * 16 ),
+            chkVersenyItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblVerseny.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblDatum = new Label {
-                Text = "Dátum:",
-                Location = new Point( 16, 5 * 16 ),
+            txtVersenyM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblVerseny.Location.Y - 4 )
+            };
+            chkVersenyLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblVerseny.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblEgyesulet = new Label {
-                Text = "Egyesület:",
-                Location = new Point( 16, 7 * 16 ),
+            chkVersenyMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblVerseny.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
+            chkVersenyRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblVerseny.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtVersenyX );
+            Controls.Add( txtVersenyY );
+            Controls.Add( txtVersenyH );
+            Controls.Add( chkVersenyBold );
+            Controls.Add( chkVersenyItalic );
+            Controls.Add( txtVersenyM );
+            Controls.Add( chkVersenyLeft );
+            Controls.Add( chkVersenyMiddle );
+            Controls.Add( chkVersenyRight );
             #endregion
 
-            txt_Azonosito = new TextBox( );
-
-            cbo_Tipus = new ComboBox( );
-            cbo_Tipus.Items.Add( _oklevel.Tipus );
-            cbo_Tipus.SelectedIndex = 0;
-
-            txt_NevX = new TextBox {
-                Location = new Point( 5 * 16, 1 * 16 - 4 )
+            #region VersenySorozat
+            txtVersenySorozatX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblVersenySorozat.Location.Y - 4 )
             };
-            txt_NevY = new TextBox {
-                Location = new Point( 12 * 16, 1 * 16 - 4 )
+            txtVersenySorozatY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblVersenySorozat.Location.Y - 4 )
             };
-            txt_NevH = new TextBox {
-                Location = new Point( 19 * 16, 1 * 16 - 4 )
+            txtVersenySorozatH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblVersenySorozat.Location.Y - 4 )
             };
-
-            txt_HelyezesX = new TextBox {
-                Location = new Point( 5 * 16, 3 * 16 - 4 )
-            };
-            txt_HelyezesY = new TextBox {
-                Location = new Point( 12 * 16, 3 * 16 - 4 )
-            };
-            txt_HelyezesH = new TextBox {
-                Location = new Point( 19 * 16, 3 * 16 - 4 )
-            };
-
-
-            txt_KategoriaX = new TextBox( );
-            txt_KategoriaY = new TextBox( );
-            txt_KategoriaH = new TextBox( );
-
-            txt_HelyszinX = new TextBox( );
-            txt_HelyszinY = new TextBox( );
-            txt_HelyszinH = new TextBox( );
-
-            txt_DatumX = new TextBox {
-                Location = new Point( 5 * 16, 5 * 16 - 4 )
-            };
-            txt_DatumY = new TextBox {
-                Location = new Point( 12 * 16, 5 * 16 - 4 )
-            };
-            txt_DatumH = new TextBox {
-                Location = new Point( 19 * 16, 5 * 16 - 4 )
-            };
-
-            txt_EgyesuletX = new TextBox {
-                Location = new Point( 5 * 16, 7 * 16 - 4 )
-            };
-            txt_EgyesuletY = new TextBox {
-                Location = new Point( 12 * 16, 7 * 16 - 4 )
-            };
-            txt_EgyesuletH = new TextBox {
-                Location = new Point( 19 * 16, 7 * 16 - 4 )
-            };
-
-            Button btnRendben = new Button {
+            chkVersenySorozatBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblVersenySorozat.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                Text = "Rendben",
-                Location = new Point( ClientRectangle.Width - 96 - 16, ClientRectangle.Height - 32 - 16 ),
-                Size = new Size( 96, 32 )
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            btnRendben.Click += btnRendben_Click;
-            Controls.Add( btnRendben );
-
-            Controls.Add( lblNev );
-            Controls.Add( lblHelyezes );
-            Controls.Add( lblDatum );
-            Controls.Add( lblEgyesulet );
-
-            Controls.Add( txt_NevX );
-            Controls.Add( txt_NevY );
-            Controls.Add( txt_NevH );
-            Controls.Add( txt_HelyezesX );
-            Controls.Add( txt_HelyezesY );
-            Controls.Add( txt_HelyezesH );
-            Controls.Add( txt_DatumX );
-            Controls.Add( txt_DatumY );
-            Controls.Add( txt_DatumH );
-            Controls.Add( txt_EgyesuletX );
-            Controls.Add( txt_EgyesuletY );
-            Controls.Add( txt_EgyesuletH );
-        }
-
-        //NOTE(mate): versenysorozat sablon modosito
-        private void InitializeForm_Versenysorozat( ) {
-            Text = "Versenysorozat sablon szerkesztő";
-            ClientSize = new Size( 430 , 240 );
-            MinimumSize = ClientSize;
-            StartPosition = FormStartPosition.CenterScreen;
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
-        }
-        private void InitializeData_Versenysorozat( Oklevel _Oklevel ) {
-            txt_Azonosito.Text = _Oklevel.Azonosito;
-            cbo_Tipus.Text = _Oklevel.Tipus;
-            txt_NevX.Text = _Oklevel.NevX.ToString( );
-            txt_NevY.Text = _Oklevel.NevY.ToString( );
-            txt_NevH.Text = _Oklevel.NevH.ToString( );
-            txt_HelyezesX.Text = _Oklevel.HelyezesX.ToString( );
-            txt_HelyezesY.Text = _Oklevel.HelyezesY.ToString( );
-            txt_HelyezesH.Text = _Oklevel.HelyezesH.ToString( );
-            txt_KategoriaX.Text = _Oklevel.KategoriaX.ToString( );
-            txt_KategoriaY.Text = _Oklevel.KategoriaY.ToString( );
-            txt_KategoriaH.Text = _Oklevel.KategoriaH.ToString( );
-            txt_HelyszinX.Text = _Oklevel.HelyszinX.ToString( );
-            txt_HelyszinY.Text = _Oklevel.HelyszinY.ToString( );
-            txt_HelyszinH.Text = _Oklevel.HelyszinH.ToString( );
-            txt_DatumX.Text = _Oklevel.DatumX.ToString( );
-            txt_DatumY.Text = _Oklevel.DatumY.ToString( );
-            txt_DatumH.Text = _Oklevel.DatumH.ToString( );
-            //txt_Egyesulet.Text = _Oklevel.Egyesulet.ToString( );
-        }
-        private void InitializeContent_Versenysorozat( Oklevel _oklevel ) {
-            int cWidth = ClientRectangle.Width;
-            int cHeight = ClientRectangle.Height;
-
-            #region Labels
-            Label lblNev = new Label {
-                Text = "Név:",
-                Location = new Point( 16, 1 * 16 ),
+            chkVersenySorozatItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblVersenySorozat.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblHelyezes = new Label {
-                Text = "Helyezés:",
-                Location = new Point( 16, 3 * 16 ),
+            txtVersenySorozatM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblVersenySorozat.Location.Y - 4 )
+            };
+            chkVersenySorozatLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblVersenySorozat.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblKategoria = new Label {
-                Text = "Kategória:",
-                Location = new Point( 16, 5 * 16 ),
+            chkVersenySorozatMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblVersenySorozat.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblHelyszin = new Label {
-                Text = "Helyszín:",
-                Location = new Point( 16, 7 * 16 ),
+            chkVersenySorozatRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblVersenySorozat.Location.Y - 4 ),
+                AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
             };
-            Label lblDatum = new Label {
-                Text = "Dátum:",
-                Location = new Point( 16, 9 * 16 ),
-                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
-            };
+            Controls.Add( txtVersenySorozatX );
+            Controls.Add( txtVersenySorozatY );
+            Controls.Add( txtVersenySorozatH );
+            Controls.Add( chkVersenySorozatBold );
+            Controls.Add( chkVersenySorozatItalic );
+            Controls.Add( txtVersenySorozatM );
+            Controls.Add( chkVersenySorozatLeft );
+            Controls.Add( chkVersenySorozatMiddle );
+            Controls.Add( chkVersenySorozatRight );
             #endregion
 
-            txt_Azonosito = new TextBox( );
+            #region Helyezes
+            txtHelyezesX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblHelyezes.Location.Y - 4 )
+            };
+            txtHelyezesY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblHelyezes.Location.Y - 4 )
+            };
+            txtHelyezesH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblHelyezes.Location.Y - 4 )
+            };
+            chkHelyezesBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblHelyezes.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkHelyezesItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblHelyezes.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtHelyezesM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblHelyezes.Location.Y - 4 )
+            };
+            chkHelyezesLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblHelyezes.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkHelyezesMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblHelyezes.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkHelyezesRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblHelyezes.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtHelyezesX );
+            Controls.Add( txtHelyezesY );
+            Controls.Add( txtHelyezesH );
+            Controls.Add( chkHelyezesBold );
+            Controls.Add( chkHelyezesItalic );
+            Controls.Add( txtHelyezesM );
+            Controls.Add( chkHelyezesLeft );
+            Controls.Add( chkHelyezesMiddle );
+            Controls.Add( chkHelyezesRight );
+            #endregion
 
-            cbo_Tipus = new ComboBox( );
-            cbo_Tipus.Items.Add( _oklevel.Tipus );
+            #region Induló
+            txtInduloX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblIndulo.Location.Y - 4 )
+            };
+            txtInduloY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblIndulo.Location.Y - 4 )
+            };
+            txtInduloH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblIndulo.Location.Y - 4 )
+            };
+            chkInduloBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblIndulo.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkInduloItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblIndulo.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtInduloM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblIndulo.Location.Y - 4 )
+            };
+            chkInduloLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblIndulo.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkInduloMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblIndulo.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkInduloRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblIndulo.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtInduloX );
+            Controls.Add( txtInduloY );
+            Controls.Add( txtInduloH );
+            Controls.Add( chkInduloBold );
+            Controls.Add( chkInduloItalic );
+            Controls.Add( txtInduloM );
+            Controls.Add( chkInduloLeft );
+            Controls.Add( chkInduloMiddle );
+            Controls.Add( chkInduloRight );
+            #endregion
 
-            txt_NevX = new TextBox {
-                Location = new Point( 5 * 16, 1 * 16 - 4 )
+            #region Egyesület
+            txtEgyesuletX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblEgyesulet.Location.Y - 4 )
             };
-            txt_NevY = new TextBox {
-                Location = new Point( 12 * 16, 1 * 16 - 4 )
+            txtEgyesuletY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblEgyesulet.Location.Y - 4 )
             };
-            txt_NevH = new TextBox {
-                Location = new Point( 19 * 16, 1 * 16 - 4 )
+            txtEgyesuletH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblEgyesulet.Location.Y - 4 )
             };
+            chkEgyesuletBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblEgyesulet.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkEgyesuletItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblEgyesulet.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtEgyesuletM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblEgyesulet.Location.Y - 4 )
+            };
+            chkEgyesuletLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblEgyesulet.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkEgyesuletMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblEgyesulet.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkEgyesuletRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblEgyesulet.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtEgyesuletX );
+            Controls.Add( txtEgyesuletY );
+            Controls.Add( txtEgyesuletH );
+            Controls.Add( chkEgyesuletBold );
+            Controls.Add( chkEgyesuletItalic );
+            Controls.Add( txtEgyesuletM );
+            Controls.Add( chkEgyesuletLeft );
+            Controls.Add( chkEgyesuletMiddle );
+            Controls.Add( chkEgyesuletRight );
+            #endregion
 
-            txt_HelyezesX = new TextBox {
-                Location = new Point( 5 * 16, 3 * 16 - 4 )
+            #region Íjtípus
+            txtIjtipusX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblIjtipus.Location.Y - 4 )
             };
-            txt_HelyezesY = new TextBox {
-                Location = new Point( 12 * 16, 3 * 16 - 4 )
+            txtIjtipusY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblIjtipus.Location.Y - 4 )
             };
-            txt_HelyezesH = new TextBox {
-                Location = new Point( 19 * 16, 3 * 16 - 4 )
+            txtIjtipusH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblIjtipus.Location.Y - 4 )
             };
+            chkIjtipusBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblIjtipus.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkIjtipusItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblIjtipus.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtIjtipusM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblIjtipus.Location.Y - 4 )
+            };
+            chkIjtipusLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblIjtipus.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkIjtipusMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblIjtipus.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkIjtipusRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblIjtipus.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtIjtipusX );
+            Controls.Add( txtIjtipusY );
+            Controls.Add( txtIjtipusH );
+            Controls.Add( chkIjtipusBold );
+            Controls.Add( chkIjtipusItalic );
+            Controls.Add( txtIjtipusM );
+            Controls.Add( chkIjtipusLeft );
+            Controls.Add( chkIjtipusMiddle );
+            Controls.Add( chkIjtipusRight );
+            #endregion
 
-            txt_KategoriaX = new TextBox {
-                Location = new Point( 5 * 16, 5 * 16 - 4 )
+            #region Koroszály
+            txtKorosztalyX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblKorosztaly.Location.Y - 4 )
             };
-            txt_KategoriaY = new TextBox {
-                Location = new Point( 12 * 16, 5 * 16 - 4 )
+            txtKorosztalyY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblKorosztaly.Location.Y - 4 )
             };
-            txt_KategoriaH = new TextBox {
-                Location = new Point( 19 * 16, 5 * 16 - 4 )
+            txtKorosztalyH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblKorosztaly.Location.Y - 4 )
             };
+            chkKorosztalyBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblKorosztaly.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkKorosztalyItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblKorosztaly.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtKorosztalyM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblKorosztaly.Location.Y - 4 )
+            };
+            chkKorosztalyLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblKorosztaly.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkKorosztalyMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblKorosztaly.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkKorosztalyRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblKorosztaly.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtKorosztalyX );
+            Controls.Add( txtKorosztalyY );
+            Controls.Add( txtKorosztalyH );
+            Controls.Add( chkKorosztalyBold );
+            Controls.Add( chkKorosztalyItalic );
+            Controls.Add( txtKorosztalyM );
+            Controls.Add( chkKorosztalyLeft );
+            Controls.Add( chkKorosztalyMiddle );
+            Controls.Add( chkKorosztalyRight );
+            #endregion
 
-            txt_HelyszinX = new TextBox {
-                Location = new Point( 5 * 16, 7 * 16 - 4 )
+            #region Indulóneme
+            txtInduloNemeX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblInduloNeme.Location.Y - 4 )
             };
-            txt_HelyszinY = new TextBox {
-                Location = new Point( 12 * 16, 7 * 16 - 4 )
+            txtInduloNemeY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblInduloNeme.Location.Y - 4 )
             };
-            txt_HelyszinH = new TextBox {
-                Location = new Point( 19 * 16, 7 * 16 - 4 )
+            txtInduloNemeH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblInduloNeme.Location.Y - 4 )
             };
+            chkInduloNemeBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblInduloNeme.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkInduloNemeItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblInduloNeme.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtInduloNemeM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblInduloNeme.Location.Y - 4 )
+            };
+            chkInduloNemeLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblInduloNeme.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkInduloNemeMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblInduloNeme.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkInduloNemeRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblInduloNeme.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtInduloNemeX );
+            Controls.Add( txtInduloNemeY );
+            Controls.Add( txtInduloNemeH );
+            Controls.Add( chkInduloNemeBold );
+            Controls.Add( chkInduloNemeItalic );
+            Controls.Add( txtInduloNemeM );
+            Controls.Add( chkInduloNemeLeft );
+            Controls.Add( chkInduloNemeMiddle );
+            Controls.Add( chkInduloNemeRight );
+            #endregion
 
-            txt_DatumX = new TextBox {
-                Location = new Point( 5 * 16, 9 * 16 - 4 )
+            #region Dátum
+            txtDatumX = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos1 * 16, lblDatum.Location.Y - 4 )
             };
-            txt_DatumY = new TextBox {
-                Location = new Point( 12 * 16, 9 * 16 - 4 )
+            txtDatumY = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos2 * 16, lblDatum.Location.Y - 4 )
             };
-            txt_DatumH = new TextBox {
-                Location = new Point( 19 * 16, 9 * 16 - 4 )
+            txtDatumH = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos3 * 16, lblDatum.Location.Y - 4 )
             };
+            chkDatumBold = new CheckBox {
+                Text = "B",
+                Location = new Point( columnPos4 * 16, lblDatum.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkDatumItalic = new CheckBox {
+                Text = "I",
+                Location = new Point( columnPos5 * 16, lblDatum.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            txtDatumM = new TextBox {
+                Size = textBoxSize,
+                Location = new Point( columnPos6 * 16, lblDatum.Location.Y - 4 )
+            };
+            chkDatumLeft = new CheckBox {
+                Text = "L",
+                Location = new Point( columnPos7 * 16, lblDatum.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkDatumMiddle = new CheckBox {
+                Text = "M",
+                Location = new Point( columnPos8 * 16, lblDatum.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            chkDatumRight = new CheckBox {
+                Text = "R",
+                Location = new Point( columnPos9 * 16, lblDatum.Location.Y - 4 ),
+                AutoSize = true,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+                FlatStyle = FlatStyle.Flat,
+                CheckState = CheckState.Unchecked
+            };
+            Controls.Add( txtDatumX );
+            Controls.Add( txtDatumY );
+            Controls.Add( txtDatumH );
+            Controls.Add( chkDatumBold );
+            Controls.Add( chkDatumItalic );
+            Controls.Add( txtDatumM );
+            Controls.Add( chkDatumLeft );
+            Controls.Add( chkDatumMiddle );
+            Controls.Add( chkDatumRight );
+            #endregion
 
-            txt_EgyesuletX = new TextBox( );
-            txt_EgyesuletY = new TextBox( );
-            txt_EgyesuletH = new TextBox( );
+            #region CheckBox EventHandlers
+            chkVersenyLeft.Click += chkAll_Click;
+            chkVersenyRight.Click += chkAll_Click;
+            chkVersenyMiddle.Click += chkAll_Click;
+            chkVersenySorozatLeft.Click += chkAll_Click;
+            chkVersenySorozatRight.Click += chkAll_Click;
+            chkVersenySorozatMiddle.Click += chkAll_Click;
+            chkHelyezesLeft.Click += chkAll_Click;
+            chkHelyezesRight.Click += chkAll_Click;
+            chkHelyezesMiddle.Click += chkAll_Click;
+            chkInduloLeft.Click += chkAll_Click;
+            chkInduloRight.Click += chkAll_Click;
+            chkInduloMiddle.Click += chkAll_Click;
+            chkEgyesuletLeft.Click += chkAll_Click;
+            chkEgyesuletRight.Click += chkAll_Click;
+            chkEgyesuletMiddle.Click += chkAll_Click;
+            chkIjtipusLeft.Click += chkAll_Click;
+            chkIjtipusRight.Click += chkAll_Click;
+            chkIjtipusMiddle.Click += chkAll_Click;
+            chkKorosztalyLeft.Click += chkAll_Click;
+            chkKorosztalyRight.Click += chkAll_Click;
+            chkKorosztalyMiddle.Click += chkAll_Click;
+            chkInduloNemeLeft.Click += chkAll_Click;
+            chkInduloNemeRight.Click += chkAll_Click;
+            chkInduloNemeMiddle.Click += chkAll_Click;
+            chkDatumLeft.Click += chkAll_Click;
+            chkDatumRight.Click += chkAll_Click;
+            chkDatumMiddle.Click += chkAll_Click;
+            #endregion
 
             Button btnRendben = new Button {
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
@@ -516,218 +1004,496 @@ namespace Íjász {
             };
             btnRendben.Click += btnRendben_Click;
             Controls.Add( btnRendben );
+            //LoadTestData( );
+        }
+        private void InitializeData(  ) {
+            modositas = false;
 
-            Controls.Add( lblNev );
-            Controls.Add( lblHelyezes );
-            Controls.Add( lblKategoria );
-            Controls.Add( lblHelyszin );
-            Controls.Add( lblDatum );
+        }
 
-            Controls.Add( txt_NevX );
-            Controls.Add( txt_NevY );
-            Controls.Add( txt_NevH );
-            Controls.Add( txt_HelyezesX );
-            Controls.Add( txt_HelyezesY );
-            Controls.Add( txt_HelyezesH );
-            Controls.Add( txt_KategoriaX );
-            Controls.Add( txt_KategoriaY );
-            Controls.Add( txt_KategoriaH );
-            Controls.Add( txt_HelyszinX );
-            Controls.Add( txt_HelyszinY );
-            Controls.Add( txt_HelyszinH );
-            Controls.Add( txt_DatumX );
-            Controls.Add( txt_DatumY );
-            Controls.Add( txt_DatumH );
+        private void InitializeData( Oklevel oklevel ) {
+            modositas = true;
+
+            txtAzonosito.Text = oklevel.Azonosito;
+            txtAzonosito.Enabled = false;
+
+            cboTipus.Text = oklevel.Tipus;
+            cboBetuTipus.Text = oklevel.BetuTipus;
+
+            txtVersenyX.Text = oklevel.VersenyX == 0 ? "" : oklevel.VersenyX.ToString( );
+            txtVersenyY.Text = oklevel.VersenyY == 0 ? "" : oklevel.VersenyY.ToString( );
+            txtVersenyH.Text = oklevel.VersenyH == 0 ? "" : oklevel.VersenyH.ToString( );
+            chkVersenyBold.Checked = ( ( oklevel.VersenyF == "B" ) || ( oklevel.VersenyF == "2" ) );
+            chkVersenyItalic.Checked = ( ( oklevel.VersenyF == "I" ) || ( oklevel.VersenyF == "2" ) );
+            chkVersenyLeft.Checked = ( oklevel.VersenyI == "L" );
+            chkVersenyRight.Checked = ( oklevel.VersenyI == "R" );
+            chkVersenyMiddle.Checked = ( oklevel.VersenyI == "M" );
+            txtVersenyM.Text = oklevel.VersenyM == 0 ? "" : oklevel.VersenyM.ToString( );
+
+            txtVersenySorozatX.Text = oklevel.VersenySorozatX == 0 ? "" : oklevel.VersenySorozatX.ToString( );
+            txtVersenySorozatY.Text = oklevel.VersenySorozatY == 0 ? "" : oklevel.VersenySorozatY.ToString( );
+            txtVersenySorozatH.Text = oklevel.VersenySorozatH == 0 ? "" : oklevel.VersenySorozatH.ToString( );
+            chkVersenySorozatBold.Checked = ( ( oklevel.VersenySorozatF == "B" ) || ( oklevel.VersenySorozatF == "2" ) );
+            chkVersenySorozatItalic.Checked = ( ( oklevel.VersenySorozatF == "I" ) || ( oklevel.VersenySorozatF == "2" ) );
+            chkVersenySorozatLeft.Checked = ( oklevel.VersenySorozatI == "L" );
+            chkVersenySorozatRight.Checked = ( oklevel.VersenySorozatI == "R" );
+            chkVersenySorozatMiddle.Checked = ( oklevel.VersenySorozatI == "M" );
+            txtVersenySorozatM.Text = oklevel.VersenySorozatM == 0 ? "" : oklevel.VersenySorozatM.ToString( );
+
+
+            txtHelyezesX.Text = oklevel.HelyezesX == 0 ? "" : oklevel.HelyezesX.ToString( );
+            txtHelyezesY.Text = oklevel.HelyezesY == 0 ? "" : oklevel.HelyezesY.ToString( );
+            txtHelyezesH.Text = oklevel.HelyezesH == 0 ? "" : oklevel.HelyezesH.ToString( );
+            chkHelyezesBold.Checked = ( ( oklevel.HelyezesF == "B" ) || ( oklevel.HelyezesF == "2" ) );
+            chkHelyezesItalic.Checked = ( ( oklevel.HelyezesF == "I" ) || ( oklevel.HelyezesF == "2" ) );
+            chkHelyezesLeft.Checked = ( oklevel.HelyezesI == "L" );
+            chkHelyezesRight.Checked = ( oklevel.HelyezesI == "R" );
+            chkHelyezesMiddle.Checked = ( oklevel.HelyezesI == "M" );
+            txtHelyezesM.Text = oklevel.HelyezesM == 0 ? "" : oklevel.HelyezesM.ToString( );
+
+            txtInduloX.Text = oklevel.InduloX == 0 ? "" : oklevel.InduloX.ToString( );
+            txtInduloY.Text = oklevel.InduloY == 0 ? "" : oklevel.InduloY.ToString( );
+            txtInduloH.Text = oklevel.InduloH == 0 ? "" : oklevel.InduloH.ToString( );
+            chkInduloBold.Checked = ( ( oklevel.InduloF == "B" ) || ( oklevel.InduloF == "2" ) );
+            chkInduloItalic.Checked = ( ( oklevel.InduloF == "I" ) || ( oklevel.InduloF == "2" ) );
+            chkInduloLeft.Checked = ( oklevel.InduloI == "L" );
+            chkInduloRight.Checked = ( oklevel.InduloI == "R" );
+            chkInduloMiddle.Checked = ( oklevel.InduloI == "M" );
+            txtInduloM.Text = oklevel.InduloM == 0 ? "" : oklevel.InduloM.ToString( );
+
+            txtEgyesuletX.Text = oklevel.EgyesuletX == 0 ? "" : oklevel.EgyesuletX.ToString( );
+            txtEgyesuletY.Text = oklevel.EgyesuletY == 0 ? "" : oklevel.EgyesuletY.ToString( );
+            txtEgyesuletH.Text = oklevel.EgyesuletH == 0 ? "" : oklevel.EgyesuletH.ToString( );
+            chkEgyesuletBold.Checked = ( ( oklevel.EgyesuletF == "B" ) || ( oklevel.EgyesuletF == "2" ) );
+            chkEgyesuletItalic.Checked = ( ( oklevel.EgyesuletF == "I" ) || ( oklevel.EgyesuletF == "2" ) );
+            chkEgyesuletLeft.Checked = ( oklevel.EgyesuletI == "L" );
+            chkEgyesuletRight.Checked = ( oklevel.EgyesuletI == "R" );
+            chkEgyesuletMiddle.Checked = ( oklevel.EgyesuletI == "M" );
+            txtEgyesuletM.Text = oklevel.EgyesuletM == 0 ? "" : oklevel.EgyesuletM.ToString( );
+
+            txtIjtipusX.Text = oklevel.IjtipusX == 0 ? "" : oklevel.IjtipusX.ToString( );
+            txtIjtipusY.Text = oklevel.IjtipusY == 0 ? "" : oklevel.IjtipusY.ToString( );
+            txtIjtipusH.Text = oklevel.IjtipusH == 0 ? "" : oklevel.IjtipusH.ToString( );
+            chkIjtipusBold.Checked = ( ( oklevel.IjtipusF == "B" ) || ( oklevel.IjtipusF == "2" ) );
+            chkIjtipusItalic.Checked = ( ( oklevel.IjtipusF == "I" ) || ( oklevel.IjtipusF == "2" ) );
+            chkIjtipusLeft.Checked = ( oklevel.IjtipusI == "L" );
+            chkIjtipusRight.Checked = ( oklevel.IjtipusI == "R" );
+            chkIjtipusMiddle.Checked = ( oklevel.IjtipusI == "M" );
+            txtIjtipusM.Text = oklevel.IjtipusM == 0 ? "" : oklevel.IjtipusM.ToString( );
+
+            txtKorosztalyX.Text = oklevel.KorosztalyX == 0 ? "" : oklevel.KorosztalyX.ToString( );
+            txtKorosztalyY.Text = oklevel.KorosztalyY == 0 ? "" : oklevel.KorosztalyY.ToString( );
+            txtKorosztalyH.Text = oklevel.KorosztalyH == 0 ? "" : oklevel.KorosztalyH.ToString( );
+            chkKorosztalyBold.Checked = ( ( oklevel.KorosztalyF == "B" ) || ( oklevel.KorosztalyF == "2" ) );
+            chkKorosztalyItalic.Checked = ( ( oklevel.KorosztalyF == "I" ) || ( oklevel.KorosztalyF == "2" ) );
+            chkKorosztalyLeft.Checked = ( oklevel.KorosztalyI == "L" );
+            chkKorosztalyRight.Checked = ( oklevel.KorosztalyI == "R" );
+            chkKorosztalyMiddle.Checked = ( oklevel.KorosztalyI == "M" );
+            txtKorosztalyM.Text = oklevel.KorosztalyM == 0 ? "" : oklevel.KorosztalyM.ToString( );
+
+            txtInduloNemeX.Text = oklevel.InduloNemeX == 0 ? "" : oklevel.InduloNemeX.ToString( );
+            txtInduloNemeY.Text = oklevel.InduloNemeY == 0 ? "" : oklevel.InduloNemeY.ToString( );
+            txtInduloNemeH.Text = oklevel.InduloNemeH == 0 ? "" : oklevel.InduloNemeH.ToString( );
+            chkInduloNemeBold.Checked = ( ( oklevel.InduloNemeF == "B" ) || ( oklevel.InduloNemeF == "2" ) );
+            chkInduloNemeItalic.Checked = ( ( oklevel.InduloNemeF == "I" ) || ( oklevel.InduloNemeF == "2" ) );
+            chkInduloNemeLeft.Checked = ( oklevel.InduloNemeI == "L" );
+            chkInduloNemeRight.Checked = ( oklevel.InduloNemeI == "R" );
+            chkInduloNemeMiddle.Checked = ( oklevel.InduloNemeI == "M" );
+            txtInduloNemeM.Text = oklevel.InduloNemeM == 0 ? "" : oklevel.InduloNemeM.ToString( );
+
+            txtDatumX.Text = oklevel.DatumX == 0 ? "" : oklevel.DatumX.ToString( );
+            txtDatumY.Text = oklevel.DatumY == 0 ? "" : oklevel.DatumY.ToString( );
+            txtDatumH.Text = oklevel.DatumH == 0 ? "" : oklevel.DatumH.ToString( );
+            chkDatumBold.Checked = ( ( oklevel.DatumF == "B" ) || ( oklevel.DatumF == "2" ) );
+            chkDatumItalic.Checked = ( ( oklevel.DatumF == "I" ) || ( oklevel.DatumF == "2" ) );
+            chkDatumLeft.Checked = ( oklevel.DatumI == "L" );
+            chkDatumRight.Checked = ( oklevel.DatumI == "R" );
+            chkDatumMiddle.Checked = ( oklevel.DatumI == "M" );
+            txtDatumM.Text = oklevel.DatumM == 0 ? "" : oklevel.DatumM.ToString( );
         }
 
         #region EventHandlers
         private void Cbo_Tipus_SelectedIndexChanged( object sender, EventArgs e ) {
-            if( cbo_Tipus.Text == null ) {
-                return;
-            }
+            //if( cbo_Tipus.Text == null ) {
+            //    return;
+            //}
 
-            if( cbo_Tipus.Text == "Verseny" ) {
-                txt_HelyezesX.Enabled = true;
-                txt_HelyezesY.Enabled = true;
-                txt_HelyezesH.Enabled = true;
-                txt_NevX.Enabled = true;
-                txt_NevY.Enabled = true;
-                txt_NevH.Enabled = true;
-                txt_EgyesuletX.Enabled = true;
-                txt_EgyesuletY.Enabled = true;
-                txt_EgyesuletH.Enabled = true;
-                txt_DatumX.Enabled = true;
-                txt_DatumY.Enabled = true;
-                txt_DatumH.Enabled = true;
+            //if( cbo_Tipus.Text == "Verseny" ) {
+            //    txt_VersenySorozatX.Enabled = true;
+            //    txt_VersenySorozatY.Enabled = true;
+            //    txt_VersenySorozatH.Enabled = true;
+            //    txt_VersenyX.Enabled = true;
+            //    txt_VersenyY.Enabled = true;
+            //    txt_VersenyH.Enabled = true;
+            //    txt_EgyesuletX.Enabled = true;
+            //    txt_EgyesuletY.Enabled = true;
+            //    txt_EgyesuletH.Enabled = true;
+            //    txt_IjtipusX.Enabled = true;
+            //    txt_IjtipusY.Enabled = true;
+            //    txt_IjtipusH.Enabled = true;
 
-                txt_KategoriaX.Enabled = false;
-                txt_KategoriaY.Enabled = false;
-                txt_KategoriaH.Enabled = false;
-                txt_HelyszinX.Enabled = false;
-                txt_HelyszinY.Enabled = false;
-                txt_HelyszinH.Enabled = false;
-            }
-            else if( cbo_Tipus.Text == "Versenysorozat" ) {
-                txt_NevX.Enabled = true;
-                txt_NevY.Enabled = true;
-                txt_NevH.Enabled = true;
-                txt_HelyezesX.Enabled = true;
-                txt_HelyezesY.Enabled = true;
-                txt_HelyezesH.Enabled = true;
-                txt_HelyszinX.Enabled = true;
-                txt_HelyszinY.Enabled = true;
-                txt_HelyszinH.Enabled = true;
-                txt_DatumX.Enabled = true;
-                txt_DatumY.Enabled = true;
-                txt_DatumH.Enabled = true;
-                txt_KategoriaX.Enabled = true;
-                txt_KategoriaY.Enabled = true;
-                txt_KategoriaH.Enabled = true;
+            //    txt_HelyezesX.Enabled = false;
+            //    txt_HelyezesY.Enabled = false;
+            //    txt_HelyezesH.Enabled = false;
+            //    txt_InduloX.Enabled = false;
+            //    txt_InduloY.Enabled = false;
+            //    txt_InduloH.Enabled = false;
+            //}
+            //else if( cbo_Tipus.Text == "Versenysorozat" ) {
+            //    txt_VersenyX.Enabled = true;
+            //    txt_VersenyY.Enabled = true;
+            //    txt_VersenyH.Enabled = true;
+            //    txt_VersenySorozatX.Enabled = true;
+            //    txt_VersenySorozatY.Enabled = true;
+            //    txt_VersenySorozatH.Enabled = true;
+            //    txt_InduloX.Enabled = true;
+            //    txt_InduloY.Enabled = true;
+            //    txt_InduloH.Enabled = true;
+            //    txt_IjtipusX.Enabled = true;
+            //    txt_IjtipusY.Enabled = true;
+            //    txt_IjtipusH.Enabled = true;
+            //    txt_HelyezesX.Enabled = true;
+            //    txt_HelyezesY.Enabled = true;
+            //    txt_HelyezesH.Enabled = true;
 
-                txt_EgyesuletX.Enabled = false;
-                txt_EgyesuletY.Enabled = false;
-                txt_EgyesuletH.Enabled = false;
-            }
+            //    txt_EgyesuletX.Enabled = false;
+            //    txt_EgyesuletY.Enabled = false;
+            //    txt_EgyesuletH.Enabled = false;
+            //}
         }
 
         private void btnRendben_Click( object sender, EventArgs e ) {
             Oklevel oklevel = new Oklevel( );
 
-            if( txt_Azonosito.Text.Length == 0 ) { MessageBox.Show( "Hiba az azonosító mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( cbo_Tipus.Text.Length == 0 ) { MessageBox.Show( "Hiba a típus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_HelyezesX.Text.Length == 0 ) { MessageBox.Show( "Hiba a helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_HelyezesY.Text.Length == 0 ) { MessageBox.Show( "Hiba a helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_HelyezesH.Text.Length == 0 ) { MessageBox.Show( "Hiba a helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_NevX.Text.Length == 0 ) { MessageBox.Show( "Hiba az név mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_NevY.Text.Length == 0 ) { MessageBox.Show( "Hiba az név mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_NevH.Text.Length == 0 ) { MessageBox.Show( "Hiba az név mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_DatumX.Text.Length == 0 ) { MessageBox.Show( "Hiba a dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_DatumY.Text.Length == 0 ) { MessageBox.Show( "Hiba a dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( txt_DatumH.Text.Length == 0 ) { MessageBox.Show( "Hiba a dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            #region Error Checks
+            if( txtAzonosito.Text.Length == 0 ) { MessageBox.Show( "Hiba az azonosító mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            if( cboTipus.Text.Length == 0 ) { MessageBox.Show( "Hiba a típus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            if( cboBetuTipus.Text.Length == 0 ) { MessageBox.Show( "Hiba a betűtípus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
 
-            try { Convert.ToInt32( txt_HelyezesX.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a helyezes mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            try { Convert.ToInt32( txt_HelyezesY.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a helyezes mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            try { Convert.ToInt32( txt_HelyezesH.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a helyezes mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-
-            try { Convert.ToInt32( txt_NevX.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a név mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            try { Convert.ToInt32( txt_NevY.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a név mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            try { Convert.ToInt32( txt_NevH.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a név mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-
-            try { Convert.ToInt32( txt_DatumX.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            try { Convert.ToInt32( txt_DatumY.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            try { Convert.ToInt32( txt_DatumH.Text ); }
-            catch( Exception ) { MessageBox.Show( "Hiba a dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-            //NOTE(mate): versenysorozat szerkesztő
-            if( cbo_Tipus.Text == "Versenysorozat" ) {
-                if( txt_KategoriaX.Text.Length == 0 ) { MessageBox.Show( "Hiba a kategória mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_KategoriaY.Text.Length == 0 ) { MessageBox.Show( "Hiba a kategória mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_KategoriaH.Text.Length == 0 ) { MessageBox.Show( "Hiba a kategória mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_HelyszinX.Text.Length == 0 ) { MessageBox.Show( "Hiba a helyszín mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_HelyszinY.Text.Length == 0 ) { MessageBox.Show( "Hiba a helyszín mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_HelyszinH.Text.Length == 0 ) { MessageBox.Show( "Hiba a helyszín mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_KategoriaX.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba a kategória mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_KategoriaY.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba a kategória mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_KategoriaH.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba a kategória mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-                try { Convert.ToInt32( txt_HelyszinX.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba a helyszín mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_HelyszinY.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba a helyszín mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_HelyszinH.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba a helyszín mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-                oklevel = new Oklevel {
-                    Azonosito = txt_Azonosito.Text,
-                    Tipus = cbo_Tipus.Text,
-
-                    HelyezesX = Convert.ToInt32( txt_HelyezesX.Text ),
-                    HelyezesY = Convert.ToInt32( txt_HelyezesY.Text ),
-                    HelyezesH = Convert.ToInt32( txt_HelyezesH.Text ),
-
-                    NevX = Convert.ToInt32( txt_NevX.Text ),
-                    NevY = Convert.ToInt32( txt_NevY.Text ),
-                    NevH = Convert.ToInt32( txt_NevH.Text ),
-
-                    DatumX = Convert.ToInt32( txt_DatumX.Text ),
-                    DatumY = Convert.ToInt32( txt_DatumY.Text ),
-                    DatumH = Convert.ToInt32( txt_DatumH.Text ),
-
-                    KategoriaX = Convert.ToInt32( txt_KategoriaX.Text ),
-                    KategoriaY = Convert.ToInt32( txt_KategoriaY.Text ),
-                    KategoriaH = Convert.ToInt32( txt_KategoriaH.Text ),
-
-                    HelyszinX = Convert.ToInt32( txt_HelyszinX.Text ),
-                    HelyszinY = Convert.ToInt32( txt_HelyszinY.Text ),
-                    HelyszinH = Convert.ToInt32( txt_HelyszinH.Text ),
-
-                    EgyesuletX = -66,
-                    EgyesuletY = -66,
-                    EgyesuletH = -66,
-                };
+          
+            if( txtVersenyX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtVersenyX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a verseny mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtVersenyY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a verseny mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtVersenyH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a verseny mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtVersenyM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a verseny mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
             }
-            //NOTE(mate): verseny szerkesztő
-            else if( cbo_Tipus.Text == "Verseny" ) {
-                if( txt_EgyesuletX.Text.Length == 0 ) { MessageBox.Show( "Hiba az egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_EgyesuletY.Text.Length == 0 ) { MessageBox.Show( "Hiba az egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                if( txt_EgyesuletH.Text.Length == 0 ) { MessageBox.Show( "Hiba az egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-                try { Convert.ToInt32( txt_EgyesuletX.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba az egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_EgyesuletY.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba az egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-                try { Convert.ToInt32( txt_EgyesuletH.Text ); }
-                catch( Exception ) { MessageBox.Show( "Hiba az egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-
-                oklevel = new Oklevel {
-                    Azonosito = txt_Azonosito.Text,
-                    Tipus = cbo_Tipus.Text,
-
-                    HelyezesX = Convert.ToInt32( txt_HelyezesX.Text ),
-                    HelyezesY = Convert.ToInt32( txt_HelyezesY.Text ),
-                    HelyezesH = Convert.ToInt32( txt_HelyezesH.Text ),
-                    NevX = Convert.ToInt32( txt_NevX.Text ),
-                    NevY = Convert.ToInt32( txt_NevY.Text ),
-                    NevH = Convert.ToInt32( txt_NevH.Text ),
-                    DatumX = Convert.ToInt32( txt_DatumX.Text ),
-                    DatumY = Convert.ToInt32( txt_DatumY.Text ),
-                    DatumH = Convert.ToInt32( txt_DatumH.Text ),
-                    EgyesuletX = Convert.ToInt32( txt_EgyesuletX.Text ),
-                    EgyesuletY = Convert.ToInt32( txt_EgyesuletY.Text ),
-                    EgyesuletH = Convert.ToInt32( txt_EgyesuletH.Text ),
-
-                    KategoriaX = -66,
-                    KategoriaY = -66,
-                    KategoriaH = -66,
-                    HelyszinX = -66,
-                    HelyszinY = -66,
-                    HelyszinH = -66,
-                };
+            if( txtVersenySorozatX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtVersenySorozatX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Versenysorozat mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtVersenySorozatY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Versenysorozat mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtVersenySorozatH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Versenysorozat mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtVersenySorozatM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Versenysorozat mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
             }
-
-            if( txt_Azonosito.FindForm( ) == null ) {
-                Program.mainform.oklevelek_panel.Sablon_Modositas( txt_Azonosito.Text, oklevel );
+            if( txtHelyezesX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtHelyezesX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtHelyezesY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtHelyezesH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtHelyezesM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Helyezés mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
             }
-            else {
+            if( txtInduloX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtInduloX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtInduloY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtInduloH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtInduloM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            }
+            if( txtEgyesuletX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtEgyesuletX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtEgyesuletY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtEgyesuletH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtEgyesuletM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Egyesület mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            }
+            if( txtIjtipusX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtIjtipusX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Íjtipus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtIjtipusY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Íjtipus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtIjtipusH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Íjtipus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtIjtipusM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Íjtipus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            }
+            if( txtKorosztalyX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtKorosztalyX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Korosztály mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtKorosztalyY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Korosztály mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtKorosztalyH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Korosztály mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtKorosztalyM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Korosztály mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            }
+            if( txtInduloNemeX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtInduloNemeX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló Neme mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtInduloNemeY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló Neme mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtInduloNemeH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló Neme mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtInduloNemeM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba az Induló Neme mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            }
+            if( txtDatumX.Text.Length != 0 ) {
+                try { Convert.ToInt32( txtDatumX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtDatumY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtDatumH.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+                try { Convert.ToInt32( txtDatumM.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a Dátum mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
+            }
+            #endregion
+
+
+            oklevel = new Oklevel {
+                Azonosito = txtAzonosito.Text,
+                Tipus = cboTipus.Text,
+                BetuTipus = cboBetuTipus.Text,
+
+                VersenyX = txtVersenyX.Text == "" ? 0 : Convert.ToInt32( txtVersenyX.Text ),
+                VersenyY = txtVersenyY.Text == "" ? 0 : Convert.ToInt32( txtVersenyY.Text ),
+                VersenyH = txtVersenyH.Text == "" ? 0 : Convert.ToInt32( txtVersenyH.Text ),
+                VersenyF = chkVersenyBold.Checked == true ? ( chkVersenyItalic.Checked == true ? "2" : "B" ) : ( chkVersenyItalic.Checked == true ? "I" : "0" ),
+                VersenyM = txtVersenyM.Text == "" ? 0 : Convert.ToInt32( txtVersenyM.Text ),
+                VersenyI = chkVersenyLeft.Checked == true ? "L" : ( chkVersenyRight.Checked == true ? "R" : ( chkVersenyMiddle.Checked == true ? "M" : "0" ) ),
+
+                VersenySorozatX = txtVersenySorozatX.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatX.Text ),
+                VersenySorozatY = txtVersenySorozatY.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatY.Text ),
+                VersenySorozatH = txtVersenySorozatH.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatH.Text ),
+                VersenySorozatF = chkVersenySorozatBold.Checked == true ? ( chkVersenySorozatItalic.Checked == true ? "2" : "B" ) : ( chkVersenySorozatItalic.Checked == true ? "I" : "0" ),
+                VersenySorozatM = txtVersenySorozatM.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatM.Text ),
+                VersenySorozatI = chkVersenySorozatLeft.Checked == true ? "L" : ( chkVersenySorozatRight.Checked == true ? "R" : ( chkVersenySorozatMiddle.Checked == true ? "M" : "0" ) ),
+
+                HelyezesX = txtHelyezesX.Text == "" ? 0 : Convert.ToInt32( txtHelyezesX.Text ),
+                HelyezesY = txtHelyezesY.Text == "" ? 0 : Convert.ToInt32( txtHelyezesY.Text ),
+                HelyezesH = txtHelyezesH.Text == "" ? 0 : Convert.ToInt32( txtHelyezesH.Text ),
+                HelyezesF = chkHelyezesBold.Checked == true ? ( chkHelyezesItalic.Checked == true ? "2" : "B" ) : ( chkHelyezesItalic.Checked == true ? "I" : "0" ),
+                HelyezesM = txtHelyezesM.Text == "" ? 0 : Convert.ToInt32( txtHelyezesM.Text ),
+                HelyezesI = chkHelyezesLeft.Checked == true ? "L" : ( chkHelyezesRight.Checked == true ? "R" : ( chkHelyezesMiddle.Checked == true ? "M" : "0" ) ),
+
+                InduloX = txtInduloX.Text == "" ? 0 : Convert.ToInt32( txtInduloX.Text ),
+                InduloY = txtInduloY.Text == "" ? 0 : Convert.ToInt32( txtInduloY.Text ),
+                InduloH = txtInduloH.Text == "" ? 0 : Convert.ToInt32( txtInduloH.Text ),
+                InduloF = chkInduloBold.Checked == true ? ( chkInduloItalic.Checked == true ? "2" : "B" ) : ( chkInduloItalic.Checked == true ? "I" : "0" ),
+                InduloM = txtInduloM.Text == "" ? 0 : Convert.ToInt32( txtInduloM.Text ),
+                InduloI = chkInduloLeft.Checked == true ? "L" : ( chkInduloRight.Checked == true ? "R" : ( chkInduloMiddle.Checked == true ? "M" : "0" ) ),
+
+                EgyesuletX = txtEgyesuletX.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletX.Text ),
+                EgyesuletY = txtEgyesuletY.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletY.Text ),
+                EgyesuletH = txtEgyesuletH.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletH.Text ),
+                EgyesuletF = chkEgyesuletBold.Checked == true ? ( chkEgyesuletItalic.Checked == true ? "2" : "B" ) : ( chkEgyesuletItalic.Checked == true ? "I" : "0" ),
+                EgyesuletM = txtEgyesuletM.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletM.Text ),
+                EgyesuletI = chkEgyesuletLeft.Checked == true ? "L" : ( chkEgyesuletRight.Checked == true ? "R" : ( chkEgyesuletMiddle.Checked == true ? "M" : "0" ) ),
+
+                IjtipusX = txtIjtipusX.Text == "" ? 0 : Convert.ToInt32( txtIjtipusX.Text ),
+                IjtipusY = txtIjtipusY.Text == "" ? 0 : Convert.ToInt32( txtIjtipusY.Text ),
+                IjtipusH = txtIjtipusH.Text == "" ? 0 : Convert.ToInt32( txtIjtipusH.Text ),
+                IjtipusF = chkIjtipusBold.Checked == true ? ( chkIjtipusItalic.Checked == true ? "2" : "B" ) : ( chkIjtipusItalic.Checked == true ? "I" : "0" ),
+                IjtipusM = txtIjtipusM.Text == "" ? 0 : Convert.ToInt32( txtIjtipusM.Text ),
+                IjtipusI = chkIjtipusLeft.Checked == true ? "L" : ( chkIjtipusRight.Checked == true ? "R" : ( chkIjtipusMiddle.Checked == true ? "M" : "0" ) ),
+
+                KorosztalyX = txtKorosztalyX.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyX.Text ),
+                KorosztalyY = txtKorosztalyY.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyY.Text ),
+                KorosztalyH = txtKorosztalyH.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyH.Text ),
+                KorosztalyF = chkKorosztalyBold.Checked == true ? ( chkKorosztalyItalic.Checked == true ? "2" : "B" ) : ( chkKorosztalyItalic.Checked == true ? "I" : "0" ),
+                KorosztalyM = txtKorosztalyM.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyM.Text ),
+                KorosztalyI = chkKorosztalyLeft.Checked == true ? "L" : ( chkKorosztalyRight.Checked == true ? "R" : ( chkKorosztalyMiddle.Checked == true ? "M" : "0" ) ),
+
+                InduloNemeX = txtInduloNemeX.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeX.Text ),
+                InduloNemeY = txtInduloNemeY.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeY.Text ),
+                InduloNemeH = txtInduloNemeH.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeH.Text ),
+                InduloNemeF = chkInduloNemeBold.Checked == true ? ( chkInduloNemeItalic.Checked == true ? "2" : "B" ) : ( chkInduloNemeItalic.Checked == true ? "I" : "0" ),
+                InduloNemeM = txtInduloNemeM.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeM.Text ),
+                InduloNemeI = chkInduloNemeLeft.Checked == true ? "L" : ( chkInduloNemeRight.Checked == true ? "R" : ( chkInduloNemeMiddle.Checked == true ? "M" : "0" ) ),
+
+                DatumX = txtDatumX.Text == "" ? 0 : Convert.ToInt32( txtDatumX.Text ),
+                DatumY = txtDatumY.Text == "" ? 0 : Convert.ToInt32( txtDatumY.Text ),
+                DatumH = txtDatumH.Text == "" ? 0 : Convert.ToInt32( txtDatumH.Text ),
+                DatumF = chkDatumBold.Checked == true ? ( chkDatumItalic.Checked == true ? "2" : "B" ) : ( chkDatumItalic.Checked == true ? "I" : "0" ),
+                DatumM = txtDatumM.Text == "" ? 0 : Convert.ToInt32( txtDatumM.Text ),
+                DatumI = chkDatumLeft.Checked == true ? "L" : ( chkDatumRight.Checked == true ? "R" : ( chkDatumMiddle.Checked == true ? "M" : "0" ) )
+            };
+
+            if( modositas == false ) {
                 Program.mainform.oklevelek_panel.Sablon_Hozzáadás( oklevel );
             }
+            else {
+                Program.mainform.oklevelek_panel.Sablon_Modositas( oklevel.Azonosito, oklevel );
 
-            this.Close( );
-            return;
+            }
+            Close( );
+        }
+
+        private void chkAll_Click( object _sender, EventArgs _event ) {
+            CheckBox chkAktiv = _sender as CheckBox;
+            
+            #region Verseny
+            if( chkAktiv == chkVersenyLeft ) {
+                chkVersenyLeft.Checked = true;
+                chkVersenyRight.Checked = false;
+                chkVersenyMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkVersenyRight ) {
+                chkVersenyRight.Checked = true;
+                chkVersenyMiddle.Checked = false;
+                chkVersenyLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkVersenyMiddle ) {
+                chkVersenyMiddle.Checked = true;
+                chkVersenyRight.Checked = false;
+                chkVersenyLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region Versenysorozat
+            if( chkAktiv == chkVersenySorozatLeft ) {
+                chkVersenySorozatLeft.Checked = true;
+                chkVersenySorozatRight.Checked = false;
+                chkVersenySorozatMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkVersenySorozatRight ) {
+                chkVersenySorozatRight.Checked = true;
+                chkVersenySorozatMiddle.Checked = false;
+                chkVersenySorozatLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkVersenySorozatMiddle ) {
+                chkVersenySorozatMiddle.Checked = true;
+                chkVersenySorozatRight.Checked = false;
+                chkVersenySorozatLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region Helyezes
+            if( chkAktiv == chkHelyezesLeft ) {
+                chkHelyezesLeft.Checked = true;
+                chkHelyezesRight.Checked = false;
+                chkHelyezesMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkHelyezesRight ) {
+                chkHelyezesRight.Checked = true;
+                chkHelyezesMiddle.Checked = false;
+                chkHelyezesLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkHelyezesMiddle ) {
+                chkHelyezesMiddle.Checked = true;
+                chkHelyezesRight.Checked = false;
+                chkHelyezesLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region Indulo
+            if( chkAktiv == chkInduloLeft ) {
+                chkInduloLeft.Checked = true;
+                chkInduloRight.Checked = false;
+                chkInduloMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkInduloRight ) {
+                chkInduloRight.Checked = true;
+                chkInduloMiddle.Checked = false;
+                chkInduloLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkInduloMiddle ) {
+                chkInduloMiddle.Checked = true;
+                chkInduloRight.Checked = false;
+                chkInduloLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region Egyesület
+            if( chkAktiv == chkEgyesuletLeft ) {
+                chkEgyesuletLeft.Checked = true;
+                chkEgyesuletRight.Checked = false;
+                chkEgyesuletMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkEgyesuletRight ) {
+                chkEgyesuletRight.Checked = true;
+                chkEgyesuletMiddle.Checked = false;
+                chkEgyesuletLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkEgyesuletMiddle ) {
+                chkEgyesuletMiddle.Checked = true;
+                chkEgyesuletRight.Checked = false;
+                chkEgyesuletLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region Ijtipus
+            if( chkAktiv == chkIjtipusLeft ) {
+                chkIjtipusLeft.Checked = true;
+                chkIjtipusRight.Checked = false;
+                chkIjtipusMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkIjtipusRight ) {
+                chkIjtipusRight.Checked = true;
+                chkIjtipusMiddle.Checked = false;
+                chkIjtipusLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkIjtipusMiddle ) {
+                chkIjtipusMiddle.Checked = true;
+                chkIjtipusRight.Checked = false;
+                chkIjtipusLeft.Checked = false;
+                return;
+            }
+
+            #endregion
+            #region Korosztaly
+            if( chkAktiv == chkKorosztalyLeft ) {
+                chkKorosztalyLeft.Checked = true;
+                chkKorosztalyRight.Checked = false;
+                chkKorosztalyMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkKorosztalyRight ) {
+                chkKorosztalyRight.Checked = true;
+                chkKorosztalyMiddle.Checked = false;
+                chkKorosztalyLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkKorosztalyMiddle ) {
+                chkKorosztalyMiddle.Checked = true;
+                chkKorosztalyRight.Checked = false;
+                chkKorosztalyLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region InduloNeme
+            if( chkAktiv == chkInduloNemeLeft ) {
+                chkInduloNemeLeft.Checked = true;
+                chkInduloNemeRight.Checked = false;
+                chkInduloNemeMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkInduloNemeRight ) {
+                chkInduloNemeRight.Checked = true;
+                chkInduloNemeMiddle.Checked = false;
+                chkInduloNemeLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkInduloNemeMiddle ) {
+                chkInduloNemeMiddle.Checked = true;
+                chkInduloNemeRight.Checked = false;
+                chkInduloNemeLeft.Checked = false;
+                return;
+            }
+            #endregion
+            #region Datum
+            if( chkAktiv == chkDatumLeft ) {
+                chkDatumLeft.Checked = true;
+                chkDatumRight.Checked = false;
+                chkDatumMiddle.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkDatumRight ) {
+                chkDatumRight.Checked = true;
+                chkDatumMiddle.Checked = false;
+                chkDatumLeft.Checked = false;
+                return;
+            }
+            if( chkAktiv == chkDatumMiddle ) {
+                chkDatumMiddle.Checked = true;
+                chkDatumRight.Checked = false;
+                chkDatumLeft.Checked = false;
+                return;
+            }
+                #endregion
         }
         #endregion
+
     }
 }
+//}

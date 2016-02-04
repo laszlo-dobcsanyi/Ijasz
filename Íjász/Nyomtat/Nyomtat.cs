@@ -2028,22 +2028,27 @@ namespace Íjász {
         }
 
         public struct OKLEVELVERSENYZO {
-            public string Nev;
-            public int Helyezes;
-            public string Egyesulet;
-            public string Datum;
-            public OKLEVELVERSENYZO( string _Nev, int _Helyezes, string _Egyesulet, string _Datum ) {
-                Nev = _Nev;
+            public string Verseny { get; set; }
+            public string VersenySorozat { get; set; }
+            public int Helyezes { get; set; }
+            public string Indulo { get; set; }
+            public string Egyesulet { get; set; }
+            public string Ijtipus { get; set; }
+            public string Korosztaly { get; set; }
+            public string InduloNeme { get; set; }
+            public string Datum{ get; set; }
+
+            public OKLEVELVERSENYZO( string _Verseny, string _VersenySorozat, int _Helyezes, string _Indulo, string _Egyesulet, string _Ijtipus, string _Korosztaly, string _InduloNeme, string _Datum ) {
+                Verseny = _Verseny;
+                VersenySorozat = _VersenySorozat;
                 Helyezes = _Helyezes;
+                Indulo = _Indulo;
                 Egyesulet = _Egyesulet;
+                Ijtipus = _Ijtipus;
+                Korosztaly = _Korosztaly;
+                InduloNeme = _InduloNeme;
                 Datum = _Datum;
             }
-
-        }
-
-
-        public struct OKLEVELVERSENYSOROZAT {
-
         }
 
         #region Tablazatok Formazas

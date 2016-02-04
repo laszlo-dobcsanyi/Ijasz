@@ -40,7 +40,7 @@ namespace Íjász {
             #region Status
             ToolStripStatusLabel Tulajdonos = new ToolStripStatusLabel(Program.Tulajdonos_Megnevezés);
             ToolStripStatusLabel Készítők = new ToolStripStatusLabel("Belinyák Nándor és Társai. \u00A9 2014");
-            ToolStripStatusLabel Verzió = new ToolStripStatusLabel("Verzió: 0.9.5-2015.01.28");
+            ToolStripStatusLabel Verzió = new ToolStripStatusLabel("Verzió: 0.9.7-2015.12.29");
             Készítők.BorderSides = ToolStripStatusLabelBorderSides.Left;
             Verzió.BorderSides = ToolStripStatusLabelBorderSides.Left;
 
