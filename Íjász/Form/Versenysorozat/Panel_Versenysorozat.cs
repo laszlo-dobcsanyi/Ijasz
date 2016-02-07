@@ -17,6 +17,15 @@ namespace Íjász {
             megnevezés = _megnevezés;
             versenyek = _versenyek;
         }
+
+        public override string ToString( ) {
+            return "Versenysorozat" + Environment.NewLine + 
+                    "{" + Environment.NewLine +
+                    "   azonosító='" + azonosító + '\'' + Environment.NewLine +
+                    "   megnevezés='" + megnevezés + '\'' + Environment.NewLine +
+                    "   versenyek=" + versenyek + Environment.NewLine +
+                    '}';
+        }
     };
 
     public delegate void Versenysorozat_Hozzáadva(Versenysorozat _versenysorozat);

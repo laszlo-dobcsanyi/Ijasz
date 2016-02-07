@@ -20,10 +20,10 @@ namespace Íjász {
 
             EREDMENYLAPVERSENYTELJES Data = new EREDMENYLAPVERSENYTELJES( _VEAZON );
             Verseny verseny = Program.database.Verseny( _VEAZON ).Value;
-            Versenysorozat? versenysorozat1 = Program.database.Versenysorozat(verseny.VersenySorozat);
-            Versenysorozat versenysorozat = new Versenysorozat();
-            if( versenysorozat1 != null ) {
-                versenysorozat = versenysorozat1.Value;
+            Versenysorozat? versenysorozat = Program.database.Versenysorozat(verseny.VersenySorozat);
+
+            if( versenysorozat == null ) {
+                versenysorozat = new Versenysorozat();
             }
 
             string versenydatum = Program.database.Verseny( _VEAZON ).Value.Datum;
@@ -35,7 +35,7 @@ namespace Íjász {
                         List<OKLEVELVERSENYZO> ind = ( from indulo in korosztaly.Indulok.Egyben
                                                        select new OKLEVELVERSENYZO {
                                                            Verseny = verseny.Megnevezes,
-                                                           VersenySorozat = versenysorozat.megnevezés,
+                                                           VersenySorozat = versenysorozat.Value.megnevezés,
                                                            Helyezes = 0,
                                                            Indulo = indulo.Nev,
                                                            Egyesulet = indulo.Egyesulet,
@@ -56,7 +56,7 @@ namespace Íjász {
                         List<OKLEVELVERSENYZO> ind = ( from indulo in korosztaly.Indulok.Nok
                                                        select new OKLEVELVERSENYZO {
                                                            Verseny = verseny.Megnevezes,
-                                                           VersenySorozat = versenysorozat.megnevezés,
+                                                           VersenySorozat = versenysorozat.Value.megnevezés,
                                                            Helyezes = 0,
                                                            Indulo = indulo.Nev,
                                                            Egyesulet = indulo.Egyesulet,
@@ -75,7 +75,7 @@ namespace Íjász {
                         ind = ( from indulo in korosztaly.Indulok.Ferfiak
                                 select new OKLEVELVERSENYZO {
                                     Verseny = verseny.Megnevezes,
-                                    VersenySorozat = versenysorozat.megnevezés,
+                                    VersenySorozat = versenysorozat.Value.megnevezés,
                                     Helyezes = 0,
                                     Indulo = indulo.Nev,
                                     Egyesulet = indulo.Egyesulet,
@@ -180,7 +180,7 @@ namespace Íjász {
             float UnitToMm = 0.353f;
 
             float xOffset = 0;
-            float yOffset = 0;
+            float yOffset = 4;
 
             //NOTE(mate): a (0,0) a lap bal also sarkaban van
 

@@ -29,7 +29,20 @@ namespace Íjász
          Egyesulet = _Egyesulet;
          Eredmenyek = _Eredmenyek;
       }
-   }
+
+        
+    public override string ToString( ) {
+            return "Indulo" + Environment.NewLine + 
+                    "{" + Environment.NewLine +
+                    "   Nev='" + Nev + '\'' + Environment.NewLine +
+                    "   Nem='" + Nem + '\'' + Environment.NewLine +
+                    "   SzuletesiDatum='" + SzuletesiDatum + '\'' + Environment.NewLine +
+                    "   Engedely='" + Engedely + '\'' + Environment.NewLine +
+                    "   Egyesulet='" + Egyesulet + '\'' + Environment.NewLine +
+                    "   Eredmenyek=" + Eredmenyek + Environment.NewLine +
+                    '}';
+        }
+    }
 
    public delegate void Induló_Hozzáadva( Induló _induló );
    public delegate void Induló_Módosítva( Induló _eredeti, Induló _uj );

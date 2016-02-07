@@ -66,7 +66,7 @@ namespace Íjász {
                     command.ExecuteNonQuery( );
                 }
                 catch( SQLiteException exception ) {
-                    new ErrorMessage( ErrorCode.INDULO_CREATE, exception.Message );
+                    new ErrorMessage( ErrorCode.INDULO_CREATE, exception.Message, indulo );
                     return false;
                 }
                 finally {
