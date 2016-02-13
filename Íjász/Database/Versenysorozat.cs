@@ -128,7 +128,7 @@ namespace Íjász {
                 connection.Open( );
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "UPDATE Versenysorozat SET VSVESZ = VSVESZ + 1 WHERE WHERE VSAZON=@VSAZON;";
+                command.CommandText = "UPDATE Versenysorozat SET VSVESZ = VSVESZ + 1 WHERE VSAZON=@VSAZON;";
                 command.Parameters.AddWithValue( "@VSAZON", azonosito );
 
                 command.ExecuteNonQuery( );
@@ -145,7 +145,7 @@ namespace Íjász {
                 connection.Open( );
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "UPDATE Versenysorozat SET VSVESZ = VSVESZ - 1 WHERE WHERE VSAZON=@VSAZON;";
+                command.CommandText = "UPDATE Versenysorozat SET VSVESZ = VSVESZ - 1 WHERE VSAZON=@VSAZON;";
                 command.Parameters.AddWithValue( "@VSAZON", azonosito );
 
                 command.ExecuteNonQuery( );
