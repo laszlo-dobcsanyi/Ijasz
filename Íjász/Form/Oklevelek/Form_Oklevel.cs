@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 //NOTE(mate): sablon típusa nem módosítható !!!
 namespace Íjász {
     public sealed class Form_Oklevel : Form {
-        bool modositas;  
-        
+        bool modositas;
+        List<string> fontItems;
+
         #region Controls
         TextBox txtAzonosito;
         ComboBox cboTipus;
@@ -216,12 +218,17 @@ namespace Íjász {
         //NOTE(mate): új sablon
         private void InitializeForm( ) {
             Text = "Új sablon szerkesztő";
-            ClientSize = new Size( 850 , 500 );
+            ClientSize = new Size( 850, 500 );
             MinimumSize = ClientSize;
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
         }
         private void InitializeContent( ) {
+                        fontItems = new List<string>( );
+            fontItems.Add( "Coronet.ttf" );
+            fontItems.Add( "BrushScript.ttf" );
+
+
             int cWidth = ClientRectangle.Width;
             int cHeight = ClientRectangle.Height;
 
@@ -237,7 +244,7 @@ namespace Íjász {
             int columnPos8 = columnPos7 + 2;
             int columnPos9 = columnPos8 + 2;
             int columnPos10 = columnPos9 + 7;
-            
+
             Size textBoxSize = new Size(64 - 16,28);
 
             #region Labels
@@ -334,7 +341,7 @@ namespace Íjász {
             };
             cboTipus = new ComboBox {
                 Location = new Point( columnPos1 * 16, lblTipus.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
@@ -405,12 +412,14 @@ namespace Íjász {
             };
             cboVersenyB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblVerseny.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboVersenyB.Items.Add("TODO");
-            Controls.Add(cboVersenyB);
+            foreach( var font in fontItems )
+                cboVersenyB.Items.Add( font );
+
+            Controls.Add( cboVersenyB );
 
             Controls.Add( txtVersenyX );
             Controls.Add( txtVersenyY );
@@ -483,12 +492,13 @@ namespace Íjász {
 
             cboVersenySorozatB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblVersenySorozat.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboVersenySorozatB.Items.Add("TODO");
-            Controls.Add(cboVersenySorozatB);
+            foreach( var font in fontItems )
+                cboVersenySorozatB.Items.Add( font );
+            Controls.Add( cboVersenySorozatB );
 
             Controls.Add( txtVersenySorozatX );
             Controls.Add( txtVersenySorozatY );
@@ -560,12 +570,13 @@ namespace Íjász {
             };
             cboHelyezesB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblHelyezes.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboHelyezesB.Items.Add("TODO");
-            Controls.Add(cboHelyezesB);
+            foreach( var font in fontItems )
+                cboHelyezesB.Items.Add( font );
+            Controls.Add( cboHelyezesB );
 
             Controls.Add( txtHelyezesX );
             Controls.Add( txtHelyezesY );
@@ -637,12 +648,13 @@ namespace Íjász {
             };
             cboInduloB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblIndulo.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboInduloB.Items.Add("TODO");
-            Controls.Add(cboInduloB);
+            foreach( var font in fontItems )
+                cboInduloB.Items.Add( font );
+            Controls.Add( cboInduloB );
 
             Controls.Add( txtInduloX );
             Controls.Add( txtInduloY );
@@ -715,12 +727,13 @@ namespace Íjász {
 
             cboEgyesuletB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblEgyesulet.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboEgyesuletB.Items.Add("TODO");
-            Controls.Add(cboEgyesuletB);
+            foreach (var font in fontItems)
+            cboEgyesuletB.Items.Add( font );
+            Controls.Add( cboEgyesuletB );
 
             Controls.Add( txtEgyesuletX );
             Controls.Add( txtEgyesuletY );
@@ -793,12 +806,13 @@ namespace Íjász {
 
             cboIjtipusB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblIjtipus.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboIjtipusB.Items.Add("TODO");
-            Controls.Add(cboIjtipusB);
+            foreach (var font in fontItems)
+            cboIjtipusB.Items.Add( font );
+            Controls.Add( cboIjtipusB );
 
             Controls.Add( txtIjtipusX );
             Controls.Add( txtIjtipusY );
@@ -870,12 +884,13 @@ namespace Íjász {
             };
             cboKorosztalyB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblKorosztaly.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboKorosztalyB.Items.Add("TODO");
-            Controls.Add(cboKorosztalyB);
+            foreach (var font in fontItems)
+            cboKorosztalyB.Items.Add( font );
+            Controls.Add( cboKorosztalyB );
 
             Controls.Add( txtKorosztalyX );
             Controls.Add( txtKorosztalyY );
@@ -957,12 +972,13 @@ namespace Íjász {
 
             cboInduloNemeB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblInduloNeme.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboInduloNemeB.Items.Add("TODO");
-            Controls.Add(cboInduloNemeB  );
+            foreach (var font in fontItems)
+            cboInduloNemeB.Items.Add( font );
+            Controls.Add( cboInduloNemeB );
 
 
             #endregion
@@ -1026,12 +1042,14 @@ namespace Íjász {
             };
             cboDatumB = new ComboBox {
                 Location = new Point( columnPos10 * 16, lblDatum.Location.Y - 8 ),
-                Size = new Size(128,16),
+                Size = new Size( 128, 16 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
             };
-            cboDatumB.Items.Add("TODO");
-            Controls.Add(cboDatumB);
+
+            foreach(var font in fontItems)
+            cboDatumB.Items.Add( font );
+            Controls.Add( cboDatumB );
 
 
             Controls.Add( txtDatumX );
@@ -1085,12 +1103,13 @@ namespace Íjász {
             Controls.Add( btnRendben );
             //LoadTestData( );
         }
-        private void InitializeData(  ) {
+        private void InitializeData( ) {
             modositas = false;
 
         }
 
         private void InitializeData( Oklevel oklevel ) {
+
             modositas = true;
 
             txtAzonosito.Text = oklevel.Azonosito;
@@ -1255,7 +1274,7 @@ namespace Íjász {
             if( txtAzonosito.Text.Length == 0 ) { MessageBox.Show( "Hiba az azonosító mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
             if( cboTipus.Text.Length == 0 ) { MessageBox.Show( "Hiba a típus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
 
-          
+
             if( txtVersenyX.Text.Length != 0 ) {
                 try { Convert.ToInt32( txtVersenyX.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a verseny mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
                 try { Convert.ToInt32( txtVersenyY.Text ); } catch( Exception ) { MessageBox.Show( "Hiba a verseny mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
@@ -1402,7 +1421,7 @@ namespace Íjász {
 
         private void chkAll_Click( object _sender, EventArgs _event ) {
             CheckBox chkAktiv = _sender as CheckBox;
-            
+
             #region Verseny
             if( chkAktiv == chkVersenyLeft ) {
                 chkVersenyLeft.Checked = true;
@@ -1583,7 +1602,7 @@ namespace Íjász {
                 chkDatumLeft.Checked = false;
                 return;
             }
-                #endregion
+            #endregion
         }
         #endregion
 

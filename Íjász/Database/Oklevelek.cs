@@ -4,9 +4,21 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace Íjász {
     partial class Database {
+        public iTextSharp.text.Font getFont( string fontName)
+        {
+            if (!FontFactory.IsRegistered(fontName))
+            {
+                var fontPath = "fonts\\" + fontName;
+                FontFactory.Register(fontPath);
+            }
+            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        }
+
 
         public List<Oklevel> Oklevelek( ) {
             List<Oklevel> Value = new List<Oklevel>( );
@@ -420,16 +432,17 @@ namespace Íjász {
                 SQLiteCommand command = connection.CreateCommand( );
 
 
-                command.CommandText = "select OKAZON, OKTIPU, " +
-                                      "OKVENEX, OKVENEY, OKVENEH, OKVENEF, OKVENEM, OKVENEI," +
-                                      "OKVSNEX, OKVSNEY, OKVSNEH, OKVSNEF, OKVSNEM, OKVSNEI, " +
-                                      "OKHELYX, OKHELYY, OKHELYH, OKHELYF, OKHELYM, OKHELYI, " +
-                                      "OKINNEVEX, OKINNEVEY, OKINNEVEH, OKINNEVEF, OKINNEVEM, OKINNEVEI, " +
-                                      "OKEGYEX, OKEGYEY, OKEGYEH, OKEGYEF, OKEGYEM, OKEGYEI, " +
-                                      "OKIJTIX, OKIJTIY, OKIJTIH, OKIJTIF, OKIJTIM, OKIJTII, " +
-                                      "OKKOROX, OKKOROY, OKKOROH, OKKOROF, OKKOROM, OKKOROI, " +
-                                      "OKINNEMEX, OKINNEMEY, OKINNEMEH, OKINNEMEF, OKINNEMEM, OKINNEMEI, " +
-                                      "OKDATUX, OKDATUY, OKDATUH, OKDATUF, OKDATUM, OKDATUI from Oklevelek WHERE OKAZON = '" + _azonosito + "';";
+                command.CommandText = "SELECT OKAZON, OKTIPU, " +
+                  "OKVENEX, OKVENEY, OKVENEH, OKVENEF , OKVENEB , OKVENEM , OKVENEI ," +
+                  "OKVSNEX, OKVSNEY, OKVSNEH, OKVSNEF , OKVSNEB , OKVSNEM , OKVSNEI ," +
+                  "OKHELYX, OKHELYY, OKHELYH, OKHELYF , OKHELYB , OKHELYM , OKHELYI ," +
+                  "OKNEVEX, OKNEVEY, OKNEVEH, OKNEVEF , OKNEVEB , OKNEVEM , OKNEVEI ," +
+                  "OKEGYEX, OKEGYEY, OKEGYEH, OKEGYEF , OKEGYEB , OKEGYEM , OKEGYEI ," +
+                  "OKIJTIX, OKIJTIY, OKIJTIH, OKIJTIF , OKIJTIB , OKIJTIM , OKIJTII ," +
+                  "OKKOROX, OKKOROY, OKKOROH, OKKOROF , OKKOROB , OKKOROM , OKKOROI ," +
+                  "OKNEMEX, OKNEMEY, OKNEMEH, OKNEMEF , OKNEMEB , OKNEMEM , OKNEMEI ," +
+                  "OKDATUX, OKDATUY, OKDATUH, OKDATUF , OKDATUB , OKDATUM , OKDATUI " +
+                  " FROM Oklevelek WHERE OKAZON = '" + _azonosito + "';";
 
                 var reader = command.ExecuteReader( );
                 while( reader.Read( ) ) {

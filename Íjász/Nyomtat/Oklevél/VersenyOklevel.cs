@@ -15,7 +15,7 @@ namespace Íjász {
 
         /// <summary>kiszedi az első _Limit eredményt, meghívja rájuk a NyomtatOklevelVersenyVersenyzo fgv-t </summary>
         static public void NyomtatOklevelVerseny( string _VEAZON, Oklevel _Oklevel, int _Limit ) {
-            
+
             List<OKLEVELVERSENYZO> versenyzok = new List<OKLEVELVERSENYZO>( );
 
             EREDMENYLAPVERSENYTELJES Data = new EREDMENYLAPVERSENYTELJES( _VEAZON );
@@ -23,7 +23,7 @@ namespace Íjász {
             Versenysorozat? versenysorozat = Program.database.Versenysorozat(verseny.VersenySorozat);
 
             if( versenysorozat == null ) {
-                versenysorozat = new Versenysorozat();
+                versenysorozat = new Versenysorozat( );
             }
 
             string versenydatum = Program.database.Verseny( _VEAZON ).Value.Datum;
@@ -41,13 +41,13 @@ namespace Íjász {
                                                            Egyesulet = indulo.Egyesulet,
                                                            Ijtipus = test.Megnevezes,
                                                            Korosztaly = korosztaly.Megnevezes,
-                                                           InduloNeme = indulo.Nem, 
+                                                           InduloNeme = indulo.Nem,
                                                            Datum = versenydatum
                                                        } ).Take( _Limit ).ToList( );
                         var q = ind.ToArray( );
 
                         for( int i = 0; i < q.Count( ); ++i ) {
-                            q[ i ].Helyezes = i + 1;
+                            q[i].Helyezes = i + 1;
                         }
 
                         versenyzok.AddRange( q.ToList( ) );
@@ -68,7 +68,7 @@ namespace Íjász {
                         var q = ind.ToArray( );
 
                         for( int i = 0; i < q.Count( ); ++i ) {
-                            q[ i ].Helyezes = i + 1;
+                            q[i].Helyezes = i + 1;
                         }
                         versenyzok.AddRange( q.ToList( ) );
                         ind = null;
@@ -87,7 +87,7 @@ namespace Íjász {
                         q = ind.ToArray( );
 
                         for( int i = 0; i < q.Count( ); ++i ) {
-                            q[ i ].Helyezes = i + 1;
+                            q[i].Helyezes = i + 1;
                         }
                         versenyzok.AddRange( q.ToList( ) );
                     }
@@ -118,11 +118,12 @@ namespace Íjász {
             public float M { get; set; }
             public string I { get; set; }
             public string F { get; set; }
+            public string B { get; set; }
             public string Value { get; set; }
 
         }
 
-        static void DrawText( ColumnText _ColumnText, string _Text, Font _Font, float _X, float _Y, float _W, float _H , string _I) {
+        static void DrawText( ColumnText _ColumnText, string _Text, Font _Font, float _X, float _Y, float _W, float _H, string _I ) {
             switch( _I ) {
                 case "L":
                     _ColumnText.SetSimpleColumn( new Phrase( new Chunk( _Text, _Font ) ),
@@ -160,7 +161,7 @@ namespace Íjász {
         }
 
         public static string NyomtatOklevelVersenyVersenyzo( Oklevel _Oklevel, OKLEVELVERSENYZO _Versenyzo, string _Path ) {
-            
+
             string filename = _Path + "/" + _Versenyzo.Indulo + ".pdf";
 
             Document document = new Document( PageSize.A4 );
@@ -189,11 +190,12 @@ namespace Íjász {
             if( _Oklevel.VersenyX != 0 ) {
                 Seged.Add( new seged {
                     X = ( _Oklevel.VersenyX * MmToUnit ) + ( xOffset * MmToUnit ),
-                    Y = 842.0f - ( _Oklevel.VersenyY * MmToUnit ) + (yOffset * MmToUnit),
+                    Y = 842.0f - ( _Oklevel.VersenyY * MmToUnit ) + ( yOffset * MmToUnit ),
                     H = _Oklevel.VersenyH * MmToUnit,
                     M = _Oklevel.VersenyM,
                     I = _Oklevel.VersenyI,
                     F = _Oklevel.VersenyF,
+                    B = _Oklevel.VersenyB,
                     Value = _Versenyzo.Verseny,
                 } );
             }
@@ -205,6 +207,7 @@ namespace Íjász {
                     M = _Oklevel.VersenySorozatM,
                     I = _Oklevel.VersenySorozatI,
                     F = _Oklevel.VersenySorozatF,
+                    B = _Oklevel.VersenySorozatB,
                     Value = _Versenyzo.VersenySorozat,
                 } );
             }
@@ -216,7 +219,8 @@ namespace Íjász {
                     M = _Oklevel.HelyezesM,
                     I = _Oklevel.HelyezesI,
                     F = _Oklevel.HelyezesF,
-                    Value = _Versenyzo.Helyezes.ToString(),
+                    B = _Oklevel.HelyezesB,
+                    Value = _Versenyzo.Helyezes.ToString( ),
                 } );
             }
             if( _Oklevel.InduloX != 0 ) {
@@ -227,6 +231,7 @@ namespace Íjász {
                     M = _Oklevel.InduloM,
                     I = _Oklevel.InduloI,
                     F = _Oklevel.InduloF,
+                    B = _Oklevel.InduloB,
                     Value = _Versenyzo.Indulo,
                 } );
             }
@@ -238,6 +243,7 @@ namespace Íjász {
                     M = _Oklevel.EgyesuletM,
                     I = _Oklevel.EgyesuletI,
                     F = _Oklevel.EgyesuletF,
+                    B = _Oklevel.EgyesuletB,
                     Value = _Versenyzo.Egyesulet,
                 } );
             }
@@ -249,6 +255,7 @@ namespace Íjász {
                     M = _Oklevel.IjtipusM,
                     I = _Oklevel.IjtipusI,
                     F = _Oklevel.IjtipusF,
+                    B = _Oklevel.IjtipusB,
                     Value = _Versenyzo.Ijtipus,
                 } );
             }
@@ -260,6 +267,7 @@ namespace Íjász {
                     M = _Oklevel.KorosztalyM,
                     I = _Oklevel.KorosztalyI,
                     F = _Oklevel.KorosztalyF,
+                    B = _Oklevel.KorosztalyB,
                     Value = _Versenyzo.Korosztaly,
                 } );
             }
@@ -271,6 +279,7 @@ namespace Íjász {
                     M = _Oklevel.InduloNemeM,
                     I = _Oklevel.InduloNemeI,
                     F = _Oklevel.InduloNemeF,
+                    B = _Oklevel.InduloNemeB,
                     Value = _Versenyzo.InduloNeme,
                 } );
             }
@@ -282,35 +291,47 @@ namespace Íjász {
                     M = _Oklevel.DatumM,
                     I = _Oklevel.DatumI,
                     F = _Oklevel.DatumF,
+                    B = _Oklevel.DatumB,
                     Value = _Versenyzo.Datum,
                 } );
             }
 
             foreach( var item in Seged ) {
-                Font font;
+                Font font = Program.database.getFont(item.B);
+                if( font == null ) {
+                    MessageBox.Show( "Hiba a betűtípus betöltésekor", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                    return null;
+                }
+                font.Size = item.M;
+
                 switch( item.F ) {
                     case "B":
-                        font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.BOLD );
+                        //font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.BOLD );
+                        font.SetStyle(Font.BOLD);
                         break;
                     case "I":
-                        font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.ITALIC );
+                        //font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.ITALIC );
+                        font.SetStyle(Font.ITALIC);
                         break;
                     case "2":
-                        font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.BOLDITALIC );
+                        //font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.BOLDITALIC );
+                        //font.SetStyle(Font.BOLDITALIC);
                         break;
                     case "0":
-                        font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.NORMAL );
+                        //font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.NORMAL );
+                        //font = Program.database.getCoronet( );
                         break;
                     default:
-                        font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.NORMAL );
+                        //font = FontFactory.GetFont( FontFactory.COURIER, item.M, Font.NORMAL );
+                        //font = Program.database.getCoronet( );
                         break;
                 }
                 DrawText( columnText,
-                    item.Value, 
+                    item.Value,
                     font,
-                    item.X, item.Y, item.H, 
+                    item.X, item.Y, item.H,
                     40,
-                    item.I);
+                    item.I );
 
             }
             document.Close( );
