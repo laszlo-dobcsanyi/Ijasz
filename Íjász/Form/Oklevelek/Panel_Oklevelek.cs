@@ -14,12 +14,12 @@ namespace Íjász {
     public struct Oklevel {
         public string Azonosito { get; set; }
         public string Tipus { get; set; }
-        public string BetuTipus { get; set; }
 
         public int VersenyX { get; set; }
         public int VersenyY { get; set; }
         public int VersenyH { get; set; }
         public string VersenyF { get; set; }
+        public string VersenyB { get; set; }
         public int VersenyM { get; set; }
         public string VersenyI { get; set; }
 
@@ -27,6 +27,7 @@ namespace Íjász {
         public int VersenySorozatY { get; set; }
         public int VersenySorozatH { get; set; }
         public string VersenySorozatF { get; set; }
+        public string VersenySorozatB { get; set; }
         public int VersenySorozatM { get; set; }
         public string VersenySorozatI { get; set; }
 
@@ -34,6 +35,7 @@ namespace Íjász {
         public int HelyezesY { get; set; }
         public int HelyezesH { get; set; }
         public string HelyezesF { get; set; }
+        public string HelyezesB { get; set; }
         public int HelyezesM { get; set; }
         public string HelyezesI { get; set; }
 
@@ -41,6 +43,7 @@ namespace Íjász {
         public int InduloY { get; set; }
         public int InduloH { get; set; }
         public string InduloF { get; set; }
+        public string InduloB { get; set; }
         public int InduloM { get; set; }
         public string InduloI { get; set; }
 
@@ -48,6 +51,7 @@ namespace Íjász {
         public int EgyesuletY { get; set; }
         public int EgyesuletH { get; set; }
         public string EgyesuletF { get; set; }
+        public string EgyesuletB { get; set; }
         public int EgyesuletM { get; set; }
         public string EgyesuletI { get; set; }
 
@@ -55,6 +59,7 @@ namespace Íjász {
         public int IjtipusY { get; set; }
         public int IjtipusH { get; set; }
         public string IjtipusF { get; set; }
+        public string IjtipusB { get; set; }
         public int IjtipusM { get; set; }
         public string IjtipusI { get; set; }
 
@@ -62,6 +67,7 @@ namespace Íjász {
         public int KorosztalyY { get; set; }
         public int KorosztalyH { get; set; }
         public string KorosztalyF { get; set; }
+        public string KorosztalyB { get; set; }
         public int KorosztalyM { get; set; }
         public string KorosztalyI { get; set; }
 
@@ -69,6 +75,7 @@ namespace Íjász {
         public int InduloNemeY { get; set; }
         public int InduloNemeH { get; set; }
         public string InduloNemeF { get; set; }
+        public string InduloNemeB { get; set; }
         public int InduloNemeM { get; set; }
         public string InduloNemeI { get; set; }
 
@@ -76,75 +83,74 @@ namespace Íjász {
         public int DatumY { get; set; }
         public int DatumH { get; set; }
         public string DatumF { get; set; }
+        public string DatumB { get; set; }
         public int DatumM { get; set; }
         public string DatumI { get; set; }
 
-        public Oklevel(string azonosito, string tipus, string betuTipus, 
-            int versenyX, int versenyY, int versenyH, string versenyF, int versenyM, string versenyI,
-            int versenySorozatX, int versenySorozatY, int versenySorozatH, string versenySorozatF, int versenySorozatM, string versenySorozatI,
-            int helyezesX, int helyezesY, int helyezesH, string helyezesF, int helyezesM, string helyezesI, 
-            int induloX, int induloY, int induloH, string induloF, int induloM, string induloI, 
-            int egyesuletX, int egyesuletY, int egyesuletH, string egyesuletF, int egyesuletM, string egyesuletI, 
-            int ijtipusX, int ijtipusY, int ijtipusH, string ijtipusF, int ijtipusM, string ijtipusI, 
-            int korosztalyX, int korosztalyY, int korosztalyH, string korosztalyF, int korosztalyM, string korosztalyI, 
-            int induloNemeX, int induloNemeY, int induloNemeH, string induloNemeF, int induloNemeM, string induloNemeI, 
-            int datumX, int datumY, int datumH, string datumF, int datumM, string datumI)
-        {
+        public Oklevel( string azonosito, string tipus, int versenyX, int versenyY, int versenyH, string versenyF, string versenyB, int versenyM, string versenyI, int versenySorozatX, int versenySorozatY, int versenySorozatH, string versenySorozatF, string versenySorozatB, int versenySorozatM, string versenySorozatI, int helyezesX, int helyezesY, int helyezesH, string helyezesF, string helyezesB, int helyezesM, string helyezesI, int induloX, int induloY, int induloH, string induloF, string induloB, int induloM, string induloI, int egyesuletX, int egyesuletY, int egyesuletH, string egyesuletF, string egyesuletB, int egyesuletM, string egyesuletI, int ijtipusX, int ijtipusY, int ijtipusH, string ijtipusF, string ijtipusB, int ijtipusM, string ijtipusI, int korosztalyX, int korosztalyY, int korosztalyH, string korosztalyF, string korosztalyB, int korosztalyM, string korosztalyI, int induloNemeX, int induloNemeY, int induloNemeH, string induloNemeF, string induloNemeB, int induloNemeM, string induloNemeI, int datumX, int datumY, int datumH, string datumF, string datumB, int datumM, string datumI ) {
             Azonosito = azonosito;
             Tipus = tipus;
-            BetuTipus = betuTipus;
             VersenyX = versenyX;
             VersenyY = versenyY;
             VersenyH = versenyH;
             VersenyF = versenyF;
+            VersenyB = versenyB;
             VersenyM = versenyM;
             VersenyI = versenyI;
             VersenySorozatX = versenySorozatX;
             VersenySorozatY = versenySorozatY;
             VersenySorozatH = versenySorozatH;
             VersenySorozatF = versenySorozatF;
+            VersenySorozatB = versenySorozatB;
             VersenySorozatM = versenySorozatM;
             VersenySorozatI = versenySorozatI;
             HelyezesX = helyezesX;
             HelyezesY = helyezesY;
             HelyezesH = helyezesH;
             HelyezesF = helyezesF;
+            HelyezesB = helyezesB;
             HelyezesM = helyezesM;
             HelyezesI = helyezesI;
             InduloX = induloX;
             InduloY = induloY;
             InduloH = induloH;
             InduloF = induloF;
+            InduloB = induloB;
             InduloM = induloM;
             InduloI = induloI;
             EgyesuletX = egyesuletX;
             EgyesuletY = egyesuletY;
             EgyesuletH = egyesuletH;
             EgyesuletF = egyesuletF;
+            EgyesuletB = egyesuletB;
             EgyesuletM = egyesuletM;
             EgyesuletI = egyesuletI;
             IjtipusX = ijtipusX;
             IjtipusY = ijtipusY;
             IjtipusH = ijtipusH;
             IjtipusF = ijtipusF;
+            IjtipusB = ijtipusB;
             IjtipusM = ijtipusM;
             IjtipusI = ijtipusI;
             KorosztalyX = korosztalyX;
             KorosztalyY = korosztalyY;
             KorosztalyH = korosztalyH;
             KorosztalyF = korosztalyF;
+            KorosztalyB = korosztalyB;
             KorosztalyM = korosztalyM;
             KorosztalyI = korosztalyI;
             InduloNemeX = induloNemeX;
             InduloNemeY = induloNemeY;
             InduloNemeH = induloNemeH;
             InduloNemeF = induloNemeF;
+            InduloNemeB = induloNemeB;
             InduloNemeM = induloNemeM;
             InduloNemeI = induloNemeI;
             DatumX = datumX;
             DatumY = datumY;
             DatumH = datumH;
             DatumF = datumF;
+            DatumB = datumB;
             DatumM = datumM;
             DatumI = datumI;
         }
@@ -187,14 +193,14 @@ namespace Íjász {
                 AllowUserToResizeRows = false,
                 AllowUserToResizeColumns = false,
                 AllowUserToAddRows = false,
-                Width = 1000,
+                Width = 240,
                 SelectionMode = DataGridViewSelectionMode.FullRowSelect,
                 MultiSelect = false,
                 ReadOnly = true,
                 DataSource = CreateSource( ),
                 AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells,
+                DefaultCellStyle = { WrapMode = DataGridViewTriState.True },
             };
-            table.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             table.DataBindingComplete += table_DataBindingComplete;
             table.CellDoubleClick += Modositas_Click;
             Controls.Add( table );
@@ -204,32 +210,32 @@ namespace Íjász {
             int cHeight = ClientRectangle.Height;
 
             Label txtOklevelTipus = new Label {
-                Text = "Oklevél típusa:",
-                Location = new Point(cWidth - 96 - 15 * 16, cHeight - 32 - 41 * 16),
+                Text = "Oklevél típusa:", 
+                Location = new Point(cWidth - 96 - 35 * 16, cHeight - 32 - 41 * 16),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             Label txtHelyezes = new Label {
                 Text = "Hány ember:",
-                Location = new Point(cWidth - 96 - 15 * 16, cHeight - 32 - 39 * 16),
+                Location = new Point(cWidth - 96 - 35 * 16, cHeight - 32 - 39 * 16),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             Label txtVerseny = new Label {
                 Text = "Verseny:",
-                Location = new Point(cWidth - 96 - 15 * 16, cHeight - 32 - 37 * 16),
+                Location = new Point(cWidth - 96 - 35 * 16, cHeight - 32 - 37 * 16),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             Label txtVersenysorozat = new Label {
                 Text = "Versenysorozat:",
-                Location = new Point(cWidth - 96 - 15 * 16, cHeight - 32 - 35 * 16),
+                Location = new Point(cWidth - 96 - 35 * 16, cHeight - 32 - 35 * 16),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
             chkVerseny = new CheckBox {
                 Text = "Verseny",
-                Location = new Point( cWidth - 96 - 12 * 16, cHeight - 32 - 41 * 16 - 8 ),
+                Location = new Point( cWidth - 96 - 32 * 16, cHeight - 32 - 41 * 16 - 8 ),
                 AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 FlatStyle = FlatStyle.Flat,
@@ -239,7 +245,7 @@ namespace Íjász {
 
             chkVersenysorozat = new CheckBox {
                 Text = "Versenysorozat",
-                Location = new Point( cWidth - 96 - 5 * 16, cHeight - 32 - 41 * 16 - 8 ),
+                Location = new Point( cWidth - 96 - 25 * 16, cHeight - 32 - 41 * 16 - 8 ),
                 AutoSize = true,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 FlatStyle = FlatStyle.Flat,
@@ -248,7 +254,7 @@ namespace Íjász {
             chkVersenysorozat.Click += ChkVerseny_Click;
 
             cboVerseny = new ComboBox {
-                Location = new Point( cWidth - 96 - 8 * 16 + 8, cHeight - 32 - 37 * 16 ),
+                Location = new Point( cWidth - 96 - 28 * 16 + 8, cHeight - 32 - 37 * 16 ),
                 Size = new Size( 128, 24 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
@@ -260,7 +266,7 @@ namespace Íjász {
             if( cboVerseny.Items.Count != 0 ) { cboVerseny.SelectedIndex = 0; }
 
             cboVersenysorozat = new ComboBox {
-                Location = new Point( cWidth - 96 - 8 * 16 + 8, cHeight - 32 - 35 * 16 ),
+                Location = new Point( cWidth - 96 - 28 * 16 + 8, cHeight - 32 - 35 * 16 ),
                 Size = new Size( 128, 24 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
@@ -272,7 +278,7 @@ namespace Íjász {
             if( cboVersenysorozat.Items.Count != 0 ) { cboVersenysorozat.SelectedIndex = 0; }
 
             cboHelyezes = new ComboBox {
-                Location = new Point( cWidth - 96 - 8 * 16 + 8, txtHelyezes.Location.Y ),
+                Location = new Point( cWidth - 96 - 28 * 16 + 8, txtHelyezes.Location.Y ),
                 Size = new Size( 128, 24 ),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
@@ -322,8 +328,8 @@ namespace Íjász {
             Controls.Add( btnTorlesSablon );
         }
 
-        
-        public string formatSeged(string _code ) {
+
+        public string formatSeged( string _code ) {
             switch( _code ) {
                 case "B":
                     return "FK";
@@ -353,11 +359,11 @@ namespace Íjász {
 
             data.Columns.Add( new DataColumn( "Azonosító", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "Típus", System.Type.GetType( "System.String" ) ) );
-            data.Columns.Add( new DataColumn( "Betűtípus", System.Type.GetType( "System.String" ) ) );
 
             data.Columns.Add( new DataColumn( "VersenyX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenyY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenyH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "VersenyB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenyF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenyM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenyI", System.Type.GetType( "System.String" ) ) );
@@ -365,6 +371,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "VersenySorozatX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenySorozatY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenySorozatH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "VersenySorozatB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenySorozatF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenySorozatM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "VersenySorozatI", System.Type.GetType( "System.String" ) ) );
@@ -372,6 +379,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "HelyezesX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "HelyezesY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "HelyezesH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "HelyezesB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "HelyezesF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "HelyezesM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "HelyezesI", System.Type.GetType( "System.String" ) ) );
@@ -379,6 +387,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "IndulóX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "IndulóB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóI", System.Type.GetType( "System.String" ) ) );
@@ -386,6 +395,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "EgyesületX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "EgyesületY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "EgyesületH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "EgyesületB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "EgyesületF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "EgyesületM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "EgyesületI", System.Type.GetType( "System.String" ) ) );
@@ -393,6 +403,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "ÍjtípusX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "ÍjtípusY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "ÍjtípusH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "ÍjtípusB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "ÍjtípusF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "ÍjtípusM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "ÍjtípusI", System.Type.GetType( "System.String" ) ) );
@@ -400,6 +411,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "KorosztályX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "KorosztályY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "KorosztályH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "KorosztályB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "KorosztályF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "KorosztályM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "KorosztályI", System.Type.GetType( "System.String" ) ) );
@@ -407,6 +419,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "IndulóNemeX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóNemeY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóNemeH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "IndulóNemeB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóNemeF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóNemeM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóNemeI", System.Type.GetType( "System.String" ) ) );
@@ -414,11 +427,12 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "DátumX", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "DátumY", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "DátumH", System.Type.GetType( "System.String" ) ) );
+            data.Columns.Add( new DataColumn( "DátumB", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "DátumF", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "DátumM", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "DátumI", System.Type.GetType( "System.String" ) ) );
 
-
+            /*
             data.Columns.Add( new DataColumn( "Verseny", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "Versenysorozat", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "Helyezes", System.Type.GetType( "System.String" ) ) );
@@ -428,6 +442,7 @@ namespace Íjász {
             data.Columns.Add( new DataColumn( "Korosztály", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "IndulóNeme", System.Type.GetType( "System.String" ) ) );
             data.Columns.Add( new DataColumn( "Dátum", System.Type.GetType( "System.String" ) ) );
+            */
 
             var Oklevelek = Program.database.Oklevelek();
             foreach( var oklevel in Oklevelek ) {
@@ -435,183 +450,81 @@ namespace Íjász {
 
                 #region set Rows
 
-                row[0] = oklevel.Azonosito;
-                row[1] = oklevel.Tipus;
-                row[2] = oklevel.BetuTipus;
+                int count = -1;
+                row[++count] = oklevel.Azonosito;
+                row[++count] = oklevel.Tipus;
 
-                row[3] = oklevel.VersenyX.ToString( );
-                row[4] = oklevel.VersenyY.ToString( );
-                row[5] = oklevel.VersenyH.ToString( );
-                row[6] = oklevel.VersenyF.ToString( );
-                row[7] = oklevel.VersenyM.ToString( );
-                row[8] = oklevel.VersenyI.ToString( );
+                row[++count] = oklevel.VersenyX.ToString( );
+                row[++count] = oklevel.VersenyY.ToString( );
+                row[++count] = oklevel.VersenyH.ToString( );
+                row[++count] = oklevel.VersenyB.ToString( );
+                row[++count] = oklevel.VersenyF.ToString( );
+                row[++count] = oklevel.VersenyM.ToString( );
+                row[++count] = oklevel.VersenyI.ToString( );
 
-                row[9] = oklevel.VersenySorozatX.ToString( );
-                row[10] = oklevel.VersenySorozatY.ToString( );
-                row[11] = oklevel.VersenySorozatH.ToString( );
-                row[12] = oklevel.VersenySorozatF.ToString( );
-                row[13] = oklevel.VersenySorozatM.ToString( );
-                row[14] = oklevel.VersenySorozatI.ToString( );
+                row[++count] = oklevel.VersenySorozatX.ToString( );
+                row[++count] = oklevel.VersenySorozatY.ToString( );
+                row[++count] = oklevel.VersenySorozatH.ToString( );
+                row[++count] = oklevel.VersenySorozatB.ToString( );
+                row[++count] = oklevel.VersenySorozatF.ToString( );
+                row[++count] = oklevel.VersenySorozatM.ToString( );
+                row[++count] = oklevel.VersenySorozatI.ToString( );
 
-                row[15] = oklevel.HelyezesX.ToString( );
-                row[16] = oklevel.HelyezesY.ToString( );
-                row[17] = oklevel.HelyezesH.ToString( );
-                row[18] = oklevel.HelyezesF.ToString( );
-                row[19] = oklevel.HelyezesM.ToString( );
-                row[20] = oklevel.HelyezesI.ToString( );
+                row[++count] = oklevel.HelyezesX.ToString( );
+                row[++count] = oklevel.HelyezesY.ToString( );
+                row[++count] = oklevel.HelyezesH.ToString( );
+                row[++count] = oklevel.HelyezesB.ToString( );
+                row[++count] = oklevel.HelyezesF.ToString( );
+                row[++count] = oklevel.HelyezesM.ToString( );
+                row[++count] = oklevel.HelyezesI.ToString( );
 
-                row[21] = oklevel.InduloX.ToString( );
-                row[22] = oklevel.InduloY.ToString( );
-                row[23] = oklevel.InduloH.ToString( );
-                row[24] = oklevel.InduloF.ToString( );
-                row[25] = oklevel.InduloM.ToString( );
-                row[26] = oklevel.InduloI.ToString( );
+                row[++count] = oklevel.InduloX.ToString( );
+                row[++count] = oklevel.InduloY.ToString( );
+                row[++count] = oklevel.InduloH.ToString( );
+                row[++count] = oklevel.InduloB.ToString( );
+                row[++count] = oklevel.InduloF.ToString( );
+                row[++count] = oklevel.InduloM.ToString( );
+                row[++count] = oklevel.InduloI.ToString( );
 
-                row[27] = oklevel.EgyesuletX.ToString( );
-                row[28] = oklevel.EgyesuletY.ToString( );
-                row[29] = oklevel.EgyesuletH.ToString( );
-                row[30] = oklevel.EgyesuletF.ToString( );
-                row[31] = oklevel.EgyesuletM.ToString( );
-                row[32] = oklevel.EgyesuletI.ToString( );
+                row[++count] = oklevel.EgyesuletX.ToString( );
+                row[++count] = oklevel.EgyesuletY.ToString( );
+                row[++count] = oklevel.EgyesuletH.ToString( );
+                row[++count] = oklevel.EgyesuletB.ToString( );
+                row[++count] = oklevel.EgyesuletF.ToString( );
+                row[++count] = oklevel.EgyesuletM.ToString( );
+                row[++count] = oklevel.EgyesuletI.ToString( );
 
-                row[33] = oklevel.IjtipusX.ToString( );
-                row[34] = oklevel.IjtipusY.ToString( );
-                row[35] = oklevel.IjtipusH.ToString( );
-                row[36] = oklevel.IjtipusF.ToString( );
-                row[37] = oklevel.IjtipusM.ToString( );
-                row[38] = oklevel.IjtipusI.ToString( );
+                row[++count] = oklevel.IjtipusX.ToString( );
+                row[++count] = oklevel.IjtipusY.ToString( );
+                row[++count] = oklevel.IjtipusH.ToString( );
+                row[++count] = oklevel.IjtipusB.ToString( );
+                row[++count] = oklevel.IjtipusF.ToString( );
+                row[++count] = oklevel.IjtipusM.ToString( );
+                row[++count] = oklevel.IjtipusI.ToString( );
 
-                row[39] = oklevel.KorosztalyX.ToString( );
-                row[40] = oklevel.KorosztalyY.ToString( );
-                row[41] = oklevel.KorosztalyH.ToString( );
-                row[42] = oklevel.KorosztalyF.ToString( );
-                row[43] = oklevel.KorosztalyM.ToString( );
-                row[44] = oklevel.KorosztalyI.ToString( );
+                row[++count] = oklevel.KorosztalyX.ToString( );
+                row[++count] = oklevel.KorosztalyY.ToString( );
+                row[++count] = oklevel.KorosztalyH.ToString( );
+                row[++count] = oklevel.KorosztalyB.ToString( );
+                row[++count] = oklevel.KorosztalyF.ToString( );
+                row[++count] = oklevel.KorosztalyM.ToString( );
+                row[++count] = oklevel.KorosztalyI.ToString( );
 
-                row[45] = oklevel.InduloNemeX.ToString( );
-                row[46] = oklevel.InduloNemeY.ToString( );
-                row[47] = oklevel.InduloNemeH.ToString( );
-                row[48] = oklevel.InduloNemeF.ToString( );
-                row[49] = oklevel.InduloNemeM.ToString( );
-                row[50] = oklevel.InduloNemeI.ToString( );
+                row[++count] = oklevel.InduloNemeX.ToString( );
+                row[++count] = oklevel.InduloNemeY.ToString( );
+                row[++count] = oklevel.InduloNemeH.ToString( );
+                row[++count] = oklevel.InduloNemeB.ToString( );
+                row[++count] = oklevel.InduloNemeF.ToString( );
+                row[++count] = oklevel.InduloNemeM.ToString( );
+                row[++count] = oklevel.InduloNemeI.ToString( );
 
-                row[51] = oklevel.DatumX.ToString( );
-                row[52] = oklevel.DatumY.ToString( );
-                row[53] = oklevel.DatumH.ToString( );
-                row[54] = oklevel.DatumF.ToString( );
-                row[55] = oklevel.DatumM.ToString( );
-                row[56] = oklevel.DatumI.ToString( );
-
-
-                //-------------------------------------------------
-
-                row[57] = oklevel.VersenyX != 0 ? "Xpos: " + oklevel.VersenyX.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += oklevel.VersenyY != 0 ? "Ypos: " + oklevel.VersenyY.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += oklevel.VersenyH != 0 ? "Hossz: " + oklevel.VersenyH.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += formatSeged( oklevel.VersenyF );
-                row[57] += Environment.NewLine;
-                row[57] += oklevel.VersenyM != 0 ? oklevel.VersenyM.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += igazitasSeged(oklevel.VersenyI);
-
-                row[58] = oklevel.VersenySorozatX != 0 ? "Xpos: " + oklevel.VersenySorozatX.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += oklevel.VersenySorozatY != 0 ? "Ypos: " + oklevel.VersenySorozatY.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += oklevel.VersenySorozatH != 0 ? "Hossz: " + oklevel.VersenySorozatH.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += formatSeged( oklevel.VersenySorozatF );
-                row[58] += Environment.NewLine;
-                row[58] += oklevel.VersenySorozatM != 0 ? oklevel.VersenySorozatM.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += igazitasSeged(oklevel.VersenySorozatI);
-
-                row[59] = oklevel.HelyezesX != 0 ? "Xpos: " + oklevel.HelyezesX.ToString( ) : " ";
-                row[59] +=  Environment.NewLine;
-                row[59] += oklevel.HelyezesY != 0 ? "Ypos: " + oklevel.HelyezesY.ToString( ) : " ";
-                row[59] +=  Environment.NewLine;
-                row[59] += oklevel.HelyezesH != 0 ? "Hossz: " + oklevel.HelyezesH.ToString( ) : " ";
-                row[59] +=  Environment.NewLine;
-                row[59] += formatSeged( oklevel.HelyezesF );
-                row[59] +=  Environment.NewLine;
-                row[59] += oklevel.HelyezesM != 0 ? oklevel.HelyezesM.ToString( ) : " ";
-                row[59] +=  Environment.NewLine;
-                row[59] += igazitasSeged( oklevel.HelyezesI);
-
-                row[60] = oklevel.InduloX != 0 ? "Xpos: " + oklevel.InduloX.ToString( ) : " ";
-                row[60] +=  Environment.NewLine;
-                row[60] += oklevel.InduloY != 0 ? "Ypos: " + oklevel.InduloY.ToString( ) : " ";
-                row[60] +=  Environment.NewLine;
-                row[60] += oklevel.InduloH != 0 ? "Hossz: " + oklevel.InduloH.ToString( ) : " ";
-                row[60] +=  Environment.NewLine;
-                row[60] += formatSeged( oklevel.InduloF );
-                row[60] +=  Environment.NewLine;
-                row[60] += oklevel.InduloM != 0 ? oklevel.InduloM.ToString( ) : " ";
-                row[60] +=  Environment.NewLine;
-                row[60] += igazitasSeged(  oklevel.InduloI);
-
-                row[61] = oklevel.EgyesuletX != 0 ? "Xpos: " + oklevel.EgyesuletX.ToString( ) : " ";
-                row[61] +=  Environment.NewLine;
-                row[61] += oklevel.EgyesuletY != 0 ?  "Ypos: " + oklevel.EgyesuletY.ToString( ) : " ";
-                row[61] +=  Environment.NewLine;
-                row[61] += oklevel.EgyesuletH != 0 ? "Hossz: " + oklevel.EgyesuletH.ToString( ) : " ";
-                row[61] +=  Environment.NewLine;
-                row[61] += formatSeged( oklevel.EgyesuletF );
-                row[61] +=  Environment.NewLine;
-                row[61] += oklevel.EgyesuletM != 0 ? oklevel.EgyesuletM.ToString( ) : " ";
-                row[61] +=  Environment.NewLine;
-                row[61] += igazitasSeged( oklevel.EgyesuletI);
-
-                row[62] = oklevel.IjtipusX != 0 ? "Xpos: " + oklevel.IjtipusX.ToString( ) : " ";
-                row[62] +=  Environment.NewLine;
-                row[62] += oklevel.IjtipusY != 0 ? "Ypos: " + oklevel.IjtipusY.ToString( ) : " ";
-                row[62] +=  Environment.NewLine;
-                row[62] += oklevel.IjtipusH != 0 ? "Hossz: " + oklevel.IjtipusH.ToString( ) : " ";
-                row[62] +=  Environment.NewLine;
-                row[62] += formatSeged( oklevel.IjtipusF );
-                row[62] +=  Environment.NewLine;
-                row[62] += oklevel.IjtipusM != 0 ? oklevel.IjtipusM.ToString( ) : " ";
-                row[62] +=  Environment.NewLine;
-                row[62] += igazitasSeged( oklevel.IjtipusI);
-
-                row[63] = oklevel.KorosztalyX != 0 ? "Xpos: " + oklevel.KorosztalyX.ToString( ) : " ";
-                row[63] +=  Environment.NewLine;
-                row[63] += oklevel.KorosztalyY != 0 ? "Ypos: " + oklevel.KorosztalyY.ToString( ) : " ";
-                row[63] +=  Environment.NewLine;
-                row[63] += oklevel.KorosztalyH != 0 ? "Hossz: " + oklevel.KorosztalyH.ToString( ) : " ";
-                row[63] +=  Environment.NewLine;
-                row[63] += formatSeged( oklevel.KorosztalyF );
-                row[63] +=  Environment.NewLine;
-                row[63] += oklevel.KorosztalyM != 0 ? oklevel.KorosztalyM.ToString( ) : " ";
-                row[63] +=  Environment.NewLine;
-                row[63] += igazitasSeged( oklevel.KorosztalyI );
-
-                row[64] = oklevel.InduloNemeX != 0 ? "Xpos: " + oklevel.InduloNemeX.ToString( ) : " ";
-                row[64] +=  Environment.NewLine;
-                row[64] += oklevel.InduloNemeY != 0 ? "Ypos: " + oklevel.InduloNemeY.ToString( ) : " ";
-                row[64] +=  Environment.NewLine;
-                row[64] += oklevel.InduloNemeH != 0 ? "Hossz: " + oklevel.InduloNemeH.ToString( ) : " ";
-                row[64] +=  Environment.NewLine;
-                row[64] += formatSeged( oklevel.InduloNemeF );
-                row[64] +=  Environment.NewLine;
-                row[64] += oklevel.InduloNemeM != 0 ? oklevel.InduloNemeM.ToString( ) : " ";
-                row[64] +=  Environment.NewLine;
-                row[64] += igazitasSeged( oklevel.InduloNemeI );
-
-                row[65] = oklevel.DatumX != 0 ? "Xpos: " + oklevel.DatumX.ToString( ) : " ";
-                row[65] +=  Environment.NewLine;
-                row[65] += oklevel.DatumY != 0 ? "Ypos: " + oklevel.DatumY.ToString( ) : " ";
-                row[65] +=  Environment.NewLine;
-                row[65] += oklevel.DatumH != 0 ? "Hossz: " + oklevel.DatumH.ToString( ) : " ";
-                row[65] +=  Environment.NewLine;
-                row[65] += formatSeged( oklevel.DatumF );
-                row[65] +=  Environment.NewLine;
-                row[65] += oklevel.DatumM != 0 ? oklevel.DatumM.ToString( ) : " ";
-                row[65] +=  Environment.NewLine;
-                row[65] += igazitasSeged(oklevel.DatumI);
+                row[++count] = oklevel.DatumX.ToString( );
+                row[++count] = oklevel.DatumY.ToString( );
+                row[++count] = oklevel.DatumH.ToString( );
+                row[++count] = oklevel.DatumB.ToString( );
+                row[++count] = oklevel.DatumF.ToString( );
+                row[++count] = oklevel.DatumM.ToString( );
+                row[++count] = oklevel.DatumI.ToString( );
                 #endregion
 
                 data.Rows.Add( row );
@@ -646,217 +559,112 @@ namespace Íjász {
             foreach( DataGridViewColumn column in table.Columns ) {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            
+
             //NOTE hiding columns
-            for( int i = 3; i < 57; i++ ) {
+            for( int i = 2; i < table.Columns.Count; i++ ) {
                 table.Columns[i].Visible = false;
             }
 
             //NOTE set visible columns width
-            for( int i = 57; i < 66; i++ ) {
-                table.Columns[i].Width = 79;
+            for( int i = 0; i < 2; i++ ) {
+                table.Columns[i].Width = 120;
             }
         }
 
         #region Accessors
         private delegate void Sablon_Hozzáadás_Callback( Oklevel _oklevel );
-        public void Sablon_Hozzáadás( Oklevel _oklevel ) {
+        public void Sablon_Hozzáadás( Oklevel oklevel ) {
             if( InvokeRequired ) {
                 Sablon_Hozzáadás_Callback callback = new Sablon_Hozzáadás_Callback(Sablon_Hozzáadás);
-                Invoke( callback, new object[] { _oklevel } );
+                Invoke( callback, new object[] { oklevel } );
             }
             else {
-                if( !Program.database.UjOklevel( _oklevel ) ) {
+                if( !Program.database.UjOklevel( oklevel ) ) {
                     MessageBox.Show( "Adatbázis hiba!\nLehet, hogy van már ilyen azonosító?", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error );
                     return;
                 }
 
                 DataRow row = data.NewRow();
 
-                #region set Rows
+                int count = -1;
+                row[++count] = oklevel.Azonosito;
+                row[++count] = oklevel.Tipus;
 
-                row[0] = _oklevel.Azonosito;
-                row[1] = _oklevel.Tipus;
-                row[2] = _oklevel.BetuTipus;
+                row[++count] = oklevel.VersenyX.ToString( );
+                row[++count] = oklevel.VersenyY.ToString( );
+                row[++count] = oklevel.VersenyH.ToString( );
+                row[++count] = oklevel.VersenyB.ToString( );
+                row[++count] = oklevel.VersenyF.ToString( );
+                row[++count] = oklevel.VersenyM.ToString( );
+                row[++count] = oklevel.VersenyI.ToString( );
 
-                row[3] = _oklevel.VersenyX.ToString( );
-                row[4] = _oklevel.VersenyY.ToString( );
-                row[5] = _oklevel.VersenyH.ToString( );
-                row[6] = _oklevel.VersenyF.ToString( );
-                row[7] = _oklevel.VersenyM.ToString( );
-                row[8] = _oklevel.VersenyI.ToString( );
+                row[++count] = oklevel.VersenySorozatX.ToString( );
+                row[++count] = oklevel.VersenySorozatY.ToString( );
+                row[++count] = oklevel.VersenySorozatH.ToString( );
+                row[++count] = oklevel.VersenySorozatB.ToString( );
+                row[++count] = oklevel.VersenySorozatF.ToString( );
+                row[++count] = oklevel.VersenySorozatM.ToString( );
+                row[++count] = oklevel.VersenySorozatI.ToString( );
 
-                row[9] = _oklevel.VersenySorozatX.ToString( );
-                row[10] = _oklevel.VersenySorozatY.ToString( );
-                row[11] = _oklevel.VersenySorozatH.ToString( );
-                row[12] = _oklevel.VersenySorozatF.ToString( );
-                row[13] = _oklevel.VersenySorozatM.ToString( );
-                row[14] = _oklevel.VersenySorozatI.ToString( );
+                row[++count] = oklevel.HelyezesX.ToString( );
+                row[++count] = oklevel.HelyezesY.ToString( );
+                row[++count] = oklevel.HelyezesH.ToString( );
+                row[++count] = oklevel.HelyezesB.ToString( );
+                row[++count] = oklevel.HelyezesF.ToString( );
+                row[++count] = oklevel.HelyezesM.ToString( );
+                row[++count] = oklevel.HelyezesI.ToString( );
 
-                row[15] = _oklevel.HelyezesX.ToString( );
-                row[16] = _oklevel.HelyezesY.ToString( );
-                row[17] = _oklevel.HelyezesH.ToString( );
-                row[18] = _oklevel.HelyezesF.ToString( );
-                row[19] = _oklevel.HelyezesM.ToString( );
-                row[20] = _oklevel.HelyezesI.ToString( );
+                row[++count] = oklevel.InduloX.ToString( );
+                row[++count] = oklevel.InduloY.ToString( );
+                row[++count] = oklevel.InduloH.ToString( );
+                row[++count] = oklevel.InduloB.ToString( );
+                row[++count] = oklevel.InduloF.ToString( );
+                row[++count] = oklevel.InduloM.ToString( );
+                row[++count] = oklevel.InduloI.ToString( );
 
-                row[21] = _oklevel.InduloX.ToString( );
-                row[22] = _oklevel.InduloY.ToString( );
-                row[23] = _oklevel.InduloH.ToString( );
-                row[24] = _oklevel.InduloF.ToString( );
-                row[25] = _oklevel.InduloM.ToString( );
-                row[26] = _oklevel.InduloI.ToString( );
+                row[++count] = oklevel.EgyesuletX.ToString( );
+                row[++count] = oklevel.EgyesuletY.ToString( );
+                row[++count] = oklevel.EgyesuletH.ToString( );
+                row[++count] = oklevel.EgyesuletB.ToString( );
+                row[++count] = oklevel.EgyesuletF.ToString( );
+                row[++count] = oklevel.EgyesuletM.ToString( );
+                row[++count] = oklevel.EgyesuletI.ToString( );
 
-                row[27] = _oklevel.EgyesuletX.ToString( );
-                row[28] = _oklevel.EgyesuletY.ToString( );
-                row[29] = _oklevel.EgyesuletH.ToString( );
-                row[30] = _oklevel.EgyesuletF.ToString( );
-                row[31] = _oklevel.EgyesuletM.ToString( );
-                row[32] = _oklevel.EgyesuletI.ToString( );
+                row[++count] = oklevel.IjtipusX.ToString( );
+                row[++count] = oklevel.IjtipusY.ToString( );
+                row[++count] = oklevel.IjtipusH.ToString( );
+                row[++count] = oklevel.IjtipusB.ToString( );
+                row[++count] = oklevel.IjtipusF.ToString( );
+                row[++count] = oklevel.IjtipusM.ToString( );
+                row[++count] = oklevel.IjtipusI.ToString( );
 
-                row[33] = _oklevel.IjtipusX.ToString( );
-                row[34] = _oklevel.IjtipusY.ToString( );
-                row[35] = _oklevel.IjtipusH.ToString( );
-                row[36] = _oklevel.IjtipusF.ToString( );
-                row[37] = _oklevel.IjtipusM.ToString( );
-                row[38] = _oklevel.IjtipusI.ToString( );
+                row[++count] = oklevel.KorosztalyX.ToString( );
+                row[++count] = oklevel.KorosztalyY.ToString( );
+                row[++count] = oklevel.KorosztalyH.ToString( );
+                row[++count] = oklevel.KorosztalyB.ToString( );
+                row[++count] = oklevel.KorosztalyF.ToString( );
+                row[++count] = oklevel.KorosztalyM.ToString( );
+                row[++count] = oklevel.KorosztalyI.ToString( );
 
-                row[39] = _oklevel.KorosztalyX.ToString( );
-                row[40] = _oklevel.KorosztalyY.ToString( );
-                row[41] = _oklevel.KorosztalyH.ToString( );
-                row[42] = _oklevel.KorosztalyF.ToString( );
-                row[43] = _oklevel.KorosztalyM.ToString( );
-                row[44] = _oklevel.KorosztalyI.ToString( );
+                row[++count] = oklevel.InduloNemeX.ToString( );
+                row[++count] = oklevel.InduloNemeY.ToString( );
+                row[++count] = oklevel.InduloNemeH.ToString( );
+                row[++count] = oklevel.InduloNemeB.ToString( );
+                row[++count] = oklevel.InduloNemeF.ToString( );
+                row[++count] = oklevel.InduloNemeM.ToString( );
+                row[++count] = oklevel.InduloNemeI.ToString( );
 
-                row[45] = _oklevel.InduloNemeX.ToString( );
-                row[46] = _oklevel.InduloNemeY.ToString( );
-                row[47] = _oklevel.InduloNemeH.ToString( );
-                row[48] = _oklevel.InduloNemeF.ToString( );
-                row[49] = _oklevel.InduloNemeM.ToString( );
-                row[50] = _oklevel.InduloNemeI.ToString( );
-
-                row[51] = _oklevel.DatumX.ToString( );
-                row[52] = _oklevel.DatumY.ToString( );
-                row[53] = _oklevel.DatumH.ToString( );
-                row[54] = _oklevel.DatumF.ToString( );
-                row[55] = _oklevel.DatumM.ToString( );
-                row[56] = _oklevel.DatumI.ToString( );
-
-
-                //-------------------------------------------------
-
-                row[57] = _oklevel.VersenyX != 0 ? "Xpos: " + _oklevel.VersenyX.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += _oklevel.VersenyY != 0 ? "Ypos: " + _oklevel.VersenyY.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += _oklevel.VersenyH != 0 ? "Hossz: " + _oklevel.VersenyH.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += formatSeged( _oklevel.VersenyF );
-                row[57] += Environment.NewLine;
-                row[57] += _oklevel.VersenyM != 0 ? _oklevel.VersenyM.ToString( ) : " ";
-                row[57] += Environment.NewLine;
-                row[57] += igazitasSeged( _oklevel.VersenyI );
-
-                row[58] = _oklevel.VersenySorozatX != 0 ? "Xpos: " + _oklevel.VersenySorozatX.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += _oklevel.VersenySorozatY != 0 ? "Ypos: " + _oklevel.VersenySorozatY.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += _oklevel.VersenySorozatH != 0 ? "Hossz: " + _oklevel.VersenySorozatH.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += formatSeged( _oklevel.VersenySorozatF );
-                row[58] += Environment.NewLine;
-                row[58] += _oklevel.VersenySorozatM != 0 ? _oklevel.VersenySorozatM.ToString( ) : " ";
-                row[58] += Environment.NewLine;
-                row[58] += igazitasSeged( _oklevel.VersenySorozatI );
-
-                row[59] = _oklevel.HelyezesX != 0 ? "Xpos: " + _oklevel.HelyezesX.ToString( ) : " ";
-                row[59] += Environment.NewLine;
-                row[59] += _oklevel.HelyezesY != 0 ? "Ypos: " + _oklevel.HelyezesY.ToString( ) : " ";
-                row[59] += Environment.NewLine;
-                row[59] += _oklevel.HelyezesH != 0 ? "Hossz: " + _oklevel.HelyezesH.ToString( ) : " ";
-                row[59] += Environment.NewLine;
-                row[59] += formatSeged( _oklevel.HelyezesF );
-                row[59] += Environment.NewLine;
-                row[59] += _oklevel.HelyezesM != 0 ? _oklevel.HelyezesM.ToString( ) : " ";
-                row[59] += Environment.NewLine;
-                row[59] += igazitasSeged( _oklevel.HelyezesI );
-
-                row[60] = _oklevel.InduloX != 0 ? "Xpos: " + _oklevel.InduloX.ToString( ) : " ";
-                row[60] += Environment.NewLine;
-                row[60] += _oklevel.InduloY != 0 ? "Ypos: " + _oklevel.InduloY.ToString( ) : " ";
-                row[60] += Environment.NewLine;
-                row[60] += _oklevel.InduloH != 0 ? "Hossz: " + _oklevel.InduloH.ToString( ) : " ";
-                row[60] += Environment.NewLine;
-                row[60] += formatSeged( _oklevel.InduloF );
-                row[60] += Environment.NewLine;
-                row[60] += _oklevel.InduloM != 0 ? _oklevel.InduloM.ToString( ) : " ";
-                row[60] += Environment.NewLine;
-                row[60] += igazitasSeged( _oklevel.InduloI );
-
-                row[61] = _oklevel.EgyesuletX != 0 ? "Xpos: " + _oklevel.EgyesuletX.ToString( ) : " ";
-                row[61] += Environment.NewLine;
-                row[61] += _oklevel.EgyesuletY != 0 ? "Ypos: " + _oklevel.EgyesuletY.ToString( ) : " ";
-                row[61] += Environment.NewLine;
-                row[61] += _oklevel.EgyesuletH != 0 ? "Hossz: " + _oklevel.EgyesuletH.ToString( ) : " ";
-                row[61] += Environment.NewLine;
-                row[61] += formatSeged( _oklevel.EgyesuletF );
-                row[61] += Environment.NewLine;
-                row[61] += _oklevel.EgyesuletM != 0 ? _oklevel.EgyesuletM.ToString( ) : " ";
-                row[61] += Environment.NewLine;
-                row[61] += igazitasSeged( _oklevel.EgyesuletI );
-
-                row[62] = _oklevel.IjtipusX != 0 ? "Xpos: " + _oklevel.IjtipusX.ToString( ) : " ";
-                row[62] += Environment.NewLine;
-                row[62] += _oklevel.IjtipusY != 0 ? "Ypos: " + _oklevel.IjtipusY.ToString( ) : " ";
-                row[62] += Environment.NewLine;
-                row[62] += _oklevel.IjtipusH != 0 ? "Hossz: " + _oklevel.IjtipusH.ToString( ) : " ";
-                row[62] += Environment.NewLine;
-                row[62] += formatSeged( _oklevel.IjtipusF );
-                row[62] += Environment.NewLine;
-                row[62] += _oklevel.IjtipusM != 0 ? _oklevel.IjtipusM.ToString( ) : " ";
-                row[62] += Environment.NewLine;
-                row[62] += igazitasSeged( _oklevel.IjtipusI );
-
-                row[63] = _oklevel.KorosztalyX != 0 ? "Xpos: " + _oklevel.KorosztalyX.ToString( ) : " ";
-                row[63] += Environment.NewLine;
-                row[63] += _oklevel.KorosztalyY != 0 ? "Ypos: " + _oklevel.KorosztalyY.ToString( ) : " ";
-                row[63] += Environment.NewLine;
-                row[63] += _oklevel.KorosztalyH != 0 ? "Hossz: " + _oklevel.KorosztalyH.ToString( ) : " ";
-                row[63] += Environment.NewLine;
-                row[63] += formatSeged( _oklevel.KorosztalyF );
-                row[63] += Environment.NewLine;
-                row[63] += _oklevel.KorosztalyM != 0 ? _oklevel.KorosztalyM.ToString( ) : " ";
-                row[63] += Environment.NewLine;
-                row[63] += igazitasSeged( _oklevel.KorosztalyI );
-
-                row[64] = _oklevel.InduloNemeX != 0 ? "Xpos: " + _oklevel.InduloNemeX.ToString( ) : " ";
-                row[64] += Environment.NewLine;
-                row[64] += _oklevel.InduloNemeY != 0 ? "Ypos: " + _oklevel.InduloNemeY.ToString( ) : " ";
-                row[64] += Environment.NewLine;
-                row[64] += _oklevel.InduloNemeH != 0 ? "Hossz: " + _oklevel.InduloNemeH.ToString( ) : " ";
-                row[64] += Environment.NewLine;
-                row[64] += formatSeged( _oklevel.InduloNemeF );
-                row[64] += Environment.NewLine;
-                row[64] += _oklevel.InduloNemeM != 0 ? _oklevel.InduloNemeM.ToString( ) : " ";
-                row[64] += Environment.NewLine;
-                row[64] += igazitasSeged( _oklevel.InduloNemeI );
-
-                row[65] = _oklevel.DatumX != 0 ? "Xpos: " + _oklevel.DatumX.ToString( ) : " ";
-                row[65] += Environment.NewLine;
-                row[65] += _oklevel.DatumY != 0 ? "Ypos: " + _oklevel.DatumY.ToString( ) : " ";
-                row[65] += Environment.NewLine;
-                row[65] += _oklevel.DatumH != 0 ? "Hossz: " + _oklevel.DatumH.ToString( ) : " ";
-                row[65] += Environment.NewLine;
-                row[65] += formatSeged( _oklevel.DatumF );
-                row[65] += Environment.NewLine;
-                row[65] += _oklevel.DatumM != 0 ? _oklevel.DatumM.ToString( ) : " ";
-                row[65] += Environment.NewLine;
-                row[65] += igazitasSeged( _oklevel.DatumI );
-                #endregion
+                row[++count] = oklevel.DatumX.ToString( );
+                row[++count] = oklevel.DatumY.ToString( );
+                row[++count] = oklevel.DatumH.ToString( );
+                row[++count] = oklevel.DatumB.ToString( );
+                row[++count] = oklevel.DatumF.ToString( );
+                row[++count] = oklevel.DatumM.ToString( );
+                row[++count] = oklevel.DatumI.ToString( );
 
                 data.Rows.Add( row );
                 if( sablon_hozzáadva != null )
-                    sablon_hozzáadva( _oklevel );
+                    sablon_hozzáadva( oklevel );
             }
         }
 
@@ -876,183 +684,82 @@ namespace Íjász {
                 if( _azonosito == current[0].ToString( ) ) {
                     #region set Rows
 
-                    current[0] = _oklevel.Azonosito;
-                    current[1] = _oklevel.Tipus;
-                    current[2] = _oklevel.BetuTipus;
+                    int count = -1;
 
-                    current[3] = _oklevel.VersenyX.ToString( );
-                    current[4] = _oklevel.VersenyY.ToString( );
-                    current[5] = _oklevel.VersenyH.ToString( );
-                    current[6] = _oklevel.VersenyF.ToString( );
-                    current[7] = _oklevel.VersenyM.ToString( );
-                    current[8] = _oklevel.VersenyI.ToString( );
+                    current[++count] = _oklevel.Azonosito;
+                    current[++count] = _oklevel.Tipus;
 
-                    current[9] = _oklevel.VersenySorozatX.ToString( );
-                    current[10] = _oklevel.VersenySorozatY.ToString( );
-                    current[11] = _oklevel.VersenySorozatH.ToString( );
-                    current[12] = _oklevel.VersenySorozatF.ToString( );
-                    current[13] = _oklevel.VersenySorozatM.ToString( );
-                    current[14] = _oklevel.VersenySorozatI.ToString( );
+                    current[++count] = _oklevel.VersenyX.ToString( );
+                    current[++count] = _oklevel.VersenyY.ToString( );
+                    current[++count] = _oklevel.VersenyH.ToString( );
+                    current[++count] = _oklevel.VersenyB.ToString( );
+                    current[++count] = _oklevel.VersenyF.ToString( );
+                    current[++count] = _oklevel.VersenyM.ToString( );
+                    current[++count] = _oklevel.VersenyI.ToString( );
 
-                    current[15] = _oklevel.HelyezesX.ToString( );
-                    current[16] = _oklevel.HelyezesY.ToString( );
-                    current[17] = _oklevel.HelyezesH.ToString( );
-                    current[18] = _oklevel.HelyezesF.ToString( );
-                    current[19] = _oklevel.HelyezesM.ToString( );
-                    current[20] = _oklevel.HelyezesI.ToString( );
+                    current[++count] = _oklevel.VersenySorozatX.ToString( );
+                    current[++count] = _oklevel.VersenySorozatY.ToString( );
+                    current[++count] = _oklevel.VersenySorozatH.ToString( );
+                    current[++count] = _oklevel.VersenySorozatB.ToString( );
+                    current[++count] = _oklevel.VersenySorozatF.ToString( );
+                    current[++count] = _oklevel.VersenySorozatM.ToString( );
+                    current[++count] = _oklevel.VersenySorozatI.ToString( );
 
-                    current[21] = _oklevel.InduloX.ToString( );
-                    current[22] = _oklevel.InduloY.ToString( );
-                    current[23] = _oklevel.InduloH.ToString( );
-                    current[24] = _oklevel.InduloF.ToString( );
-                    current[25] = _oklevel.InduloM.ToString( );
-                    current[26] = _oklevel.InduloI.ToString( );
+                    current[++count] = _oklevel.HelyezesX.ToString( );
+                    current[++count] = _oklevel.HelyezesY.ToString( );
+                    current[++count] = _oklevel.HelyezesH.ToString( );
+                    current[++count] = _oklevel.HelyezesB.ToString( );
+                    current[++count] = _oklevel.HelyezesF.ToString( );
+                    current[++count] = _oklevel.HelyezesM.ToString( );
+                    current[++count] = _oklevel.HelyezesI.ToString( );
 
-                    current[27] = _oklevel.EgyesuletX.ToString( );
-                    current[28] = _oklevel.EgyesuletY.ToString( );
-                    current[29] = _oklevel.EgyesuletH.ToString( );
-                    current[30] = _oklevel.EgyesuletF.ToString( );
-                    current[31] = _oklevel.EgyesuletM.ToString( );
-                    current[32] = _oklevel.EgyesuletI.ToString( );
+                    current[++count] = _oklevel.InduloX.ToString( );
+                    current[++count] = _oklevel.InduloY.ToString( );
+                    current[++count] = _oklevel.InduloH.ToString( );
+                    current[++count] = _oklevel.InduloB.ToString( );
+                    current[++count] = _oklevel.InduloF.ToString( );
+                    current[++count] = _oklevel.InduloM.ToString( );
+                    current[++count] = _oklevel.InduloI.ToString( );
 
-                    current[33] = _oklevel.IjtipusX.ToString( );
-                    current[34] = _oklevel.IjtipusY.ToString( );
-                    current[35] = _oklevel.IjtipusH.ToString( );
-                    current[36] = _oklevel.IjtipusF.ToString( );
-                    current[37] = _oklevel.IjtipusM.ToString( );
-                    current[38] = _oklevel.IjtipusI.ToString( );
+                    current[++count] = _oklevel.EgyesuletX.ToString( );
+                    current[++count] = _oklevel.EgyesuletY.ToString( );
+                    current[++count] = _oklevel.EgyesuletH.ToString( );
+                    current[++count] = _oklevel.EgyesuletB.ToString( );
+                    current[++count] = _oklevel.EgyesuletF.ToString( );
+                    current[++count] = _oklevel.EgyesuletM.ToString( );
+                    current[++count] = _oklevel.EgyesuletI.ToString( );
 
-                    current[39] = _oklevel.KorosztalyX.ToString( );
-                    current[40] = _oklevel.KorosztalyY.ToString( );
-                    current[41] = _oklevel.KorosztalyH.ToString( );
-                    current[42] = _oklevel.KorosztalyF.ToString( );
-                    current[43] = _oklevel.KorosztalyM.ToString( );
-                    current[44] = _oklevel.KorosztalyI.ToString( );
+                    current[++count] = _oklevel.IjtipusX.ToString( );
+                    current[++count] = _oklevel.IjtipusY.ToString( );
+                    current[++count] = _oklevel.IjtipusH.ToString( );
+                    current[++count] = _oklevel.IjtipusB.ToString( );
+                    current[++count] = _oklevel.IjtipusF.ToString( );
+                    current[++count] = _oklevel.IjtipusM.ToString( );
+                    current[++count] = _oklevel.IjtipusI.ToString( );
 
-                    current[45] = _oklevel.InduloNemeX.ToString( );
-                    current[46] = _oklevel.InduloNemeY.ToString( );
-                    current[47] = _oklevel.InduloNemeH.ToString( );
-                    current[48] = _oklevel.InduloNemeF.ToString( );
-                    current[49] = _oklevel.InduloNemeM.ToString( );
-                    current[50] = _oklevel.InduloNemeI.ToString( );
+                    current[++count] = _oklevel.KorosztalyX.ToString( );
+                    current[++count] = _oklevel.KorosztalyY.ToString( );
+                    current[++count] = _oklevel.KorosztalyH.ToString( );
+                    current[++count] = _oklevel.KorosztalyB.ToString( );
+                    current[++count] = _oklevel.KorosztalyF.ToString( );
+                    current[++count] = _oklevel.KorosztalyM.ToString( );
+                    current[++count] = _oklevel.KorosztalyI.ToString( );
 
-                    current[51] = _oklevel.DatumX.ToString( );
-                    current[52] = _oklevel.DatumY.ToString( );
-                    current[53] = _oklevel.DatumH.ToString( );
-                    current[54] = _oklevel.DatumF.ToString( );
-                    current[55] = _oklevel.DatumM.ToString( );
-                    current[56] = _oklevel.DatumI.ToString( );
+                    current[++count] = _oklevel.InduloNemeX.ToString( );
+                    current[++count] = _oklevel.InduloNemeY.ToString( );
+                    current[++count] = _oklevel.InduloNemeH.ToString( );
+                    current[++count] = _oklevel.InduloNemeB.ToString( );
+                    current[++count] = _oklevel.InduloNemeF.ToString( );
+                    current[++count] = _oklevel.InduloNemeM.ToString( );
+                    current[++count] = _oklevel.InduloNemeI.ToString( );
 
-
-                    //-------------------------------------------------
-
-                    current[57] = _oklevel.VersenyX != 0 ? "Xpos: " + _oklevel.VersenyX.ToString( ) : " ";
-                    current[57] += Environment.NewLine;
-                    current[57] += _oklevel.VersenyY != 0 ? "Ypos: " + _oklevel.VersenyY.ToString( ) : " ";
-                    current[57] += Environment.NewLine;
-                    current[57] += _oklevel.VersenyH != 0 ? "Hossz: " + _oklevel.VersenyH.ToString( ) : " ";
-                    current[57] += Environment.NewLine;
-                    current[57] += formatSeged( _oklevel.VersenyF );
-                    current[57] += Environment.NewLine;
-                    current[57] += _oklevel.VersenyM != 0 ? _oklevel.VersenyM.ToString( ) : " ";
-                    current[57] += Environment.NewLine;
-                    current[57] += igazitasSeged( _oklevel.VersenyI );
-
-                    current[58] = _oklevel.VersenySorozatX != 0 ? "Xpos: " + _oklevel.VersenySorozatX.ToString( ) : " ";
-                    current[58] += Environment.NewLine;
-                    current[58] += _oklevel.VersenySorozatY != 0 ? "Ypos: " + _oklevel.VersenySorozatY.ToString( ) : " ";
-                    current[58] += Environment.NewLine;
-                    current[58] += _oklevel.VersenySorozatH != 0 ? "Hossz: " + _oklevel.VersenySorozatH.ToString( ) : " ";
-                    current[58] += Environment.NewLine;
-                    current[58] += formatSeged( _oklevel.VersenySorozatF );
-                    current[58] += Environment.NewLine;
-                    current[58] += _oklevel.VersenySorozatM != 0 ? _oklevel.VersenySorozatM.ToString( ) : " ";
-                    current[58] += Environment.NewLine;
-                    current[58] += igazitasSeged( _oklevel.VersenySorozatI );
-
-                    current[59] = _oklevel.HelyezesX != 0 ? "Xpos: " + _oklevel.HelyezesX.ToString( ) : " ";
-                    current[59] += Environment.NewLine;
-                    current[59] += _oklevel.HelyezesY != 0 ? "Ypos: " + _oklevel.HelyezesY.ToString( ) : " ";
-                    current[59] += Environment.NewLine;
-                    current[59] += _oklevel.HelyezesH != 0 ? "Hossz: " + _oklevel.HelyezesH.ToString( ) : " ";
-                    current[59] += Environment.NewLine;
-                    current[59] += formatSeged( _oklevel.HelyezesF );
-                    current[59] += Environment.NewLine;
-                    current[59] += _oklevel.HelyezesM != 0 ? _oklevel.HelyezesM.ToString( ) : " ";
-                    current[59] += Environment.NewLine;
-                    current[59] += igazitasSeged( _oklevel.HelyezesI );
-
-                    current[60] = _oklevel.InduloX != 0 ? "Xpos: " + _oklevel.InduloX.ToString( ) : " ";
-                    current[60] += Environment.NewLine;
-                    current[60] += _oklevel.InduloY != 0 ? "Ypos: " + _oklevel.InduloY.ToString( ) : " ";
-                    current[60] += Environment.NewLine;
-                    current[60] += _oklevel.InduloH != 0 ? "Hossz: " + _oklevel.InduloH.ToString( ) : " ";
-                    current[60] += Environment.NewLine;
-                    current[60] += formatSeged( _oklevel.InduloF );
-                    current[60] += Environment.NewLine;
-                    current[60] += _oklevel.InduloM != 0 ? _oklevel.InduloM.ToString( ) : " ";
-                    current[60] += Environment.NewLine;
-                    current[60] += igazitasSeged( _oklevel.InduloI );
-
-                    current[61] = _oklevel.EgyesuletX != 0 ? "Xpos: " + _oklevel.EgyesuletX.ToString( ) : " ";
-                    current[61] += Environment.NewLine;
-                    current[61] += _oklevel.EgyesuletY != 0 ? "Ypos: " + _oklevel.EgyesuletY.ToString( ) : " ";
-                    current[61] += Environment.NewLine;
-                    current[61] += _oklevel.EgyesuletH != 0 ? "Hossz: " + _oklevel.EgyesuletH.ToString( ) : " ";
-                    current[61] += Environment.NewLine;
-                    current[61] += formatSeged( _oklevel.EgyesuletF );
-                    current[61] += Environment.NewLine;
-                    current[61] += _oklevel.EgyesuletM != 0 ? _oklevel.EgyesuletM.ToString( ) : " ";
-                    current[61] += Environment.NewLine;
-                    current[61] += igazitasSeged( _oklevel.EgyesuletI );
-
-                    current[62] = _oklevel.IjtipusX != 0 ? "Xpos: " + _oklevel.IjtipusX.ToString( ) : " ";
-                    current[62] += Environment.NewLine;
-                    current[62] += _oklevel.IjtipusY != 0 ? "Ypos: " + _oklevel.IjtipusY.ToString( ) : " ";
-                    current[62] += Environment.NewLine;
-                    current[62] += _oklevel.IjtipusH != 0 ? "Hossz: " + _oklevel.IjtipusH.ToString( ) : " ";
-                    current[62] += Environment.NewLine;
-                    current[62] += formatSeged( _oklevel.IjtipusF );
-                    current[62] += Environment.NewLine;
-                    current[62] += _oklevel.IjtipusM != 0 ? _oklevel.IjtipusM.ToString( ) : " ";
-                    current[62] += Environment.NewLine;
-                    current[62] += igazitasSeged( _oklevel.IjtipusI );
-
-                    current[63] = _oklevel.KorosztalyX != 0 ? "Xpos: " + _oklevel.KorosztalyX.ToString( ) : " ";
-                    current[63] += Environment.NewLine;
-                    current[63] += _oklevel.KorosztalyY != 0 ? "Ypos: " + _oklevel.KorosztalyY.ToString( ) : " ";
-                    current[63] += Environment.NewLine;
-                    current[63] += _oklevel.KorosztalyH != 0 ? "Hossz: " + _oklevel.KorosztalyH.ToString( ) : " ";
-                    current[63] += Environment.NewLine;
-                    current[63] += formatSeged( _oklevel.KorosztalyF );
-                    current[63] += Environment.NewLine;
-                    current[63] += _oklevel.KorosztalyM != 0 ? _oklevel.KorosztalyM.ToString( ) : " ";
-                    current[63] += Environment.NewLine;
-                    current[63] += igazitasSeged( _oklevel.KorosztalyI );
-
-                    current[64] = _oklevel.InduloNemeX != 0 ? "Xpos: " + _oklevel.InduloNemeX.ToString( ) : " ";
-                    current[64] += Environment.NewLine;
-                    current[64] += _oklevel.InduloNemeY != 0 ? "Ypos: " + _oklevel.InduloNemeY.ToString( ) : " ";
-                    current[64] += Environment.NewLine;
-                    current[64] += _oklevel.InduloNemeH != 0 ? "Hossz: " + _oklevel.InduloNemeH.ToString( ) : " ";
-                    current[64] += Environment.NewLine;
-                    current[64] += formatSeged( _oklevel.InduloNemeF );
-                    current[64] += Environment.NewLine;
-                    current[64] += _oklevel.InduloNemeM != 0 ? _oklevel.InduloNemeM.ToString( ) : " ";
-                    current[64] += Environment.NewLine;
-                    current[64] += igazitasSeged( _oklevel.InduloNemeI );
-
-                    current[65] = _oklevel.DatumX != 0 ? "Xpos: " + _oklevel.DatumX.ToString( ) : " ";
-                    current[65] += Environment.NewLine;
-                    current[65] += _oklevel.DatumY != 0 ? "Ypos: " + _oklevel.DatumY.ToString( ) : " ";
-                    current[65] += Environment.NewLine;
-                    current[65] += _oklevel.DatumH != 0 ? "Hossz: " + _oklevel.DatumH.ToString( ) : " ";
-                    current[65] += Environment.NewLine;
-                    current[65] += formatSeged( _oklevel.DatumF );
-                    current[65] += Environment.NewLine;
-                    current[65] += _oklevel.DatumM != 0 ? _oklevel.DatumM.ToString( ) : " ";
-                    current[65] += Environment.NewLine;
-                    current[65] += igazitasSeged( _oklevel.DatumI );
+                    current[++count] = _oklevel.DatumX.ToString( );
+                    current[++count] = _oklevel.DatumY.ToString( );
+                    current[++count] = _oklevel.DatumH.ToString( );
+                    current[++count] = _oklevel.DatumB.ToString( );
+                    current[++count] = _oklevel.DatumF.ToString( );
+                    current[++count] = _oklevel.DatumM.ToString( );
+                    current[++count] = _oklevel.DatumI.ToString( );
                     #endregion
                 }
             }
@@ -1119,11 +826,11 @@ namespace Íjász {
             Oklevel oklevel = new Oklevel {
                 Azonosito = data.Rows[table.SelectedRows[0].Index][++c].ToString(),
                 Tipus = data.Rows[table.SelectedRows[0].Index][++c].ToString(),
-                BetuTipus = data.Rows[table.SelectedRows[0].Index][++c].ToString(),
 
                 VersenyX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 VersenyY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 VersenyH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                VersenyB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 VersenyF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 VersenyM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 VersenyI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1131,6 +838,7 @@ namespace Íjász {
                 VersenySorozatX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 VersenySorozatY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 VersenySorozatH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                VersenySorozatB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 VersenySorozatF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 VersenySorozatM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 VersenySorozatI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1138,6 +846,7 @@ namespace Íjász {
                 HelyezesX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 HelyezesY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 HelyezesH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                HelyezesB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 HelyezesF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 HelyezesM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 HelyezesI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1145,6 +854,7 @@ namespace Íjász {
                 InduloX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 InduloY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 InduloH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                InduloB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 InduloF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 InduloM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 InduloI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1152,6 +862,7 @@ namespace Íjász {
                 EgyesuletX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 EgyesuletY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 EgyesuletH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                EgyesuletB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 EgyesuletF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 EgyesuletM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 EgyesuletI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1159,6 +870,7 @@ namespace Íjász {
                 IjtipusX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 IjtipusY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 IjtipusH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                IjtipusB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 IjtipusF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 IjtipusM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 IjtipusI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1166,6 +878,7 @@ namespace Íjász {
                 KorosztalyX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 KorosztalyY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 KorosztalyH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                KorosztalyB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 KorosztalyF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 KorosztalyM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 KorosztalyI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1173,6 +886,7 @@ namespace Íjász {
                 InduloNemeX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 InduloNemeY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 InduloNemeH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                InduloNemeB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 InduloNemeF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 InduloNemeM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 InduloNemeI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
@@ -1180,6 +894,7 @@ namespace Íjász {
                 DatumX = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 DatumY = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 DatumH = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
+                DatumB = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 DatumF = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),
                 DatumM = Convert.ToInt32(data.Rows[table.SelectedRows[0].Index][++c]),
                 DatumI = (data.Rows[table.SelectedRows[0].Index][++c]).ToString(),

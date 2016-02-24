@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Íjász {
     partial class Database {
@@ -14,92 +15,98 @@ namespace Íjász {
                 connection.Open( );
                 SQLiteCommand command = connection.CreateCommand( );
 
-                command.CommandText = "select OKAZON, OKTIPU, OKBETU, " +
-                                      "OKVENEX, OKVENEY, OKVENEH, OKVENEF, OKVENEM, OKVENEI," +
-                                      "OKVSNEX, OKVSNEY, OKVSNEH, OKVSNEF, OKVSNEM, OKVSNEI, " +
-                                      "OKHELYX, OKHELYY, OKHELYH, OKHELYF, OKHELYM, OKHELYI, " +
-                                      "OKINNEVEX, OKINNEVEY, OKINNEVEH, OKINNEVEF, OKINNEVEM, OKINNEVEI, " +
-                                      "OKEGYEX, OKEGYEY, OKEGYEH, OKEGYEF, OKEGYEM, OKEGYEI, " +
-                                      "OKIJTIX, OKIJTIY, OKIJTIH, OKIJTIF, OKIJTIM, OKIJTII, " +
-                                      "OKKOROX, OKKOROY, OKKOROH, OKKOROF, OKKOROM, OKKOROI, " +
-                                      "OKINNEMEX, OKINNEMEY, OKINNEMEH, OKINNEMEF, OKINNEMEM, OKINNEMEI, " +
-                                      "OKDATUX, OKDATUY, OKDATUH, OKDATUF, OKDATUM, OKDATUI from Oklevelek;";
-
+                command.CommandText = "SELECT OKAZON, OKTIPU, " +
+                  "OKVENEX, OKVENEY, OKVENEH, OKVENEF , OKVENEB , OKVENEM , OKVENEI ," +
+                  "OKVSNEX, OKVSNEY, OKVSNEH, OKVSNEF , OKVSNEB , OKVSNEM , OKVSNEI ," +
+                  "OKHELYX, OKHELYY, OKHELYH, OKHELYF , OKHELYB , OKHELYM , OKHELYI ," +
+                  "OKNEVEX, OKNEVEY, OKNEVEH, OKNEVEF , OKNEVEB , OKNEVEM , OKNEVEI ," +
+                  "OKEGYEX, OKEGYEY, OKEGYEH, OKEGYEF , OKEGYEB , OKEGYEM , OKEGYEI ," +
+                  "OKIJTIX, OKIJTIY, OKIJTIH, OKIJTIF , OKIJTIB , OKIJTIM , OKIJTII ," +
+                  "OKKOROX, OKKOROY, OKKOROH, OKKOROF , OKKOROB , OKKOROM , OKKOROI ," +
+                  "OKNEMEX, OKNEMEY, OKNEMEH, OKNEMEF , OKNEMEB , OKNEMEM , OKNEMEI ," +
+                  "OKDATUX, OKDATUY, OKDATUH, OKDATUF , OKDATUB , OKDATUM , OKDATUI " +
+                  " FROM Oklevelek;";
 
 
                 var reader = command.ExecuteReader( );
                 while( reader.Read( ) ) {
                     int index = -1;
-                        Value.Add( new Oklevel( reader.GetString( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetString( ++index ),
+                    Value.Add( new Oklevel( reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
 
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index ),
-                                                reader.GetInt32( ++index ),
-                                                reader.GetString( ++index )
-                                                ) );
-                    }
-
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetString( ++index ),
+                                            reader.GetInt32( ++index ),
+                                            reader.GetString( ++index )
+                                            ) );
+                }
 
                 command.Dispose( );
                 connection.Close( );
@@ -107,79 +114,282 @@ namespace Íjász {
             return Value;
         }
 
-        public bool UjOklevel( Oklevel _Oklevel ) {
+        public bool UjOklevel( Oklevel oklevel ) {
             bool value = false;
 
             lock ( Program.datalock ) {
                 connection.Open( );
                 SQLiteCommand command = connection.CreateCommand( );
 
-                command.CommandText =
-                    "insert into Oklevelek(OKAZON,OKTIPU,OKBETU," +
-                    "OKVENEX,OKVENEY,OKVENEH,OKVENEF,OKVENEM,OKVENEI," +
-                    "OKVSNEX,OKVSNEY,OKVSNEH,OKVSNEF,OKVSNEM,OKVSNEI," +
-                    "OKHELYX,OKHELYY,OKHELYH,OKHELYF,OKHELYM,OKHELYI," +
-                    "OKINNEVEX,OKINNEVEY,OKINNEVEH,OKINNEVEF,OKINNEVEM,OKINNEVEI," +
-                    "OKEGYEX,OKEGYEY,OKEGYEH,OKEGYEF,OKEGYEM,OKEGYEI," +
-                    "OKIJTIX,OKIJTIY,OKIJTIH,OKIJTIF,OKIJTIM,OKIJTII," +
-                    "OKKOROX,OKKOROY,OKKOROH,OKKOROF,OKKOROM,OKKOROI," +
-                    "OKINNEMEX,OKINNEMEY,OKINNEMEH,OKINNEMEF,OKINNEMEM,OKINNEMEI," +
-                    "OKDATUX,OKDATUY,OKDATUH,OKDATUF,OKDATUM,OKDATUI)" +
-                    "VALUES( '" + _Oklevel.Azonosito + "','" + _Oklevel.Tipus + "','" + _Oklevel.BetuTipus + "', " +
-                    _Oklevel.VersenyX + ", " + _Oklevel.VersenyY + ", " + _Oklevel.VersenyH + ", '" + _Oklevel.VersenyF +
-                    "', " + _Oklevel.VersenyM + ", '" + _Oklevel.VersenyI + "', " +
-                    _Oklevel.VersenySorozatX + ", " + _Oklevel.VersenySorozatY + ", " + _Oklevel.VersenySorozatH + ", '" +
-                    _Oklevel.VersenySorozatF + "', " + _Oklevel.VersenySorozatM + ", '" + _Oklevel.VersenySorozatI +
-                    "', " +
-                    _Oklevel.HelyezesX + ", " + _Oklevel.HelyezesY + ", " + _Oklevel.HelyezesH + ", '" +
-                    _Oklevel.HelyezesF + "', " + _Oklevel.HelyezesM + ", '" + _Oklevel.HelyezesI + "', " +
-                    _Oklevel.InduloX + ", " + _Oklevel.InduloY + ", " + _Oklevel.InduloH + ", '" + _Oklevel.InduloF +
-                    "', " + _Oklevel.InduloM + ", '" + _Oklevel.InduloI + "', " +
-                    _Oklevel.EgyesuletX + ", " + _Oklevel.EgyesuletY + ", " + _Oklevel.EgyesuletH + ", '" +
-                    _Oklevel.EgyesuletF + "', " + _Oklevel.EgyesuletM + ", '" + _Oklevel.EgyesuletI + "', " +
-                    _Oklevel.IjtipusX + ", " + _Oklevel.IjtipusY + ", " + _Oklevel.IjtipusH + ", '" + _Oklevel.IjtipusF +
-                    "', " + _Oklevel.IjtipusM + ", '" + _Oklevel.IjtipusI + "', " +
-                    _Oklevel.KorosztalyX + ", " + _Oklevel.KorosztalyY + ", " + _Oklevel.KorosztalyH + ", '" +
-                    _Oklevel.KorosztalyF + "', " + _Oklevel.KorosztalyM + ", '" + _Oklevel.KorosztalyI + "', " +
-                    _Oklevel.InduloNemeX + ", " + _Oklevel.InduloNemeY + ", " + _Oklevel.InduloNemeH + ", '" +
-                    _Oklevel.InduloNemeF + "', " + _Oklevel.InduloNemeM + ", '" + _Oklevel.InduloNemeI + "', " +
-                    _Oklevel.DatumX + ", " + _Oklevel.DatumY + ", " + _Oklevel.DatumH + ", '" + _Oklevel.DatumF + "', " +
-                    _Oklevel.DatumM + ", '" + _Oklevel.DatumI + "');";
+                command.CommandText = "INSERT INTO Oklevelek (" +
+                                      "OKAZON, OKTIPU, " +
+                                      "OKVENEX, OKVENEY, OKVENEH, OKVENEF , OKVENEB , OKVENEM , OKVENEI ," +
+                                      "OKVSNEX, OKVSNEY, OKVSNEH, OKVSNEF , OKVSNEB , OKVSNEM , OKVSNEI ," +
+                                      "OKHELYX, OKHELYY, OKHELYH, OKHELYF , OKHELYB , OKHELYM , OKHELYI ," +
+                                      "OKNEVEX, OKNEVEY, OKNEVEH, OKNEVEF , OKNEVEB , OKNEVEM , OKNEVEI ," +
+                                      "OKEGYEX, OKEGYEY, OKEGYEH, OKEGYEF , OKEGYEB , OKEGYEM , OKEGYEI ," +
+                                      "OKIJTIX, OKIJTIY, OKIJTIH, OKIJTIF , OKIJTIB , OKIJTIM , OKIJTII ," +
+                                      "OKKOROX, OKKOROY, OKKOROH, OKKOROF , OKKOROB , OKKOROM , OKKOROI ," +
+                                      "OKNEMEX, OKNEMEY, OKNEMEH, OKNEMEF , OKNEMEB , OKNEMEM , OKNEMEI ," +
+                                      "OKDATUX, OKDATUY, OKDATUH, OKDATUF , OKDATUB , OKDATUM , OKDATUI" +
+                                      ") VALUES (" +
+                                      "@OKAZON,  @OKTIPU, " +
+                                      "@OKVENEX, @OKVENEY, @OKVENEH, @OKVENEF , @OKVENEB , @OKVENEM , @OKVENEI ," +
+                                      "@OKVSNEX, @OKVSNEY, @OKVSNEH, @OKVSNEF , @OKVSNEB , @OKVSNEM , @OKVSNEI ," +
+                                      "@OKHELYX, @OKHELYY, @OKHELYH, @OKHELYF , @OKHELYB , @OKHELYM , @OKHELYI ," +
+                                      "@OKNEVEX, @OKNEVEY, @OKNEVEH, @OKNEVEF , @OKNEVEB , @OKNEVEM , @OKNEVEI ," +
+                                      "@OKEGYEX, @OKEGYEY, @OKEGYEH, @OKEGYEF , @OKEGYEB , @OKEGYEM , @OKEGYEI ," +
+                                      "@OKIJTIX, @OKIJTIY, @OKIJTIH, @OKIJTIF , @OKIJTIB , @OKIJTIM , @OKIJTII ," +
+                                      "@OKKOROX, @OKKOROY, @OKKOROH, @OKKOROF , @OKKOROB , @OKKOROM , @OKKOROI ," +
+                                      "@OKNEMEX, @OKNEMEY, @OKNEMEH, @OKNEMEF , @OKNEMEB , @OKNEMEM , @OKNEMEI ," +
+                                      "@OKDATUX, @OKDATUY, @OKDATUH, @OKDATUF , @OKDATUB , @OKDATUM , @OKDATUI" +
+                                      ");";
 
-                command.ExecuteNonQuery( );
-                command.Dispose( );
-                connection.Close( );
+                command.Parameters.Add( new SQLiteParameter( "@OKAZON", oklevel.Azonosito ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKTIPU", oklevel.Tipus ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEX", oklevel.VersenyX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEY", oklevel.VersenyY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEH", oklevel.VersenyH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEF", oklevel.VersenyF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEB", oklevel.VersenyB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEM", oklevel.VersenyM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEI", oklevel.VersenyI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEX", oklevel.VersenySorozatX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEY", oklevel.VersenySorozatY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEH", oklevel.VersenySorozatH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEF", oklevel.VersenySorozatF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEB", oklevel.VersenySorozatB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEM", oklevel.VersenySorozatM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEI", oklevel.VersenySorozatI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYX", oklevel.HelyezesX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYY", oklevel.HelyezesY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYH", oklevel.HelyezesH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYF", oklevel.HelyezesF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYB", oklevel.HelyezesB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYM", oklevel.HelyezesM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYI", oklevel.HelyezesI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEX", oklevel.InduloX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEY", oklevel.InduloY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEH", oklevel.InduloH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEF", oklevel.InduloF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEB", oklevel.InduloB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEM", oklevel.InduloM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEI", oklevel.InduloI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEX", oklevel.EgyesuletX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEY", oklevel.EgyesuletY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEH", oklevel.EgyesuletH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEF", oklevel.EgyesuletF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEB", oklevel.EgyesuletB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEM", oklevel.EgyesuletM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEI", oklevel.EgyesuletI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIX", oklevel.IjtipusX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIY", oklevel.IjtipusY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIH", oklevel.IjtipusH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIF", oklevel.IjtipusF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIB", oklevel.IjtipusB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIM", oklevel.IjtipusM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTII", oklevel.IjtipusI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROX", oklevel.KorosztalyX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROY", oklevel.KorosztalyY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROH", oklevel.KorosztalyH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROF", oklevel.KorosztalyF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROB", oklevel.KorosztalyB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROM", oklevel.KorosztalyM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROI", oklevel.KorosztalyI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEX", oklevel.InduloNemeX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEY", oklevel.InduloNemeY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEH", oklevel.InduloNemeH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEF", oklevel.InduloNemeF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEB", oklevel.InduloNemeB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEM", oklevel.InduloNemeM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEI", oklevel.InduloNemeI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUX", oklevel.DatumX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUY", oklevel.DatumY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUH", oklevel.DatumH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUF", oklevel.DatumF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUB", oklevel.DatumB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUM", oklevel.DatumM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUI", oklevel.DatumI ) );
+
+                try {
+                    command.ExecuteNonQuery( );
+                } catch( SQLiteException exception ) {
+                    MessageBox.Show( exception.Message );
+                } finally {
+                    command.Dispose( );
+                    connection.Close( );
+                }
                 value = true;
             }
 
             return value;
         }
 
-        public bool OklevelModositas( string _Azonosito, Oklevel _Oklevel ) {
+        public bool OklevelModositas( string _Azonosito, Oklevel oklevel ) {
             lock ( Program.datalock ) {
                 connection.Open( );
 
                 SQLiteCommand command = connection.CreateCommand( );
 
-                command.CommandText = "UPDATE Oklevelek " +
-                   "SET OKAZON= '" + _Oklevel.Azonosito + "', OKTIPU= '" + _Oklevel.Tipus + "', OKBETU= '" + _Oklevel.BetuTipus + "'" + 
-                   ", OKVENEX= " + _Oklevel.VersenyX + ", OKVENEY= " + _Oklevel.VersenyY + ", OKVENEH= " + _Oklevel.VersenyH + ", OKVENEF= '" + _Oklevel.VersenyF + "', OKVENEM= " + _Oklevel.VersenyM + ", OKVENEI= '" + _Oklevel.VersenyI + "'" + 
-                   ", OKVSNEX= " + _Oklevel.VersenySorozatX + ", OKVSNEY= " + _Oklevel.VersenySorozatY + ", OKVSNEH= " + _Oklevel.VersenySorozatH + ", OKVSNEF= '" + _Oklevel.VersenySorozatF + "', OKVSNEM= " + _Oklevel.VersenySorozatM + ", OKVSNEI= '" + _Oklevel.VersenySorozatI + "'" +
-                   ", OKHELYX= " + _Oklevel.HelyezesX + ", OKHELYY= " + _Oklevel.HelyezesY + ", OKHELYH= " + _Oklevel.HelyezesH + ", OKHELYF= '" + _Oklevel.HelyezesF + "', OKHELYM= " + _Oklevel.HelyezesM + ", OKHELYI= '" + _Oklevel.HelyezesI + "'" +
-                   ", OKINNEVEX= " + _Oklevel.InduloX + ", OKINNEVEY= " + _Oklevel.InduloY + ", OKINNEVEH= " + _Oklevel.InduloH + ", OKINNEVEF= '" + _Oklevel.InduloF + "', OKINNEVEM= " + _Oklevel.InduloM + ", OKINNEVEI= '" + _Oklevel.InduloI + "'" +
-                   ", OKEGYEX= " + _Oklevel.EgyesuletX + ", OKEGYEY= " + _Oklevel.EgyesuletY + ", OKEGYEH= " + _Oklevel.EgyesuletH + ", OKEGYEF= '" + _Oklevel.EgyesuletF + "', OKEGYEM= " + _Oklevel.EgyesuletM + ", OKEGYEI= '" + _Oklevel.EgyesuletI + "'" +
-                   ", OKIJTIX= " + _Oklevel.IjtipusX + ", OKIJTIY= " + _Oklevel.IjtipusY + ", OKIJTIH= " + _Oklevel.IjtipusH + ", OKIJTIF= '" + _Oklevel.IjtipusF + "', OKIJTIM= " + _Oklevel.IjtipusM + ", OKIJTII= '" + _Oklevel.IjtipusI + "'" +
-                   ", OKKOROX= " + _Oklevel.KorosztalyX + ", OKKOROY= " + _Oklevel.KorosztalyY + ", OKKOROH= " + _Oklevel.KorosztalyH + ", OKKOROF= '" + _Oklevel.KorosztalyF + "', OKKOROM= " + _Oklevel.KorosztalyM + ", OKKOROI= '" + _Oklevel.KorosztalyI + "'" +
-                   ", OKINNEMEX= " + _Oklevel.InduloNemeX + ", OKINNEMEY= " + _Oklevel.InduloNemeY + ", OKINNEMEH= " + _Oklevel.InduloNemeH + ", OKINNEMEF= '" + _Oklevel.InduloNemeF + "', OKINNEMEM= " + _Oklevel.InduloNemeM + ", OKINNEMEI= '" + _Oklevel.InduloNemeI + "'" +
-                   ", OKDATUX= " + _Oklevel.DatumX + ", OKDATUY= " + _Oklevel.DatumY + ", OKDATUH= " + _Oklevel.DatumH + ", OKDATUF= '" + _Oklevel.DatumF + "', OKDATUM= " + _Oklevel.DatumM + ", OKDATUI= '" + _Oklevel.DatumI + "'" +
-                   " WHERE OKAZON = '" + _Oklevel.Azonosito + "';";
+                command.CommandText = "UPDATE Oklevelek SET " +
+                                                "OKAZON=@OKAZON, " +
+                                                "OKTIPU=@OKTIPU, " +
+                                                "OKVENEX=@OKVENEX, " +
+                                                "OKVENEY=@OKVENEY, " +
+                                                "OKVENEH=@OKVENEH, " +
+                                                "OKVENEF=@OKVENEF, " +
+                                                "OKVENEB=@OKVENEB, " +
+                                                "OKVENEM=@OKVENEM, " +
+                                                "OKVENEI=@OKVENEI, " +
+                                                "OKVSNEX=@OKVSNEX, " +
+                                                "OKVSNEY=@OKVSNEY, " +
+                                                "OKVSNEH=@OKVSNEH, " +
+                                                "OKVSNEF=@OKVSNEF, " +
+                                                "OKVSNEB=@OKVSNEB, " +
+                                                "OKVSNEM=@OKVSNEM, " +
+                                                "OKVSNEI=@OKVSNEI, " +
+                                                "OKHELYX=@OKHELYX, " +
+                                                "OKHELYY=@OKHELYY, " +
+                                                "OKHELYH=@OKHELYH, " +
+                                                "OKHELYF=@OKHELYF, " +
+                                                "OKHELYB=@OKHELYB, " +
+                                                "OKHELYM=@OKHELYM, " +
+                                                "OKHELYI=@OKHELYI, " +
+                                                "OKNEVEX=@OKNEVEX, " +
+                                                "OKNEVEY=@OKNEVEY, " +
+                                                "OKNEVEH=@OKNEVEH, " +
+                                                "OKNEVEF=@OKNEVEF, " +
+                                                "OKNEVEB=@OKNEVEB, " +
+                                                "OKNEVEM=@OKNEVEM, " +
+                                                "OKNEVEI=@OKNEVEI, " +
+                                                "OKEGYEX=@OKEGYEX, " +
+                                                "OKEGYEY=@OKEGYEY, " +
+                                                "OKEGYEH=@OKEGYEH, " +
+                                                "OKEGYEF=@OKEGYEF, " +
+                                                "OKEGYEB=@OKEGYEB, " +
+                                                "OKEGYEM=@OKEGYEM, " +
+                                                "OKEGYEI=@OKEGYEI, " +
+                                                "OKIJTIX=@OKIJTIX, " +
+                                                "OKIJTIY=@OKIJTIY, " +
+                                                "OKIJTIH=@OKIJTIH, " +
+                                                "OKIJTIF=@OKIJTIF, " +
+                                                "OKIJTIB=@OKIJTIB, " +
+                                                "OKIJTIM=@OKIJTIM, " +
+                                                "OKIJTII=@OKIJTII, " +
+                                                "OKKOROX=@OKKOROX, " +
+                                                "OKKOROY=@OKKOROY, " +
+                                                "OKKOROH=@OKKOROH, " +
+                                                "OKKOROF=@OKKOROF, " +
+                                                "OKKOROB=@OKKOROB, " +
+                                                "OKKOROM=@OKKOROM, " +
+                                                "OKKOROI=@OKKOROI, " +
+                                                "OKNEMEX=@OKNEMEX, " +
+                                                "OKNEMEY=@OKNEMEY, " +
+                                                "OKNEMEH=@OKNEMEH, " +
+                                                "OKNEMEF=@OKNEMEF, " +
+                                                "OKNEMEB=@OKNEMEB, " +
+                                                "OKNEMEM=@OKNEMEM, " +
+                                                "OKNEMEI=@OKNEMEI, " +
+                                                "OKDATUX=@OKDATUX, " +
+                                                "OKDATUY=@OKDATUY, " +
+                                                "OKDATUH=@OKDATUH, " +
+                                                "OKDATUF=@OKDATUF, " +
+                                                "OKDATUB=@OKDATUB, " +
+                                                "OKDATUM=@OKDATUM, " +
+                                                "OKDATUI=@OKDATUI " +
+                                                "WHERE OKAZON=@OKAZON";
+
+                command.Parameters.Add( new SQLiteParameter( "@OKAZON", oklevel.Azonosito ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKTIPU", oklevel.Tipus ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEX", oklevel.VersenyX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEY", oklevel.VersenyY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEH", oklevel.VersenyH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEF", oklevel.VersenyF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEB", oklevel.VersenyB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEM", oklevel.VersenyM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVENEI", oklevel.VersenyI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEX", oklevel.VersenySorozatX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEY", oklevel.VersenySorozatY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEH", oklevel.VersenySorozatH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEF", oklevel.VersenySorozatF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEB", oklevel.VersenySorozatB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEM", oklevel.VersenySorozatM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKVSNEI", oklevel.VersenySorozatI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYX", oklevel.HelyezesX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYY", oklevel.HelyezesY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYH", oklevel.HelyezesH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYF", oklevel.HelyezesF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYB", oklevel.HelyezesB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYM", oklevel.HelyezesM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKHELYI", oklevel.HelyezesI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEX", oklevel.InduloX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEY", oklevel.InduloY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEH", oklevel.InduloH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEF", oklevel.InduloF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEB", oklevel.InduloB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEM", oklevel.InduloM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEVEI", oklevel.InduloI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEX", oklevel.EgyesuletX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEY", oklevel.EgyesuletY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEH", oklevel.EgyesuletH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEF", oklevel.EgyesuletF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEB", oklevel.EgyesuletB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEM", oklevel.EgyesuletM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKEGYEI", oklevel.EgyesuletI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIX", oklevel.IjtipusX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIY", oklevel.IjtipusY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIH", oklevel.IjtipusH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIF", oklevel.IjtipusF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIB", oklevel.IjtipusB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTIM", oklevel.IjtipusM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKIJTII", oklevel.IjtipusI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROX", oklevel.KorosztalyX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROY", oklevel.KorosztalyY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROH", oklevel.KorosztalyH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROF", oklevel.KorosztalyF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROB", oklevel.KorosztalyB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROM", oklevel.KorosztalyM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKKOROI", oklevel.KorosztalyI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEX", oklevel.InduloNemeX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEY", oklevel.InduloNemeY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEH", oklevel.InduloNemeH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEF", oklevel.InduloNemeF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEB", oklevel.InduloNemeB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEM", oklevel.InduloNemeM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKNEMEI", oklevel.InduloNemeI ) );
+
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUX", oklevel.DatumX ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUY", oklevel.DatumY ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUH", oklevel.DatumH ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUF", oklevel.DatumF ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUB", oklevel.DatumB ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUM", oklevel.DatumM ) );
+                command.Parameters.Add( new SQLiteParameter( "@OKDATUI", oklevel.DatumI ) );
+
+
+
                 try {
                     command.ExecuteNonQuery( );
-                }
-                catch( SQLiteException e ) {
+                } catch( SQLiteException e ) {
                     return false;
-                }
-                finally {
+                } finally {
                     command.Dispose( );
                     connection.Close( );
                 }
@@ -208,35 +418,29 @@ namespace Íjász {
             lock ( Program.datalock ) {
                 connection.Open( );
                 SQLiteCommand command = connection.CreateCommand( );
-                command.CommandText = "select OKAZON,OKTIPU,OKBETU," +
-                    "OKVENEX,OKVENEY,OKVENEH,OKVENEF,OKVENEM,OKVENEI," +
-                    "OKVSNEX,OKVSNEY,OKVSNEH,OKVSNEF,OKVSNEM,OKVSNEI," +
-                    "OKHELYX,OKHELYY,OKHELYH,OKHELYF,OKHELYM,OKHELYI," +
-                    "OKINNEVEX,OKINNEVEY,OKINNEVEH,OKINNEVEF,OKINNEVEM,OKINNEVEI," +
-                    "OKEGYEX,OKEGYEY,OKEGYEH,OKEGYEF,OKEGYEM,OKEGYEI," +
-                    "OKIJTIX,OKIJTIY,OKIJTIH,OKIJTIF,OKIJTIM,OKIJTII," +
-                    "OKKOROX,OKKOROY,OKKOROH,OKKOROF,OKKOROM,OKKOROI," +
-                    "OKINNEMEX,OKINNEMEY,OKINNEMEH,OKINNEMEF,OKINNEMEM,OKINNEMEI," +
-                    "OKDATUX,OKDATUY,OKDATUH,OKDATUF,OKDATUM,OKDATUI" +
-                    " from Oklevelek where OKAZON = '" + _azonosito + "';";
+
+
+                command.CommandText = "select OKAZON, OKTIPU, " +
+                                      "OKVENEX, OKVENEY, OKVENEH, OKVENEF, OKVENEM, OKVENEI," +
+                                      "OKVSNEX, OKVSNEY, OKVSNEH, OKVSNEF, OKVSNEM, OKVSNEI, " +
+                                      "OKHELYX, OKHELYY, OKHELYH, OKHELYF, OKHELYM, OKHELYI, " +
+                                      "OKINNEVEX, OKINNEVEY, OKINNEVEH, OKINNEVEF, OKINNEVEM, OKINNEVEI, " +
+                                      "OKEGYEX, OKEGYEY, OKEGYEH, OKEGYEF, OKEGYEM, OKEGYEI, " +
+                                      "OKIJTIX, OKIJTIY, OKIJTIH, OKIJTIF, OKIJTIM, OKIJTII, " +
+                                      "OKKOROX, OKKOROY, OKKOROH, OKKOROF, OKKOROM, OKKOROI, " +
+                                      "OKINNEMEX, OKINNEMEY, OKINNEMEH, OKINNEMEF, OKINNEMEM, OKINNEMEI, " +
+                                      "OKDATUX, OKDATUY, OKDATUH, OKDATUF, OKDATUM, OKDATUI from Oklevelek WHERE OKAZON = '" + _azonosito + "';";
+
                 var reader = command.ExecuteReader( );
-                while( reader.Read( ) )
-                {
+                while( reader.Read( ) ) {
                     int c = -1;
                     Value = new Oklevel( reader.GetString( ++c ),
                                              reader.GetString( ++c ),
-                                             reader.GetString( ++c ),
 
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetString( ++c ),
-
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
@@ -245,12 +449,6 @@ namespace Íjász {
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetString( ++c ),
-
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
@@ -259,12 +457,6 @@ namespace Íjász {
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetString( ++c ),
-
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
@@ -273,12 +465,6 @@ namespace Íjász {
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetString( ++c ),
-
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
-                                             reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c ),
@@ -286,6 +472,39 @@ namespace Íjász {
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetString( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
+
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetInt32( ++c ),
+                                             reader.GetString( ++c ),
                                              reader.GetString( ++c ),
                                              reader.GetInt32( ++c ),
                                              reader.GetString( ++c )

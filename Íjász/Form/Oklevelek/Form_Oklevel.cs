@@ -10,7 +10,6 @@ namespace Íjász {
         #region Controls
         TextBox txtAzonosito;
         ComboBox cboTipus;
-        ComboBox cboBetuTipus;
 
         TextBox txtVersenyX;
         TextBox txtVersenyY;
@@ -20,6 +19,7 @@ namespace Íjász {
         CheckBox chkVersenyLeft;
         CheckBox chkVersenyRight;
         CheckBox chkVersenyMiddle;
+        ComboBox cboVersenyB;
         TextBox txtVersenyM;
 
         TextBox txtVersenySorozatX;
@@ -30,6 +30,7 @@ namespace Íjász {
         CheckBox chkVersenySorozatLeft;
         CheckBox chkVersenySorozatRight;
         CheckBox chkVersenySorozatMiddle;
+        ComboBox cboVersenySorozatB;
         TextBox txtVersenySorozatM;
 
         TextBox txtHelyezesX;
@@ -40,6 +41,7 @@ namespace Íjász {
         CheckBox chkHelyezesLeft;
         CheckBox chkHelyezesRight;
         CheckBox chkHelyezesMiddle;
+        ComboBox cboHelyezesB;
         TextBox txtHelyezesM;
 
         TextBox txtInduloX;
@@ -50,6 +52,7 @@ namespace Íjász {
         CheckBox chkInduloLeft;
         CheckBox chkInduloRight;
         CheckBox chkInduloMiddle;
+        ComboBox cboInduloB;
         TextBox txtInduloM;
 
         TextBox txtEgyesuletX;
@@ -60,6 +63,7 @@ namespace Íjász {
         CheckBox chkEgyesuletLeft;
         CheckBox chkEgyesuletRight;
         CheckBox chkEgyesuletMiddle;
+        ComboBox cboEgyesuletB;
         TextBox txtEgyesuletM;
 
         TextBox txtIjtipusX;
@@ -70,6 +74,7 @@ namespace Íjász {
         CheckBox chkIjtipusLeft;
         CheckBox chkIjtipusRight;
         CheckBox chkIjtipusMiddle;
+        ComboBox cboIjtipusB;
         TextBox txtIjtipusM;
 
         TextBox txtKorosztalyX;
@@ -80,6 +85,7 @@ namespace Íjász {
         CheckBox chkKorosztalyLeft;
         CheckBox chkKorosztalyRight;
         CheckBox chkKorosztalyMiddle;
+        ComboBox cboKorosztalyB;
         TextBox txtKorosztalyM;
 
         TextBox txtInduloNemeX;
@@ -90,6 +96,7 @@ namespace Íjász {
         CheckBox chkInduloNemeLeft;
         CheckBox chkInduloNemeRight;
         CheckBox chkInduloNemeMiddle;
+        ComboBox cboInduloNemeB;
         TextBox txtInduloNemeM;
 
         TextBox txtDatumX;
@@ -100,12 +107,12 @@ namespace Íjász {
         CheckBox chkDatumLeft;
         CheckBox chkDatumRight;
         CheckBox chkDatumMiddle;
+        ComboBox cboDatumB;
         TextBox txtDatumM;
         #endregion
 
         public void LoadTestData( ) {
             cboTipus.SelectedIndex = 0;
-            cboBetuTipus.SelectedIndex = 0;
 
             chkVersenyBold.CheckState = CheckState.Checked;
             chkVersenyItalic.CheckState = CheckState.Unchecked;
@@ -209,7 +216,7 @@ namespace Íjász {
         //NOTE(mate): új sablon
         private void InitializeForm( ) {
             Text = "Új sablon szerkesztő";
-            ClientSize = new Size( 720 , 500 );
+            ClientSize = new Size( 850 , 500 );
             MinimumSize = ClientSize;
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
@@ -229,6 +236,7 @@ namespace Íjász {
             int columnPos7 = columnPos6 + 2;
             int columnPos8 = columnPos7 + 2;
             int columnPos9 = columnPos8 + 2;
+            int columnPos10 = columnPos9 + 7;
             
             Size textBoxSize = new Size(64 - 16,28);
 
@@ -246,14 +254,8 @@ namespace Íjász {
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
             };
-            Label lblBetuTipus = new Label {
-                Text = "Betűtípus:",
-                Location = new Point( 16, (labelPos += 2) * 16 ),
-                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-                AutoSize = true
-            };
             Label lblFelirat = new Label {
-                Text = "                         Szélesség(mm)          Magasság(mm)       Hossz(mm)                      Format                 Méret                          Igazítás",
+                Text = "                         Szélesség(mm)          Magasság(mm)       Hossz(mm)                      Format                 Méret                          Igazítás                         Betűtípus",
                 Location = new Point( 16, (labelPos += 2) * 16 ),
                 Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
                 AutoSize = true
@@ -315,7 +317,6 @@ namespace Íjász {
             };
             Controls.Add( lblAzonosito );
             Controls.Add( lblTipus );
-            Controls.Add( lblBetuTipus );
             Controls.Add( lblFelirat );
             Controls.Add( lblVerseny );
             Controls.Add( lblVersenySorozat );
@@ -341,17 +342,8 @@ namespace Íjász {
             cboTipus.Items.Add( "Versenysorozat" );
             cboTipus.SelectedIndexChanged += Cbo_Tipus_SelectedIndexChanged;
 
-            cboBetuTipus = new ComboBox {
-                Location = new Point( columnPos1 * 16, lblBetuTipus.Location.Y - 8 ),
-                Size = new Size( 128, 16 ),
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
-            };
-            cboBetuTipus.Items.Add( "TODO betűtípus" );
-
             Controls.Add( txtAzonosito );
             Controls.Add( cboTipus );
-            Controls.Add( cboBetuTipus );
 
             #region Verseny
 
@@ -411,6 +403,15 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+            cboVersenyB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblVerseny.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboVersenyB.Items.Add("TODO");
+            Controls.Add(cboVersenyB);
+
             Controls.Add( txtVersenyX );
             Controls.Add( txtVersenyY );
             Controls.Add( txtVersenyH );
@@ -479,6 +480,16 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+
+            cboVersenySorozatB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblVersenySorozat.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboVersenySorozatB.Items.Add("TODO");
+            Controls.Add(cboVersenySorozatB);
+
             Controls.Add( txtVersenySorozatX );
             Controls.Add( txtVersenySorozatY );
             Controls.Add( txtVersenySorozatH );
@@ -547,6 +558,15 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+            cboHelyezesB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblHelyezes.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboHelyezesB.Items.Add("TODO");
+            Controls.Add(cboHelyezesB);
+
             Controls.Add( txtHelyezesX );
             Controls.Add( txtHelyezesY );
             Controls.Add( txtHelyezesH );
@@ -615,6 +635,15 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+            cboInduloB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblIndulo.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboInduloB.Items.Add("TODO");
+            Controls.Add(cboInduloB);
+
             Controls.Add( txtInduloX );
             Controls.Add( txtInduloY );
             Controls.Add( txtInduloH );
@@ -683,6 +712,16 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+
+            cboEgyesuletB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblEgyesulet.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboEgyesuletB.Items.Add("TODO");
+            Controls.Add(cboEgyesuletB);
+
             Controls.Add( txtEgyesuletX );
             Controls.Add( txtEgyesuletY );
             Controls.Add( txtEgyesuletH );
@@ -751,6 +790,16 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+
+            cboIjtipusB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblIjtipus.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboIjtipusB.Items.Add("TODO");
+            Controls.Add(cboIjtipusB);
+
             Controls.Add( txtIjtipusX );
             Controls.Add( txtIjtipusY );
             Controls.Add( txtIjtipusH );
@@ -819,6 +868,15 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+            cboKorosztalyB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblKorosztaly.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboKorosztalyB.Items.Add("TODO");
+            Controls.Add(cboKorosztalyB);
+
             Controls.Add( txtKorosztalyX );
             Controls.Add( txtKorosztalyY );
             Controls.Add( txtKorosztalyH );
@@ -896,6 +954,17 @@ namespace Íjász {
             Controls.Add( chkInduloNemeLeft );
             Controls.Add( chkInduloNemeMiddle );
             Controls.Add( chkInduloNemeRight );
+
+            cboInduloNemeB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblInduloNeme.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboInduloNemeB.Items.Add("TODO");
+            Controls.Add(cboInduloNemeB  );
+
+
             #endregion
 
             #region Dátum
@@ -955,6 +1024,16 @@ namespace Íjász {
                 FlatStyle = FlatStyle.Flat,
                 CheckState = CheckState.Unchecked
             };
+            cboDatumB = new ComboBox {
+                Location = new Point( columnPos10 * 16, lblDatum.Location.Y - 8 ),
+                Size = new Size(128,16),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Anchor = AnchorStyles.Right | AnchorStyles.Bottom,
+            };
+            cboDatumB.Items.Add("TODO");
+            Controls.Add(cboDatumB);
+
+
             Controls.Add( txtDatumX );
             Controls.Add( txtDatumY );
             Controls.Add( txtDatumH );
@@ -1018,7 +1097,6 @@ namespace Íjász {
             txtAzonosito.Enabled = false;
 
             cboTipus.Text = oklevel.Tipus;
-            cboBetuTipus.Text = oklevel.BetuTipus;
 
             txtVersenyX.Text = oklevel.VersenyX == 0 ? "" : oklevel.VersenyX.ToString( );
             txtVersenyY.Text = oklevel.VersenyY == 0 ? "" : oklevel.VersenyY.ToString( );
@@ -1029,6 +1107,7 @@ namespace Íjász {
             chkVersenyRight.Checked = ( oklevel.VersenyI == "R" );
             chkVersenyMiddle.Checked = ( oklevel.VersenyI == "M" );
             txtVersenyM.Text = oklevel.VersenyM == 0 ? "" : oklevel.VersenyM.ToString( );
+            cboVersenyB.Text = oklevel.VersenyB;
 
             txtVersenySorozatX.Text = oklevel.VersenySorozatX == 0 ? "" : oklevel.VersenySorozatX.ToString( );
             txtVersenySorozatY.Text = oklevel.VersenySorozatY == 0 ? "" : oklevel.VersenySorozatY.ToString( );
@@ -1039,7 +1118,7 @@ namespace Íjász {
             chkVersenySorozatRight.Checked = ( oklevel.VersenySorozatI == "R" );
             chkVersenySorozatMiddle.Checked = ( oklevel.VersenySorozatI == "M" );
             txtVersenySorozatM.Text = oklevel.VersenySorozatM == 0 ? "" : oklevel.VersenySorozatM.ToString( );
-
+            cboVersenySorozatB.Text = oklevel.VersenySorozatB;
 
             txtHelyezesX.Text = oklevel.HelyezesX == 0 ? "" : oklevel.HelyezesX.ToString( );
             txtHelyezesY.Text = oklevel.HelyezesY == 0 ? "" : oklevel.HelyezesY.ToString( );
@@ -1050,6 +1129,7 @@ namespace Íjász {
             chkHelyezesRight.Checked = ( oklevel.HelyezesI == "R" );
             chkHelyezesMiddle.Checked = ( oklevel.HelyezesI == "M" );
             txtHelyezesM.Text = oklevel.HelyezesM == 0 ? "" : oklevel.HelyezesM.ToString( );
+            cboHelyezesB.Text = oklevel.HelyezesB;
 
             txtInduloX.Text = oklevel.InduloX == 0 ? "" : oklevel.InduloX.ToString( );
             txtInduloY.Text = oklevel.InduloY == 0 ? "" : oklevel.InduloY.ToString( );
@@ -1060,6 +1140,7 @@ namespace Íjász {
             chkInduloRight.Checked = ( oklevel.InduloI == "R" );
             chkInduloMiddle.Checked = ( oklevel.InduloI == "M" );
             txtInduloM.Text = oklevel.InduloM == 0 ? "" : oklevel.InduloM.ToString( );
+            cboInduloB.Text = oklevel.InduloB;
 
             txtEgyesuletX.Text = oklevel.EgyesuletX == 0 ? "" : oklevel.EgyesuletX.ToString( );
             txtEgyesuletY.Text = oklevel.EgyesuletY == 0 ? "" : oklevel.EgyesuletY.ToString( );
@@ -1070,6 +1151,7 @@ namespace Íjász {
             chkEgyesuletRight.Checked = ( oklevel.EgyesuletI == "R" );
             chkEgyesuletMiddle.Checked = ( oklevel.EgyesuletI == "M" );
             txtEgyesuletM.Text = oklevel.EgyesuletM == 0 ? "" : oklevel.EgyesuletM.ToString( );
+            cboEgyesuletB.Text = oklevel.EgyesuletB;
 
             txtIjtipusX.Text = oklevel.IjtipusX == 0 ? "" : oklevel.IjtipusX.ToString( );
             txtIjtipusY.Text = oklevel.IjtipusY == 0 ? "" : oklevel.IjtipusY.ToString( );
@@ -1080,6 +1162,7 @@ namespace Íjász {
             chkIjtipusRight.Checked = ( oklevel.IjtipusI == "R" );
             chkIjtipusMiddle.Checked = ( oklevel.IjtipusI == "M" );
             txtIjtipusM.Text = oklevel.IjtipusM == 0 ? "" : oklevel.IjtipusM.ToString( );
+            cboEgyesuletB.Text = oklevel.EgyesuletB;
 
             txtKorosztalyX.Text = oklevel.KorosztalyX == 0 ? "" : oklevel.KorosztalyX.ToString( );
             txtKorosztalyY.Text = oklevel.KorosztalyY == 0 ? "" : oklevel.KorosztalyY.ToString( );
@@ -1090,6 +1173,7 @@ namespace Íjász {
             chkKorosztalyRight.Checked = ( oklevel.KorosztalyI == "R" );
             chkKorosztalyMiddle.Checked = ( oklevel.KorosztalyI == "M" );
             txtKorosztalyM.Text = oklevel.KorosztalyM == 0 ? "" : oklevel.KorosztalyM.ToString( );
+            cboKorosztalyB.Text = oklevel.KorosztalyB;
 
             txtInduloNemeX.Text = oklevel.InduloNemeX == 0 ? "" : oklevel.InduloNemeX.ToString( );
             txtInduloNemeY.Text = oklevel.InduloNemeY == 0 ? "" : oklevel.InduloNemeY.ToString( );
@@ -1100,6 +1184,7 @@ namespace Íjász {
             chkInduloNemeRight.Checked = ( oklevel.InduloNemeI == "R" );
             chkInduloNemeMiddle.Checked = ( oklevel.InduloNemeI == "M" );
             txtInduloNemeM.Text = oklevel.InduloNemeM == 0 ? "" : oklevel.InduloNemeM.ToString( );
+            cboInduloNemeB.Text = oklevel.InduloNemeB;
 
             txtDatumX.Text = oklevel.DatumX == 0 ? "" : oklevel.DatumX.ToString( );
             txtDatumY.Text = oklevel.DatumY == 0 ? "" : oklevel.DatumY.ToString( );
@@ -1110,6 +1195,7 @@ namespace Íjász {
             chkDatumRight.Checked = ( oklevel.DatumI == "R" );
             chkDatumMiddle.Checked = ( oklevel.DatumI == "M" );
             txtDatumM.Text = oklevel.DatumM == 0 ? "" : oklevel.DatumM.ToString( );
+            cboDatumB.Text = oklevel.DatumB;
         }
 
         #region EventHandlers
@@ -1168,7 +1254,6 @@ namespace Íjász {
             #region Error Checks
             if( txtAzonosito.Text.Length == 0 ) { MessageBox.Show( "Hiba az azonosító mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
             if( cboTipus.Text.Length == 0 ) { MessageBox.Show( "Hiba a típus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
-            if( cboBetuTipus.Text.Length == 0 ) { MessageBox.Show( "Hiba a betűtípus mezőben", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error ); return; }
 
           
             if( txtVersenyX.Text.Length != 0 ) {
@@ -1231,12 +1316,12 @@ namespace Íjász {
             oklevel = new Oklevel {
                 Azonosito = txtAzonosito.Text,
                 Tipus = cboTipus.Text,
-                BetuTipus = cboBetuTipus.Text,
 
                 VersenyX = txtVersenyX.Text == "" ? 0 : Convert.ToInt32( txtVersenyX.Text ),
                 VersenyY = txtVersenyY.Text == "" ? 0 : Convert.ToInt32( txtVersenyY.Text ),
                 VersenyH = txtVersenyH.Text == "" ? 0 : Convert.ToInt32( txtVersenyH.Text ),
                 VersenyF = chkVersenyBold.Checked == true ? ( chkVersenyItalic.Checked == true ? "2" : "B" ) : ( chkVersenyItalic.Checked == true ? "I" : "0" ),
+                VersenyB = cboVersenyB.Text,
                 VersenyM = txtVersenyM.Text == "" ? 0 : Convert.ToInt32( txtVersenyM.Text ),
                 VersenyI = chkVersenyLeft.Checked == true ? "L" : ( chkVersenyRight.Checked == true ? "R" : ( chkVersenyMiddle.Checked == true ? "M" : "0" ) ),
 
@@ -1244,12 +1329,14 @@ namespace Íjász {
                 VersenySorozatY = txtVersenySorozatY.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatY.Text ),
                 VersenySorozatH = txtVersenySorozatH.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatH.Text ),
                 VersenySorozatF = chkVersenySorozatBold.Checked == true ? ( chkVersenySorozatItalic.Checked == true ? "2" : "B" ) : ( chkVersenySorozatItalic.Checked == true ? "I" : "0" ),
+                VersenySorozatB = cboVersenySorozatB.Text,
                 VersenySorozatM = txtVersenySorozatM.Text == "" ? 0 : Convert.ToInt32( txtVersenySorozatM.Text ),
                 VersenySorozatI = chkVersenySorozatLeft.Checked == true ? "L" : ( chkVersenySorozatRight.Checked == true ? "R" : ( chkVersenySorozatMiddle.Checked == true ? "M" : "0" ) ),
 
                 HelyezesX = txtHelyezesX.Text == "" ? 0 : Convert.ToInt32( txtHelyezesX.Text ),
                 HelyezesY = txtHelyezesY.Text == "" ? 0 : Convert.ToInt32( txtHelyezesY.Text ),
                 HelyezesH = txtHelyezesH.Text == "" ? 0 : Convert.ToInt32( txtHelyezesH.Text ),
+                HelyezesB = cboHelyezesB.Text,
                 HelyezesF = chkHelyezesBold.Checked == true ? ( chkHelyezesItalic.Checked == true ? "2" : "B" ) : ( chkHelyezesItalic.Checked == true ? "I" : "0" ),
                 HelyezesM = txtHelyezesM.Text == "" ? 0 : Convert.ToInt32( txtHelyezesM.Text ),
                 HelyezesI = chkHelyezesLeft.Checked == true ? "L" : ( chkHelyezesRight.Checked == true ? "R" : ( chkHelyezesMiddle.Checked == true ? "M" : "0" ) ),
@@ -1257,6 +1344,7 @@ namespace Íjász {
                 InduloX = txtInduloX.Text == "" ? 0 : Convert.ToInt32( txtInduloX.Text ),
                 InduloY = txtInduloY.Text == "" ? 0 : Convert.ToInt32( txtInduloY.Text ),
                 InduloH = txtInduloH.Text == "" ? 0 : Convert.ToInt32( txtInduloH.Text ),
+                InduloB = cboInduloB.Text,
                 InduloF = chkInduloBold.Checked == true ? ( chkInduloItalic.Checked == true ? "2" : "B" ) : ( chkInduloItalic.Checked == true ? "I" : "0" ),
                 InduloM = txtInduloM.Text == "" ? 0 : Convert.ToInt32( txtInduloM.Text ),
                 InduloI = chkInduloLeft.Checked == true ? "L" : ( chkInduloRight.Checked == true ? "R" : ( chkInduloMiddle.Checked == true ? "M" : "0" ) ),
@@ -1264,6 +1352,7 @@ namespace Íjász {
                 EgyesuletX = txtEgyesuletX.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletX.Text ),
                 EgyesuletY = txtEgyesuletY.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletY.Text ),
                 EgyesuletH = txtEgyesuletH.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletH.Text ),
+                EgyesuletB = cboEgyesuletB.Text,
                 EgyesuletF = chkEgyesuletBold.Checked == true ? ( chkEgyesuletItalic.Checked == true ? "2" : "B" ) : ( chkEgyesuletItalic.Checked == true ? "I" : "0" ),
                 EgyesuletM = txtEgyesuletM.Text == "" ? 0 : Convert.ToInt32( txtEgyesuletM.Text ),
                 EgyesuletI = chkEgyesuletLeft.Checked == true ? "L" : ( chkEgyesuletRight.Checked == true ? "R" : ( chkEgyesuletMiddle.Checked == true ? "M" : "0" ) ),
@@ -1271,6 +1360,7 @@ namespace Íjász {
                 IjtipusX = txtIjtipusX.Text == "" ? 0 : Convert.ToInt32( txtIjtipusX.Text ),
                 IjtipusY = txtIjtipusY.Text == "" ? 0 : Convert.ToInt32( txtIjtipusY.Text ),
                 IjtipusH = txtIjtipusH.Text == "" ? 0 : Convert.ToInt32( txtIjtipusH.Text ),
+                IjtipusB = cboIjtipusB.Text,
                 IjtipusF = chkIjtipusBold.Checked == true ? ( chkIjtipusItalic.Checked == true ? "2" : "B" ) : ( chkIjtipusItalic.Checked == true ? "I" : "0" ),
                 IjtipusM = txtIjtipusM.Text == "" ? 0 : Convert.ToInt32( txtIjtipusM.Text ),
                 IjtipusI = chkIjtipusLeft.Checked == true ? "L" : ( chkIjtipusRight.Checked == true ? "R" : ( chkIjtipusMiddle.Checked == true ? "M" : "0" ) ),
@@ -1278,6 +1368,7 @@ namespace Íjász {
                 KorosztalyX = txtKorosztalyX.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyX.Text ),
                 KorosztalyY = txtKorosztalyY.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyY.Text ),
                 KorosztalyH = txtKorosztalyH.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyH.Text ),
+                KorosztalyB = cboKorosztalyB.Text,
                 KorosztalyF = chkKorosztalyBold.Checked == true ? ( chkKorosztalyItalic.Checked == true ? "2" : "B" ) : ( chkKorosztalyItalic.Checked == true ? "I" : "0" ),
                 KorosztalyM = txtKorosztalyM.Text == "" ? 0 : Convert.ToInt32( txtKorosztalyM.Text ),
                 KorosztalyI = chkKorosztalyLeft.Checked == true ? "L" : ( chkKorosztalyRight.Checked == true ? "R" : ( chkKorosztalyMiddle.Checked == true ? "M" : "0" ) ),
@@ -1285,6 +1376,7 @@ namespace Íjász {
                 InduloNemeX = txtInduloNemeX.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeX.Text ),
                 InduloNemeY = txtInduloNemeY.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeY.Text ),
                 InduloNemeH = txtInduloNemeH.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeH.Text ),
+                InduloNemeB = cboInduloNemeB.Text,
                 InduloNemeF = chkInduloNemeBold.Checked == true ? ( chkInduloNemeItalic.Checked == true ? "2" : "B" ) : ( chkInduloNemeItalic.Checked == true ? "I" : "0" ),
                 InduloNemeM = txtInduloNemeM.Text == "" ? 0 : Convert.ToInt32( txtInduloNemeM.Text ),
                 InduloNemeI = chkInduloNemeLeft.Checked == true ? "L" : ( chkInduloNemeRight.Checked == true ? "R" : ( chkInduloNemeMiddle.Checked == true ? "M" : "0" ) ),
@@ -1292,6 +1384,7 @@ namespace Íjász {
                 DatumX = txtDatumX.Text == "" ? 0 : Convert.ToInt32( txtDatumX.Text ),
                 DatumY = txtDatumY.Text == "" ? 0 : Convert.ToInt32( txtDatumY.Text ),
                 DatumH = txtDatumH.Text == "" ? 0 : Convert.ToInt32( txtDatumH.Text ),
+                DatumB = cboDatumB.Text,
                 DatumF = chkDatumBold.Checked == true ? ( chkDatumItalic.Checked == true ? "2" : "B" ) : ( chkDatumItalic.Checked == true ? "I" : "0" ),
                 DatumM = txtDatumM.Text == "" ? 0 : Convert.ToInt32( txtDatumM.Text ),
                 DatumI = chkDatumLeft.Checked == true ? "L" : ( chkDatumRight.Checked == true ? "R" : ( chkDatumMiddle.Checked == true ? "M" : "0" ) )

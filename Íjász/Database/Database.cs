@@ -31,18 +31,16 @@ namespace Íjász {
                     "CREATE TABLE Egyesuletek (EGAZON char(30) PRIMARY KEY,EGCIME char(30),EGVENE char(30),EGVET1 char(30),EGVET2 char(30),EGVEM1 char(30),EGVEM2 char(30),EGLIST boolean,EGTASZ int);" +
                     "CREATE TABLE Indulók (INNEVE char(30) PRIMARY KEY, INNEME char(1) NOT NULL, INSZUL char(20) NOT NULL, INVEEN char(30),INERSZ int, EGAZON char(10));" +
                     "CREATE TABLE Oklevelek (" +
-                    " OKAZON char(10) PRIMARY KEY," +
-                    " OKTIPU char(30)," +
-                    " OKBETU char(30)," +
-                    " OKVENEX int, OKVENEY int, OKVENEH int, OKVENEF char(1), OKVENEM int, OKVENEI char(1)," +
-                    " OKVSNEX int, OKVSNEY int, OKVSNEH int, OKVSNEF char(1), OKVSNEM int, OKVSNEI char(1)," +
-                    " OKHELYX int, OKHELYY int, OKHELYH int, OKHELYF char(1), OKHELYM int, OKHELYI char(1)," +
-                    " OKINNEVEX int, OKINNEVEY int, OKINNEVEH int, OKINNEVEF char(1), OKINNEVEM int, OKINNEVEI char(1)," +
-                    " OKEGYEX int, OKEGYEY int, OKEGYEH int, OKEGYEF char(1), OKEGYEM int, OKEGYEI char(1)," +
-                    " OKIJTIX int, OKIJTIY int, OKIJTIH int, OKIJTIF char(1), OKIJTIM int, OKIJTII char(1)," +
-                    " OKKOROX int, OKKOROY int, OKKOROH int, OKKOROF char(1), OKKOROM int, OKKOROI char(1)," +
-                    " OKINNEMEX int, OKINNEMEY int, OKINNEMEH int, OKINNEMEF char(1), OKINNEMEM int, OKINNEMEI char(1)," +
-                    " OKDATUX int, OKDATUY int, OKDATUH int, OKDATUF char(1), OKDATUM int, OKDATUI char(1) );" +
+                                "OKAZON char(30) PRIMARY KEY, OKTIPU char(30)," +
+                                "OKVENEX int, OKVENEY int, OKVENEH int, OKVENEF char(1), OKVENEB char(30), OKVENEM int, OKVENEI char(1)," +
+                                "OKVSNEX int, OKVSNEY int, OKVSNEH int, OKVSNEF char(1), OKVSNEB char(30), OKVSNEM int, OKVSNEI char(1)," +
+                                "OKHELYX int, OKHELYY int, OKHELYH int, OKHELYF char(1), OKHELYB char(30), OKHELYM int, OKHELYI char(1)," +
+                                "OKNEVEX int, OKNEVEY int, OKNEVEH int, OKNEVEF char(1), OKNEVEB char(30), OKNEVEM int, OKNEVEI char(1)," +
+                                "OKEGYEX int, OKEGYEY int, OKEGYEH int, OKEGYEF char(1), OKEGYEB char(30), OKEGYEM int, OKEGYEI char(1)," +
+                                "OKIJTIX int, OKIJTIY int, OKIJTIH int, OKIJTIF char(1), OKIJTIB char(30), OKIJTIM int, OKIJTII char(1)," +
+                                "OKKOROX int, OKKOROY int, OKKOROH int, OKKOROF char(1), OKKOROB char(30), OKKOROM int, OKKOROI char(1)," +
+                                "OKNEMEX int, OKNEMEY int, OKNEMEH int, OKNEMEF char(1), OKNEMEB char(30), OKNEMEM int, OKNEMEI char(1)," +
+                                "OKDATUX int, OKDATUY int, OKDATUH int, OKDATUF char(1), OKDATUB char(30), OKDATUM int, OKDATUI char(1));" +
                     "INSERT INTO Verzió (PRVERZ) VALUES (" + Verzió + ");";
 
                 if( command.ExecuteNonQuery( ) != 0 ) { }// MessageBox.Show("Adatbázis hiba!", "Hiba", MessageBoxButtons.OK, MessageBoxIcon.Error);
