@@ -95,10 +95,6 @@ namespace Íjász {
                 command.Parameters.Add( new SQLiteParameter( "@EGAZON",indulo.Egyesulet) );
                 command.Parameters.Add( new SQLiteParameter( "@INNEVE_OLD",nev) );
 
-                command.ExecuteNonQuery( );
-                command.Dispose( );
-                connection.Close( );
-
                 try {
                     command.ExecuteNonQuery( );
                 }

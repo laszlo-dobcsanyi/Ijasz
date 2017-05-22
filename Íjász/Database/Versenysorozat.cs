@@ -14,7 +14,7 @@ namespace Íjász {
                 connection.Open( );
 
                 SQLiteCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT VSAZON, VSMEGN, VSVESZ FROM Versenysorozat;";
+                command.CommandText = "SELECT VSAZON, VSMEGN, VSVESZ FROM Versenysorozat WHERE VSAZON='" + _azonosító + "';";
                 SQLiteDataReader reader = command.ExecuteReader();
                 while( reader.Read( ) ) {
                     data = new Versenysorozat( reader.GetString( 0 ), reader.GetString( 1 ), reader.GetInt32( 2 ) );

@@ -121,6 +121,7 @@ namespace Íjász
          titleFormat.Bold = true;
 
          Header header = document.Headers.odd;
+            document.AddHeaders();
 
          Paragraph title = header.InsertParagraph();
          title.Append( Cim );
@@ -174,9 +175,10 @@ namespace Íjász
          HeaderTable.Rows[ 0 ].Cells[ HeaderTable.Rows[ 0 ].Cells.Count - 1 ].Paragraphs[ 0 ].FontSize( 8D );
 
          HeaderTable.AutoFit = AutoFit.ColumnWidth;
-         EredmenyLapReszletesTablazatFormazas( HeaderTable );
+         //EredmenyLapReszletesTablazatFormazas( HeaderTable );
 
          header.InsertTable( HeaderTable );
+        
          #endregion
 
          for ( int i = 0 ; i < Data.IjTipusok.Count ; i++ )

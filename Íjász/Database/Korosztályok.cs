@@ -19,7 +19,7 @@ namespace Íjász
 
             SQLiteCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSN, KOINSF, KOEGYB FROM Korosztályok WHERE VEAZON = '" + _verseny + "';";
+            command.CommandText = "SELECT VEAZON, KOAZON, KOMEGN, KOEKMI, KOEKMA, KONOK, KOFERF, KOINSN, KOINSF, KOEGYB FROM Korosztályok WHERE VEAZON = '" + _verseny + "' ORDER BY KOEKMI;";
             SQLiteDataReader reader = command.ExecuteReader();
             while ( reader.Read( ) )
             {

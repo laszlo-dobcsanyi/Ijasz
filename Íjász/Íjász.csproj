@@ -226,6 +226,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="System.Data.SQLite.dll" />
     <Content Include="Íjász.ico" />
   </ItemGroup>
   <ItemGroup />
