@@ -67,7 +67,7 @@ namespace Íjász
 
             SQLiteCommand command = connection.CreateCommand();
 
-            command.CommandText = "SELECT EGAZON,EGCIME,EGVENE,EGVET1,EGVET2,EGVEM1,EGVEM2,EGLIST,EGTASZ FROM Egyesuletek ;";
+            command.CommandText = "SELECT EGAZON,EGCIME,EGVENE,EGVET1,EGVET2,EGVEM1,EGVEM2,EGLIST,EGTASZ FROM Egyesuletek ORDER BY EGAZON;";
             SQLiteDataReader reader = command.ExecuteReader();
             while ( reader.Read( ) )
             {
