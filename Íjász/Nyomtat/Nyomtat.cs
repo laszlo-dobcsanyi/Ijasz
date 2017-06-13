@@ -478,6 +478,10 @@ namespace Íjász {
                 public int OsszPont;
                 public int Szazalek;
                 public string Verseny;
+                public int TizPont;
+                public int NyolcPont;
+                public int OtPont;
+                public int Melle;
 
                 public INDULO( string _Ijtipus,
                                 string _Korosztaly,
@@ -487,7 +491,11 @@ namespace Íjász {
                                 string _Egyesulet,
                                 int _OsszPont,
                                 int _Szazalek,
-                                string _Verseny ) {
+                                string _Verseny,
+                                int tizpont,
+                                int nyolcpont,
+                                int otpont,
+                                int melle) {
                     Ijtipus = _Ijtipus;
                     Korosztaly = _Korosztaly;
                     Nem = _Nem;
@@ -497,6 +505,10 @@ namespace Íjász {
                     OsszPont = _OsszPont;
                     Szazalek = _Szazalek;
                     Verseny = _Verseny;
+                    TizPont = tizpont;
+                    NyolcPont = nyolcpont;
+                    OtPont = otpont;
+                    Melle = melle;
                 }
             }
 
@@ -590,7 +602,11 @@ namespace Íjász {
                                                                indulo.Egyesulet,
                                                                eredmeny.Osszpont.Value,
                                                                eredmeny.Szazalek.Value,
-                                                               verseny.Azonosito);
+                                                               verseny.Azonosito, 
+                                                               eredmeny.Talalat10,
+                                                               eredmeny.Talalat8,
+                                                               eredmeny.Talalat5, 
+                                                               eredmeny.Melle);
                             Data.Add( temp );
                         }
                     }
@@ -603,9 +619,47 @@ namespace Íjász {
             public List<IJTIPUS> Ijtipusok;
 
             public class Order : IComparer<INDULO> {
+                // 1. több 10-es
+                // 2. kevesebb 0
+                // 3. több 8
+                // 3. több 5
                 public int Compare( INDULO i1, INDULO i2 ) {
-                    int z = i1.OsszPont.CompareTo(i2.OsszPont);
-                    return ( -1 * z );
+                    int compareOsszpont = i2.OsszPont.CompareTo(i1.OsszPont) ;
+                    int compareTizpont = i2.TizPont.CompareTo(i1.TizPont);
+                    int compareNyolcpont = i2.NyolcPont.CompareTo(i1.NyolcPont);
+                    int compareOtpont = i2.OtPont.CompareTo(i1.OtPont) ;
+                    // ezt negálni
+                    int compareMelle = i2.Melle.CompareTo(i1.Melle);
+
+                    if (compareOsszpont == 0)
+                    {
+                        if (compareTizpont == 0)
+                        {
+                            if (compareMelle == 0)
+                            {
+                                if (compareNyolcpont == 0)
+                                {
+                                    return compareOtpont;
+                                }
+                                else
+                                {
+                                    return compareNyolcpont;
+                                }
+                            }
+                            else
+                            {
+                                return -1 * compareMelle;
+                            }
+                        }
+                        else
+                        {
+                            return compareTizpont;
+                        }
+                    }
+                    else
+                    {
+                        return compareOsszpont;
+                    }
                 }
             }
 
@@ -723,6 +777,10 @@ namespace Íjász {
                 public int OsszPont;
                 public int Szazalek;
                 public string Verseny;
+                public int TizPont;
+                public int NyolcPont;
+                public int OtPont;
+                public int Melle;
 
                 public INDULO( string _Ijtipus,
                                 string _Korosztaly,
@@ -732,7 +790,12 @@ namespace Íjász {
                                 string _Egyesulet,
                                 int _OsszPont,
                                 int _Szazalek,
-                                string _Verseny ) {
+                                string _Verseny,
+                                int tizpont,
+                                int nyolcpont,
+                                int otpont,
+                                int melle)
+                {
                     Ijtipus = _Ijtipus;
                     Korosztaly = _Korosztaly;
                     Nem = _Nem;
@@ -742,6 +805,10 @@ namespace Íjász {
                     OsszPont = _OsszPont;
                     Szazalek = _Szazalek;
                     Verseny = _Verseny;
+                    TizPont = tizpont;
+                    NyolcPont = nyolcpont;
+                    OtPont = otpont;
+                    Melle = melle;
                 }
             }
 
@@ -847,7 +914,11 @@ namespace Íjász {
                                                                     indulo.Egyesulet,
                                                                     eredmeny.Osszpont.Value,
                                                                     eredmeny.Szazalek.Value,
-                                                                    verseny.Azonosito);
+                                                                    verseny.Azonosito,
+                                                                    eredmeny.Talalat10, 
+                                                                    eredmeny.Talalat8, 
+                                                                    eredmeny.Talalat5, 
+                                                                    eredmeny.Melle);
                                 Data.Add( temp );
                             }
                             else if( indulo.Nem == "N" && eredmeny.Megjelent == true && indulo.Engedely != null ) {
@@ -860,7 +931,11 @@ namespace Íjász {
                                                                     indulo.Egyesulet,
                                                                     eredmeny.Osszpont.Value,
                                                                     eredmeny.Szazalek.Value,
-                                                                    verseny.Azonosito);
+                                                                    verseny.Azonosito,
+                                                                    eredmeny.Talalat10,
+                                                                    eredmeny.Talalat8,
+                                                                    eredmeny.Talalat5,
+                                                                    eredmeny.Melle);
                                 Data.Add( temp );
                             }
                         }
@@ -874,11 +949,47 @@ namespace Íjász {
             public List<IJTIPUS> Ijtipusok;
 
             public class Order : IComparer<INDULO> {
-                public int Compare( INDULO i1, INDULO i2 ) {
-                    int z = i1.OsszPont.CompareTo(i2.OsszPont);
-                    return ( -1 * z );
+                public int Compare(INDULO i1, INDULO i2)
+                {
+                    int compareOsszpont = i2.OsszPont.CompareTo(i1.OsszPont);
+                    int compareTizpont = i2.TizPont.CompareTo(i1.TizPont);
+                    int compareNyolcpont = i2.NyolcPont.CompareTo(i1.NyolcPont);
+                    int compareOtpont = i2.OtPont.CompareTo(i1.OtPont);
+                    // ezt negálni
+                    int compareMelle = i2.Melle.CompareTo(i1.Melle);
+
+                    if (compareOsszpont == 0)
+                    {
+                        if (compareTizpont == 0)
+                        {
+                            if (compareMelle == 0)
+                            {
+                                if (compareNyolcpont == 0)
+                                {
+                                    return compareOtpont;
+                                }
+                                else
+                                {
+                                    return compareNyolcpont;
+                                }
+                            }
+                            else
+                            {
+                                return -1 * compareMelle;
+                            }
+                        }
+                        else
+                        {
+                            return compareTizpont;
+                        }
+                    }
+                    else
+                    {
+                        return compareOsszpont;
+                    }
                 }
             }
+        
 
             public EREDMENYLAPVERSENYMISZ( string _VEAZON )
                 : this( ) {
@@ -1311,8 +1422,8 @@ namespace Íjász {
             #region Compare
             public class Order : IComparer<INDULO> {
                 public int Compare( INDULO i1, INDULO i2 ) {
-                    int z = i1.OsszPont.CompareTo(i2.OsszPont);
-                    return ( -1 * z );
+                    int compareOsszPont = i2.OsszPont.CompareTo(i1.OsszPont);
+                    return (compareOsszPont);
                 }
             }
 
@@ -1658,8 +1769,9 @@ namespace Íjász {
             #region Compare
             public class Order : IComparer<INDULO> {
                 public int Compare( INDULO i1, INDULO i2 ) {
-                    int z = i1.OsszPont.CompareTo(i2.OsszPont);
-                    return ( -1 * z );
+                    int compareOsszPont = i2.OsszPont.CompareTo(i1.OsszPont);
+                    return (compareOsszPont);
+                    
                 }
             }
 
@@ -2007,8 +2119,8 @@ namespace Íjász {
             #region Compare
             public class Order : IComparer<INDULO> {
                 public int Compare( INDULO i1, INDULO i2 ) {
-                    int z = i1.OsszPont.CompareTo(i2.OsszPont);
-                    return ( -1 * z );
+                    int compareOsszPont = i2.OsszPont.CompareTo(i1.OsszPont);
+                    return (compareOsszPont);
                 }
             }
 
